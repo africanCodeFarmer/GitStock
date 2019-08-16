@@ -1,0 +1,23 @@
+button{
+  margin-left:20rpx;
+  margin-right:20rpx;
+}
+
+.btn_ok{
+  margin-top: 40rpx;
+  background-color: rgba(20, 180, 20,0.5);
+}
+
+#myView{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 10rpx;
+  margin-top:10rpx;
+}
+
+.myInput{
+  margin-top: 10rpx;
+  text-align: center;
+}

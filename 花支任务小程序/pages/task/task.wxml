@@ -1,0 +1,64 @@
+<view id="header">
+  <image src="{{userImagePath}}" id="headerImage" bindtap="changeTaskSet"></image>
+  <view id="header_header">
+    <text space="ensp" id="headerName">{{userName}}</text>
+    <text id="headerNote" space="ensp">
+    {{userNote}}</text>
+    <text id="headerRight">Lv{{grade}}: {{exp}}/{{upNeedExp}}</text>
+    <progress id="headerProgress"  stroke-width="20rpx" border-radius="10" percent="{{(exp/upNeedExp)*100}}" activeColor="rgb(159, 221, 159)" active="true" active-mode="forwards">
+    </progress>
+  </view>
+</view>
+
+<view id="columnHeader">
+  <text id="columnHeaderText">今日任务</text>
+  <scroll-view scroll-y="true" id="columnScrollView">
+
+    <view class="columns" wx:for="{{tasks}}" style="{{opacityColumn[index]}}">
+      <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{checked[index]}}"></checkbox>
+      
+      <scroll-view scroll-x="true" class="columns_name" style="{{compeleteSign[index]}};color:red;" wx:if="{{showChooseType[index]=='0'}}">{{item}}</scroll-view>
+      <scroll-view scroll-x="true" class="columns_name" style="{{compeleteSign[index]}};color:goldenrod;" wx:elif="{{showChooseType[index]=='1'}}">{{item}}</scroll-view>
+      <scroll-view scroll-x="true" class="columns_name" style="{{compeleteSign[index]}};color:black;" wx:else>{{item}}</scroll-view>
+
+      <view wx:if="{{showButtons[index]}}" animation="{{animation}}">
+        <button size="mini" class="columns_button btn_no" bindtap="delete" id="{{index}}">删除</button>
+        <button size="mini" class="columns_button btn_ok" bindtap="edit" id="{{index}}">编辑</button>
+        <image src="photos/back.png" class="set_back_btn" bindtap="hideTwoButton" id="{{index}}"></image>
+      </view>
+      <view wx:else animation="{{animation}}">
+        <image src="photos/setImage.png" class="set_back_btn" id="{{index}}"bindtap="showTwoButton"></image>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>
+
+<view id="footerButtonView">
+  <button class="footerButton" bindtap="gotoTimedistribute">时间规划</button>
+  <button class="footerButton" bindtap="addTask">添加任务</button>
+</view>
+
+<view wx:if="{{showAddModal}}" id="addModal">
+  <form bindsubmit="goAddTask">
+    <view style="margin:10rpx;">
+      <text id="addModalHeader">{{isEdit?"编辑任务":"添加任务"}}</text>
+
+      <checkbox-group bindchange="changeOneChoose" id="checkBoxView">
+        <checkbox value="0" checked="{{choosed[0]}}" color="red"></checkbox>
+        <checkbox value="1" checked="{{choosed[1]}}" color="goldenrod"></checkbox>
+        <checkbox value="2" checked="{{choosed[2]}}" color="black"></checkbox>
+      </checkbox-group>
+
+      <textarea id="addModalTextarea" name="input_task" value="{{isEdit?input_note:''}}" placeholder="支持批量添加(一行一个任务)"></textarea>
+      <view>
+        <button size="mini" id="addModalLeftButton" bindtap="addModalClose">取消</button>
+        <button size="mini" id="addModalRightButton" form-type="submit">{{isEdit?"编辑":"添加"}}</button>
+      </view>
+    </view>
+  </form>
+</view>
+
+<view class="userinfo">
+  <text style="font-size:20rpx;color:gray;">--- 本程序基于本地缓存存储数据,清理微信缓存时请注意备份 ---</text>
+</view>

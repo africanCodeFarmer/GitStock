@@ -1,0 +1,10 @@
+<view id="content">
+  <form bindsubmit="changeTaskSetSubmit">
+    <input type="text" name="userName" placeholder="昵称" class="spaceBetween" value="{{userName}}"></input>
+    <input type="text" name="userNote" placeholder="签名" class="spaceBetween"  value="{{userNote}}" style="color:gray;"></input>
+
+    <image src="{{userImagePath}}" class="spaceBetween"></image>
+    <button class="spaceBetween" bindtap="chooseNewImage">选择头像图片</button>
+    <button class="spaceBetween btn_ok" form-type="submit">确定更改</button>
+  </form>
+</view>

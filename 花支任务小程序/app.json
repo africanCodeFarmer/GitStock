@@ -1,0 +1,26 @@
+{
+  "pages": [
+    "pages/task/task",
+    "pages/timeDistribute/timeDistribute",
+    "pages/changeTaskSet/changeTaskSet",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/change/change",
+    "pages/taskLogs/taskLogs"
+  ],
+  "tabBar":{
+    "list":[
+      {"text": "任务","pagePath": "pages/task/task"},
+      {"text":"记账","pagePath":"pages/index/index"},
+      {"text": "账单明细","pagePath": "pages/logs/logs"},
+      {"text": "历史完成","pagePath": "pages/taskLogs/taskLogs"}
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

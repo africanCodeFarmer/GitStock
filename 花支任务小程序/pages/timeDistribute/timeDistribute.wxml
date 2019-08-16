@@ -1,0 +1,17 @@
+<form bindsubmit="changeDistribute">
+  <scroll-view scroll-x="true">
+    
+    <view class="tr" wx:for="{{columns}}" style="{{columns[index]}}">
+      <text class="td times">{{index+6}}-{{index+7}}</text>
+      <input class="td texts" type="text" placeholder="" name="{{index}}" value="{{distributes[index]}}"></input>
+       <image src="photos/clear.png" class="clear" bindtap="wantClearColumn" id="{{index}}"></image>
+    </view>
+
+  </scroll-view>
+
+  <view id="buttons">
+    <button class="leftButton" bindtap="wantClear">清空规划</button>
+    <button class="rightButton" form-type="submit">更新规划</button>
+    <button bindtap="wantBack">返回</button>
+  </view>
+</form>

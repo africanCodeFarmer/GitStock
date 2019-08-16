@@ -1,0 +1,40 @@
+.clear{
+  position: absolute;
+  right: 0;
+  width:40rpx;
+  height: 40rpx;
+  margin: 10rpx;
+}
+
+.tr{
+  display: flex;
+  flex-direction: row;
+  border-top: 1rpx solid gray;
+}
+
+.td{
+  height: 60rpx;
+  margin-left: 10rpx;
+}
+
+.times{
+  width: 120rpx;
+}
+
+.texts{
+  width: 74%;
+  margin-right: 4rpx;
+}
+
+#buttons{
+  margin-top: 22rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.leftButton{
+  background-color: rgb(255, 134, 134);
+}
+.rightButton{
+  background-color:rgb(159, 221, 159);
+}

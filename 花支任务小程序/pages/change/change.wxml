@@ -1,0 +1,21 @@
+<text>\n</text>
+
+<form bindsubmit="formSubmit">  
+  <view id="myView">
+    <text>新目标名字</text>
+    <input class="myInput" name="new_name" placeholder="此处输入名字"></input>
+    
+    <text>\n</text>
+
+    <text>新目标价格</text>
+    <input class="myInput" name="new_price" placeholder="此处输入价格"></input>
+
+    <text>\n</text>
+
+    <image src="{{imagePath}}"></image>
+  </view>
+
+  <button bindtap="chooseNewImage">选择新图片</button>
+
+  <button form-type="submit" class="btn_ok">确定新目标</button>
+</form>

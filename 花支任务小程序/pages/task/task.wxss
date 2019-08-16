@@ -1,0 +1,163 @@
+.userinfo {
+  margin-top: 10rpx;
+  margin-bottom:20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 头像部分 */
+#header_header{
+  flex-direction: column;
+}
+
+#header{
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+#headerImage{
+  margin-left: 10rpx;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+}
+
+#headerName{
+  margin-left: 12rpx;
+  margin-top: 24rpx;
+}
+
+#headerNote{
+  padding-left: 40rpx;
+  font-size: 80%;
+  color: gray;
+}
+
+#headerRight{
+  color: gray;
+  position: absolute;
+  margin-top: 90rpx;
+  right: 0;
+  top: 0;
+  margin-right: 20rpx;
+  font-size: 40%;
+}
+
+#headerProgress{
+  width: 600rpx;
+  margin-top: 20rpx;
+}
+
+/* 添加界面部分 */
+#checkBoxView{
+  z-index: 1001;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 20rpx;
+  margin-top: 10rpx;
+}
+
+#addModalHeader{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+#addModalLeftButton{
+  margin-left: 10rpx;
+  position: absolute;
+  left: 0;
+  height: 60rpx;
+  width: 40%;
+}
+
+#addModalRightButton{
+  background-color: rgb(159, 221, 159);
+  margin-right: 10rpx;
+  position: absolute;
+  right: 0;
+  height: 60rpx;
+  width: 40%;
+}
+
+#addModalTextarea{
+  width: 100%;
+  height: 480rpx;
+}
+
+#addModal{
+  z-index: 1000;
+  position: fixed;
+  top: 6%;
+  left: 10%;
+  width:80%;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 4%;
+  height: 600rpx;
+}
+
+/* 任务显示部分 */
+#columnHeader{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+#columnHeaderText{
+  margin: 40rpx;
+  font-size: 160%;
+}
+
+#columnScrollView{
+  width: 96%;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  height: 680rpx;
+}
+
+.columns{
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.columns_name{
+  margin-left: 20rpx;
+  text-align: left;
+  margin-right: 60rpx;
+}
+
+.set_back_btn{
+  position: absolute;
+  right: 0;
+  height: 60rpx;
+  width: 60rpx;
+}
+
+.columns_button{
+  right: 32rpx;
+  position: absolute;
+  margin-right: 20rpx;
+}
+
+.btn_no{
+  margin-right: 140rpx;
+}
+.btn_ok{
+}
+
+#footerButtonView{
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.footerButton{
+  width: 300rpx;
+}

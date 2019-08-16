@@ -1,0 +1,27 @@
+#clearLogsButton{
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rpx;
+}
+
+.log-item {
+  margin-left: 10rpx;
+}
+
+.addLogs{
+ color: rgb(159, 221, 159);
+}
+
+.subLogs{
+  color:black;
+}
+
+.dataLogs{
+  text-align: center;
+  font-size: 140%;
+}

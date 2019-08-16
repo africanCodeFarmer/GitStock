@@ -1,0 +1,95 @@
+<!--index.wxml-->
+<view wx:if="{{showMyHistories}}" id="historyView">
+  <text id="historyHeader">历史实现</text>
+
+  <scroll-view scroll-y="true" style="height:400rpx;margin-bottom:100rpx;">
+    <view wx:for="{{histories}}" class="historyColumn">{{item}}</view>
+  </scroll-view>
+
+  <button id="historyCloseButton" size="mini" bindtap="closeHistory">关闭历史</button>
+  <button id="historyClearButton" size="mini" bindtap="clearHistory">清空历史</button>
+</view>
+
+<button size="mini" id="historyButton" bindtap="showHistories">查看历史实现</button>
+
+<view id="header">
+    <image src="{{aimImagePath}}" class='userinfo-avatar' bindtap="change"></image>
+    <view id="headerText">
+      <text style="margin-top:10rpx;font-size:32rpx;">{{aimName}}: {{aimPrice}}</text>
+      <text style="color:gray;margin-top:10rpx;font-size:22rpx;">距离实现目标: {{(100-aimPercent)<0?"已经实现啦!!!":(100-aimPercent)+"%"}}</text>
+    </view>
+</view>
+ 
+<progress id='myProgress' active='true' percent="{{aimPercent}}" border-radius="50" stroke-width="120rpx" active-mode="forwards" activeColor="rgb(159, 221, 159)">
+</progress>
+
+<text id="columns_header">余额记录</text>
+<view>
+  <view class="columns">
+      <text class="columns_values">微信: {{wx_stock}}</text>
+      <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="微信">+</button>
+      <text> \t\t\t</text>
+      <button class='myButton addButton' size="mini" bindtap="wantSub" data-choose="微信">-</button>
+  </view>
+
+  <view class="columns">
+      <text class="columns_values">支付宝: {{zfb_stock}}</text>
+      <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="支付宝">+</button>
+      <text> \t\t\t</text>
+      <button class='myButton addButton' size="mini" bindtap="wantSub" data-choose="支付宝">-</button>
+  </view>
+
+  <view class="columns">
+      <text class="columns_values">银行卡: {{yhk_stock}}</text>
+      <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="银行卡">+</button>
+      <text> \t\t\t</text>
+      <button class='myButton addButton' size="mini" bindtap="wantSub" data-choose="银行卡">-</button>
+  </view>
+
+  <view class="columns">
+      <text class="columns_values">其他: {{qt_stock}}</text>
+      <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="其他">+</button>
+      <text> \t\t\t</text>
+      <button class='myButton addButton' size="mini" bindtap="wantSub" data-choose="其他">-</button>
+  </view>
+
+  <view class="columns">
+      <text class="columns_values columns_small_values">待还(花呗): {{dh_stock}}</text>
+      <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="待还">+</button>
+      <text> \t\t\t</text>
+      <button class='myButton addButton' size="mini" bindtap="wantSub" data-choose="待还">-</button>
+  </view>
+
+  <view class="columns">
+      <text class="columns_values" class="columns_small_values">等待入账(不参与目标计算): {{dd_stock}}</text>
+      <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="等待入账">+</button>
+      <text> \t\t\t</text>
+      <button class='myButton addButton' size="mini" bindtap="wantSub" data-choose="等待入账">-</button>
+  </view>
+
+  <view class="columns">
+      <text class="columns_values" class="columns_small_values">饭卡(不参与目标计算): {{fk_stock}}</text>
+      <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="饭卡">+</button>
+      <text> \t\t\t</text>
+      <button class='myButton addButton' size="mini" bindtap="wantSub" data-choose="饭卡">-</button>
+  </view>
+</view>
+
+<view wx:if="{{showMyModal}}" id="myModal">
+  <text id="modalHeader">{{sign=='+'?"+":"-"}} {{choose}}\n</text>
+  <form bindsubmit="changeSubmit">
+    <view id="inputView">
+      <text class="modalTextAndInput">输入框:</text>
+      <textarea name="input_value" class="modalTextAndInput" style="width:80%;height:160rpx;" placeholder="输入格式:金额+任意空格+注释"></textarea>
+    </view>
+
+    <text>\n</text>
+
+    <button form-type="submit" class="leftButton">确定</button>
+    <button bindtap="closeButton" class="rightButton">取消</button>
+  </form>
+</view>
+
+<view class="userinfo">
+  <text style="font-size:20rpx;color:gray;">--- 本程序基于本地缓存存储数据,清理微信缓存时请注意备份 ---</text>
+</view>

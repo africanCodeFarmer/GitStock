@@ -1,0 +1,23 @@
+#clearAllButton{
+  margin-top: 10rpx;
+  background-color: rgb(255, 134, 134)
+}
+
+.headerDate{
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 140%;
+}
+
+.headerText{
+  margin-left:20rpx;
+  margin-top: 10rpx;
+  color: gray;
+}
+
+button{
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
