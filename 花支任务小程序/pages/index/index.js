@@ -30,7 +30,107 @@ Page({
 
     //实现历史相关
     showMyHistories:false,
-    histories:[]
+    histories:[],
+
+    showTransferModal:false,
+    transferRange: [
+      [
+        "微信",
+        "支付宝",
+        "银行卡",
+        "其他",
+        "等待入账",
+      ],
+      [
+        "微信",
+        "支付宝",
+        "银行卡",
+        "其他",
+        "饭卡",
+      ],
+    ],
+    transferValue:[
+      [
+        "wx",
+        "zfb",
+        "yhk",
+        "qt",
+        "dd",
+      ],
+      [
+        "wx",
+        "zfb",
+        "yhk",
+        "qt",
+        "fk",
+      ],
+    ],
+    iIndex:0,
+    jIndex:0,
+  },
+
+  //确认转账
+  goTransfer:function(e){
+    // console.log("从 " + this.data.transferValue[0][this.data.iIndex] + " 到 " + this.data.transferValue[1][this.data.jIndex] + " 转 " + e.detail.value["transfer_money"])
+    if (this.data.transferValue[0][this.data.iIndex] == this.data.transferValue[1][this.data.jIndex]){
+      wx.showToast({
+        icon:'none',
+        title: '不能自己转给自己',
+        duration:1000,
+      })
+    }
+    else{
+      var fromStockName = this.data.transferValue[0][this.data.iIndex]+"_stock"
+      var toStockName = this.data.transferValue[1][this.data.jIndex]+"_stock"
+      var money = parseInt(e.detail.value["transfer_money"])
+      
+      var formStockValue = parseInt(wx.getStorageSync(fromStockName)||0)
+      var toStockValue = parseInt(wx.getStorageSync(toStockName) || 0)
+      //console.log(formStockValue + " " + toStockValue)
+      
+      formStockValue -=money
+      toStockValue +=money
+      
+      wx.setStorageSync(fromStockName, formStockValue)
+      wx.setStorageSync(toStockName, toStockValue)
+
+      //写入今天的日志
+      var formChinaName = this.data.transferRange[0][this.data.iIndex]
+      var toChinaName = this.data.transferRange[1][this.data.jIndex]
+
+      var msgForm = "-" + formChinaName + "-" + money.toString() + ": 转到" + toChinaName
+      var msgTo = "+" + toChinaName + "+" + money.toString() + ": 收到" + formChinaName+"转账"
+      var logs = wx.getStorageSync('nowDayLogs') || []
+      logs.push(msgForm)
+      logs.push(msgTo)
+      wx.setStorageSync('nowDayLogs', logs)
+
+      this.onShow()
+    }
+
+    this.setData({
+      showTransferModal:false
+    })
+  },
+
+  showWantTransfer:function(e){
+    this.setData({
+      iIndex:e.detail.value[0],
+      jIndex:e.detail.value[1]
+    })
+    //console.log(e.detail.value) 从transferValue[0][iIndex]到transferValue[1][jIndex]处理字段
+  },
+
+  wantTransfer:function(){
+    this.setData({
+      showTransferModal:true,
+    })
+  },
+
+  closeTransferModal:function(){
+    this.setData({
+      showTransferModal:false
+    })
   },
 
   //关闭历史实现
@@ -94,6 +194,9 @@ Page({
 
   //+-操作
   changeSubmit:function(e){
+    //待还标志
+    var dhSign = "";
+
     var tempAllString = e.detail.value["input_value"]
     var tempSplitString = tempAllString.split(" ")
     var tempValue = ""
@@ -162,6 +265,11 @@ Page({
       }
       //dh
       else if (this.data.choose == "待还") {
+        if (this.data.sign == '+')
+          dhSign = "a";
+        else
+          dhSign = "s";
+
         if (this.data.sign == '+') {
           var temp = parseInt(tempValue) + parseInt(this.data.dh_stock)
           this.data.dh_stock = temp.toString()
@@ -200,8 +308,14 @@ Page({
         }
       }
 
-      //写入日志 eg:wx+10 测试
-      var msg = this.data.sign + this.data.choose + this.data.sign + tempValue + ": " + tempNote
+      //写入日志 eg:wx+10 测试 dhSign是a s前缀
+      var msg ="";
+      if(dhSign=="a"||dhSign=="s"){
+        msg = dhSign + this.data.choose + this.data.sign + tempValue + ": " + tempNote
+      }
+      else
+        msg = this.data.sign + this.data.choose + this.data.sign + tempValue + ": " + tempNote
+      
       var logs = wx.getStorageSync('nowDayLogs') || []
       logs.push(msg)
       wx.setStorageSync('nowDayLogs', logs)

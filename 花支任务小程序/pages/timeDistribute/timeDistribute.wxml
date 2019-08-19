@@ -12,6 +12,21 @@
   <view id="buttons">
     <button class="leftButton" bindtap="wantClear">清空规划</button>
     <button class="rightButton" form-type="submit">更新规划</button>
+    <button bindtap="showTask">显示任务</button>
     <button bindtap="wantBack">返回</button>
   </view>
 </form>
+
+<view id="taskView" wx:if="{{showTaskView}}">
+  <text id="taskViewHead">今日剩余任务</text>
+
+  <scroll-view id="taskScrollView" scroll-y="true">
+    <view wx:for="{{notCheckedTasks}}">
+      <text wx:if="{{tasksGrade[index]=='0'}}" style="color:red;">{{item}}</text>
+      <text wx:if="{{tasksGrade[index]=='1'}}" style="color:goldenrod;">{{item}}</text>
+      <text wx:if="{{tasksGrade[index]=='2'}}" style="color:black;">{{item}}</text>
+    </view>
+  </scroll-view>
+
+  <button bindtap="closeTaskView" id="taskViewButton">关闭</button>
+</view>

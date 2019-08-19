@@ -23,7 +23,31 @@
 <progress id='myProgress' active='true' percent="{{aimPercent}}" border-radius="50" stroke-width="120rpx" active-mode="forwards" activeColor="rgb(159, 221, 159)">
 </progress>
 
-<text id="columns_header">余额记录</text>
+<view class="columns_header">
+  <text>余额记录</text>
+  <button size="mini" id="columns_header_button" bindtap="wantTransfer">余额间转账</button>
+</view>
+
+<view class="myModal" wx:if="{{showTransferModal}}">
+  <text class="modalHeader">余额转账</text>
+  
+  <form bindsubmit="goTransfer">
+    <view id="myModalCenter">
+      <picker mode="multiSelector" range="{{transferRange}}" bindchange="showWantTransfer">
+        <view id="pickerArea">
+          从 {{transferRange[0][iIndex]}} 转到 {{transferRange[1][jIndex]}}
+        </view>
+      </picker>
+
+      <textarea id="transferTextarea" placeholder="输入金额" name="transfer_money"></textarea>
+    </view>
+
+    <button class="rightButton" bindtap="closeTransferModal">关闭</button>
+    <button class="leftButton" form-type="submit">确定</button>
+  </form>
+  
+</view>
+
 <view>
   <view class="columns">
       <text class="columns_values">微信: {{wx_stock}}</text>
@@ -75,8 +99,8 @@
   </view>
 </view>
 
-<view wx:if="{{showMyModal}}" id="myModal">
-  <text id="modalHeader">{{sign=='+'?"+":"-"}} {{choose}}\n</text>
+<view wx:if="{{showMyModal}}" class="myModal">
+  <text class="modalHeader">{{sign=='+'?"+":"-"}} {{choose}}\n</text>
   <form bindsubmit="changeSubmit">
     <view id="inputView">
       <text class="modalTextAndInput">输入框:</text>

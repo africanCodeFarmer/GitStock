@@ -2,6 +2,36 @@ Page({
   data:{
     columns:["","","","","","","","","","","","","","","","","","border-bottom:1px solid gray;"],
     distributes:[],
+
+    notCheckedTasks:[],
+    tasksGrade:[],
+
+    showTaskView:false,
+  },
+
+  closeTaskView:function(){
+    this.setData({
+      showTaskView:false
+    })
+  },
+
+  //显示任务窗口
+  showTask:function(){
+    var grade=[]
+    var temp =[]
+    var tasks = wx.getStorageSync('tasks') || []
+    var checked = wx.getStorageSync('checked') || []
+    for(var i in tasks)
+      if(!checked[i]){
+        temp.push(tasks[i].substring(1))
+        grade.push(tasks[i].substring(0,1))
+      }
+
+    this.setData({
+      notCheckedTasks:temp,
+      showTaskView:true,
+      tasksGrade:grade
+    })
   },
 
   //清空单栏
@@ -11,15 +41,9 @@ Page({
     this.setData({
       distributes: tempDis
     })
-    wx.setStorageSync('timeDistribute', tempDis)
-
-    this.onShow()
-
-    wx.showToast({
-      icon:'none',
-      title: '清理成功',
-      duration:1000,
-    })
+    
+    //wx.setStorageSync('timeDistribute', tempDis)
+    //this.onShow()
   },
 
   //点击清空按钮

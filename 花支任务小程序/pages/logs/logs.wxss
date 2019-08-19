@@ -3,6 +3,14 @@
   margin-right: 10rpx;
 }
 
+.grayLogs{
+  color: rgb(159, 221, 159);
+}
+
+.dhLogs{
+  color: black;
+}
+
 .log-list {
   display: flex;
   flex-direction: column;

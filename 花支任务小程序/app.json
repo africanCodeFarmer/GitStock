@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/task/task",
+    "pages/index/index",
+    "pages/study/study",
     "pages/timeDistribute/timeDistribute",
     "pages/changeTaskSet/changeTaskSet",
-    "pages/index/index",
     "pages/logs/logs",
     "pages/change/change",
     "pages/taskLogs/taskLogs"

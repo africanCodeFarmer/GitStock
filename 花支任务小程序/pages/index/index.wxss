@@ -1,4 +1,30 @@
 /**index.wxss**/
+#transferTextarea{
+  width: 100%;
+  height: 100rpx;
+}
+
+#pickerArea{
+  height: 100rpx;
+  width: 100%;
+  margin-bottom: 10rpx;
+}
+
+#myModalCenter{
+  margin-top: 60rpx;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 32rpx;
+}
+
+#columns_header_button{
+  position: absolute;
+  right: 20rpx;
+  width: 30%;
+  height: 70rpx;
+}
+
 #historyClearButton{
   position: absolute;
   bottom: 0;
@@ -33,7 +59,7 @@
 }
 
 #historyView{
-  z-index: 1001;
+  z-index: 999;
   border-radius: 6%;
   position: fixed;
   top: 4%;
@@ -76,12 +102,13 @@
   margin-bottom: 25rpx;
 }
 
-#columns_header{
+.columns_header{
   margin-top: 60rpx;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   font-size: 60rpx;
+  margin-left: 20rpx
 }
 
 .columns{
@@ -113,7 +140,8 @@
   background-color: rgb(159, 221, 159)
 }
 
-#myModal{
+.myModal{
+  z-index: 999;
   position: absolute;
   border-radius: 6%;
   top: 4%;
@@ -124,7 +152,7 @@
   border:1px solid gray;
 }
 
-#modalHeader{
+.modalHeader{
   display: flex;
   text-align: center;
   flex-direction: column;
