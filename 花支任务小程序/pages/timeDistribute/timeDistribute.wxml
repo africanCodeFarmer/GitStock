@@ -17,7 +17,7 @@
   </view>
 </form>
 
-<view id="taskView" wx:if="{{showTaskView}}">
+<view id="taskView" wx:if="{{showTaskView}}" animation="{{animation}}">
   <text id="taskViewHead">今日剩余任务</text>
 
   <scroll-view id="taskScrollView" scroll-y="true">

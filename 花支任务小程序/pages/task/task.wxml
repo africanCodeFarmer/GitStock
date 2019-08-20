@@ -21,14 +21,18 @@
       <view class="columns_name" style="color:goldenrod;{{compeleteSign[index]}}" wx:elif="{{showChooseType[index]=='1'}}">{{item}}</view>
       <view class="columns_name" style="color:black;{{compeleteSign[index]}}" wx:else>{{item}}</view>
 
-      <view wx:if="{{showButtons[index]}}" animation="{{animation}}">
-        <button size="mini" class="columns_button btn_no" bindtap="delete" id="{{index}}">删除</button>
-        <button size="mini" class="columns_button btn_ok" bindtap="edit" id="{{index}}">编辑</button>
-        <image src="photos/back.png" class="set_back_btn" bindtap="hideTwoButton" id="{{index}}"></image>
-      </view>
-      <view wx:else animation="{{animation}}">
-        <image src="photos/setImage.png" class="set_back_btn" id="{{index}}"bindtap="showTwoButton"></image>
-      </view>
+        <!-- 隐藏按钮 -->
+        <view wx:if="{{showButtons[index]}}" animation="{{animation[index]}}">
+          <button size="mini" class="columns_button btn_no" bindtap="delete" id="{{index}}">删除</button>
+          <button size="mini" class="columns_button btn_ok" bindtap="edit" id="{{index}}">编辑</button>
+          <image src="photos/back.png" class="set_back_btn" bindtap="hideTwoButton" id="{{index}}"></image>
+        </view>
+
+        <!-- 显示按钮 -->
+        <view wx:else animation="{{animation[index]}}">
+          <image src="photos/setImage.png" class="set_back_btn" id="{{index}}"bindtap="showTwoButton"></image>
+        </view>
+
     </view>
 
   </scroll-view>
@@ -39,7 +43,7 @@
   <button class="footerButton" bindtap="addTask">添加任务</button>
 </view>
 
-<view wx:if="{{showAddModal}}" id="addModal">
+<view wx:if="{{showAddModal}}" id="addModal" animation="{{addModalAnimation}}">
   <form bindsubmit="goAddTask">
     <view style="margin:10rpx;">
       <text id="addModalHeader">{{isEdit?"编辑任务":"添加任务"}}</text>

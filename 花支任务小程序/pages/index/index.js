@@ -67,6 +67,21 @@ Page({
     ],
     iIndex:0,
     jIndex:0,
+
+    animation:"",
+  },
+
+  onLoad:function(){
+    this.animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'linear',
+      //transformOrigin:'20% 0% 0',
+    })
+
+    this.animation.opacity(0).step({ duration: 0 }).opacity(1).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
+    })
   },
 
   //确认转账
@@ -108,9 +123,17 @@ Page({
       this.onShow()
     }
 
+    this.animation.opacity(0).step({ duration: 200 })
     this.setData({
-      showTransferModal:false
+      animation: this.animation.export(),
     })
+
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showTransferModal: false
+      })
+    }, 200)
   },
 
   showWantTransfer:function(e){
@@ -125,19 +148,38 @@ Page({
     this.setData({
       showTransferModal:true,
     })
+
+    this.animation.opacity(1).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
+    })
   },
 
   closeTransferModal:function(){
+    this.animation.opacity(0).step({ duration: 200 })
     this.setData({
-      showTransferModal:false
+      animation: this.animation.export(),
     })
+
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showTransferModal: false
+      })
+    }, 200)
   },
 
   //关闭历史实现
   closeHistory:function(){
+    this.animation.opacity(0).step({ duration: 200 })
     this.setData({
-      showMyHistories:false
+      animation: this.animation.export(),
     })
+
+    var that = this
+    setTimeout(function(){
+      that.setData({ showMyHistories: false })
+    },200)
   },
 
   //清空历史实现
@@ -173,6 +215,11 @@ Page({
       showMyHistories:true,
       histories:wx.getStorageSync('historyLogs')
     })
+
+    this.animation.opacity(1).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
+    })
   },
 
   //点击+
@@ -182,6 +229,11 @@ Page({
       showMyModal:true,
       choose:e.target.dataset.choose,
     })
+
+    this.animation.opacity(1).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
+    })
   },
   //点击-
   wantSub:function(e){
@@ -189,6 +241,11 @@ Page({
       sign: "-",
       showMyModal:true,
       choose: e.target.dataset.choose,
+    })
+
+    this.animation.opacity(1).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
     })
   },
 
@@ -322,9 +379,17 @@ Page({
     }
 
     //关闭窗口
+    this.animation.opacity(0).step({ duration: 200 })
     this.setData({
-      showMyModal:false
+      animation: this.animation.export(),
     })
+
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showMyModal: false
+      })
+    }, 200)
 
     //刷新页面
     this.onShow()
@@ -338,9 +403,17 @@ Page({
 
   //关闭按钮
   closeButton:function(){
+    this.animation.opacity(0).step({ duration: 200 })
     this.setData({
-      showMyModal:false
+      animation: this.animation.export(),
     })
+
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showMyModal: false
+      })
+    }, 200)
   },
 
   onShow:function(){
@@ -377,8 +450,5 @@ Page({
     wx.navigateTo({
       url: '../change/change',
     })
-  },
-
-  onLoad: function () {  
   },
 })

@@ -7,12 +7,30 @@ Page({
     tasksGrade:[],
 
     showTaskView:false,
+
+    animation:'',
+  },
+
+  onLoad:function(){
+    this.animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'linear',
+      //transformOrigin:'20% 0% 0',
+    })
   },
 
   closeTaskView:function(){
+    this.animation.opacity(0).translateY(6).step({ duration: 200 })
     this.setData({
-      showTaskView:false
+      animation: this.animation.export(),
     })
+
+    var that = this
+    setTimeout(function(){
+      that.setData({
+        showTaskView: false
+      })
+    },200)
   },
 
   //显示任务窗口
@@ -31,6 +49,11 @@ Page({
       notCheckedTasks:temp,
       showTaskView:true,
       tasksGrade:grade
+    })
+
+    this.animation.opacity(1).translateY(-6).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
     })
   },
 

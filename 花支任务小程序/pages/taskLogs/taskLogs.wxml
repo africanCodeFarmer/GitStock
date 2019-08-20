@@ -1,13 +1,15 @@
 <button bindtap="clearLogs">清空历史(今天除外)</button>
 <button id="clearAllButton" bindtap="clearAllStorage">恢复出厂设置</button>
 
-<view wx:for="{{nowDayTaskLogs}}">
-  <text wx:if="{{nowDayIsDate[index]=='t'}}" class="headerDate">{{item}}</text>
-  <text wx:else class="headerText">{{item}}</text>
-</view>
+<view id="myView">
+  <view wx:for="{{nowDayTaskLogs}}">
+    <text wx:if="{{nowDayIsDate[index]=='t'}}" class="headerDate">{{item}}</text>
+    <text wx:else class="headerText">{{item}}</text>
+  </view>
 
-<view wx:for="{{taskLogs}}" wx:if="{{index<page*20}}">
-  <text wx:if="{{taskLogsIsDate[index]=='t'}}" class="headerDate">{{item}}</text>
-  <text wx:else class="headerText">{{item}}</text>
+  <view wx:for="{{taskLogs}}" wx:if="{{index<page*20}}">
+    <text wx:if="{{taskLogsIsDate[index]=='t'}}" class="headerDate">{{item}}</text>
+    <text wx:else class="headerText">{{item}}</text>
+  </view>
 </view>
 

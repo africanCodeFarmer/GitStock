@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view wx:if="{{showMyHistories}}" id="historyView">
+<view wx:if="{{showMyHistories}}" id="historyView" animation="{{animation}}">
   <text id="historyHeader">历史实现</text>
 
   <scroll-view scroll-y="true" style="height:400rpx;margin-bottom:100rpx;">
@@ -28,7 +28,7 @@
   <button size="mini" id="columns_header_button" bindtap="wantTransfer">余额间转账</button>
 </view>
 
-<view class="myModal" wx:if="{{showTransferModal}}">
+<view class="myModal" wx:if="{{showTransferModal}}" animation="{{animation}}">
   <text class="modalHeader">余额转账</text>
   
   <form bindsubmit="goTransfer">
@@ -99,7 +99,7 @@
   </view>
 </view>
 
-<view wx:if="{{showMyModal}}" class="myModal">
+<view wx:if="{{showMyModal}}" class="myModal" animation="{{animation}}">
   <text class="modalHeader">{{sign=='+'?"+":"-"}} {{choose}}\n</text>
   <form bindsubmit="changeSubmit">
     <view id="inputView">

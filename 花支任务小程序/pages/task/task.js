@@ -28,8 +28,6 @@ Page({
     //显示按钮与否数组
     showButtons: [],
 
-    animation:'',
-
     //任务等级
     choosed:[false,false,true],
     chooseType:2,
@@ -39,6 +37,11 @@ Page({
 
     //√完成的透明效果数组
     opacityColumn:[],
+
+    animation:[],
+    animationInstance:"",
+
+    addModalAnimation:"",
   },
 
   //跳转到时间规划
@@ -64,6 +67,23 @@ Page({
   },
 
   onLoad:function(){
+    var tasks = wx.getStorageSync('tasks')||[]
+
+    this.animationInstance = wx.createAnimation({
+      duration:1000,
+      timingFunction:'linear',
+      //transformOrigin:'20% 0% 0',
+    })
+    this.addModalAnimation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'linear',
+      //transformOrigin:'20% 0% 0',
+    })
+
+    this.addModalAnimation.opacity(0).step({ duration: 0 }).opacity(1).step({ duration:200})
+    this.setData({
+      addModalAnimation: this.addModalAnimation.export(),
+    })
   },
 
   //隐藏删除编辑按钮
@@ -74,6 +94,16 @@ Page({
     wx.setStorageSync('showButtons', showButtons)
 
     this.onShow()
+
+    this.animationInstance.translateX(0).step({duration:200})
+
+    var tempAnimation = this.data.animation
+    tempAnimation[id] = this.animationInstance.export()
+
+    this.setData({
+      animation: tempAnimation
+    })
+    wx.setStorageSync('animation', this.data.animation)
   },
   //显示删除编辑按钮
   showTwoButton:function(e){
@@ -83,6 +113,16 @@ Page({
     wx.setStorageSync('showButtons', showButtons)
 
     this.onShow()
+
+    this.animationInstance.translateX(-4).step({ duration: 200 })
+
+    var tempAnimation = this.data.animation
+    tempAnimation[id] = this.animationInstance.export()
+
+    this.setData({
+      animation: tempAnimation
+    })
+    wx.setStorageSync('animation', this.data.animation)
   },
 
   //跳转去设置头像昵称个性签名
@@ -96,6 +136,8 @@ Page({
     clearTimeout()
 
     this.setData({
+      animation: wx.getStorageSync('animation') || [],
+
       userImagePath: (wx.getStorageSync('userImagePath') == "" || wx.getStorageSync('userImagePath')== "NaN") ? "photos/temp.png" : wx.getStorageSync('userImagePath'),
       userName: wx.getStorageSync('userName') || "",
       userNote: wx.getStorageSync('userNote') || "",
@@ -215,7 +257,16 @@ Page({
   },
 
   addModalClose:function(){
-    this.setData({ showAddModal: false,isEdit:false, })
+    this.addModalAnimation.opacity(0).step({ duration: 200 })
+    this.setData({
+      addModalAnimation: this.addModalAnimation.export(),
+    })
+
+    var that = this
+    setTimeout(function(){
+       that.setData({ showAddModal: false, isEdit: false, })
+    },200)
+
   },
 
   //删除按钮操作
@@ -227,6 +278,14 @@ Page({
     var tempOpacityColumn = wx.getStorageSync('opacityColumn') || []
     
     var id = parseInt(e.target.id)
+
+    //按钮动画
+    var tempAnimation = this.data.animation
+    tempAnimation.splice(id,1)
+    this.setData({
+      animation: tempAnimation
+    })
+    wx.setStorageSync('animation', this.data.animation)
 
     tempOpacityColumn.splice(id, 1)
     tempShowButtons.splice(id,1)
@@ -252,11 +311,30 @@ Page({
   //编辑按钮操作
   edit:function(e){
     var tempTasks = wx.getStorageSync('tasks')
+
+    //更新一下选取的字段
+    var tempChoosed = this.data.choosed
+    var editType = tempTasks[parseInt(e.target.id)].substring(0,1)
+    for(var i in [0,1,2])
+      if(i.toString()==editType)
+        tempChoosed[i]=true
+      else
+        tempChoosed[i] = false
+    
     this.setData({
+      choosed: tempChoosed,
+      chooseType:editType,
+
       input_note:tempTasks[parseInt(e.target.id)].substring(1),
       showAddModal:true,
       isEdit:true,
       editId:e.target.id,
+    })
+
+
+    this.addModalAnimation.opacity(1).step({ duration: 200 })
+    this.setData({
+      addModalAnimation: this.addModalAnimation.export(),
     })
   },
 
@@ -273,9 +351,11 @@ Page({
     var mulTasks = e.detail.value["input_task"].split("\n")
 
     if(!this.data.isEdit){
+      var tempAnimation = this.data.animation
       for(var i in mulTasks){
         //任务为空不添加
         if (!mulTasks[mulTasks.length - i - 1]==""){
+          tempAnimation.unshift("")
           tempOpacityColumn.unshift("")
           tempShowButtons.unshift(false)
           tempChecked.unshift(false)
@@ -290,6 +370,12 @@ Page({
       tempShowButtons[this.data.editId] =false
     }
     
+    //添加 按钮动画数组
+    this.setData({
+      animation:tempAnimation
+    })
+
+    wx.setStorageSync('animation', this.data.animation)
     wx.setStorageSync('opacityColumn', tempOpacityColumn)
     wx.setStorageSync('showButtons', tempShowButtons)
     wx.setStorageSync('tasks', tempTasks)
@@ -319,8 +405,17 @@ Page({
 
   //显示添加框
   addTask: function () {
+    var tempChecked = [false,false,true]
+
     this.setData({
-       showAddModal: true,
+      choosed:tempChecked,
+      chooseType:2,
+      showAddModal: true,
+    })
+
+    this.addModalAnimation.opacity(1).step({ duration: 200 })
+    this.setData({
+      addModalAnimation: this.addModalAnimation.export(),
     })
   },
 })
