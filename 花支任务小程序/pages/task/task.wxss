@@ -116,9 +116,10 @@
 
 #columnScrollView{
   width: 96%;
-  margin-left: 20rpx;
-  margin-right: 20rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
   height: 680rpx;
+  padding-bottom:10rpx;
 }
 
 .columns{
@@ -165,4 +166,5 @@
 
 .footerButton{
   width: 300rpx;
+  margin-top: 30rpx;
 }

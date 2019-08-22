@@ -97,24 +97,33 @@ Page({
     else{
       var fromStockName = this.data.transferValue[0][this.data.iIndex]+"_stock"
       var toStockName = this.data.transferValue[1][this.data.jIndex]+"_stock"
-      var money = parseInt(e.detail.value["transfer_money"])
-      
-      var formStockValue = parseInt(wx.getStorageSync(fromStockName)||0)
-      var toStockValue = parseInt(wx.getStorageSync(toStockName) || 0)
-      //console.log(formStockValue + " " + toStockValue)
+
+      var money = parseFloat(e.detail.value["transfer_money"])
+      var formStockValue = parseFloat(wx.getStorageSync(fromStockName)||0)
+      var toStockValue = parseFloat(wx.getStorageSync(toStockName) || 0)
       
       formStockValue -=money
       toStockValue +=money
-      
+      formStockValue = formStockValue.toFixed(2)
+      toStockValue = toStockValue.toFixed(2)
+      money =  money.toFixed(2)
+
       wx.setStorageSync(fromStockName, formStockValue)
       wx.setStorageSync(toStockName, toStockValue)
 
       //写入今天的日志
+
+      //myDate[1] 时间
+      var time = util.formatTime(new Date())
+      var needPrintTime = time.split(" ")[0]
+      var date = time.split("/")
+      var myDate = date[2].split(" ")
+
       var formChinaName = this.data.transferRange[0][this.data.iIndex]
       var toChinaName = this.data.transferRange[1][this.data.jIndex]
 
-      var msgForm = "-" + formChinaName + "-" + money.toString() + ": 转到" + toChinaName
-      var msgTo = "+" + toChinaName + "+" + money.toString() + ": 收到" + formChinaName+"转账"
+      var msgForm = "-" + myDate[1] + " "+formChinaName + "-" + money.toString() + ": 转到" + toChinaName
+      var msgTo = "+" + myDate[1] + " "+toChinaName + "+" + money.toString() + ": 收到" + formChinaName+"转账"
       var logs = wx.getStorageSync('nowDayLogs') || []
       logs.push(msgForm)
       logs.push(msgTo)
@@ -271,12 +280,14 @@ Page({
       //wx
       if (this.data.choose == "微信") {
         if (this.data.sign == '+') {
-          var temp = parseInt(tempValue) + parseInt(this.data.wx_stock)
+          var temp = parseFloat(tempValue) + parseFloat(this.data.wx_stock)
+          temp = temp.toFixed(2);
           this.data.wx_stock = temp.toString()
           wx.setStorageSync('wx_stock', this.data.wx_stock)
         }
         else {
-          var temp = parseInt(this.data.wx_stock) - parseInt(tempValue)
+          var temp = parseFloat(this.data.wx_stock) - parseFloat(tempValue)
+          temp = temp.toFixed(2);
           this.data.wx_stock = temp.toString()
           wx.setStorageSync('wx_stock', this.data.wx_stock)
         }
@@ -284,12 +295,14 @@ Page({
       //zfb
       else if (this.data.choose == "支付宝") {
         if (this.data.sign == '+') {
-          var temp = parseInt(tempValue) + parseInt(this.data.zfb_stock)
+          var temp = parseFloat(tempValue) + parseFloat(this.data.zfb_stock)
+          temp = temp.toFixed(2);
           this.data.zfb_stock = temp.toString()
           wx.setStorageSync('zfb_stock', this.data.zfb_stock)
         }
         else {
-          var temp = parseInt(this.data.zfb_stock) - parseInt(tempValue)
+          var temp = parseFloat(this.data.zfb_stock) - parseFloat(tempValue)
+          temp = temp.toFixed(2);
           this.data.zfb_stock = temp.toString()
           wx.setStorageSync('zfb_stock', this.data.zfb_stock)
         }
@@ -297,12 +310,14 @@ Page({
       //yhk
       else if (this.data.choose == "银行卡") {
         if (this.data.sign == '+') {
-          var temp = parseInt(tempValue) + parseInt(this.data.yhk_stock)
+          var temp = parseFloat(tempValue) + parseFloat(this.data.yhk_stock)
+          temp = temp.toFixed(2);
           this.data.yhk_stock = temp.toString()
           wx.setStorageSync('yhk_stock', this.data.yhk_stock)
         }
         else {
-          var temp = parseInt(this.data.yhk_stock) - parseInt(tempValue)
+          var temp = parseFloat(this.data.yhk_stock) - parseFloat(tempValue)
+          temp = temp.toFixed(2);
           this.data.yhk_stock = temp.toString()
           wx.setStorageSync('yhk_stock', this.data.yhk_stock)
         }
@@ -310,12 +325,14 @@ Page({
       //qt
       else if (this.data.choose == "其他") {
         if (this.data.sign == '+') {
-          var temp = parseInt(tempValue) + parseInt(this.data.qt_stock)
+          var temp = parseFloat(tempValue) + parseFloat(this.data.qt_stock)
+          temp = temp.toFixed(2);
           this.data.qt_stock = temp.toString()
           wx.setStorageSync('qt_stock', this.data.qt_stock)
         }
         else {
-          var temp = parseInt(this.data.qt_stock) - parseInt(tempValue)
+          var temp = parseFloat(this.data.qt_stock) - parseFloat(tempValue)
+          temp = temp.toFixed(2);
           this.data.qt_stock = temp.toString()
           wx.setStorageSync('qt_stock', this.data.qt_stock)
         }
@@ -328,12 +345,14 @@ Page({
           dhSign = "s";
 
         if (this.data.sign == '+') {
-          var temp = parseInt(tempValue) + parseInt(this.data.dh_stock)
+          var temp = parseFloat(tempValue) + parseFloat(this.data.dh_stock)
+          temp = temp.toFixed(2);
           this.data.dh_stock = temp.toString()
           wx.setStorageSync('dh_stock', this.data.dh_stock)
         }
         else {
-          var temp = parseInt(this.data.dh_stock) - parseInt(tempValue)
+          var temp = parseFloat(this.data.dh_stock) - parseFloat(tempValue)
+          temp = temp.toFixed(2);
           this.data.dh_stock = temp.toString()
           wx.setStorageSync('dh_stock', this.data.dh_stock)
         }
@@ -341,12 +360,14 @@ Page({
       //fk
       else if (this.data.choose == "饭卡") {
         if (this.data.sign == '+') {
-          var temp = parseInt(tempValue) + parseInt(this.data.fk_stock)
+          var temp = parseFloat(tempValue) + parseFloat(this.data.fk_stock)
+          temp = temp.toFixed(2);
           this.data.fk_stock = temp.toString()
           wx.setStorageSync('fk_stock', this.data.fk_stock)
         }
         else {
-          var temp = parseInt(this.data.fk_stock) - parseInt(tempValue)
+          var temp = parseFloat(this.data.fk_stock) - parseFloat(tempValue)
+          temp = temp.toFixed(2);
           this.data.fk_stock = temp.toString()
           wx.setStorageSync('fk_stock', this.data.fk_stock)
         }
@@ -354,24 +375,36 @@ Page({
       //dd
       else if (this.data.choose == "等待入账") {
         if (this.data.sign == '+') {
-          var temp = parseInt(tempValue) + parseInt(this.data.dd_stock)
+          var temp = parseFloat(tempValue) + parseFloat(this.data.dd_stock)
+          temp = temp.toFixed(2);
           this.data.dd_stock = temp.toString()
           wx.setStorageSync('dd_stock', this.data.dd_stock)
         }
         else {
-          var temp = parseInt(this.data.dd_stock) - parseInt(tempValue)
+          var temp = parseFloat(this.data.dd_stock) - parseFloat(tempValue)
+          temp = temp.toFixed(2);
           this.data.dd_stock = temp.toString()
           wx.setStorageSync('dd_stock', this.data.dd_stock)
         }
       }
 
+      //tempValue 显示金额%.2f
+      tempValue = parseFloat(tempValue).toFixed(2)
+      tempValue = tempValue.toString()
+
+      //myDate[1] 时间
+      var time = util.formatTime(new Date())
+      var needPrintTime = time.split(" ")[0]
+      var date = time.split("/")
+      var myDate = date[2].split(" ")
+
       //写入日志 eg:wx+10 测试 dhSign是a s前缀
       var msg ="";
       if(dhSign=="a"||dhSign=="s"){
-        msg = dhSign + this.data.choose + this.data.sign + tempValue + ": " + tempNote
+        msg = dhSign +myDate[1]+" "+ this.data.choose + this.data.sign + tempValue + ": " + tempNote
       }
       else
-        msg = this.data.sign + this.data.choose + this.data.sign + tempValue + ": " + tempNote
+        msg = this.data.sign + myDate[1] + " " + this.data.choose + this.data.sign + tempValue + ": " + tempNote
       
       var logs = wx.getStorageSync('nowDayLogs') || []
       logs.push(msg)
@@ -433,12 +466,12 @@ Page({
       dd_stock: (wx.getStorageSync('dd_stock') == "" || wx.getStorageSync('dd_stock') == "NaN") ? '0' : wx.getStorageSync('dd_stock'),
     })
 
-    var tepmWxStock = parseInt(this.data.wx_stock)
-    var tempZfbStock = parseInt(this.data.zfb_stock)
-    var tempYhkStock = parseInt(this.data.yhk_stock)
-    var tempQtStock = parseInt(this.data.qt_stock)
-    var tempDhStock = parseInt(this.data.dh_stock)
-    var tempAimPrice = parseInt(this.data.aimPrice)
+    var tepmWxStock = parseFloat(this.data.wx_stock)
+    var tempZfbStock = parseFloat(this.data.zfb_stock)
+    var tempYhkStock = parseFloat(this.data.yhk_stock)
+    var tempQtStock = parseFloat(this.data.qt_stock)
+    var tempDhStock = parseFloat(this.data.dh_stock)
+    var tempAimPrice = parseFloat(this.data.aimPrice)
 
     this.setData({
       aimPercent: (((tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock) / (tempAimPrice + tempDhStock))*100).toFixed(2)

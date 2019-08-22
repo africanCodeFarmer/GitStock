@@ -22,14 +22,13 @@
   position: absolute;
   right: 20rpx;
   width: 30%;
-  height: 70rpx;
+  margin-top: 10rpx;
 }
 
 #historyClearButton{
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 12%;
   width: 40%;
   margin: 20rpx;
 }
@@ -39,7 +38,6 @@
   bottom: 0;
   right: 0;
   margin: 20rpx;
-  height: 12%;
   width: 40%;
   background-color: rgb(159, 221, 159)
 }

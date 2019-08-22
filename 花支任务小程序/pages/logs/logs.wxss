@@ -1,6 +1,9 @@
 #clearLogsButton{
   margin-left: 10rpx;
   margin-right: 10rpx;
+  position: fixed;
+  top: 10rpx;
+  right: 10rpx;
 }
 
 .grayLogs{
@@ -26,10 +29,9 @@
 }
 
 .subLogs{
-  color:black;
+  color:gray;
 }
 
 .dataLogs{
-  text-align: center;
   font-size: 140%;
 }

@@ -1,5 +1,5 @@
-<button bindtap="clearLogs">清空历史(今天除外)</button>
-<button id="clearAllButton" bindtap="clearAllStorage">恢复出厂设置</button>
+<button bindtap="clearLogs" size="mini" id="clearButton">清空历史</button>
+<button id="clearAllButton" bindtap="clearAllStorage" size="mini">清空缓存</button>
 
 <view id="myView">
   <view wx:for="{{nowDayTaskLogs}}">

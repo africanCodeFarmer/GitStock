@@ -1,5 +1,5 @@
 <!--logs.wxml-->
-<button id="clearLogsButton" bindtap="clearLogs">清空账单</button>
+<button id="clearLogsButton" bindtap="clearLogs" size="mini">清空账单</button>
 
 <view class="container log-list">
   <block wx:for="{{nowDayLogs}}" wx:for-item="log">

@@ -3,8 +3,16 @@
   margin-right: 10rpx;
 }
 
+#clearButton{
+  position: fixed;
+  top: 10rpx;
+  right: 10rpx;
+}
+
 #clearAllButton{
-  margin-top: 10rpx;
+  position: fixed;
+  top: 80rpx;
+  right: 10rpx;
   background-color: rgb(255, 134, 134)
 }
 
@@ -12,7 +20,6 @@
   margin-top: 10rpx;
   display: flex;
   flex-direction: column;
-  text-align: center;
   font-size: 140%;
 }
 

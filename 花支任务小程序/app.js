@@ -11,7 +11,7 @@ App({
     var needPrintTime=time.split(" ")[0]  
     var date = time.split("/")
     var myDate = date[2].split(" ")
-
+    
     //wx.setStorageSync('myDate', '15')
 
     //日期变更

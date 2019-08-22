@@ -64,5 +64,5 @@
 </view>
 
 <view class="userinfo">
-  <text style="font-size:20rpx;color:gray;">--- 本程序基于本地缓存存储数据,清理微信缓存时请注意备份 ---</text>
+  <text style="font-size:20rpx;color:gray;"></text>
 </view>

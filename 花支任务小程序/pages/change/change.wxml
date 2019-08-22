@@ -2,12 +2,10 @@
 
 <form bindsubmit="formSubmit">  
   <view id="myView">
-    <text>新目标名字</text>
     <input class="myInput" name="new_name" placeholder="此处输入名字"></input>
     
     <text>\n</text>
 
-    <text>新目标价格</text>
     <input class="myInput" name="new_price" placeholder="此处输入价格"></input>
 
     <text>\n</text>
