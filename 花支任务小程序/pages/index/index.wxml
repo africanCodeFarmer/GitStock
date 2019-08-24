@@ -20,7 +20,7 @@
     </view>
 </view>
  
-<progress id='myProgress' active='true' percent="{{aimPercent}}" border-radius="50" stroke-width="120rpx" active-mode="forwards" activeColor="rgb(159, 221, 159)">
+<progress id='myProgress' active='true' percent="{{aimPercent}}" border-radius="10" stroke-width="120rpx" active-mode="forwards" activeColor="rgb(159, 221, 159)">
 </progress>
 
 <view class="columns_header">
@@ -115,5 +115,5 @@
 </view>
 
 <view class="userinfo">
-  <text style="font-size:20rpx;color:gray;"></text>
+  <text style="font-size:20rpx;color:gray;">--- 本程序基于本地缓存存储数据,清理微信缓存清注意备份数据 ---</text>
 </view>

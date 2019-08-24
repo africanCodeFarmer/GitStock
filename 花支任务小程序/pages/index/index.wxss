@@ -21,8 +21,9 @@
 #columns_header_button{
   position: absolute;
   right: 20rpx;
-  width: 30%;
+  width: auto;
   margin-top: 10rpx;
+  height:auto;
 }
 
 #historyClearButton{
@@ -82,7 +83,7 @@
 #header{
   display: flex;
   flex-direction: row;
-  margin-left: 40rpx;
+  margin-left: 10rpx;
   margin-top: 20rpx;
   margin-bottom: 10rpx;
 }
@@ -95,9 +96,10 @@
 }
 
 #myProgress{
-  margin-left: 25rpx;
-  margin-right:25rpx;
+  margin-left: 10rpx;
+  margin-right:10rpx;
   margin-bottom: 25rpx;
+  margin-top: 20rpx;
 }
 
 .columns_header{
@@ -193,5 +195,5 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-top: 60rpx;
+  margin-top: 80rpx;
 }

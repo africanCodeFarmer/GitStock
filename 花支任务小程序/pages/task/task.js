@@ -172,16 +172,57 @@ Page({
       opacityColumn: wx.getStorageSync('opacityColumn') || [],
     })
 
-    //重新写入日期
+    //myDate[1] 时间
+    var time = util.formatTime(new Date())
+    var needPrintTime = time.split(" ")[0]
+    var date = time.split("/")
+    var myDate = date[2].split(" ")
+
+    //重新写入日期和今日完成日志
     var logs = []
     var time = util.formatTime(new Date())
     var needPrintTime = time.split(" ")[0]
     logs.unshift("t" + needPrintTime)
 
-    //今天完成的任务 加入 今天完成
+    //已经完成的任务 加入 今天完成
+    // for (var i in this.data.tasks)
+    //   if (this.data.checked[i])
+    //     logs.push("r" +this.data.tasks[i])
+    // wx.setStorageSync('nowDayTaskLogs', logs)
+
+    //今日完成
+    var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs')||[]
+    //想要push到今日完成的数组
+    var tempWantPushLogs = [];
+
     for (var i in this.data.tasks)
-      if (this.data.checked[i])
-        logs.push("r" + this.data.tasks[i])
+      if (this.data.checked[i]){
+        for (var j in nowDayTaskLogs){
+          if(j==0) continue
+
+          //拼接字符串
+          var temp = nowDayTaskLogs[j].split(" ")
+          var str = temp[1]
+          for (var k in temp){
+            if(k>1)
+              str +=" "+temp[k]
+          }
+
+          if (str === this.data.tasks[i]){
+            tempWantPushLogs.push(nowDayTaskLogs[j])
+            break;
+          }
+          if (j == nowDayTaskLogs.length-1){
+            tempWantPushLogs.push("r" +myDate[1]+" "+this.data.tasks[i])
+            break;
+          }
+        }
+      }
+
+    tempWantPushLogs.sort()
+    for (var i in tempWantPushLogs)
+      logs.push(tempWantPushLogs[i])
+    
     wx.setStorageSync('nowDayTaskLogs', logs)
   },
 

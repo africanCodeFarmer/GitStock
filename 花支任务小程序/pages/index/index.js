@@ -123,7 +123,7 @@ Page({
       var toChinaName = this.data.transferRange[1][this.data.jIndex]
 
       var msgForm = "-" + myDate[1] + " "+formChinaName + "-" + money.toString() + ": 转到" + toChinaName
-      var msgTo = "+" + myDate[1] + " "+toChinaName + "+" + money.toString() + ": 收到" + formChinaName+"转账"
+      var msgTo = "+" + myDate[1] + " "+toChinaName + "+" + money.toString() + ": "
       var logs = wx.getStorageSync('nowDayLogs') || []
       logs.push(msgForm)
       logs.push(msgTo)
@@ -272,10 +272,11 @@ Page({
     if (tempBeginString!="" && tempBeginString >= '0' && tempBeginString <='9'){
       tempValue = tempSplitString[0]
     
-      //注释填充
-      var tempNote =""
-      if (tempSplitString.length>1)
-        tempNote = tempSplitString[tempSplitString.length - 1]
+      //注释填充 拼接字符串
+      var tempNote = tempSplitString[1]||""
+      for (var i in tempSplitString)
+        if(i>1)
+          tempNote += " "+tempSplitString[i]
       
       //wx
       if (this.data.choose == "微信") {

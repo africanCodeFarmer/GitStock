@@ -79,5 +79,12 @@ Page({
         page:tempPage
       })
     }
+    else{
+      wx.showToast({
+        icon:'none',
+        title: '没有更多数据啦',
+        duration:1000,
+      })
+    }
   }
 })

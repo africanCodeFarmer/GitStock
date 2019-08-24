@@ -21,6 +21,10 @@
   display: flex;
   flex-direction: column;
   font-size: 140%;
+
+  border-bottom: 1rpx solid gray;
+  padding-bottom: 4rpx;
+  margin-right: 10rpx;
 }
 
 .headerText{
