@@ -13,6 +13,7 @@ Page({
     tasks:[],
     checked:[],
 
+    //每日任务 完成标记 和 任务 和 √情况
     dayCompeleteSign:[],
     dayTasks:[],
     dayChecked:[],
@@ -24,17 +25,16 @@ Page({
     editId:0,
     input_note:"",
 
-    dayIsEdit:false,
-    dayEditId:0,
+    //dayIsEdit:false,
+    //dayEditId:0,
 
     //等级
     grade:0,
     exp:0,
     upNeedExp:10,
 
-    //显示按钮与否数组
+    //显示按钮与否数组 今天任务和每日任务
     showButtons: [],
-
     dayShowButtons:[],
 
     //任务等级
@@ -43,16 +43,13 @@ Page({
 
     //显示时 任务等级前缀012数组
     showChooseType:[],
-
     dayShowChooseType:[],
 
     //√完成的透明效果数组
     opacityColumn:[],
-
     dayOpacityColumn:[],
 
     animation:[],
-
     dayAnimation:[],
 
     animationInstance:"",
@@ -62,6 +59,7 @@ Page({
     isDayTask:false,
   },
 
+  //swiper改变
   changeSwiper:function(e){
     if(e.detail.current==1)
       this.setData({
@@ -101,12 +99,10 @@ Page({
     this.animationInstance = wx.createAnimation({
       duration:1000,
       timingFunction:'linear',
-      //transformOrigin:'20% 0% 0',
     })
     this.addModalAnimation = wx.createAnimation({
       duration: 1000,
       timingFunction: 'linear',
-      //transformOrigin:'20% 0% 0',
     })
 
     this.addModalAnimation.opacity(0).step({ duration: 0 }).opacity(1).step({ duration:200})
@@ -235,13 +231,12 @@ Page({
       showChooseType: (wx.getStorageSync('tasks') || []).map(log => {
         return log.substring(0,1)
       }),
-
       dayShowChooseType: (wx.getStorageSync('dayTasks') || []).map(log => {
         return log.substring(0, 1)
       })
     })
 
-    //再次检查选中透明状态
+    //再次检查选中透明状态 每日任务区
     if(this.data.isDayTask){
       var tempOpacity = wx.getStorageSync('dayOpacityColumn')||[]
       for(var i in this.data.dayChecked)
@@ -346,16 +341,11 @@ Page({
     for (var i in tempWantPushLogs)
       logs.push(tempWantPushLogs[i])
     wx.setStorageSync('nowDayTaskLogs', logs)
-
-    //已经完成的任务 加入 今天完成
-    // for (var i in this.data.tasks)
-    //   if (this.data.checked[i])
-    //     logs.push("r" +this.data.tasks[i])
-    // wx.setStorageSync('nowDayTaskLogs', logs)
   },
 
   //点击checkbox(打勾完成操作)
   compeleteTask:function(e){
+    //每日任务区
     if(this.data.isDayTask){
       var tempCompeleteSign = wx.getStorageSync('dayCompeleteSign')||[]
       var tempChecked = wx.getStorageSync('dayChecked')||[]
@@ -413,7 +403,7 @@ Page({
       wx.setStorageSync('dayCompeleteSign', tempCompeleteSign)
       wx.setStorageSync('dayChecked', tempChecked)
 
-      //选中就透明50%
+      //选中就透明60%
       var tempOpacityColumn = wx.getStorageSync('dayOpacityColumn') || []
       if (tempChecked[id]){
         tempOpacityColumn[id]="opacity:0.6;";
@@ -482,7 +472,7 @@ Page({
       wx.setStorageSync('compeleteSign', tempCompeleteSign)
       wx.setStorageSync('checked', tempChecked)
 
-      //选中就透明50%
+      //选中就透明60%
       var tempOpacityColumn = wx.getStorageSync('opacityColumn') || []
       if (tempChecked[id]) {
         tempOpacityColumn[id] = "opacity:0.6;";
@@ -496,6 +486,7 @@ Page({
     }
   },
 
+  //添加编辑窗口的关闭
   addModalClose:function(){
     this.addModalAnimation.opacity(0).step({ duration: 200 })
     this.setData({
@@ -510,6 +501,7 @@ Page({
 
   //删除按钮操作
   delete:function(e){
+    //日常区
     if(this.data.isDayTask){
       var tempTasks = wx.getStorageSync('dayTasks') || []
       var tempCompeleteSign = wx.getStorageSync('dayCompeleteSign') || []
@@ -580,6 +572,7 @@ Page({
 
   //编辑按钮操作
   edit:function(e){
+    //日常区
     if(this.data.isDayTask){
       var tempTasks = wx.getStorageSync('dayTasks')||[]
     }
@@ -590,6 +583,7 @@ Page({
     //更新一下选取的字段
     var tempChoosed = this.data.choosed
     var editType = tempTasks[parseInt(e.target.id)].substring(0, 1)
+
     for (var i in [0, 1, 2])
       if (i.toString() == editType)
         tempChoosed[i] = true
@@ -612,10 +606,10 @@ Page({
     })
   },
 
-  //添加任务操作
+  //添加任务操作 console.log(this.data.chooseType) 根据等级 0红 1橙 2黑(默认)
   goAddTask: function (e) {
+    //每日任务区
     if(this.data.isDayTask){
-      //console.log(this.data.chooseType) 根据等级 0红 1橙 2黑(默认)
       var tempTasks = wx.getStorageSync('dayTasks') || []
       var tempCompeleteSign = wx.getStorageSync('dayCompeleteSign') || []
       var tempChecked = wx.getStorageSync('dayChecked') || []
@@ -639,8 +633,7 @@ Page({
           }
         }
       }
-      else{
-        //console.log(this.data.chooseType)
+      else{ //编辑
         tempTasks[this.data.editId] = this.data.chooseType+e.detail.value["input_task"]
         tempShowButtons[this.data.editId] =false
       }
@@ -658,7 +651,6 @@ Page({
       wx.setStorageSync('dayChecked', tempChecked)
     }
     else{
-      //console.log(this.data.chooseType) 根据等级 0红 1橙 2黑(默认)
       var tempTasks = wx.getStorageSync('tasks') || []
       var tempCompeleteSign = wx.getStorageSync('compeleteSign') || []
       var tempChecked = wx.getStorageSync('checked') || []
@@ -682,8 +674,7 @@ Page({
           }
         }
       }
-      else {
-        //console.log(this.data.chooseType)
+      else { //编辑
         tempTasks[this.data.editId] = this.data.chooseType + e.detail.value["input_task"]
         tempShowButtons[this.data.editId] = false
       }
@@ -722,7 +713,7 @@ Page({
     this.onShow()
   },
 
-  //显示添加框
+  //显示添加编辑窗口
   addTask: function () {
     var tempChecked = [false,false,true]
 

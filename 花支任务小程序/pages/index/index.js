@@ -32,6 +32,7 @@ Page({
     showMyHistories:false,
     histories:[],
 
+    //余额间转账 相关
     showTransferModal:false,
     transferRange: [
       [
@@ -75,7 +76,6 @@ Page({
     this.animation = wx.createAnimation({
       duration: 1000,
       timingFunction: 'linear',
-      //transformOrigin:'20% 0% 0',
     })
 
     this.animation.opacity(0).step({ duration: 0 }).opacity(1).step({ duration: 200 })
@@ -84,9 +84,9 @@ Page({
     })
   },
 
-  //确认转账
+  //确认转账 从 " + this.data.transferValue[0][this.data.iIndex] + " 到 " + this.data.transferValue[1][this.data.jIndex] + " 转 " + e.detail.value["transfer_money"]
   goTransfer:function(e){
-    // console.log("从 " + this.data.transferValue[0][this.data.iIndex] + " 到 " + this.data.transferValue[1][this.data.jIndex] + " 转 " + e.detail.value["transfer_money"])
+    //自转判定
     if (this.data.transferValue[0][this.data.iIndex] == this.data.transferValue[1][this.data.jIndex]){
       wx.showToast({
         icon:'none',
@@ -111,14 +111,13 @@ Page({
       wx.setStorageSync(fromStockName, formStockValue)
       wx.setStorageSync(toStockName, toStockValue)
 
-      //写入今天的日志
-
       //myDate[1] 时间
       var time = util.formatTime(new Date())
       var needPrintTime = time.split(" ")[0]
       var date = time.split("/")
       var myDate = date[2].split(" ")
 
+      //写入今天的日志
       var formChinaName = this.data.transferRange[0][this.data.iIndex]
       var toChinaName = this.data.transferRange[1][this.data.jIndex]
 
@@ -145,14 +144,16 @@ Page({
     }, 200)
   },
 
+  //想要从iIndex转账jIndex
+    //console.log(e.detail.value) 从transferValue[0][iIndex]到transferValue[1][jIndex]处理字段
   showWantTransfer:function(e){
     this.setData({
       iIndex:e.detail.value[0],
       jIndex:e.detail.value[1]
     })
-    //console.log(e.detail.value) 从transferValue[0][iIndex]到transferValue[1][jIndex]处理字段
   },
 
+  //显示转账窗口
   wantTransfer:function(){
     this.setData({
       showTransferModal:true,
@@ -164,6 +165,7 @@ Page({
     })
   },
 
+  //关闭转账窗口
   closeTransferModal:function(){
     this.animation.opacity(0).step({ duration: 200 })
     this.setData({
@@ -218,7 +220,7 @@ Page({
     })
   },
 
-  //展示历史实现
+  //显示历史实现
   showHistories:function(){
     this.setData({
       showMyHistories:true,
@@ -260,19 +262,18 @@ Page({
 
   //+-操作
   changeSubmit:function(e){
-    //待还标志
-    var dhSign = "";
-
+    var dhSign = ""; //待还标志
     var tempAllString = e.detail.value["input_value"]
     var tempSplitString = tempAllString.split(" ")
     var tempValue = ""
     var check = true;
-    //数值检测填充
+
+    //数值填充
     var tempBeginString = tempSplitString[0].substring(0,1)
     if (tempBeginString!="" && tempBeginString >= '0' && tempBeginString <='9'){
       tempValue = tempSplitString[0]
     
-      //注释填充 拼接字符串
+      //注释填充 拼接注释字符串
       var tempNote = tempSplitString[1]||""
       for (var i in tempSplitString)
         if(i>1)

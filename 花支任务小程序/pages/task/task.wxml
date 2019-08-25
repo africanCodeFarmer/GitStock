@@ -14,8 +14,8 @@
   <swiper-item name="xx">
     <view id="columnHeader">
       <text id="columnHeaderText">今日任务</text>
-      <scroll-view scroll-y="true" id="columnScrollView">
 
+      <scroll-view scroll-y="true" id="columnScrollView">
         <view class="columns" wx:for="{{tasks}}" style="{{opacityColumn[index]}}">
           <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{checked[index]}}"></checkbox>
           
@@ -23,28 +23,29 @@
           <view class="columns_name" style="color:goldenrod;{{compeleteSign[index]}}" wx:elif="{{showChooseType[index]=='1'}}">{{item}}</view>
           <view class="columns_name" style="color:black;{{compeleteSign[index]}}" wx:else>{{item}}</view>
 
-            <!-- 隐藏按钮 -->
-            <view wx:if="{{showButtons[index]}}" animation="{{animation[index]}}">
-              <button size="mini" class="columns_button btn_no" bindtap="delete" id="{{index}}">删除</button>
-              <button size="mini" class="columns_button btn_ok" bindtap="edit" id="{{index}}">编辑</button>
-              <image src="photos/back.png" class="set_back_btn" bindtap="hideTwoButton" id="{{index}}"></image>
-            </view>
+          <!-- 隐藏按钮 -->
+          <view wx:if="{{showButtons[index]}}" animation="{{animation[index]}}">
+            <button size="mini" class="columns_button btn_no" bindtap="delete" id="{{index}}">删除</button>
+            <button size="mini" class="columns_button btn_ok" bindtap="edit" id="{{index}}">编辑</button>
+            <image src="photos/back.png" class="set_back_btn" bindtap="hideTwoButton" id="{{index}}"></image>
+          </view>
 
-            <!-- 显示按钮 -->
-            <view wx:else animation="{{animation[index]}}">
-              <image src="photos/setImage.png" class="set_back_btn" id="{{index}}"bindtap="showTwoButton"></image>
-            </view>
+          <!-- 显示按钮 -->
+          <view wx:else animation="{{animation[index]}}">
+            <image src="photos/setImage.png" class="set_back_btn" id="{{index}}"bindtap="showTwoButton"></image>
+          </view>
         </view>
       </scroll-view>
+
     </view>
   </swiper-item>
 
   <!-- 日常任务 -->
   <swiper-item>
-      <view id="columnHeader">
+    <view id="columnHeader">
       <text id="columnHeaderText">每日任务</text>
-      <scroll-view scroll-y="true" id="columnScrollView">
 
+      <scroll-view scroll-y="true" id="columnScrollView">
         <view class="columns" wx:for="{{dayTasks}}" style="{{dayOpacityColumn[index]}}">
           <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{dayChecked[index]}}"></checkbox>
           
@@ -65,6 +66,7 @@
           </view>
         </view>
       </scroll-view>
+
     </view>
   </swiper-item>
 </swiper>

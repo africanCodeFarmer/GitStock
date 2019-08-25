@@ -103,7 +103,6 @@
   <text class="modalHeader">{{sign=='+'?"+":"-"}} {{choose}}\n</text>
   <form bindsubmit="changeSubmit">
     <view id="inputView">
-      <!-- <text class="modalTextAndInput"></text> -->
       <textarea name="input_value" class="modalTextAndInput" style="width:80%;height:160rpx;" placeholder="输入格式:金额+任意空格+注释"></textarea>
     </view>
 

@@ -69,7 +69,6 @@ App({
       wx.setStorageSync('dayAnimation', dayAnimation)
       wx.setStorageSync('dayShowButtons', dayShowButtons)
       wx.setStorageSync('dayOpacityColumn', tempOpacity)
-      wx.setStorageSync('dayTasks', tempTasks)
       wx.setStorageSync('dayCompeleteSign', tempCompeleteSign)
       wx.setStorageSync('dayChecked', tempChecked)
 

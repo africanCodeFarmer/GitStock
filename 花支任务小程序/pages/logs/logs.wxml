@@ -1,18 +1,22 @@
 <!--logs.wxml-->
 <text id="headText">当日账单点击可删除</text>
-
 <button id="clearLogsButton" bindtap="clearLogs" size="mini">清空账单</button>
 
 <view class="container log-list">
+
   <block wx:for="{{nowDayLogs}}" wx:for-item="log">
+    <!-- 默认+-日志 -->
     <text bindtap="click" id="{{index}}" class="addLogs log-item" wx:if="{{nowDaySigns[index]=='+'}}">{{log}}</text>
     <text bindtap="click" id="{{index}}" class="subLogs log-item" wx:elif="{{nowDaySigns[index]=='-'}}">{{log}}</text>
 
+    <!-- 待还add sub字段处理 目前没用 -->
     <text bindtap="click" id="{{index}}" class="dhLogs log-item" wx:elif="{{nowDaySigns[index]=='a'}}">{{log}}</text>
     <text bindtap="click" id="{{index}}" class="grayLogs log-item" wx:elif="{{nowDaySigns[index]=='s'}}">{{log}}</text>
 
+    <!-- 日期日志 -->
     <text class="dataLogs log-item" wx:else>{{log}}</text>
   </block>
+
 </view>
 
 <view class="container log-list">

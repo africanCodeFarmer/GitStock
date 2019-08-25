@@ -5,14 +5,18 @@ const app = getApp()
 Page({
   data: {
     page: 1, //page*40个数据
+
+    //历史账单
     logs: [],
     signs:[],
+
+    //今日账单
     nowDayLogs:[],
     nowDaySigns:[],
   },
 
+  //点击 询问是否删除
   click:function(e){
-    //console.log(e.target.id)
     var tempNowDayTaskLogs = wx.getStorageSync('nowDayLogs') || []
     var msg = tempNowDayTaskLogs[e.target.id].substring(1)
     var that = this
@@ -55,6 +59,7 @@ Page({
       signs: (wx.getStorageSync('logs') || []).map(log => {
         return log.substring(0,1)
       }),
+      
       nowDayLogs: (wx.getStorageSync('nowDayLogs') || []).map(log => {
         return log.substring(1)
       }),

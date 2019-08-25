@@ -5,9 +5,11 @@ Page({
   data:{
     page: 1, //page*40个数据
     
+    //今日任务日志
     nowDayTaskLogs:[],
     nowDayIsDate:[],
 
+    //历史完成日志
     taskLogs:[],
     taskLogsIsDate:[],
   },

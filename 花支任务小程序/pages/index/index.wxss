@@ -135,7 +135,6 @@
 
 .addButton{
 }
-
 .subButton{
   background-color: rgb(159, 221, 159)
 }
@@ -179,7 +178,6 @@
   right: 0;
   margin-bottom: 20rpx;
 }
-
 .rightButton{
   z-index: 1000;
   width: 30%;

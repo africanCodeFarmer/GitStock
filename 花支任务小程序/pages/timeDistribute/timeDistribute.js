@@ -1,8 +1,10 @@
 Page({
   data:{
+    //时间分配行
     columns:["","","","","","","","","","","","","","","","","","border-bottom:1px solid gray;"],
     distributes:[],
 
+    //显示任务 相关
     notCheckedTasks:[],
     tasksGrade:[],
 
@@ -15,7 +17,6 @@ Page({
     this.animation = wx.createAnimation({
       duration: 1000,
       timingFunction: 'linear',
-      //transformOrigin:'20% 0% 0',
     })
   },
 
@@ -121,6 +122,7 @@ Page({
     })
   },
 
+  //返回按钮
   wantBack:function(){
     wx.navigateBack({})
   },
