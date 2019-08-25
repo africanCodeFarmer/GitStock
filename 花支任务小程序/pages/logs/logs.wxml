@@ -3,18 +3,18 @@
 
 <view class="container log-list">
   <block wx:for="{{nowDayLogs}}" wx:for-item="log">
-    <text class="addLogs log-item" wx:if="{{nowDaySigns[index]=='+'}}">{{log}}</text>
-    <text class="subLogs log-item" wx:elif="{{nowDaySigns[index]=='-'}}">{{log}}</text>
+    <text bindtap="click" id="{{index}}" class="addLogs log-item" wx:if="{{nowDaySigns[index]=='+'}}">{{log}}</text>
+    <text bindtap="click" id="{{index}}" class="subLogs log-item" wx:elif="{{nowDaySigns[index]=='-'}}">{{log}}</text>
 
-    <text class="dhLogs log-item" wx:elif="{{nowDaySigns[index]=='a'}}">{{log}}</text>
-    <text class="grayLogs log-item" wx:elif="{{nowDaySigns[index]=='s'}}">{{log}}</text>
+    <text bindtap="click" id="{{index}}" class="dhLogs log-item" wx:elif="{{nowDaySigns[index]=='a'}}">{{log}}</text>
+    <text bindtap="click" id="{{index}}" class="grayLogs log-item" wx:elif="{{nowDaySigns[index]=='s'}}">{{log}}</text>
 
     <text class="dataLogs log-item" wx:else>{{log}}</text>
   </block>
 </view>
 
 <view class="container log-list">
-  <block wx:for="{{logs}}" wx:for-item="log" wx:if="{{index<page*20}}">
+  <block wx:for="{{logs}}" wx:for-item="log" wx:if="{{index<page*40}}">
     <text class="addLogs log-item" wx:if="{{signs[index]=='+'}}">{{log}}</text>
     <text class="subLogs log-item" wx:elif="{{signs[index]=='-'}}">{{log}}</text>
 

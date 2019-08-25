@@ -16,6 +16,7 @@ App({
 
     //日期变更
     if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == "")){
+      
       //把今天的任务加入历史任务
       var taskLogs = wx.getStorageSync('taskLogs')||[]
       var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs')||[]
@@ -28,17 +29,49 @@ App({
       var tempCompeleteSign = wx.getStorageSync('compeleteSign') || []
       var tempChecked = wx.getStorageSync('checked') || []
       var tempOpacity = wx.getStorageSync('opacityColumn')||[]
-      for (var i in tempTasks)
+      var tempShowButtons = wx.getStorageSync('showButtons') || []
+      var tempAnimation = wx.getStorageSync('animation') || []
+      for (var i in tempTasks){
         while (tempChecked[i]){
           tempTasks.splice(i, 1)
           tempCompeleteSign.splice(i, 1)
           tempChecked.splice(i, 1)
           tempOpacity.splice(i,1)
+          tempShowButtons.splice(i,1)
+          tempAnimation.splice(i,1)
         }
+      }
+      wx.setStorageSync('showButtons', tempShowButtons)
+      wx.setStorageSync('animation', tempAnimation)
       wx.setStorageSync('opacityColumn', tempOpacity)
       wx.setStorageSync('tasks', tempTasks)
       wx.setStorageSync('compeleteSign', tempCompeleteSign)
       wx.setStorageSync('checked', tempChecked)
+
+      //复原日常任务
+      var tempTasks = wx.getStorageSync('dayTasks') || []
+      var tempCompeleteSign = wx.getStorageSync('dayCompeleteSign') || []
+      var tempChecked = wx.getStorageSync('dayChecked') || []
+      var tempOpacity = wx.getStorageSync('dayOpacityColumn') || []
+      var dayShowButtons = wx.getStorageSync('dayShowButtons') || []
+      var dayAnimation = wx.getStorageSync('dayAnimation') || []
+      for (var i in tempTasks){
+        dayShowButtons[i] = false
+        dayAnimation[i] = ""
+        while (tempChecked[i]) {
+          tempCompeleteSign[i]=""
+          tempChecked[i]=false
+          tempOpacity[i]=""
+          dayShowButtons[i] = false
+          dayAnimation[i] = ""
+        }
+      }
+      wx.setStorageSync('dayAnimation', dayAnimation)
+      wx.setStorageSync('dayShowButtons', dayShowButtons)
+      wx.setStorageSync('dayOpacityColumn', tempOpacity)
+      wx.setStorageSync('dayTasks', tempTasks)
+      wx.setStorageSync('dayCompeleteSign', tempCompeleteSign)
+      wx.setStorageSync('dayChecked', tempChecked)
 
       //把今天的账单加入历史账单
       var tempNowDay = wx.getStorageSync('nowDayLogs') || []

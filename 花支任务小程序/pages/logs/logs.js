@@ -4,11 +4,37 @@ const app = getApp()
 
 Page({
   data: {
-    page: 1, //page*20个数据
+    page: 1, //page*40个数据
     logs: [],
     signs:[],
     nowDayLogs:[],
     nowDaySigns:[],
+  },
+
+  click:function(e){
+    //console.log(e.target.id)
+    var tempNowDayTaskLogs = wx.getStorageSync('nowDayLogs') || []
+    var msg = tempNowDayTaskLogs[e.target.id].substring(1)
+    var that = this
+    wx.showModal({
+      title: '删除记录',
+      content: msg,
+      confirmText:"yes",
+      cancelText:"no",
+      success:function(res){
+        if(res.confirm){
+          tempNowDayTaskLogs.splice(e.target.id,1)
+          wx.setStorageSync('nowDayLogs', tempNowDayTaskLogs)
+          wx.showToast({
+            icon:'none',
+            title: '删除成功',
+            duration:1000,
+          })
+
+          that.onShow()
+        }
+      }
+    })
   },
 
   //输出日志
@@ -70,9 +96,9 @@ Page({
     })
   },
 
-  //触底多显示page*20条数据
+  //触底多显示page*40条数据
   onReachBottom:function(){
-    if(this.data.logs.length>this.data.page*20){
+    if(this.data.logs.length>this.data.page*40){
       var tempPage = parseInt(this.data.page)
       tempPage +=1
       this.setData({

@@ -1,5 +1,5 @@
 {
   "navigationBarTitleText": "",
   "usingComponents": {},
-  "onReachBottomDistance": 20
+  "onReachBottomDistance": 100
 }

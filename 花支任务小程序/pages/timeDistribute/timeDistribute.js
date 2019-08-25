@@ -39,10 +39,20 @@ Page({
     var temp =[]
     var tasks = wx.getStorageSync('tasks') || []
     var checked = wx.getStorageSync('checked') || []
+
+    var dayTasks = wx.getStorageSync('dayTasks') || []
+    var dayChecked = wx.getStorageSync('dayChecked') || []
+
     for(var i in tasks)
       if(!checked[i]){
         temp.push(tasks[i].substring(1))
         grade.push(tasks[i].substring(0,1))
+      }
+
+    for (var i in dayTasks)
+      if (!dayChecked[i]) {
+        temp.push(dayTasks[i].substring(1))
+        grade.push(dayTasks[i].substring(0, 1))
       }
 
     this.setData({
@@ -64,9 +74,6 @@ Page({
     this.setData({
       distributes: tempDis
     })
-    
-    //wx.setStorageSync('timeDistribute', tempDis)
-    //this.onShow()
   },
 
   //点击清空按钮

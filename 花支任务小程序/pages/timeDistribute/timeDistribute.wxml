@@ -4,7 +4,7 @@
     <view class="tr" wx:for="{{columns}}" style="{{columns[index]}}">
       <text class="td times">{{index+6}}-{{index+7}}</text>
       <input class="td texts" type="text" placeholder="" name="{{index}}" value="{{distributes[index]}}"></input>
-       <image src="photos/clear.png" class="clear" bindtap="wantClearColumn" id="{{index}}"></image>
+      <image src="photos/clear.png" class="clear" bindtap="wantClearColumn" id="{{index}}"></image>
     </view>
 
   </scroll-view>

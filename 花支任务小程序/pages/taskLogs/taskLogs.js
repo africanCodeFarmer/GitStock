@@ -3,7 +3,7 @@ const app = getApp()
 
 Page({
   data:{
-    page: 1, //page*20个数据
+    page: 1, //page*40个数据
     
     nowDayTaskLogs:[],
     nowDayIsDate:[],
@@ -89,9 +89,9 @@ Page({
     })
   },
 
-  //触底多显示page*20条数据
+  //触底多显示page*40条数据
   onReachBottom: function () {
-    if (this.data.taskLogs.length > this.data.page * 20) {
+    if (this.data.taskLogs.length > this.data.page * 40) {
       var tempPage = parseInt(this.data.page)
       tempPage += 1
       this.setData({

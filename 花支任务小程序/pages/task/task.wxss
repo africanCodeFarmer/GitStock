@@ -1,3 +1,7 @@
+#swiperView{
+  height: 820rpx;
+}
+
 .userinfo {
   margin-top: 10rpx;
   margin-bottom:20rpx;

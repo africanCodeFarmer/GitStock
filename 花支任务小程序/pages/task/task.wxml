@@ -10,33 +10,64 @@
   </view>
 </view>
 
-<view id="columnHeader">
-  <text id="columnHeaderText">今日任务</text>
-  <scroll-view scroll-y="true" id="columnScrollView">
+<swiper id="swiperView" indicator-dots="true" bindchange="changeSwiper">
+  <swiper-item name="xx">
+    <view id="columnHeader">
+      <text id="columnHeaderText">今日任务</text>
+      <scroll-view scroll-y="true" id="columnScrollView">
 
-    <view class="columns" wx:for="{{tasks}}" style="{{opacityColumn[index]}}">
-      <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{checked[index]}}"></checkbox>
-      
-      <view class="columns_name" style="color:red;{{compeleteSign[index]}}" wx:if="{{showChooseType[index]=='0'}}">{{item}}</view>
-      <view class="columns_name" style="color:goldenrod;{{compeleteSign[index]}}" wx:elif="{{showChooseType[index]=='1'}}">{{item}}</view>
-      <view class="columns_name" style="color:black;{{compeleteSign[index]}}" wx:else>{{item}}</view>
+        <view class="columns" wx:for="{{tasks}}" style="{{opacityColumn[index]}}">
+          <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{checked[index]}}"></checkbox>
+          
+          <view class="columns_name" style="color:red;{{compeleteSign[index]}}" wx:if="{{showChooseType[index]=='0'}}">{{item}}</view>
+          <view class="columns_name" style="color:goldenrod;{{compeleteSign[index]}}" wx:elif="{{showChooseType[index]=='1'}}">{{item}}</view>
+          <view class="columns_name" style="color:black;{{compeleteSign[index]}}" wx:else>{{item}}</view>
 
-        <!-- 隐藏按钮 -->
-        <view wx:if="{{showButtons[index]}}" animation="{{animation[index]}}">
-          <button size="mini" class="columns_button btn_no" bindtap="delete" id="{{index}}">删除</button>
-          <button size="mini" class="columns_button btn_ok" bindtap="edit" id="{{index}}">编辑</button>
-          <image src="photos/back.png" class="set_back_btn" bindtap="hideTwoButton" id="{{index}}"></image>
+            <!-- 隐藏按钮 -->
+            <view wx:if="{{showButtons[index]}}" animation="{{animation[index]}}">
+              <button size="mini" class="columns_button btn_no" bindtap="delete" id="{{index}}">删除</button>
+              <button size="mini" class="columns_button btn_ok" bindtap="edit" id="{{index}}">编辑</button>
+              <image src="photos/back.png" class="set_back_btn" bindtap="hideTwoButton" id="{{index}}"></image>
+            </view>
+
+            <!-- 显示按钮 -->
+            <view wx:else animation="{{animation[index]}}">
+              <image src="photos/setImage.png" class="set_back_btn" id="{{index}}"bindtap="showTwoButton"></image>
+            </view>
         </view>
-
-        <!-- 显示按钮 -->
-        <view wx:else animation="{{animation[index]}}">
-          <image src="photos/setImage.png" class="set_back_btn" id="{{index}}"bindtap="showTwoButton"></image>
-        </view>
-
+      </scroll-view>
     </view>
+  </swiper-item>
 
-  </scroll-view>
-</view>
+  <!-- 日常任务 -->
+  <swiper-item>
+      <view id="columnHeader">
+      <text id="columnHeaderText">每日任务</text>
+      <scroll-view scroll-y="true" id="columnScrollView">
+
+        <view class="columns" wx:for="{{dayTasks}}" style="{{dayOpacityColumn[index]}}">
+          <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{dayChecked[index]}}"></checkbox>
+          
+          <view class="columns_name" style="color:red;{{dayCompeleteSign[index]}}" wx:if="{{dayShowChooseType[index]=='0'}}">{{item}}</view>
+          <view class="columns_name" style="color:goldenrod;{{dayCompeleteSign[index]}}" wx:elif="{{dayShowChooseType[index]=='1'}}">{{item}}</view>
+          <view class="columns_name" style="color:black;{{dayCompeleteSign[index]}}" wx:else>{{item}}</view>
+
+            <!-- 隐藏按钮 -->
+          <view wx:if="{{dayShowButtons[index]}}" animation="{{dayAnimation[index]}}">
+            <button size="mini" class="columns_button btn_no" bindtap="delete" id="{{index}}">删除</button>
+            <button size="mini" class="columns_button btn_ok" bindtap="edit" id="{{index}}">编辑</button>
+            <image src="photos/back.png" class="set_back_btn" bindtap="hideTwoButton" id="{{index}}"></image>
+          </view>
+
+          <!-- 显示按钮 -->
+          <view wx:else animation="{{dayAnimation[index]}}">
+            <image src="photos/setImage.png" class="set_back_btn" id="{{index}}"bindtap="showTwoButton"></image>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </swiper-item>
+</swiper>
 
 <view id="footerButtonView">
   <button class="footerButton" bindtap="gotoTimedistribute">时间规划</button>
@@ -46,7 +77,7 @@
 <view wx:if="{{showAddModal}}" id="addModal" animation="{{addModalAnimation}}">
   <form bindsubmit="goAddTask">
     <view style="margin:10rpx;">
-      <text id="addModalHeader">{{isEdit?"编辑任务":"添加任务"}}</text>
+      <text id="addModalHeader">{{isDayTask?(isEdit?"编辑日常任务":"添加日常任务"):(isEdit?"编辑任务":"添加任务")}}</text>
 
       <checkbox-group bindchange="changeOneChoose" id="checkBoxView">
         <checkbox value="0" checked="{{choosed[0]}}" color="red"></checkbox>
