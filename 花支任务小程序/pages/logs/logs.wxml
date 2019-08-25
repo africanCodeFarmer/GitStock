@@ -1,4 +1,6 @@
 <!--logs.wxml-->
+<text id="headText">当日账单点击可删除</text>
+
 <button id="clearLogsButton" bindtap="clearLogs" size="mini">清空账单</button>
 
 <view class="container log-list">
