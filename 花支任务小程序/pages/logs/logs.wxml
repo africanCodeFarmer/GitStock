@@ -1,17 +1,15 @@
-<!--logs.wxml-->
-<text id="headText">当日账单点击可删除</text>
 <button id="clearLogsButton" bindtap="clearLogs" size="mini">清空账单</button>
 
 <view class="container log-list">
 
   <block wx:for="{{nowDayLogs}}" wx:for-item="log">
     <!-- 默认+-日志 -->
-    <text bindtap="click" id="{{index}}" class="addLogs log-item" wx:if="{{nowDaySigns[index]=='+'}}">{{log}}</text>
-    <text bindtap="click" id="{{index}}" class="subLogs log-item" wx:elif="{{nowDaySigns[index]=='-'}}">{{log}}</text>
+    <text bindtap="click" id="n{{index}}" class="addLogs log-item" wx:if="{{nowDaySigns[index]=='+'}}">{{log}}</text>
+    <text bindtap="click" id="n{{index}}" class="subLogs log-item" wx:elif="{{nowDaySigns[index]=='-'}}">{{log}}</text>
 
     <!-- 待还add sub字段处理 目前没用 -->
-    <text bindtap="click" id="{{index}}" class="dhLogs log-item" wx:elif="{{nowDaySigns[index]=='a'}}">{{log}}</text>
-    <text bindtap="click" id="{{index}}" class="grayLogs log-item" wx:elif="{{nowDaySigns[index]=='s'}}">{{log}}</text>
+    <text bindtap="click" id="n{{index}}" class="dhLogs log-item" wx:elif="{{nowDaySigns[index]=='a'}}">{{log}}</text>
+    <text bindtap="click" id="n{{index}}" class="grayLogs log-item" wx:elif="{{nowDaySigns[index]=='s'}}">{{log}}</text>
 
     <!-- 日期日志 -->
     <text class="dataLogs log-item" wx:else>{{log}}</text>
@@ -21,12 +19,25 @@
 
 <view class="container log-list">
   <block wx:for="{{logs}}" wx:for-item="log" wx:if="{{index<page*40}}">
-    <text class="addLogs log-item" wx:if="{{signs[index]=='+'}}">{{log}}</text>
-    <text class="subLogs log-item" wx:elif="{{signs[index]=='-'}}">{{log}}</text>
+    <text bindtap="click" id="h{{index}}" class="addLogs log-item" wx:if="{{signs[index]=='+'}}">{{log}}</text>
+    <text bindtap="click" id="h{{index}}" class="subLogs log-item" wx:elif="{{signs[index]=='-'}}">{{log}}</text>
 
-    <text class="dhLogs log-item" wx:elif="{{signs[index]=='a'}}">{{log}}</text>
-    <text class="grayLogs log-item" wx:elif="{{signs[index]=='s'}}">{{log}}</text>
+    <text bindtap="click" id="h{{index}}" class="dhLogs log-item" wx:elif="{{signs[index]=='a'}}">{{log}}</text>
+    <text bindtap="click" id="h{{index}}" class="grayLogs log-item" wx:elif="{{signs[index]=='s'}}">{{log}}</text>
 
     <text class="dataLogs log-item" wx:else>{{log}}</text>
   </block>
+</view>
+
+<view id="changeView" animation="{{animation}}" wx:if="{{showChangeView}}">
+  <form bindsubmit="goChange">
+    <text id="changViewHead">更改窗口</text>
+    <textarea id="textView" type="text" name="input_note" value="{{input_note}}"></textarea>
+
+    <view id="viewButton">
+      <button class="myButton" bindtap="delete" size="mini">删除</button>
+      <button class="myButton btn_ok" form-type="submit" size="mini">修改</button>
+      <button class="myButton" bindtap="closeChangeView" size="mini">关闭</button>
+    </view>
+  </form>
 </view>

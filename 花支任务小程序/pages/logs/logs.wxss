@@ -1,14 +1,39 @@
-#headText{
-  margin-top:20rpx;
-  color: gray;
+.btn_ok{
+  background-color: rgb(159, 221, 159);
+}
+
+.myButton{
+  width: 160rpx;
+  height: 60rpx;
+}
+
+#viewButton{
+  display: flex;
+  flex-direction: row;
+}
+
+#textView{
+  width: 96%;
+  height: 240rpx;
+  padding:2%;
+}
+
+#changViewHead{
   display: flex;
   flex-direction: column;
   text-align: center;
-  font-size: 20rpx;
-  border-bottom: 1rpx solid rgba(128, 128, 128,0.5);
-  padding-bottom: 20rpx;
-  margin-left: 10rpx;
-  margin-right: 10rpx;
+  font-size: 160%;
+}
+
+#changeView{
+  border: 1rpx solid gray;
+  border-radius: 6%;
+  background-color: white;
+  position: fixed;
+  left: 10%;
+  width:80%;
+  top: 20%;
+  height: 400rpx;
 }
 
 #clearLogsButton{
