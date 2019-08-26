@@ -190,8 +190,7 @@
 }
 
 .userinfo {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-top: 80rpx;
+  position: fixed;
+  left: 10%;
+  bottom: 10rpx;
 }

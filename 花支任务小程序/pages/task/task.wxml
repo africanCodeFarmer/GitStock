@@ -72,8 +72,8 @@
 </swiper>
 
 <view id="footerButtonView">
-  <button class="footerButton" bindtap="gotoTimedistribute">时间规划</button>
-  <button class="footerButton" bindtap="addTask">添加任务</button>
+  <button class="footerButtonL" bindtap="gotoTimedistribute">时间规划</button>
+  <button class="footerButtonR" bindtap="addTask">添加任务</button>
 </view>
 
 <view wx:if="{{showAddModal}}" id="addModal" animation="{{addModalAnimation}}">

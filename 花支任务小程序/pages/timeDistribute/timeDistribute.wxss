@@ -65,8 +65,26 @@
 
 #buttons{
   margin-top: 22rpx;
-  display: flex;
-  flex-direction: row;
+}
+.b1{
+  position: fixed;
+  left: 20rpx;
+  bottom: 20rpx;
+}
+.b2{
+  position: fixed;
+  left: 220rpx;
+  bottom: 20rpx;
+}
+.b3{
+  position: fixed;
+  right: 150rpx;
+  bottom: 20rpx;
+}
+.b4{
+  position: fixed;
+  right:20rpx;
+  bottom: 20rpx;
 }
 
 .leftButton{

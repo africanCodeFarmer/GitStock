@@ -176,6 +176,7 @@ Page({
       animation: this.animation.export(),
     })
 
+    //console.log(e.target.id)
     this.onShow()
   },
 

@@ -1,8 +1,7 @@
 {
   "pages": [
-    "pages/logs/logs",
     "pages/task/task",
-    
+    "pages/logs/logs",
     "pages/index/index",
     "pages/study/study",
     "pages/timeDistribute/timeDistribute",
@@ -12,10 +11,18 @@
   ],
   "tabBar":{
     "list":[
-      {"text": "任务","pagePath": "pages/task/task"},
-      {"text":"记账","pagePath":"pages/index/index"},
-      {"text": "账单日志","pagePath": "pages/logs/logs"},
-      {"text": "完成日志","pagePath": "pages/taskLogs/taskLogs"}
+      {"text": "任务","pagePath": "pages/task/task",
+      "iconPath":"/photos/rw.png","selectedIconPath":"/photos/rw.png"
+      },
+      {"text":"记账","pagePath":"pages/index/index",
+      "iconPath": "/photos/jz.png","selectedIconPath": "/photos/jz.png"
+      },
+      {"text": "账单日志","pagePath": "pages/logs/logs",
+      "iconPath": "/photos/zdrz.png","selectedIconPath": "/photos/zdrz.png"
+      },
+      {"text": "完成日志","pagePath": "pages/taskLogs/taskLogs",
+      "iconPath": "/photos/wcrz.png","selectedIconPath": "/photos/wcrz.png"
+      }
     ]
   },
   "window": {

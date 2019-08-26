@@ -9,10 +9,10 @@
   </scroll-view>
 
   <view id="buttons">
-    <button class="leftButton" bindtap="wantClear">清空规划</button>
-    <button class="rightButton" form-type="submit">更新规划</button>
-    <button bindtap="showTask">显示任务</button>
-    <button bindtap="wantBack">返回</button>
+    <button class="leftButton b1" bindtap="wantClear">清空规划</button>
+    <button class="rightButton b2" form-type="submit">更新规划</button>
+    <button bindtap="showTask" class="b3">显示任务</button>
+    <button bindtap="wantBack" class="b4">返回</button>
   </view>
   
 </form>
