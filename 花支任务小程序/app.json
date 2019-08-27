@@ -12,16 +12,16 @@
   "tabBar":{
     "list":[
       {"text": "任务","pagePath": "pages/task/task",
-      "iconPath":"/photos/rw.png","selectedIconPath":"/photos/rw.png"
+      "iconPath":"/photos/rw.png","selectedIconPath":"/photos/srw.png"
       },
       {"text":"记账","pagePath":"pages/index/index",
-      "iconPath": "/photos/jz.png","selectedIconPath": "/photos/jz.png"
+      "iconPath": "/photos/jz.png","selectedIconPath": "/photos/sjz.png"
       },
       {"text": "账单日志","pagePath": "pages/logs/logs",
-      "iconPath": "/photos/zdrz.png","selectedIconPath": "/photos/zdrz.png"
+      "iconPath": "/photos/zdrz.png","selectedIconPath": "/photos/szdrz.png"
       },
       {"text": "完成日志","pagePath": "pages/taskLogs/taskLogs",
-      "iconPath": "/photos/wcrz.png","selectedIconPath": "/photos/wcrz.png"
+      "iconPath": "/photos/wcrz.png","selectedIconPath": "/photos/swcrz.png"
       }
     ]
   },
