@@ -1,5 +1,12 @@
-#swiperView{
-  height: 820rpx;
+#columnScrollView{
+  padding-top: 10rpx;
+  border-top: 1rpx solid rgba(128, 128, 128, 0.5);
+  width: 96%;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  padding-bottom:10rpx;
 }
 
 .userinfo {
@@ -117,18 +124,6 @@
   margin-top: 40rpx;
 }
 
-#columnScrollView{
-  padding-top: 10rpx;
-  border-top: 1rpx solid rgba(128, 128, 128, 0.5);
-  width: 96%;
-  padding-left: 10rpx;
-  padding-right: 10rpx;
-  margin-left: 10rpx;
-  margin-right: 10rpx;
-  height: 680rpx;
-  padding-bottom:10rpx;
-}
-
 .columns{
   margin-top: 20rpx;
   display: flex;
@@ -147,8 +142,8 @@
 .set_back_btn{
   position: absolute;
   right: 0;
-  height: 60rpx;
-  width: 60rpx;
+  height: 46rpx;
+  width: 46rpx;
 }
 
 .columns_button{
@@ -166,7 +161,7 @@
 }
 
 #footerButtonView{
-  border-top:1rpx solid rgba(128, 128, 128, 0.5);
+  /* border-top:1rpx solid rgba(128, 128, 128, 0.5); */
   margin-right: 10rpx;
   margin-left: 10rpx;
   margin-top: 10rpx;

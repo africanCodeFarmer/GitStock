@@ -10,12 +10,12 @@
   </view>
 </view>
 
-<swiper id="swiperView" indicator-dots="true" bindchange="changeSwiper">
+<swiper id="swiperView" style="height:{{swiperHeight}}rpx;"indicator-dots="true" bindchange="changeSwiper">
   <swiper-item name="xx">
     <view id="columnHeader">
       <text id="columnHeaderText">今日任务</text>
 
-      <scroll-view scroll-y="true" id="columnScrollView">
+      <scroll-view scroll-y="true" id="columnScrollView" style="height:{{swiperHeight-150}}rpx;">
         <view class="columns" wx:for="{{tasks}}" style="{{opacityColumn[index]}}">
           <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{checked[index]}}"></checkbox>
           
@@ -45,7 +45,7 @@
     <view id="columnHeader">
       <text id="columnHeaderText">每日任务</text>
 
-      <scroll-view scroll-y="true" id="columnScrollView">
+      <scroll-view scroll-y="true" id="columnScrollView" style="height:{{swiperHeight-150}}rpx;">
         <view class="columns" wx:for="{{dayTasks}}" style="{{dayOpacityColumn[index]}}">
           <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{dayChecked[index]}}"></checkbox>
           

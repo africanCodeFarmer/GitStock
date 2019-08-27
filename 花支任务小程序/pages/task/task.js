@@ -57,6 +57,9 @@ Page({
     addModalAnimation:"",
 
     isDayTask:false,
+
+    //swiper高度
+    swiperHeight:0,
   },
 
   //swiper改变
@@ -201,6 +204,16 @@ Page({
 
   onShow:function(){
     clearTimeout()
+
+    //获取屏幕高度 swiper
+    var that = this
+    wx.getSystemInfo({
+      success:function(res){
+        that.setData({
+          swiperHeight: res.windowHeight*1.35
+        })
+      }
+    })
 
     this.setData({
       animation: wx.getStorageSync('animation') || [],
