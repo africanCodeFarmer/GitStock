@@ -1,0 +1,209 @@
+<?php
+//全修改区
+$tableName = "yg_project";
+$tableHead = "项目查询";
+
+if(isSet($columns)){
+	$table ="<table border='1'>
+                <tr><td colspan='".(count($columns)+1)."'><h2>".$tableHead."</h2></td></tr>
+                <tr>
+                    <td colspan='".(count($columns)+1)."' class='searchTable'>
+                        <form action='searchTable' method='post'>";
+
+    //根据wantSelect["type_id"]的所有可能值 填充option 让用户选择下拉框值
+    for($i=0;$i<(count($wantSelect)/2);$i++){
+        if(!strcmp($wantSelect[$i], "type_id"))
+            $table.="
+                            <font>项目类型</font>
+                            <select name=\"select".ucfirst($wantSelect[$i])."\">";
+        else if(!strcmp($wantSelect[$i], "year"))
+            $table.="
+                            <font>年份</font>
+                            <select name=\"select".ucfirst($wantSelect[$i])."\">";
+        else if(!strcmp($wantSelect[$i], "college_id"))
+            $table.="
+                            <font>院系</font>
+                            <select name=\"select".ucfirst($wantSelect[$i])."\">";
+
+        //$wantSelect[$i]为type_id $wantSelect[$wantSelect[$i]][$j]为值
+        for($j=0;$j<count($wantSelect[$wantSelect[$i]]);$j++)
+            //id字段用useIdExchangeName替换成中文
+            if(!strcmp($wantSelect[$i], "type_id")||!strcmp($wantSelect[$i], "college_id")||!strcmp($wantSelect[$i], "major_id")){
+                if(strcmp($wantSelect[$wantSelect[$i]][$j], ''))
+                    $table .="   <option value=".$wantSelect[$wantSelect[$i]][$j].">".$useIdExchangeName[$wantSelect[$i]][$wantSelect[$wantSelect[$i]][$j]]."
+                                 </option>";
+                else
+                    $table .="   <option value=".$wantSelect[$wantSelect[$i]][$j].">".$wantSelect[$wantSelect[$i]][$j]."
+                                 </option>";
+            }
+            else
+                $table .="       <option value=".$wantSelect[$wantSelect[$i]][$j].">".$wantSelect[$wantSelect[$i]][$j]."
+                                 </option>";
+
+        $table.="           </select>";  
+    }
+
+    $table .="                               
+                            <font> 参与人或负责人名字 (支持模糊查询)</font>
+                            <input class='middleWidth' type='text' name='name'>
+
+                            <input type='submit' value='查询'>
+                            <input type='button' name='backSubmit' onclick='javascript:history.back(-1);' value='返回'> 
+                        </form>
+                    </td>
+                </tr>
+                <tr class='tableHead'>";
+
+    //输出id title等所有字段标题栏
+    $table.= "
+                    <td class='bigWidth'>项目编号</td>
+                    <td class='bigWidth'>项目名称</td>
+                    <td class='bigWidth'>院系</td>
+                    <td class='bigWidth'>项目类型</td>
+                    <td class='bigWidth'>立项时间</td>
+                    <td class='bigWidth'>结题时间</td>
+                    <td class='bigWidth'>年份</td>
+                    <td class='bigWidth'>负责人</td>
+                    <td class='bigWidth'>参与者</td>
+                    <td class='bigWidth'>备注</td>
+                    <td class='bigWidth'>项目经费</td>
+                    <td class='bigWidth'>项目状态</td>";
+
+    //分页功能 部分一开始
+    $pageDataSize=20; //每页显示数据个数
+    $pageBegin =($page-1)*$pageDataSize;
+
+    $rowTemp = Db::table($tableName)->where($myWhereHandle)->select();
+    $rowCount=count($rowTemp);
+
+    $pageCount = ceil($rowCount/$pageDataSize); //总页数
+
+    $result=Db::table($tableName)->where($myWhereHandle)->limit($pageBegin,$pageDataSize)->select();
+    //分页功能 部分一结束
+    
+    //输出所有select的值 根据$useIdExchangeName替换中文 //useIdExchangeName eg: [ ['type_id',[[1,'教改'],[2,'实验']]], ] 三维数组
+    for($i=0;$i<count($result);$i++){
+        $table .="
+                <tr>";
+
+        //$columns[$j]["COLUMN_NAME"]=>'id' 值=>$result[$i][$columns[$j]["COLUMN_NAME"]]
+        for($j=0;$j<count($columns);$j++)
+            //如果是id字段
+            if(!strcmp($columns[$j]["COLUMN_NAME"], 'marjor_id')||!strcmp($columns[$j]["COLUMN_NAME"], 'college_id')||
+                !strcmp($columns[$j]["COLUMN_NAME"], 'type_id')&&isSet($useIdExchangeName[$columns[$j]["COLUMN_NAME"]][$result[$i][$columns[$j]["COLUMN_NAME"]]]))
+                $table .="
+                    <td>".$useIdExchangeName[$columns[$j]["COLUMN_NAME"]][$result[$i][$columns[$j]["COLUMN_NAME"]]]."</td>";
+            else
+                $table .="
+                    <td>".$result[$i][$columns[$j]["COLUMN_NAME"]]."</td>";
+    }
+    $table .="</tr>";
+
+    //分页功能 部分二开始
+    $table .="
+    			<tr>
+                    <td colspan='".(count($columns)+1)."'>
+                        <font>第".$page."/".$pageCount."页,共 ".$pageCount." 页</font>
+                        <form name='wantAddOrSubPage' method='get'>
+                            <input type='hidden' name='pageCur' value='".$page."'>";
+                        
+    if(is_array($myWhere)){
+        $keys = array_keys($myWhere);
+        for($i=0;$i<count($myWhere);$i++){
+            $table .="      <input type='hidden' name='myWhere".ucfirst($keys[$i])."' value='".$myWhere[$keys[$i]]."'>";
+        }
+    }
+
+    if($page>1)
+        $table .="              
+                            <input type='submit' value='上一页' onclick='subPage()'>";
+    if($page<$pageCount)
+        $table .="
+                            <input type='submit' value='下一页' onclick='addPage()'>";
+    $table .="
+                            <font>go:</font>
+                            <input type='text' name='goPageValue' class='smallWidth'>
+                            <input type='submit' value='跳转' onclick='goPage()'>
+                        </form>
+                    </td>
+                </tr>";
+
+    $table .="</table>";
+    //分页功能 部分二结束
+
+	echo($table);               
+}
+else{
+	$showTable = "<script>window.location.href='ProjectQuery/manageTable'</script>";
+
+    echo($showTable);
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>项目查询</title>
+    <style>
+        table{
+            align:center;
+            border-collapse:collapse;
+            width: 100%;
+        }
+        tr.tableHead{
+            background-color:lightgray;
+        }
+        td{
+            text-align:center;
+        }
+        td.searchTable{
+            text-align:left;
+        }
+
+        .smallWidth{
+            width:30px;
+        }
+        .middleWidth{
+            width:100px;
+        }
+        .bigWidth{
+            width:160px;
+        }
+
+        .topButton{
+            margin-top:4px;
+            margin-bottom:4px;
+        }
+        .bottomButton{
+            margin-top:4px;
+            margin-bottom:4px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function wantaddTable(){
+            document.collegeAddOrUpdate.action="addTable";
+            document.collegeAddOrUpdate.submit();
+        }
+        function wantupdateTable(){
+            document.collegeAddOrUpdate.action="updateTable";
+            document.collegeAddOrUpdate.submit();
+        }
+
+        function addPage(){
+            document.wantAddOrSubPage.action="addTablePage";
+            document.wantAddOrSubPage.submit();
+        }
+        function subPage(){
+            document.wantAddOrSubPage.action="subTablePage";
+            document.wantAddOrSubPage.submit();
+        }    
+        function goPage(){
+            document.wantAddOrSubPage.action="goTablePage";
+            document.wantAddOrSubPage.submit();
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
