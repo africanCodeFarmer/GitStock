@@ -87,7 +87,7 @@
         <checkbox value="2" checked="{{choosed[2]}}" color="black"></checkbox>
       </checkbox-group>
 
-      <textarea id="addModalTextarea" name="input_task" value="{{isEdit?input_note:''}}" placeholder="支持批量添加(一行一个任务)"></textarea>
+      <textarea id="addModalTextarea" name="input_task" value="{{isEdit?input_note:''}}" placeholder="支持批量添加(一行一个任务)" auto-focus="true"></textarea>
       <view>
         <button size="mini" id="addModalLeftButton" bindtap="addModalClose">取消</button>
         <button size="mini" id="addModalRightButton" form-type="submit">{{isEdit?"编辑":"添加"}}</button>
