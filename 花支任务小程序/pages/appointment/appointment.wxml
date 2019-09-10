@@ -1,0 +1,86 @@
+<cover-view style="z-index:1000;position:fixed;top:16rpx;left:10rpx;" wx:if="{{showWeather}}">
+{{city}} {{temperature}}° {{weather}}
+</cover-view>
+
+<cover-image src="photos/weather.png" class="resetButton" bindtap="showWeather" style="right:144rpx;margin-top:2rpx;"></cover-image>
+
+<cover-image src="photos/resetLocationIcon.png" class="resetButton" bindtap="resetLocation" style="right:82rpx;margin-top:2rpx;"></cover-image>
+
+<cover-image src="photos/clearIcon.png" class="resetButton" bindtap="clearSchedule"></cover-image>
+
+<map longitude="{{longitude}}" latitude="{{latitude}}" show-location scale="12"
+markers="{{markers}}" bindmarkertap="tapMarkers" polyline="{{polyline}}"></map>
+
+<view class="searchColumn">
+  <text space="ensp">地点 </text>
+  <input bindinput="getSuggest" value="{{suggestKeyword}}" style="width:80%;" bindblur="showDetail" placeholder="地点名称"></input>
+  <button class="searchButton" bindtap="clearSearchKeyword">X</button>
+</view>
+
+<form bindsubmit="showLocationPOI">
+  <view class="searchColumn">
+      <text space="ensp">poi </text>
+      <input style="width:76%;" name="input_shop_name" value="{{input_shop_name}}" placeholder="娱乐 餐饮 酒店 具体店名 等等" bindblur="showLocationPOI"></input>
+      <!-- <button class="searchButton" form-type="submit">→</button> -->
+      <button class="searchButton" bindtap="clearSearchPOI">X</button>
+  </view>
+</form>
+
+<scroll-view id="scroll_view" scroll-y="true" wx:if="{{showScrollView}}">
+  <view wx:for="{{suggest}}" id="{{index}}" bindtap="fillKeyword" class="column">
+    <text class="column_title">{{item.title}} \n</text>
+    <text class="column_addr"> {{item.addr}}</text>
+  </view>
+</scroll-view>
+
+<scroll-view id="detailView" wx:if="{{showDetail}}" scroll-y>
+  <text>店名: {{tapMarker.title}}\n</text>
+  <scroll-view scroll-x style="width:100%;overflow:hidden;height:40rpx;"><text style="font-size:40%;">地址: {{tapMarker.address}}\n</text></scroll-view>
+  
+  <form bindsubmit="addSchedule">
+    <view style="display:flex;flex-direction:row;">
+      <text style="font-size:80%;margin-top:2rpx;">玩点: \n</text>
+      <input value="{{tapMarker.play}}" type="text" style="font-size:80%;width:500rpx;"  name="play" placeholder="..." bindblur="showInputBlurMsg"></input>
+    </view>
+
+    <view style="display:flex;flex-direction:row;">
+      <text style="font-size:80%;position:absolute;right:100rpx;bottom:70rpx;margin-bottom:4rpx;">费用: </text>
+      <input value="{{tapMarker.spend}}" type="text" style="font-size:80%;position:absolute;right:20rpx;bottom:70rpx;width:70rpx;"  name="spend" placeholder="..." bindblur="showInputBlurMsg"></input>
+    </view>
+
+    <view style="display:flex;flex-direction:row;background-color:white;">
+      <text style="font-size:80%;position:absolute;right:160rpx;bottom:140rpx;margin-bottom:4rpx;">时间: </text>
+      <input value="{{tapMarker.time}}" type="text" style="font-size:80%;position:absolute;right:16rpx;bottom:140rpx;width:140rpx;"  name="time" placeholder="..." bindblur="showInputBlurMsg"></input>
+    </view>
+    
+    <view style="display:flex;flex-direction:row;">
+      <text style="font-size:80%;margin-top:2rpx;">来此路线: \n</text>
+      <input value="{{tapMarker.way}}" type="text" style="font-size:80%;width:300rpx;"  name="way" placeholder="..." bindblur="showInputBlurMsg"></input>
+    </view>
+
+    <!-- <view style="margin-top:20rpx;display:flex;flex-direction:row;">
+      <text space="ensp">信息填写: </text>
+      <input type="text" placeholder="时间'玩点'路线'费用" name="all_input"></input>
+    </view> -->
+    
+    <button size="mini" class="detailViewAddButton" form-type="submit">加改行程</button>
+    <button size="mini" class="detailViewAddButton" bindtap="removeSchedule" style="right:200rpx;">移除行程</button>
+
+  </form>
+
+  <!-- <button size="mini" class="detailViewAddButton" bindtap="showWay" style="top:0;">查看路线</button> -->
+</scroll-view>
+
+<scroll-view id="scheduleScrollView" scroll-y scroll-x>
+  <text space="ensp" style="font-size:40%;">总费用: {{allSpend}}</text>
+  <view style="border-bottom:1rpx solid rgba(0, 0, 0, 0.8);width:400rpx;margin-bottom:20rpx;"></view>
+  <view wx:for="{{markers_schedule}}" class="schedule_column">
+    <text id="{{item.id}}" bindtap="clickScheduleColumn" space="ensp" style="margin-top:4rpx;">    ↓路线: {{item.way}}\n</text>
+    <text id="{{item.id}}" bindtap="clickScheduleColumn">{{index+1}}. {{item.time}} {{item.title}}</text>
+    <view style="width:100%;display:flex;flex-direction:row;border-top:1rpx solid rgba(0, 0, 0, 0.8);"></view>
+  </view>
+</scroll-view>
+
+<view wx:if="{{showWayViewStatus}}" id="showWayView" animation="{{animation}}">
+  <button class="searchButton" bindtap="closeShowWayView" style="top:10rpx;">X</button>
+</view>
