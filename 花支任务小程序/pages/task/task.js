@@ -250,34 +250,31 @@ Page({
     })
 
     //再次检查选中透明状态 每日任务区
-    if(this.data.isDayTask){
-      var tempOpacity = wx.getStorageSync('dayOpacityColumn')||[]
-      for(var i in this.data.dayChecked)
-        if (this.data.dayChecked[i]) {
-          tempOpacity[i] = "opacity:0.6;";
-        }
-        else {
-          tempOpacity[i] = "";
-        }
-      wx.setStorageSync('dayOpacityColumn', tempOpacity)
-      this.setData({
-        dayOpacityColumn: wx.getStorageSync('dayOpacityColumn') || [],
-      })
-    }
-    else{
-      var tempOpacity = wx.getStorageSync('opacityColumn') || []
-      for (var i in this.data.checked)
-        if (this.data.checked[i]) {
-          tempOpacity[i] = "opacity:0.6;";
-        }
-        else {
-          tempOpacity[i] = "";
-        }
-      wx.setStorageSync('opacityColumn', tempOpacity)
-      this.setData({
-        opacityColumn: wx.getStorageSync('opacityColumn') || [],
-      })
-    }
+    var tempOpacity = wx.getStorageSync('dayOpacityColumn')||[]
+    for(var i in this.data.dayChecked)
+      if (this.data.dayChecked[i]) {
+        tempOpacity[i] = "opacity:0.6;";
+      }
+      else {
+        tempOpacity[i] = "";
+      }
+    wx.setStorageSync('dayOpacityColumn', tempOpacity)
+    this.setData({
+      dayOpacityColumn: wx.getStorageSync('dayOpacityColumn') || [],
+    })
+    //今日任务
+    tempOpacity = wx.getStorageSync('opacityColumn') || []
+    for (var i in this.data.checked)
+      if (this.data.checked[i]) {
+        tempOpacity[i] = "opacity:0.6;";
+      }
+      else {
+        tempOpacity[i] = "";
+      }
+    wx.setStorageSync('opacityColumn', tempOpacity)
+    this.setData({
+      opacityColumn: wx.getStorageSync('opacityColumn') || [],
+    })
 
     //myDate[1] 时间
     var time = util.formatTime(new Date())

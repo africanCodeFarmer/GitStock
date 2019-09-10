@@ -49,7 +49,7 @@
 }
 
 .dhLogs{
-  color: black;
+  color: gray;
 }
 
 .log-list {

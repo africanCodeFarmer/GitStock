@@ -1,9 +1,10 @@
 {  
   "pages": [
+
     "pages/task/task",
     "pages/logs/logs",
     "pages/index/index",
-    
+    "pages/appointment/appointment",
     "pages/timeDistribute/timeDistribute",
     "pages/changeTaskSet/changeTaskSet",
     "pages/change/change",
@@ -17,10 +18,16 @@
       {"text":"记账","pagePath":"pages/index/index",
       "iconPath": "/photos/jz.png","selectedIconPath": "/photos/sjz.png"
       },
-      {"text": "账单日志","pagePath": "pages/logs/logs",
+      {
+        "text": "行程",
+        "pagePath": "pages/appointment/appointment",
+        "iconPath": "/photos/yh.png",
+        "selectedIconPath": "/photos/syh.png"
+      },
+      {"text": "记账日志","pagePath": "pages/logs/logs",
       "iconPath": "/photos/zdrz.png","selectedIconPath": "/photos/szdrz.png"
       },
-      {"text": "完成日志","pagePath": "pages/taskLogs/taskLogs",
+      {"text": "任务日志","pagePath": "pages/taskLogs/taskLogs",
       "iconPath": "/photos/wcrz.png","selectedIconPath": "/photos/swcrz.png"
       }
     ]
