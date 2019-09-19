@@ -1,10 +1,5 @@
 {
   "navigationBarTitleText": "行程安排",
   "usingComponents": {},
-  "permission": {
-    "scope.userLocation": {
-      "desc": "开启定位服务"
-    }
-  },
   "disableScroll": true
 }

@@ -1,4 +1,9 @@
 {  
+  "permission": {
+    "scope.userLocation": {
+      "desc": "开启定位服务"
+    }
+  },
   "pages": [
 
     "pages/task/task",
@@ -18,12 +23,7 @@
       {"text":"记账","pagePath":"pages/index/index",
       "iconPath": "/photos/jz.png","selectedIconPath": "/photos/sjz.png"
       },
-      {
-        "text": "行程",
-        "pagePath": "pages/appointment/appointment",
-        "iconPath": "/photos/yh.png",
-        "selectedIconPath": "/photos/syh.png"
-      },
+      
       {"text": "记账日志","pagePath": "pages/logs/logs",
       "iconPath": "/photos/zdrz.png","selectedIconPath": "/photos/szdrz.png"
       },

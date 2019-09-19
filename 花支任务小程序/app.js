@@ -1,3 +1,10 @@
+// {
+//   "text": "行程",
+//   "pagePath": "pages/appointment/appointment",
+//   "iconPath": "/photos/yh.png",
+//   "selectedIconPath": "/photos/syh.png"
+// },
+
 //app.js
 var util = require('/utils/util.js'); 
  

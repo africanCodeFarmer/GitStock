@@ -1,4 +1,5 @@
 {
   "navigationBarTitleText": "规划",
-  "usingComponents": {}
+  "usingComponents": {},
+  "disableScroll": true
 }
