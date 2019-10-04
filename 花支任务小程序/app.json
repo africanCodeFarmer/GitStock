@@ -5,7 +5,6 @@
     }
   },
   "pages": [
-
     "pages/task/task",
     "pages/logs/logs",
     "pages/index/index",

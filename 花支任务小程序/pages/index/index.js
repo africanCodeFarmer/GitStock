@@ -49,6 +49,7 @@ Page({
         "银行卡",
         "其他",
         "饭卡",
+        "待还",
       ],
     ],
     transferValue:[
@@ -66,6 +67,7 @@ Page({
         "yhk",
         "qt",
         "fk",
+        "dh",
       ],
     ],
     iIndex:0,
@@ -105,7 +107,12 @@ Page({
       var toStockValue = parseFloat(wx.getStorageSync(toStockName) || 0)
       
       formStockValue -=money
-      toStockValue +=money
+      
+      if (toStockName=="dh_stock")
+        toStockValue -= money
+      else
+        toStockValue +=money
+
       formStockValue = formStockValue.toFixed(2)
       toStockValue = toStockValue.toFixed(2)
       money =  money.toFixed(2)
@@ -123,8 +130,18 @@ Page({
       var formChinaName = this.data.transferRange[0][this.data.iIndex]
       var toChinaName = this.data.transferRange[1][this.data.jIndex]
 
+      var isDhMsg = false; 
+      if (toStockName == "dh_stock")
+        isDhMsg = true;
+
       var msgForm = "-" + myDate[1] + " "+formChinaName + "-" + money.toString() + ": 转到" + toChinaName
-      var msgTo = "+" + myDate[1] + " "+toChinaName + "+" + money.toString() + ": "
+
+      //花呗注释处理
+      if (isDhMsg)
+        var msgTo = "-" + myDate[1] + " "+toChinaName + "+" + money.toString() + ": "
+      else
+        var msgTo = "+" + myDate[1] + " " + toChinaName + "+" + money.toString() + ": "
+
       var logs = wx.getStorageSync('nowDayLogs') || []
       logs.push(msgForm)
       logs.push(msgTo)
