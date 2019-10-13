@@ -21,7 +21,7 @@
 #columns_header_button{
   position: absolute;
   right: 20rpx;
-  width: auto;
+  width: 224rpx;
   margin-top: 10rpx;
   height:auto;
 }
@@ -103,12 +103,9 @@
 }
 
 .columns_header{
-  margin-top: 60rpx;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: block;
   font-size: 60rpx;
-  margin-left: 20rpx
+  text-align: center;
 }
 
 .columns{

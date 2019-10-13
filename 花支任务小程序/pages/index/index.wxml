@@ -25,7 +25,6 @@
 
 <view class="columns_header">
   <text>余额记录</text>
-  <button size="mini" id="columns_header_button" bindtap="wantTransfer">余额间转账</button>
 </view>
 
 <view class="myModal" wx:if="{{showTransferModal}}" animation="{{animation}}">
@@ -92,10 +91,15 @@
   </view>
 
   <view class="columns">
-      <text class="columns_values" class="columns_small_values">饭卡(不参与目标计算): {{fk_stock}}</text>
+      <text class="columns_values" class="columns_small_values">饭卡(不参与目标,分配计算): {{fk_stock}}</text>
       <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="饭卡">+</button>
       <text> \t\t\t</text>
       <button class='myButton addButton' size="mini" bindtap="wantSub" data-choose="饭卡">-</button>
+  </view>
+
+  <view class="columns">
+      <text class="columns_values" class="columns_small_values">可分配余额: {{avail_stock}}</text>
+      <button size="mini" id="columns_header_button" bindtap="wantTransfer">余额间转账</button>
   </view>
 </view>
 
