@@ -10,6 +10,8 @@ Page({
     aimName:"",
     aimPrice:"",
 
+    avail_stock:0,
+
     //各余额量
     wx_stock:0,
     zfb_stock: 0,
@@ -134,18 +136,24 @@ Page({
       if (toStockName == "dh_stock")
         isDhMsg = true;
 
-      var msgForm = "-" + myDate[1] + " "+formChinaName + "-" + money.toString() + ": 转到" + toChinaName
+      var msgForm = "b" + myDate[1] + " "+formChinaName + "-" + money.toString() + ": 转到" + toChinaName
 
-      //花呗注释处理
+      //花呗注释处理 
       if (isDhMsg)
-        var msgTo = "-" + myDate[1] + " "+toChinaName + "+" + money.toString() + ": "
+        var msgTo = "b" + myDate[1] + " "+toChinaName + "-" + money.toString() + ": "
       else
-        var msgTo = "+" + myDate[1] + " " + toChinaName + "+" + money.toString() + ": "
+        var msgTo = "b" + myDate[1] + " " + toChinaName + "+" + money.toString() + ": "
 
       var logs = wx.getStorageSync('nowDayLogs') || []
       logs.push(msgForm)
       logs.push(msgTo)
       wx.setStorageSync('nowDayLogs', logs)
+
+      wx.showToast({
+        icon: 'none',
+        title: '转账成功',
+        duration: 1000,
+      })
 
       this.onShow()
     }
@@ -473,10 +481,20 @@ Page({
   onShow:function(){
     clearTimeout()
 
+    //判断日期变更
+    var time = util.formatTime(new Date())
+    var needPrintTime = time.split(" ")[0]
+    var date = time.split("/")
+    var myDate = date[2].split(" ")
+    if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == ""))
+      app.onLaunch()
+
     this.setData({
       aimImagePath: (wx.getStorageSync('aimImagePath') == "" || wx.getStorageSync('aimImagePath') == "NaN") ? "photos/wait.jpg" : wx.getStorageSync('aimImagePath'),
       aimName:wx.getStorageSync('aimName'),
       aimPrice:wx.getStorageSync('aimPrice'),
+
+      avail_stock: (wx.getStorageSync('avail_stock') == "" || wx.getStorageSync('avail_stock') == "NaN") ? '0' : wx.getStorageSync('avail_stock'),
 
       wx_stock: (wx.getStorageSync('wx_stock') == "" || wx.getStorageSync('wx_stock') =="NaN") ? '0' : wx.getStorageSync('wx_stock'),
       zfb_stock: (wx.getStorageSync('zfb_stock') == "" || wx.getStorageSync('zfb_stock') == "NaN") ? '0' : wx.getStorageSync('zfb_stock'),
@@ -492,11 +510,15 @@ Page({
     var tempYhkStock = parseFloat(this.data.yhk_stock)
     var tempQtStock = parseFloat(this.data.qt_stock)
     var tempDhStock = parseFloat(this.data.dh_stock)
+    var tempDdStock = parseFloat(this.data.dd_stock)
     var tempAimPrice = parseFloat(this.data.aimPrice)
 
     this.setData({
-      aimPercent: (((tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock) / (tempAimPrice + tempDhStock))*100).toFixed(2)
+      aimPercent: (((tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock) / (tempAimPrice + tempDhStock))*100).toFixed(2),
+      avail_stock: tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock - tempDhStock + tempDdStock,
     })
+
+    wx.setStorageSync("avail_stock", this.data.avail_stock)
   },
 
   //设置目标跳转

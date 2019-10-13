@@ -44,14 +44,6 @@
   right: 10rpx;
 }
 
-.grayLogs{
-  color: rgb(159, 221, 159);
-}
-
-.dhLogs{
-  color: gray;
-}
-
 .log-list {
   display: flex;
   flex-direction: column;
@@ -62,12 +54,16 @@
   margin-left: 10rpx;
 }
 
-.addLogs{
+.greenLogs{
  color: rgb(159, 221, 159);
 }
 
-.subLogs{
-  color:gray;
+.grayLogs{
+  color:rgba(128,128,128,0.8);
+}
+
+.redLogs{
+  color:rgba(255, 0, 0, 0.8);
 }
 
 .dataLogs{
