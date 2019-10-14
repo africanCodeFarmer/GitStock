@@ -1,3 +1,16 @@
+view.rowline{
+  margin:14rpx 20rpx 0rpx 20rpx;
+  height: 2rpx;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+image.dragoncat{
+  top: 150rpx;
+  position: absolute;
+  width: 50rpx;
+  height: 36rpx;
+}
+
 /**index.wxss**/
 #transferTextarea{
   width: 100%;
@@ -71,6 +84,7 @@
 #historyButton{
   position: fixed;
   right: 0;
+  margin-top: 10px;
   margin-right:20rpx;
 }
 
@@ -96,10 +110,9 @@
 }
 
 #myProgress{
-  margin-left: 10rpx;
-  margin-right:10rpx;
   margin-bottom: 25rpx;
-  margin-top: 20rpx;
+  margin-top: 40rpx;
+  margin:40rpx 2rpx 25rpx 2rpx;
 }
 
 .columns_header{

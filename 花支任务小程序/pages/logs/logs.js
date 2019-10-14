@@ -44,17 +44,17 @@ Page({
     var id = this.data.changeId.substring(1)
 
     if (profix == 'n') {
-      var temp = nowDayLogs[id].split(":")
-      temp[3]=str
-      nowDayLogs[id] = temp.join(":")
-
+      // var temp = nowDayLogs[id].split(":")
+      // temp[3]=str
+      // nowDayLogs[id] = temp.join(":")
+      nowDayLogs[id] = str
       wx.setStorageSync('nowDayLogs', nowDayLogs)
     }
     else {
-      var temp = logs[id].split(":")
-      temp[3] = str
-      logs[id] = temp.join(":")
-
+      // var temp = logs[id].split(":")
+      // temp[3] = str
+      // logs[id] = temp.join(":")
+      logs[id] = str
       wx.setStorageSync('logs', logs)
     }
 
@@ -98,7 +98,7 @@ Page({
     var that = this
     wx.showModal({
       title: '删除',
-      content: msg.substring(1)+' ?',
+      content: msg+' ?',
       confirmText:'yes',
       cancelText:'no',
       success:function(res){
@@ -165,8 +165,9 @@ Page({
     else
       tempInputNote = logs[id]
 
+    //input_note: tempInputNote.split(":")[3] || "",
     this.setData({
-      input_note:tempInputNote.split(":")[3]||"",
+      input_note: tempInputNote,
       changeId:e.target.id,
       showChangeView: true
     })

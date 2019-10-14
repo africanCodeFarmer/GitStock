@@ -3,13 +3,26 @@
 
 <view id="myView">
   <view wx:for="{{nowDayTaskLogs}}">
-    <text wx:if="{{nowDayIsDate[index]=='t'}}" class="headerDate">{{item}}</text>
+    <text bindtap="click" id="n{{index}}" wx:if="{{nowDayIsDate[index]=='t'}}" class="headerDate">{{item}}</text>
     <text wx:else class="headerText">{{item}}</text>
   </view>
 
-  <view wx:for="{{taskLogs}}" wx:if="{{index<page*40}}">
+  <view bindtap="click" wx:for="{{taskLogs}}" id="h{{index}}" wx:if="{{index<page*40}}">
     <text wx:if="{{taskLogsIsDate[index]=='t'}}" class="headerDate">{{item}}</text>
     <text wx:else class="headerText">{{item}}</text>
   </view>
 </view>
 
+<view id="changeView" wx:if="{{showChangeView}}" animation="{{animation}}">
+  <form bindsubmit="goChange">
+    <text id="changViewHead">编辑窗口</text>
+    <view class="rowline"></view>
+    <textarea id="textView" type="text" name="input_note" value="{{input_note}}"></textarea>
+
+    <view id="viewButton">
+      <button class="myButton redButton" bindtap="delete" size="mini">删除</button>
+      <button class="myButton btn_ok" form-type="submit" size="mini">修改</button>
+      <button class="myButton" bindtap="closeChangeView" size="mini">关闭</button>
+    </view>
+  </form>
+</view>

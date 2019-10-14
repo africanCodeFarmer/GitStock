@@ -1,7 +1,9 @@
+<image class="dragoncat" style="left:{{dragoncatLeft-13}}px;" src="./photos/dragoncat.gif"></image>
+
 <!--index.wxml-->
 <view wx:if="{{showMyHistories}}" id="historyView" animation="{{animation}}">
   <text id="historyHeader">历史实现</text>
-
+  <view class="rowline"></view>
   <scroll-view scroll-y="true" style="height:400rpx;margin-bottom:100rpx;">
     <view wx:for="{{histories}}" class="historyColumn">{{item}}</view>
   </scroll-view>
@@ -20,16 +22,18 @@
     </view>
 </view>
  
-<progress id='myProgress' active='true' percent="{{aimPercent}}" border-radius="10" stroke-width="120rpx" active-mode="forwards" activeColor="rgb(159, 221, 159)">
+<!-- active-mode="forwards" active='true' border-radius="10" -->
+<progress id='myProgress' percent="{{aimPercent}}" border-radius="10" stroke-width="120rpx" activeColor="rgb(159, 221, 159)">
 </progress>
 
 <view class="columns_header">
   <text>余额记录</text>
+  <view class="rowline"></view>
 </view>
 
 <view class="myModal" wx:if="{{showTransferModal}}" animation="{{animation}}">
   <text class="modalHeader">余额转账</text>
-  
+  <view class="rowline"></view>
   <form bindsubmit="goTransfer">
     <view id="myModalCenter">
       <picker mode="multiSelector" range="{{transferRange}}" bindchange="showWantTransfer">
@@ -98,13 +102,14 @@
   </view>
 
   <view class="columns">
-      <text class="columns_values" class="columns_small_values">可分配余额: {{avail_stock}}</text>
+      <text class="columns_values" class="columns_small_values">可分配总余额: {{avail_stock}}</text>
       <button size="mini" id="columns_header_button" bindtap="wantTransfer">余额间转账</button>
   </view>
 </view>
 
 <view wx:if="{{showMyModal}}" class="myModal" animation="{{animation}}">
   <text class="modalHeader">{{sign=='+'?"+":"-"}} {{choose}}\n</text>
+  <view class="rowline"></view>
   <form bindsubmit="changeSubmit">
     <view id="inputView">
       <textarea name="input_value" class="modalTextAndInput" style="width:80%;height:160rpx;" placeholder="输入格式:金额+任意空格+注释" auto-focus="true"></textarea>
@@ -118,5 +123,5 @@
 </view>
 
 <view class="userinfo">
-  <text style="font-size:20rpx;color:gray;">--- 本程序基于本地缓存存储数据,清理微信缓存清注意备份数据 ---</text>
+  <text style="font-size:20rpx;color:gray;"></text>
 </view>

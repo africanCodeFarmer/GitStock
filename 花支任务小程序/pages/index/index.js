@@ -5,6 +5,8 @@ const util = require('../../utils/util.js')
 
 Page({
   data:{
+    dragoncatLeft:0,
+
     //目标图片 名字 价格
     aimImagePath:"photos/wait.jpg",
     aimName:"",
@@ -482,12 +484,12 @@ Page({
     clearTimeout()
 
     //判断日期变更
-    var time = util.formatTime(new Date())
-    var needPrintTime = time.split(" ")[0]
-    var date = time.split("/")
-    var myDate = date[2].split(" ")
-    if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == ""))
-      app.onLaunch()
+    // var time = util.formatTime(new Date())
+    // var needPrintTime = time.split(" ")[0]
+    // var date = time.split("/")
+    // var myDate = date[2].split(" ")
+    // if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == ""))
+    //   app.onLaunch()
 
     this.setData({
       aimImagePath: (wx.getStorageSync('aimImagePath') == "" || wx.getStorageSync('aimImagePath') == "NaN") ? "photos/wait.jpg" : wx.getStorageSync('aimImagePath'),
@@ -516,6 +518,16 @@ Page({
     this.setData({
       aimPercent: (((tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock) / (tempAimPrice + tempDhStock))*100).toFixed(2),
       avail_stock: tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock - tempDhStock + tempDdStock,
+    })
+
+
+    var tempDragoncatLeft = Math.floor(wx.getSystemInfoSync().windowWidth * (this.data.aimPercent / 100))
+    if (tempDragoncatLeft <10)
+      tempDragoncatLeft = 10
+    if (tempDragoncatLeft > wx.getSystemInfoSync().windowWidth-10)
+      tempDragoncatLeft = wx.getSystemInfoSync().windowWidth-10
+    this.setData({
+      dragoncatLeft: tempDragoncatLeft,
     })
 
     wx.setStorageSync("avail_stock", this.data.avail_stock)

@@ -19,7 +19,7 @@ App({
     var date = time.split("/")
     var myDate = date[2].split(" ")
     
-    //wx.setStorageSync('myDate', '15')
+    //wx.setStorageSync('myDate', '16')
 
     //日期变更
     if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == "")){
@@ -27,6 +27,14 @@ App({
       //把今天的任务加入历史任务
       var taskLogs = wx.getStorageSync('taskLogs')||[]
       var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs')||[]
+
+      var accomplishCount = 0
+      if (nowDayTaskLogs.length-1 > 0){
+        accomplishCount = nowDayTaskLogs.length - 1
+        //console.log("今日完成量:" + accomplishCount)
+        nowDayTaskLogs[0] = nowDayTaskLogs[0] + "_" + accomplishCount
+      }
+    
       for (var i in nowDayTaskLogs)
         taskLogs.unshift(nowDayTaskLogs[nowDayTaskLogs.length-i-1])
       wx.setStorageSync('taskLogs', taskLogs)

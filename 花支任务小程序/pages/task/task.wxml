@@ -1,3 +1,5 @@
+<image class="gril" src="./photos/rotatogril.gif"></image>
+
 <view id="header">
   <image src="{{userImagePath}}" id="headerImage" bindtap="changeTaskSet"></image>
   <view id="header_header">
@@ -86,6 +88,8 @@
         <checkbox value="1" checked="{{choosed[1]}}" color="goldenrod"></checkbox>
         <checkbox value="2" checked="{{choosed[2]}}" color="black"></checkbox>
       </checkbox-group>
+
+      <view class="rowline"></view>
 
       <textarea id="addModalTextarea" name="input_task" value="{{isEdit?input_note:''}}" placeholder="支持批量添加(一行一个任务)" auto-focus="true"></textarea>
       <view>

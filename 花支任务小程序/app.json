@@ -6,13 +6,16 @@
   },
   "pages": [
     "pages/task/task",
+    "pages/taskLogs/taskLogs",
+
     "pages/logs/logs",
     "pages/index/index",
+
     "pages/appointment/appointment",
+
     "pages/timeDistribute/timeDistribute",
     "pages/changeTaskSet/changeTaskSet",
-    "pages/change/change",
-    "pages/taskLogs/taskLogs"
+    "pages/change/change"
   ],
   "tabBar":{
     "list":[

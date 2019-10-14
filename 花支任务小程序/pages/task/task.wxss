@@ -1,3 +1,11 @@
+image.gril{
+  position: absolute;
+  right: 20rpx;
+  top: 10rpx;
+  width: 80rpx;
+  height: 80rpx;
+}
+
 #columnScrollView{
   padding-top: 10rpx;
   border-top: 1rpx solid rgba(128, 128, 128, 0.5);
@@ -100,6 +108,12 @@
   height: 480rpx;
 }
 
+view.rowline{
+  margin-top: 14rpx;
+  height: 2rpx;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+
 #addModal{
   z-index: 1000;
   position: fixed;
@@ -109,7 +123,7 @@
   background-color: white;
   border: 1px solid black;
   border-radius: 4%;
-  height: 600rpx;
+  height: 616rpx;
 }
 
 #columnHeader{
@@ -131,6 +145,8 @@
 }
 
 .columns_name{
+  margin-top: 4rpx;
+  line-height: 40rpx;
   margin-left: 20rpx;
   text-align: left;
   margin-right: 60rpx;
@@ -170,6 +186,7 @@
 }
 
 .footerButtonL{
+  background-color: lightblue;
   width: 300rpx;
   margin-top: 30rpx;
   position: absolute;

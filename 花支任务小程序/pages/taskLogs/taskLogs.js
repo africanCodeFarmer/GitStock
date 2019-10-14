@@ -5,6 +5,12 @@ Page({
   data:{
     page: 1, //page*40个数据
     
+    animation:"",
+
+    input_note:"",
+    changeId:0,
+    showChangeView:false,
+
     //今日任务日志
     nowDayTaskLogs:[],
     nowDayIsDate:[],
@@ -35,6 +41,54 @@ Page({
           that.onShow()
         }
       }
+    })
+  },
+
+  click:function(e){
+    // console.log(e.currentTarget.id);
+    // var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs') || []
+    // var taskLogs = wx.getStorageSync('taskLogs') || []
+    // var profix = e.currentTarget.id.substring(0, 1)
+    // var id = e.currentTarget.id.substring(1)
+
+    var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs') || []
+    var taskLogs = wx.getStorageSync('taskLogs') || []
+
+    var profix = e.currentTarget.id.substring(0, 1)
+    var id = e.currentTarget.id.substring(1)
+    var tempInputNote = ""
+
+    if (profix == 'n') {
+      tempInputNote = nowDayTaskLogs[id]
+    }
+    else
+      tempInputNote = taskLogs[id]
+
+    //input_note: tempInputNote.split(":")[3] || "",
+    this.setData({
+      input_note: tempInputNote,
+      changeId: e.currentTarget.id,
+      showChangeView: true
+    })
+
+    this.animation.opacity(1).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
+    })
+
+    //console.log(e.target.id)
+    this.onShow()
+  },
+
+  onLoad: function () {
+    this.animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'linear',
+    })
+
+    this.animation.opacity(0).step({ duration: 0 }).opacity(1).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
     })
   },
 
@@ -107,5 +161,121 @@ Page({
         duration: 1000,
       })
     }
-  }
+  },
+
+  closeChangeView: function () {
+    this.animation.opacity(0).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
+    })
+
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showChangeView: false
+      })
+    }, 200)
+  },
+
+  goChange: function (e) {
+    //console.log(e.detail.value["input_note"])
+
+    var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs') || []
+    var taskLogs = wx.getStorageSync('taskLogs') || []
+
+    var str = e.detail.value["input_note"]
+    var profix = this.data.changeId.substring(0, 1)
+    var id = this.data.changeId.substring(1)
+
+    if (profix == 'n') {
+      // var temp = nowDayLogs[id].split(":")
+      // temp[3]=str
+      // nowDayLogs[id] = temp.join(":")
+      nowDayTaskLogs[id] = str
+      wx.setStorageSync('nowDayTaskLogs', nowDayTaskLogs)
+    }
+    else {
+      // var temp = logs[id].split(":")
+      // temp[3] = str
+      // logs[id] = temp.join(":")
+      taskLogs[id] = str
+      wx.setStorageSync('taskLogs', taskLogs)
+    }
+
+    this.animation.opacity(0).step({ duration: 200 })
+    this.setData({
+      animation: this.animation.export(),
+    })
+
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showChangeView: false
+      })
+
+      wx.showToast({
+        icon: 'none',
+        title: '修改成功',
+        duration: 1000,
+      })
+    }, 200)
+
+    this.onShow()
+  },
+
+  //删除功能
+  delete: function () {
+    var that = this
+
+    var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs') || []
+    var taskLogs = wx.getStorageSync('taskLogs') || []
+
+    var profix = that.data.changeId.substring(0, 1)
+    var id = that.data.changeId.substring(1)
+
+    var msg = ""
+    if (profix == 'n')
+      msg = nowDayTaskLogs[id]
+    else
+      msg = taskLogs[id]
+
+    var that = this
+    wx.showModal({
+      title: '删除',
+      content: msg + ' ?',
+      confirmText: 'yes',
+      cancelText: 'no',
+      success: function (res) {
+        if (res.confirm) {
+          if (profix == 'n') {
+            nowDayTaskLogs.splice(id, 1)
+            wx.setStorageSync('nowDayTaskLogs', nowDayTaskLogs)
+          }
+          else {
+          taskLogs.splice(id, 1)
+            wx.setStorageSync('taskLogs', taskLogs)
+          }
+
+          that.animation.opacity(0).step({ duration: 200 })
+          that.setData({
+            animation: that.animation.export(),
+          })
+
+          setTimeout(function () {
+            that.setData({
+              showChangeView: false
+            })
+          }, 200)
+
+          wx.showToast({
+            icon: 'none',
+            title: '删除成功',
+            duration: 1000,
+          })
+
+          that.onShow()
+        }
+      }
+    })
+  },
 })

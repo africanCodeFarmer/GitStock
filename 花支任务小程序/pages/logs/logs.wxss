@@ -1,3 +1,13 @@
+view.rowline{
+  margin:14rpx 10rpx 0rpx 10rpx;
+  height: 2rpx;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+button.redButton{
+  background-color: rgb(255, 134, 134);
+}
+
 .btn_ok{
   background-color: rgb(159, 221, 159);
 }
@@ -22,7 +32,8 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  font-size: 160%;
+  font-size: 120%;
+  margin-top: 10rpx;
 }
 
 #changeView{
@@ -33,7 +44,7 @@
   left: 10%;
   width:80%;
   top: 20%;
-  height: 400rpx;
+  height: 420rpx;
 }
 
 #clearLogsButton{
@@ -52,12 +63,12 @@
 
 .log-item {
   margin-left: 10rpx;
+  word-break:break-all;
 }
 
 .greenLogs{
  color: rgb(159, 221, 159);
 }
-
 .grayLogs{
   color:rgba(128,128,128,0.8);
 }
@@ -67,8 +78,11 @@
 }
 
 .dataLogs{
+  display: block;
+  text-align: center;
   font-size: 140%;
-  border-bottom: 1rpx solid gray;
+
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.8);
   padding-bottom: 4rpx;
   margin-right: 10rpx;
 }

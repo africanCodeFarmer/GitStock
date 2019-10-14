@@ -1,3 +1,53 @@
+view.rowline{
+  margin:14rpx 10rpx 0rpx 10rpx;
+  height: 2rpx;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+#textView{
+  width: 96%;
+  height: 240rpx;
+  padding:2%;
+}
+
+button.redButton{
+  background-color: rgb(255, 134, 134);
+}
+
+.btn_ok{
+  background-color: rgb(159, 221, 159);
+}
+
+.myButton{
+  width: 160rpx;
+  height: 60rpx;
+  margin: 20rpx;
+}
+
+#viewButton{
+  position: inline-block;
+  float: left;
+}
+
+#changViewHead{
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 120%;
+}
+
+#changeView{
+  border: 1rpx solid gray;
+  border-radius: 6%;
+  background-color: white;
+  position: fixed;
+  left: 10%;
+  width:80%;
+  top: 20%;
+  height: 430rpx;
+}
+
 #myView{
   margin-left: 10rpx;
   margin-right: 10rpx;
@@ -17,13 +67,13 @@
 }
 
 .headerDate{
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.8);
+  display: block;
+  text-align: center;
   margin-top: 10rpx;
-  display: flex;
   flex-direction: column;
   font-size: 140%;
-  border-bottom: 1rpx solid gray;
   padding-bottom: 4rpx;
-  margin-right: 10rpx;
 }
 
 .headerText{
