@@ -2,9 +2,9 @@
 
 <form bindsubmit="formSubmit">  
   <view id="myView">
-    <input class="myInput" name="new_name" placeholder="此处输入名字"></input><text>\n</text>
-    <input class="myInput" name="new_price" placeholder="此处输入价格"></input><text>\n</text>
-    <image src="{{imagePath}}"></image>
+    <input class="myInput" name="new_name" placeholder="此处输入名字" value="{{aimName}}"></input><text>\n</text>
+    <input class="myInput" name="new_price" placeholder="此处输入价格" value="{{aimPrice}}"></input><text>\n</text>
+    <image src="{{aimImagePath}}"></image>
   </view>
 
   <button bindtap="chooseNewImage">选择新图片</button>

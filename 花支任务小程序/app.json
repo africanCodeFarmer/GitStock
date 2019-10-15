@@ -6,9 +6,8 @@
   },
   "pages": [
     "pages/task/task",
-    "pages/taskLogs/taskLogs",
-
     "pages/logs/logs",
+    "pages/taskLogs/taskLogs",
     "pages/index/index",
 
     "pages/appointment/appointment",

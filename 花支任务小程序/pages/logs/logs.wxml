@@ -1,4 +1,5 @@
 <button id="clearLogsButton" bindtap="clearLogs" size="mini">清空账单</button>
+<button class="showGraphButton" bindtap="showChartsView" size="mini">显示图形</button>
 
 <view class="container log-list">
 
@@ -45,4 +46,9 @@
       <button class="myButton" bindtap="closeChangeView" size="mini">关闭</button>
     </view>
   </form>
+</view>
+
+<view class="chartsView" hidden="{{!showChartsView}}" animation="{{animationCharts}}">
+  <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas"></canvas>
+  <button class="closeChartsViewButton" bindtap="closeChartsView">关闭</button>
 </view>

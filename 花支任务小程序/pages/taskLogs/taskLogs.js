@@ -1,8 +1,14 @@
 const util = require('../../utils/util.js')
 const app = getApp()
+const wxCharts = require('../../utils/wxcharts.js');
+var windowW = 0;
 
 Page({
   data:{
+    animationCharts:"",
+
+    showChartsView:false,
+
     page: 1, //page*40个数据
     
     animation:"",
@@ -81,6 +87,21 @@ Page({
   },
 
   onLoad: function () {
+    this.animationCharts = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'linear',
+    })
+
+    // 屏幕宽度
+    this.setData({
+      imageWidth: wx.getSystemInfoSync().windowWidth
+    });
+    //console.log(this.data.imageWidth);
+
+    //计算屏幕宽度比列
+    windowW = this.data.imageWidth / 375;
+    //console.log(windowW);
+    
     this.animation = wx.createAnimation({
       duration: 1000,
       timingFunction: 'linear',
@@ -93,6 +114,89 @@ Page({
   },
 
   onShow:function(){
+    //columnCanvas 生成
+    new wxCharts({
+      canvasId: 'columnCanvas',
+      type: 'column',
+      animation: false,
+      legend:false,
+      categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+      series: [
+        {
+          name: '日完成数',
+          data: [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],
+          format: function (val, name) {
+            return val.toFixed(0) + '';
+          }
+        }, 
+        // {
+        //   name: '成交量',
+        //   data: [6.00, 9.00, 20.00, 45.00],
+        //   format: function (val, name) {
+        //     return val.toFixed(2) + '万';
+        //   }
+        // }
+      ],
+      yAxis: {
+        // format: function (val) {
+        //   return val + '万';
+        // },
+        // title: 'hello',
+        min: 0
+      },
+      xAxis: {
+        disableGrid: false,
+        type: 'calibration'
+      },
+      extra: {
+        column: {
+          width: 4
+        }
+      },
+      width: (375 * windowW),
+      height: (200 * windowW),
+    });
+
+    //lineCanvas
+    // new wxCharts({
+    //   canvasId: 'lineCanvas',
+    //   type: 'line',
+    //   legend: false,
+    //   categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+    //   animation: false,
+    //   series: [
+    //     {
+    //       name: '成交量1',
+    //       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    //       format: function (val, name) {
+    //         return val.toFixed(0) + '';
+    //       }
+    //     }, 
+    //     // {
+    //     //   name: '成交量2',
+    //     //   data: [2, 0, 0, 3, null, 4, 0, 0, 2, 0],
+    //     //   format: function (val, name) {
+    //     //     return val.toFixed(2) + '万';
+    //     //   }
+    //     // }
+    //   ],
+    //   xAxis: {
+    //     disableGrid: true
+    //   },
+    //   yAxis: {
+    //     title: '',
+    //     format: function (val) {
+    //       return val.toFixed(2);
+    //     },
+    //     min: 0
+    //   },
+    //   width: (375 * windowW),
+    //   height: (200 * windowW),
+    //   dataLabel: true,
+    //   dataPointShape: true,
+    //   extra: {
+    //   }
+    // });
 
     //判断日期变更
     var time = util.formatTime(new Date())
@@ -278,4 +382,32 @@ Page({
       }
     })
   },
+
+  showChartsView:function(){
+    this.setData({
+      showChartsView: true,
+    })
+
+    var that = this
+    setTimeout(function () {
+      that.animationCharts.opacity(1).translateY(-6).step({ duration: 200 })
+      that.setData({
+        animationCharts: that.animationCharts.export(),
+      })
+    },200);
+  },
+
+  closeChartsView:function(){
+    this.animationCharts.opacity(0).translateY(6).step({ duration: 200 })
+    this.setData({
+      animationCharts: this.animationCharts.export(),
+    })
+
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showChartsView: false
+      })
+    }, 200)
+  }
 })

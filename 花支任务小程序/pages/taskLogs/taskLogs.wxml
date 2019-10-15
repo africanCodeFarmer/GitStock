@@ -1,5 +1,6 @@
 <button bindtap="clearLogs" size="mini" id="clearButton">清空历史</button>
 <button id="clearAllButton" bindtap="clearAllStorage" size="mini">清空缓存</button>
+<button class="showGraphButton" bindtap="showChartsView" size="mini">显示图形</button>
 
 <view id="myView">
   <view wx:for="{{nowDayTaskLogs}}">
@@ -25,4 +26,9 @@
       <button class="myButton" bindtap="closeChangeView" size="mini">关闭</button>
     </view>
   </form>
+</view>
+
+<view class="chartsView" hidden="{{!showChartsView}}" animation="{{animationCharts}}">
+  <canvas canvas-id="columnCanvas" disable-scroll="true" class="canvas"></canvas>
+  <button class="closeChartsViewButton" bindtap="closeChartsView">关闭</button>
 </view>

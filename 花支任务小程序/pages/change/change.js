@@ -2,7 +2,17 @@ const util = require('../../utils/util.js')
 
 Page({
   data:{
-    imagePath:"",
+    aimImagePath:"",
+    aimName:"",
+    aimPrice:"",
+  },
+
+  onShow:function(){
+    this.setData({
+      aimName: wx.getStorageSync('aimName')||"",
+      aimPrice: wx.getStorageSync('aimPrice')||"",
+      aimImagePath: wx.getStorageSync('aimImagePath') || "",
+    })
   },
 
   //提交目标更改
@@ -37,7 +47,7 @@ Page({
 
           //设置本地缓存
           var temp = e.detail.value
-          wx.setStorageSync('aimImagePath', that.data.imagePath)
+          wx.setStorageSync('aimImagePath', that.data.aimImagePath)
           wx.setStorageSync('aimName', temp["new_name"])
           wx.setStorageSync('aimPrice', temp["new_price"])
 
@@ -57,7 +67,7 @@ Page({
     else{
       //设置本地缓存
       var temp = e.detail.value
-      wx.setStorageSync('aimImagePath', this.data.imagePath)
+      wx.setStorageSync('aimImagePath', this.data.aimImagePath)
       wx.setStorageSync('aimName', temp["new_name"])
       wx.setStorageSync('aimPrice', temp["new_price"])
 
@@ -85,7 +95,7 @@ Page({
           tempFilePath: res.tempFilePaths[0],
           success:function(res){
             that.setData({
-              imagePath:res.savedFilePath
+              aimImagePath:res.savedFilePath
             })
           }
         })

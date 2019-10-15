@@ -1,3 +1,32 @@
+button.closeChartsViewButton{
+  position: absolute;
+  top: 420rpx;
+  display: block;
+  width: 100%;
+  margin: 10rpx auto;
+  overflow: hidden;
+}
+button.showGraphButton{
+  position: fixed;
+  top: 80rpx;
+  right: 20rpx;
+  background-color: lightblue;
+}
+view.chartsView{
+  position: absolute;
+  padding-top: 20rpx;
+  width: 100%;
+  height: 510rpx;
+  background-color: white;
+  border-top: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  top: 300rpx;
+}
+.canvas {
+    width: 750rpx;
+    height: 500rpx;
+}
+
 view.rowline{
   margin:14rpx 10rpx 0rpx 10rpx;
   height: 2rpx;
