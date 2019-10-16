@@ -1,10 +1,11 @@
-/* image.rundog{
-  position: absolute;
-  width: 400rpx;
-  height: 300rpx;
-  margin-left: 40rpx;
-} */
-
+view.rowline{
+  display: block;
+  text-align: center;
+  height: 2px;
+  border-top: 1px solid gray;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
 #taskViewButton{
   position: absolute;
   bottom: 20rpx;

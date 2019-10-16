@@ -1,3 +1,11 @@
+view.rowline{
+  display: block;
+  text-align: center;
+  height: 2px;
+  border-top: 1px solid black;
+  /* margin:0px 10rpx 0px 10 rpx; */
+}
+
 text.chartsViewText{
   position: absolute;
   display: block;
