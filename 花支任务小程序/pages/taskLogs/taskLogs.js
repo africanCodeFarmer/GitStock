@@ -5,9 +5,11 @@ var windowW = 0;
 
 Page({
   data:{
+    month:"0",
     animationCharts:"",
+    dayCompeleteDataArray: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 
-    showChartsView:false,
+    showChartsView:"none",
 
     page: 1, //page*40个数据
     
@@ -114,48 +116,16 @@ Page({
   },
 
   onShow:function(){
-    //columnCanvas 生成
-    new wxCharts({
-      canvasId: 'columnCanvas',
-      type: 'column',
-      animation: false,
-      legend:false,
-      categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
-      series: [
-        {
-          name: '日完成数',
-          data: [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],
-          format: function (val, name) {
-            return val.toFixed(0) + '';
-          }
-        }, 
-        // {
-        //   name: '成交量',
-        //   data: [6.00, 9.00, 20.00, 45.00],
-        //   format: function (val, name) {
-        //     return val.toFixed(2) + '万';
-        //   }
-        // }
-      ],
-      yAxis: {
-        // format: function (val) {
-        //   return val + '万';
-        // },
-        // title: 'hello',
-        min: 0
-      },
-      xAxis: {
-        disableGrid: false,
-        type: 'calibration'
-      },
-      extra: {
-        column: {
-          width: 4
-        }
-      },
-      width: (375 * windowW),
-      height: (200 * windowW),
-    });
+    //统计完成数
+    var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs') || []
+    var nowDayTaskCompeleteCount = 0;
+    if (nowDayTaskLogs.length>1)
+      nowDayTaskCompeleteCount = nowDayTaskLogs.length-1
+
+    if (nowDayTaskLogs[0].indexOf("_")<0){
+      nowDayTaskLogs[0] = nowDayTaskLogs[0] + "_" + nowDayTaskCompeleteCount
+      wx.setStorageSync('nowDayTaskLogs', nowDayTaskLogs)
+    }
 
     //lineCanvas
     // new wxCharts({
@@ -384,9 +354,86 @@ Page({
   },
 
   showChartsView:function(){
+    var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs')||[]
+    var taskLogs = wx.getStorageSync('taskLogs') || []
+
+    var month = nowDayTaskLogs[0].split("/")[1]
     this.setData({
-      showChartsView: true,
+      month: month
     })
+
+    var days = {};
+    var dayCompeleteDataArray = this.data.dayCompeleteDataArray;
+
+    for(var i=1;i<=31;i++){
+      days[i]=0
+    }
+
+    days[parseInt(nowDayTaskLogs[0].split("/")[2].split("_")[0])] = parseInt(nowDayTaskLogs[0].split("/")[2].split("_")[1]);
+    for (var i = 0; i < taskLogs.length;i++){
+      if (taskLogs[i].startsWith("t") && taskLogs[i].split("/")[1]==month)
+        days[parseInt(taskLogs[i].split("/")[2].split("_")[0])] = parseInt(taskLogs[i].split("/")[2].split("_")[1]);
+    }
+    console.log(days)
+
+    for (var i = 0; i <= 30;i++){
+      dayCompeleteDataArray[i]=days[i+1];
+    }
+    console.log(dayCompeleteDataArray)
+    
+    this.setData({
+      showChartsView: "",
+      dayCompeleteDataArray: dayCompeleteDataArray,
+    })
+
+    //显示图表
+    //columnCanvas 生成
+    var dayCompeleteDataArray = this.data.dayCompeleteDataArray
+    new wxCharts({
+      canvasId: 'columnCanvas',
+      type: 'column',
+      animation: false,
+      legend: false,
+      categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+      series: [
+        {
+          name: '日完成数',
+          // data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+          data:dayCompeleteDataArray,
+          format: function (val, name) {
+            return val.toFixed(0) + '';
+          }
+        },
+        // {
+        //   name: '成交量',
+        //   data: [6.00, 9.00, 20.00, 45.00],
+        //   format: function (val, name) {
+        //     return val.toFixed(2) + '万';
+        //   }
+        // }
+      ],
+      yAxis: {
+        // format: function (val) {
+        //   return val + '万';
+        // },
+        // title: 'hello',
+        format: function (val) {
+          return val.toFixed(0);
+        },
+        min: 0
+      },
+      xAxis: {
+        disableGrid: false,
+        type: 'calibration'
+      },
+      extra: {
+        column: {
+          width: 4
+        }
+      },
+      width: (375 * windowW),
+      height: (200 * windowW),
+    });
 
     var that = this
     setTimeout(function () {
@@ -406,7 +453,7 @@ Page({
     var that = this
     setTimeout(function () {
       that.setData({
-        showChartsView: false
+        showChartsView: "none"
       })
     }, 200)
   }

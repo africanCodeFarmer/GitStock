@@ -1,6 +1,6 @@
 <button bindtap="clearLogs" size="mini" id="clearButton">清空历史</button>
 <button id="clearAllButton" bindtap="clearAllStorage" size="mini">清空缓存</button>
-<button class="showGraphButton" bindtap="showChartsView" size="mini">显示图形</button>
+<button class="showGraphButton" bindtap="showChartsView" size="mini">本月图表</button>
 
 <view id="myView">
   <view wx:for="{{nowDayTaskLogs}}">
@@ -28,7 +28,8 @@
   </form>
 </view>
 
-<view class="chartsView" hidden="{{!showChartsView}}" animation="{{animationCharts}}">
-  <canvas canvas-id="columnCanvas" disable-scroll="true" class="canvas"></canvas>
+<view class="chartsView" style="display:{{showChartsView}};" animation="{{animationCharts}}">
+  <text class="chartsViewText">{{month}}月任务量统计图</text>
+  <canvas canvas-id="columnCanvas" class="canvas"></canvas>
   <button class="closeChartsViewButton" bindtap="closeChartsView">关闭</button>
 </view>

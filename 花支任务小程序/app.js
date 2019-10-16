@@ -19,7 +19,12 @@ App({
     var date = time.split("/")
     var myDate = date[2].split(" ")
     
-    //wx.setStorageSync('myDate', '16')
+    //wx.setStorageSync('myDate', '17')
+    // var temp = "t2019/10/11_12";
+    // var temp2 = wx.getStorageSync("taskLogs")
+    // for(var i=0;i<10;i++)
+    // temp2.shift(temp)
+    // wx.setStorageSync("taskLogs", temp2)
 
     //日期变更
     if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == "")){
@@ -28,12 +33,12 @@ App({
       var taskLogs = wx.getStorageSync('taskLogs')||[]
       var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs')||[]
 
-      var accomplishCount = 0
-      if (nowDayTaskLogs.length-1 > 0){
-        accomplishCount = nowDayTaskLogs.length - 1
-        //console.log("今日完成量:" + accomplishCount)
-        nowDayTaskLogs[0] = nowDayTaskLogs[0] + "_" + accomplishCount
-      }
+      // var accomplishCount = 0
+      // if (nowDayTaskLogs.length-1 > 0){
+      //   accomplishCount = nowDayTaskLogs.length - 1
+      //   //console.log("今日完成量:" + accomplishCount)
+      //   nowDayTaskLogs[0] = nowDayTaskLogs[0] + "_" + accomplishCount
+      // }
     
       for (var i in nowDayTaskLogs)
         taskLogs.unshift(nowDayTaskLogs[nowDayTaskLogs.length-i-1])

@@ -8,6 +8,10 @@ Page({
   data: {
     animationCharts:"",
 
+    month:"",
+    nowDayPay:0.00,
+    dayPayDataArray: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,],
+
     page: 1, //page*40个数据
 
     //历史账单
@@ -202,6 +206,57 @@ Page({
 
   //输出日志
   onShow: function () {
+    //统计今天的总支出
+    var nowDayLogs = wx.getStorageSync('nowDayLogs') || []
+    var logs = wx.getStorageSync('logs') || []
+
+    //统计今日的总支出
+    var totalPay = 0.00;
+    for (var i = 1; i < nowDayLogs.length;i++){
+      if (nowDayLogs[i].substring(0,1)!='b'){
+        var money = nowDayLogs[i].split(":")[2];
+        var sign="+";
+        var profix = nowDayLogs[i].substring(0,1)
+        if ( money.split("-").length>1 ){
+          sign="-";
+          money = money.split("-")[1];
+        }
+        else{
+          sign = "+";
+          money = money.split("+")[1];
+        }
+        if(profix=='a')
+          sign='-'
+        if(profix=='s')
+          sign='+'
+
+        totalPay = (sign == "+") ? (totalPay + parseFloat(money)) : (totalPay - parseFloat(money))
+        //console.log(profix+" "+sign+money)
+      }
+    }
+    totalPay = -totalPay; //因为是要统计支出 所以取反画图
+    //console.log(totalPay) //今日总支出
+    if (nowDayLogs[0].split(" ").length==1){
+      if (totalPay>=0)
+        nowDayLogs[0] = nowDayLogs[0] + " -" + totalPay
+      else
+        nowDayLogs[0] = nowDayLogs[0] + " +" + totalPay.toString().substring(1)
+    }
+    else{
+      var commont = nowDayLogs[0].split(" ");
+      if (totalPay >= 0)
+        commont[1] = " -" + totalPay
+      else
+        commont[1] = " +" + totalPay.toString().substring(1)
+      nowDayLogs[0] = commont[0] + commont[1]
+    }
+    //total为今日收支 //支出为正 收入为负(画表格需要)
+    wx.setStorageSync('nowDayLogs', nowDayLogs)
+    this.setData({
+      nowDayPay:totalPay
+    })
+
+
     //columnCanvas 生成
     // new wxCharts({
     //   canvasId: 'columnCanvas',
@@ -244,47 +299,6 @@ Page({
     //   width: (375 * windowW),
     //   height: (200 * windowW),
     // });
-
-    //lineCanvas
-    new wxCharts({
-      canvasId: 'lineCanvas',
-      type: 'line',
-      legend: false,
-      categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
-      animation: false,
-      series: [
-        {
-          name: '成交量1',
-          data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-          format: function (val, name) {
-            return val.toFixed(0) + '';
-          }
-        }, 
-        // {
-        //   name: '成交量2',
-        //   data: [2, 0, 0, 3, null, 4, 0, 0, 2, 0],
-        //   format: function (val, name) {
-        //     return val.toFixed(2) + '万';
-        //   }
-        // }
-      ],
-      xAxis: {
-        disableGrid: true
-      },
-      yAxis: {
-        title: '',
-        format: function (val) {
-          return val.toFixed(2);
-        },
-        min: 0
-      },
-      width: (375 * windowW),
-      height: (200 * windowW),
-      dataLabel: true,
-      dataPointShape: true,
-      extra: {
-      }
-    });
 
     //判断日期变更
     var time = util.formatTime(new Date())
@@ -362,6 +376,79 @@ Page({
   },
 
   showChartsView: function () {
+    var nowDayLogs = wx.getStorageSync('nowDayLogs') || []
+    var month = nowDayLogs[0].split("/")[1]
+    var logs = wx.getStorageSync('logs') || []
+    this.setData({
+      month: month
+    })
+
+    //从这
+    var days = {};
+    var dayPayDataArray = this.data.dayPayDataArray;
+
+    for (var i = 1; i <= 31; i++) {
+      days[i] = 0
+    }
+
+    days[parseInt(nowDayLogs[0].split("/")[2].split(" ")[0])] = parseFloat(nowDayLogs[0].split("/")[2].split(" ")[1]);
+    console.log(days)
+    for (var i = 0; i < logs.length; i++) {
+      if (logs[i].startsWith("t") && logs[i].split("/")[1] == month)
+        days[parseInt(logs[i].split("/")[2].split(" ")[0])] = parseFloat(logs[i].split("/")[2].split(" ")[1]);
+    }
+    console.log(days)
+
+    for (var i = 0; i <= 30; i++) {
+      dayPayDataArray[i] = days[i + 1];
+    }
+    console.log(dayPayDataArray)
+    //到这
+
+    //lineCanvas
+    new wxCharts({
+      canvasId: 'lineCanvas',
+      type: 'line',
+      legend: false,
+      categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,31],
+      animation: false,
+      series: [
+        {
+          name: '',
+          data: dayPayDataArray,
+          format: function (val, name) {
+            return val.toFixed(2) + '';
+          }
+        },
+        // {
+        //   name: '成交量2',
+        //   data: [2, 0, 0, 3, null, 4, 0, 0, 2, 0],
+        //   format: function (val, name) {
+        //     return val.toFixed(2) + '万';
+        //   }
+        // }
+      ],
+      xAxis: {
+        disableGrid: true
+      },
+      yAxis: {
+        title: '',
+        format: function (val) {
+          return val.toFixed(2);
+        },
+        min: 0
+      },
+      extra: {
+        column: {
+          width: 2
+        }
+      },
+      width: (375 * windowW),
+      height: (200 * windowW),
+      dataLabel: true,
+      dataPointShape: true,
+    });
+
     this.setData({
       showChartsView: true,
     })

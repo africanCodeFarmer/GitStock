@@ -484,12 +484,12 @@ Page({
     clearTimeout()
 
     //判断日期变更
-    // var time = util.formatTime(new Date())
-    // var needPrintTime = time.split(" ")[0]
-    // var date = time.split("/")
-    // var myDate = date[2].split(" ")
-    // if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == ""))
-    //   app.onLaunch()
+    var time = util.formatTime(new Date())
+    var needPrintTime = time.split(" ")[0]
+    var date = time.split("/")
+    var myDate = date[2].split(" ")
+    if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == ""))
+      app.onLaunch()
 
     this.setData({
       aimImagePath: (wx.getStorageSync('aimImagePath') == "" || wx.getStorageSync('aimImagePath') == "NaN") ? "photos/wait.jpg" : wx.getStorageSync('aimImagePath'),
