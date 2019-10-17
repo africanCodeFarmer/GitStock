@@ -5,7 +5,16 @@ view.rowline{
   border-top: 1px solid black;
   /* margin:0px 10rpx 0px 10 rpx; */
 }
-
+text.chartsViewTextSub{
+  position: absolute;
+  display: block;
+  text-align: center;
+  font-size: 80%;
+  margin-left: 28%;
+  color: gray;
+  top: 60rpx;
+  right: 40rpx;
+}
 text.chartsViewText{
   position: absolute;
   display: block;

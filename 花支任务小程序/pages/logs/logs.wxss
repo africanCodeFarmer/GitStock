@@ -4,8 +4,18 @@ text.chartsViewText{
   text-align: center;
   font-size: 140%;
   margin-left: 28%;
-  top: 40rpx;
+  top: 14rpx;
 }
+text.chartsViewTextSub1{
+  position: absolute;
+  display: block;
+  text-align: center;
+  font-size: 80%;
+  margin-left: 20%;
+  color: gray;
+  top: 78rpx;
+}
+
 button.closeChartsViewButton{
   position: absolute;
   top: 520rpx;

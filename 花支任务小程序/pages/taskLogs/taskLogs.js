@@ -7,6 +7,7 @@ Page({
   data:{
     month:"0",
     animationCharts:"",
+    monthCompeleteCount:0, //月完成量
     dayCompeleteDataArray: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 
     showChartsView:"none",
@@ -364,7 +365,8 @@ Page({
 
     var days = {};
     var dayCompeleteDataArray = this.data.dayCompeleteDataArray;
-
+    var monthCompeleteCount = 0
+    
     for(var i=1;i<=31;i++){
       days[i]=0
     }
@@ -374,16 +376,18 @@ Page({
       if (taskLogs[i].startsWith("t") && taskLogs[i].split("/")[1]==month)
         days[parseInt(taskLogs[i].split("/")[2].split("_")[0])] = parseInt(taskLogs[i].split("/")[2].split("_")[1]);
     }
-    console.log(days)
+    //console.log(days)
 
     for (var i = 0; i <= 30;i++){
       dayCompeleteDataArray[i]=days[i+1];
+      monthCompeleteCount += parseInt(days[i + 1]);
     }
-    console.log(dayCompeleteDataArray)
+    //console.log(dayCompeleteDataArray)
     
     this.setData({
       showChartsView: "",
       dayCompeleteDataArray: dayCompeleteDataArray,
+      monthCompeleteCount, monthCompeleteCount
     })
 
     //显示图表

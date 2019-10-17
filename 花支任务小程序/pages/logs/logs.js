@@ -10,6 +10,9 @@ Page({
 
     month:"",
     nowDayPay:0.00,
+    totalMonthPay:0.00, //月总支出
+    totalMonthMake:0.00, //月总收入
+    totalMonthStorage:0.00, //月剩余
     adddayPayDataArray: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,],
     subdayPayDataArray: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,],
 
@@ -388,6 +391,8 @@ Page({
     var days = {};
     var adddayPayDataArray = this.data.adddayPayDataArray;
     var subdayPayDataArray = this.data.subdayPayDataArray;
+    var totalMonthPay = 0.00
+    var totalMonthMake = 0.00
 
     for (var i = 1; i <= 31; i++) {
       days[i] = 0
@@ -404,11 +409,21 @@ Page({
     for (var i = 0; i <= 30; i++) {
       if (days[i + 1]>=0){
         adddayPayDataArray[i] = days[i + 1];
+        totalMonthPay += parseFloat(days[i + 1])
       }
       else{
         subdayPayDataArray[i] = -days[i + 1];
+        totalMonthMake += parseFloat(-days[i + 1]);
       }
     }
+
+    totalMonthPay = totalMonthPay.toFixed(2),
+    totalMonthMake = totalMonthMake.toFixed(2),
+    this.setData({
+      totalMonthPay: totalMonthPay,
+      totalMonthMake: totalMonthMake,
+      totalMonthStorage: totalMonthPay - totalMonthMake, //这里顺序反了 但是直接这样吧
+    })
     //console.log(dayPayDataArray)
     //到这
 
@@ -418,6 +433,7 @@ Page({
       canvasId: 'canvas4',
       type: 'area',
       legend:true,
+      animation:false,
       categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
       series: [
         {

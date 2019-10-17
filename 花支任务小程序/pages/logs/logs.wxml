@@ -50,6 +50,8 @@
 
 <view class="chartsView" hidden="{{!showChartsView}}" animation="{{animationCharts}}">
   <text class="chartsViewText">{{month}}月收支量统计图</text>
+  <text class="chartsViewTextSub1" space="ensp">月收入: {{totalMonthPay}}   月支出: {{totalMonthMake}}   月剩余: {{totalMonthStorage}}</text>
+
   <canvas canvas-id="canvas4" disable-scroll="true" class="canvas"></canvas>
   <button class="closeChartsViewButton" bindtap="closeChartsView">关闭</button>
 </view>

@@ -28,8 +28,11 @@
   </form>
 </view>
 
-<view class="chartsView" style="display:{{showChartsView}};" animation="{{animationCharts}}">
-  <text class="chartsViewText">{{month}}月任务量统计图</text>
-  <canvas canvas-id="columnCanvas" class="canvas"></canvas>
-  <button class="closeChartsViewButton" bindtap="closeChartsView">关闭</button>
+<view style="display:{{showChartsView}};" class="grayDiv">
+  <view class="chartsView" style="display:{{showChartsView}};" animation="{{animationCharts}}">
+    <text class="chartsViewText">{{month}}月任务量统计图</text>
+    <text class="chartsViewTextSub">月完成量: {{monthCompeleteCount}}</text>
+    <canvas canvas-id="columnCanvas" class="canvas"></canvas>
+    <button class="closeChartsViewButton" bindtap="closeChartsView">关闭</button>
+  </view>
 </view>
