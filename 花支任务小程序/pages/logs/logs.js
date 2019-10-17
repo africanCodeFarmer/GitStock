@@ -10,7 +10,8 @@ Page({
 
     month:"",
     nowDayPay:0.00,
-    dayPayDataArray: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,],
+    adddayPayDataArray: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,],
+    subdayPayDataArray: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,],
 
     page: 1, //page*40个数据
 
@@ -385,76 +386,128 @@ Page({
 
     //从这
     var days = {};
-    var dayPayDataArray = this.data.dayPayDataArray;
+    var adddayPayDataArray = this.data.adddayPayDataArray;
+    var subdayPayDataArray = this.data.subdayPayDataArray;
 
     for (var i = 1; i <= 31; i++) {
       days[i] = 0
     }
 
     days[parseInt(nowDayLogs[0].split("/")[2].split(" ")[0])] = parseFloat(nowDayLogs[0].split("/")[2].split(" ")[1]);
-    console.log(days)
+    //console.log(days)
     for (var i = 0; i < logs.length; i++) {
       if (logs[i].startsWith("t") && logs[i].split("/")[1] == month)
         days[parseInt(logs[i].split("/")[2].split(" ")[0])] = parseFloat(logs[i].split("/")[2].split(" ")[1]);
     }
-    console.log(days)
+    //console.log(days)
 
     for (var i = 0; i <= 30; i++) {
-      dayPayDataArray[i] = days[i + 1];
+      if (days[i + 1]>=0){
+        adddayPayDataArray[i] = days[i + 1];
+      }
+      else{
+        subdayPayDataArray[i] = -days[i + 1];
+      }
     }
-    console.log(dayPayDataArray)
+    //console.log(dayPayDataArray)
     //到这
 
     //显示图表
-    //columnCanvas 生成
+    //区域图
     new wxCharts({
-      canvasId: 'columnCanvas',
-      type: 'column',
-      animation: false,
-      legend: false,
+      canvasId: 'canvas4',
+      type: 'area',
+      legend:true,
       categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
       series: [
         {
-          name: '日完成数',
-          // data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-          data: dayPayDataArray,
+          name: '收入',
+          data: adddayPayDataArray,
           format: function (val, name) {
-            return val.toFixed(0) + '';
-          }
+            return val == "0" ? "" : val;
+          },
         },
-        // {
-        //   name: '成交量',
-        //   data: [6.00, 9.00, 20.00, 45.00],
-        //   format: function (val, name) {
-        //     return val.toFixed(2) + '万';
-        //   }
-        // }
+        {
+          name: '支出',
+          data: subdayPayDataArray,
+          format: function (val, name) {
+            //console.log(val)
+            return val == "0" ? "" : val;
+          },
+        }
       ],
       yAxis: {
-        // format: function (val) {
-        //   return val + '万';
-        // },
-        // title: 'hello',
         format: function (val) {
-          return val.toFixed(2);
+          return val + '';
         },
-        min: 0
+        min:0,
       },
       xAxis: {
-        // format: function (val) {
-        //   return val.toFixed(2);
-        // },
-        disableGrid: false,
-        type: 'calibration'
+        format: function (val) {
+            return val + '';
+        },
+        disableGrid:false,
       },
       extra: {
         column: {
-          width: 4
+          width: 8
         }
       },
       width: (375 * windowW),
       height: (200 * windowW),
+      dataLabel: true,
+      dataPointShape: false,
     });
+
+    //columnCanvas 生成
+    // new wxCharts({
+    //   canvasId: 'columnCanvas',
+    //   type: 'column',
+    //   animation: false,
+    //   legend: false,
+    //   categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+    //   series: [
+    //     {
+    //       name: '日完成数',
+    //       // data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+    //       data: dayPayDataArray,
+    //       format: function (val, name) {
+    //         return val.toFixed(0) + '';
+    //       }
+    //     },
+    //     // {
+    //     //   name: '成交量',
+    //     //   data: [6.00, 9.00, 20.00, 45.00],
+    //     //   format: function (val, name) {
+    //     //     return val.toFixed(2) + '万';
+    //     //   }
+    //     // }
+    //   ],
+    //   yAxis: {
+    //     // format: function (val) {
+    //     //   return val + '万';
+    //     // },
+    //     // title: 'hello',
+    //     format: function (val) {
+    //       return val.toFixed(2);
+    //     },
+    //     min: 0
+    //   },
+    //   xAxis: {
+    //     // format: function (val) {
+    //     //   return val.toFixed(2);
+    //     // },
+    //     disableGrid: false,
+    //     type: 'calibration'
+    //   },
+    //   extra: {
+    //     column: {
+    //       width: 4
+    //     }
+    //   },
+    //   width: (375 * windowW),
+    //   height: (200 * windowW),
+    // });
 
     //lineCanvas
     // new wxCharts({

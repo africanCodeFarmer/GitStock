@@ -49,7 +49,7 @@
 </view>
 
 <view class="chartsView" hidden="{{!showChartsView}}" animation="{{animationCharts}}">
-  <text class="chartsViewText">{{month}}月花支量统计图(正收负支)</text>
-  <canvas canvas-id="columnCanvas" disable-scroll="true" class="canvas"></canvas>
+  <text class="chartsViewText">{{month}}月收支量统计图</text>
+  <canvas canvas-id="canvas4" disable-scroll="true" class="canvas"></canvas>
   <button class="closeChartsViewButton" bindtap="closeChartsView">关闭</button>
 </view>

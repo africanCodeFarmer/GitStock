@@ -3,7 +3,7 @@ text.chartsViewText{
   display: block;
   text-align: center;
   font-size: 140%;
-  margin-left: 15%;
+  margin-left: 28%;
   top: 40rpx;
 }
 button.closeChartsViewButton{
