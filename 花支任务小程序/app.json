@@ -8,8 +8,6 @@
     "pages/task/task",
     "pages/logs/logs",
     "pages/taskLogs/taskLogs",
-
-    
     "pages/index/index",
 
     "pages/timeDistribute/timeDistribute",
