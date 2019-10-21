@@ -358,6 +358,13 @@ Page({
     tempWantPushLogs.sort()
     for (var i in tempWantPushLogs)
       logs.push(tempWantPushLogs[i])
+
+    if(logs.length>1)
+      logs[0] = logs[0]+"_0"
+    else
+      logs[0] = logs[0]+"_"+(logs.length-1).toString()
+    
+    //console.log(logs)
     wx.setStorageSync('nowDayTaskLogs', logs)
   },
 

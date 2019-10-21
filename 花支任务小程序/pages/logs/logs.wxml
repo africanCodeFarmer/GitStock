@@ -20,7 +20,7 @@
 
 </view>
 
-<view class="container log-list">
+<view class="log-list">
   <block wx:for="{{logs}}" wx:for-item="log" wx:if="{{index<page*40}}">
     <text bindtap="click" id="h{{index}}" class=" greenLogs log-item" wx:if="{{signs[index]=='+'}}">{{log}}</text>
     <text bindtap="click" id="h{{index}}" class=" redLogs log-item" wx:elif="{{signs[index]=='-'}}">{{log}}</text>

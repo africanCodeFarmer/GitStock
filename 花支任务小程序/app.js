@@ -104,10 +104,12 @@ App({
     //与本地缓存比较,改变了就输出一下日期
     if (wx.getStorageSync('myDate') == "" || !(wx.getStorageSync('myDate') === myDate[0])){
       var logs = wx.getStorageSync('nowDayLogs') || []
-      logs.unshift("t"+needPrintTime)
+      logs.unshift("t"+needPrintTime+" -0")
+      var taskLogs = wx.getStorageSync('nowDayLogs') || []
+      taskLogs.unshift("t" + needPrintTime+"_0")
 
       //更新本地缓存
-      wx.setStorageSync('nowDayTaskLogs', logs)
+      wx.setStorageSync('nowDayTaskLogs', taskLogs)
       wx.setStorageSync('nowDayLogs', logs)
       wx.setStorageSync('myDate', myDate[0])
     }

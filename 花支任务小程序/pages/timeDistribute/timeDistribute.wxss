@@ -1,3 +1,8 @@
+view.taskColumn{
+  border-bottom: 1rpx solid rgba(128, 128, 128, 0.5);
+  line-height: 48rpx;
+}
+
 view.rowline{
   display: block;
   text-align: center;

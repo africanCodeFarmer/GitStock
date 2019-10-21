@@ -51,7 +51,7 @@
   
 </view>
 
-<view>
+<view class="panel">
   <view class="columns">
       <text class="columns_values">微信: {{wx_stock}}</text>
       <button class='myButton subButton' size="mini" bindtap="wantAdd" data-choose="微信">+</button>

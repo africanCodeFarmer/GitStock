@@ -2,7 +2,7 @@
 <button id="clearAllButton" bindtap="clearAllStorage" size="mini">清空缓存</button>
 <button class="showGraphButton" bindtap="showChartsView" size="mini">本月图表</button>
 
-<view id="myView">
+<view id="myView" class="grayView">
   <view wx:for="{{nowDayTaskLogs}}">
     <text bindtap="click" id="n{{index}}" wx:if="{{nowDayIsDate[index]=='t'}}" class="headerDate">{{item}}</text>
     <text wx:else class="headerText">{{item}}</text>
