@@ -117,14 +117,6 @@ Page({
   },
 
   onShow:function(){
-    //判断日期变更
-    var time = util.formatTime(new Date())
-    var needPrintTime = time.split(" ")[0]
-    var date = time.split("/")
-    var myDate = date[2].split(" ")
-    if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == ""))
-      app.onLaunch()
-
     //统计完成数
     var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs') || []
     var nowDayTaskCompeleteCount = 0;
@@ -139,6 +131,14 @@ Page({
       + nowDayTaskCompeleteCount
     }
     wx.setStorageSync('nowDayTaskLogs', nowDayTaskLogs)
+
+    //判断日期变更
+    var time = util.formatTime(new Date())
+    var needPrintTime = time.split(" ")[0]
+    var date = time.split("/")
+    var myDate = date[2].split(" ")
+    if (!(wx.getStorageSync('myDate') === myDate[0]) && !(wx.getStorageSync('myDate') == ""))
+      app.onLaunch()
 
     //lineCanvas
     // new wxCharts({

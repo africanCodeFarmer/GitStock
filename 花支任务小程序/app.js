@@ -33,12 +33,16 @@ App({
       var taskLogs = wx.getStorageSync('taskLogs')||[]
       var nowDayTaskLogs = wx.getStorageSync('nowDayTaskLogs')||[]
 
-      // var accomplishCount = 0
-      // if (nowDayTaskLogs.length-1 > 0){
-      //   accomplishCount = nowDayTaskLogs.length - 1
-      //   //console.log("今日完成量:" + accomplishCount)
-      //   nowDayTaskLogs[0] = nowDayTaskLogs[0] + "_" + accomplishCount
-      // }
+      var accomplishCount = 0
+      if (nowDayTaskLogs.length-1 > 0){
+        accomplishCount = nowDayTaskLogs.length - 1
+        //console.log("今日完成量:" + accomplishCount)
+        if (nowDayTaskLogs[0].split("_").length<2){
+          nowDayTaskLogs[0] = nowDayTaskLogs[0] + "_" + accomplishCount
+        }
+        else
+          nowDayTaskLogs[0] = nowDayTaskLogs[0].substring(0, nowDayTaskLogs[0].length - 1) + accomplishCount
+      }
     
       for (var i in nowDayTaskLogs)
         taskLogs.unshift(nowDayTaskLogs[nowDayTaskLogs.length-i-1])
