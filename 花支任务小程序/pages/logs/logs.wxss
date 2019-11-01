@@ -1,5 +1,9 @@
-.container{
-
+image.chartImage{
+  width: 50rpx;
+  height: 50rpx;
+  position: fixed;
+  top: 14rpx;
+  right: 14rpx;
 }
 
 text.chartsViewText{
@@ -38,9 +42,8 @@ view.chartsView{
   margin-right: 1%;
   height: 520rpx;
   background-color: white;
-  border-top: 1px solid rgba(128, 128, 128, 0.5);
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-  top: 300rpx;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  top: 20%;
 }
 .canvas {
     position: absolute;
@@ -50,7 +53,7 @@ view.chartsView{
 }
 button.showGraphButton{
   position: fixed;
-  top: 80rpx;
+  top: 10rpx;
   right: 20rpx;
   background-color: lightblue;
 }
@@ -58,7 +61,7 @@ button.showGraphButton{
 view.rowline{
   margin:14rpx 10rpx 0rpx 10rpx;
   height: 2rpx;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-bottom: 1px solid black;
 }
 
 button.redButton{
@@ -141,6 +144,6 @@ button.redButton{
   text-align: center;
   font-size: 140%;
  
-  border-bottom: 1rpx solid rgba(0, 0, 0, 0.8);
+  border: 1rpx solid rgba(0, 0, 0, 0.8);
   margin-right: 10rpx;
 }

@@ -422,7 +422,7 @@ Page({
     this.setData({
       totalMonthPay: totalMonthPay,
       totalMonthMake: totalMonthMake,
-      totalMonthStorage: totalMonthPay - totalMonthMake, //这里顺序反了 但是直接这样吧
+      totalMonthStorage: (totalMonthPay - totalMonthMake).toFixed(2), //这里顺序反了 但是直接这样吧
     })
     //console.log(dayPayDataArray)
     //到这
@@ -439,6 +439,7 @@ Page({
         {
           name: '收入',
           data: adddayPayDataArray,
+          color:'#9FDD9F',
           format: function (val, name) {
             return val == "0" ? "" : val;
           },
@@ -446,6 +447,7 @@ Page({
         {
           name: '支出',
           data: subdayPayDataArray,
+          color:'#FF3333',
           format: function (val, name) {
             //console.log(val)
             return val == "0" ? "" : val;

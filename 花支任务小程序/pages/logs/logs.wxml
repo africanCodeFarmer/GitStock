@@ -1,5 +1,6 @@
-<button id="clearLogsButton" bindtap="clearLogs" size="mini">清空账单</button>
-<button class="showGraphButton" bindtap="showChartsView" size="mini">本月图表</button>
+<!-- <button id="clearLogsButton" bindtap="clearLogs" size="mini">清空账单</button> -->
+<!-- <button class="showGraphButton" bindtap="showChartsView" size="mini">本月图表</button> -->
+<image class="chartImage" src="../../photos/chartIcon.png" bindtap="showChartsView"></image>
 
 <view class="container log-list">
 

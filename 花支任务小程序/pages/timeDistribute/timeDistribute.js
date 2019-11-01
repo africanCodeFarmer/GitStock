@@ -1,5 +1,8 @@
 Page({
   data:{
+    //hideButton:"display:none;",
+    taskCount:0,
+
     //时间分配行
     columns:["","","","","","","","","","","","","","","","","","border-bottom:1px solid gray;"],
     distributes:[],
@@ -11,6 +14,8 @@ Page({
     showTaskView:false,
 
     animation:'',
+
+    scrollTop: 0,
   },
 
   onLoad:function(){
@@ -59,7 +64,8 @@ Page({
     this.setData({
       notCheckedTasks:temp,
       showTaskView:true,
-      tasksGrade:grade
+      tasksGrade:grade,
+      taskCount: temp.length
     })
 
     this.animation.opacity(1).translateY(-6).step({ duration: 200 })
@@ -126,4 +132,31 @@ Page({
   wantBack:function(){
     wx.navigateBack({})
   },
+
+  // onTabItemTap(item) {
+  //   if(item.text=='规划'){
+  //     if (this.data.hideButton==""){
+  //       this.setData({
+  //         hideButton:"display:none;",
+  //       })
+  //       // wx.showToast({
+  //       //   title: '隐藏了',
+  //       // })
+  //     }
+  //     else{
+  //       this.setData({
+  //         hideButton: "",
+  //       })
+  //       // wx.showToast({
+  //       //   title: '显示了',
+  //       // })
+  //     }
+  //   }
+  // },
+
+  // startScroll:function(){
+  //   wx.showToast({
+  //     title: '滑动了',
+  //   })
+  // }
 })

@@ -1,4 +1,4 @@
-<image class="gril" src="./photos/rotatogril.gif"></image>
+<image class="girl" src="./photos/rotatogril.gif"></image>
 
 <view id="header">
   <image src="{{userImagePath}}" id="headerImage" bindtap="changeTaskSet"></image>
@@ -17,7 +17,7 @@
     <view id="columnHeader">
       <text id="columnHeaderText">今日任务</text>
 
-      <scroll-view scroll-y="true" id="columnScrollView" style="height:{{swiperHeight-150}}rpx;">
+      <scroll-view scroll-y="true" id="columnScrollView" style="height:{{swiperHeight-160}}rpx;">
         <view class="columns" wx:for="{{tasks}}" style="{{opacityColumn[index]}}">
           <checkbox bindtap="compeleteTask" id="{{index}}" checked="{{checked[index]}}"></checkbox>
           
@@ -74,7 +74,7 @@
 </swiper>
 
 <view id="footerButtonView">
-  <button class="footerButtonL" bindtap="gotoTimedistribute">时间规划</button>
+  <button class="footerButtonL" bindtap="gotoTimedistribute" disabled="disabled">时间规划</button>
   <button class="footerButtonR" bindtap="addTask">添加任务</button>
 </view>
 

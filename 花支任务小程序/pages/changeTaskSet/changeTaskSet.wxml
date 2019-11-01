@@ -1,10 +1,23 @@
-<view id="content">
-  <form bindsubmit="changeTaskSetSubmit">
-    <input type="text" name="userName" placeholder="昵称" class="spaceBetween" value="{{userName}}"></input>
-    <input type="text" name="userNote" placeholder="签名" class="spaceBetween"  value="{{userNote}}" style="color:gray;"></input>
+<form bindsubmit="changeTaskSetSubmit">
+<view>
+  <view class="userInfoView">
+    <view class="userNameView">
+      <view class="onerow">昵称 </view>
+      <view class="tworow"><input maxlength="20" type="text" type="text" name="userName" value="{{userName}}"></input></view>
+    </view>
+    <view class="userSloganView">
+      <view class="onerow">个性签名 </view>
+      <view class="tworow"><input maxlength="32" type="text" name="userNote"  value="{{userNote}}"></input></view>
+    </view>
+    <view class="userImageView">
+      <view class="onerow">头像 </view>
+      <view class="tworow"><image src="{{userImagePath}}"></image></view>
+    </view>
+  </view>
 
-    <image src="{{userImagePath}}" class="spaceBetween"></image>
-    <button class="spaceBetween" bindtap="chooseNewImage">选择头像图片</button>
-    <button class="spaceBetween btn_ok" form-type="submit">确定更改</button>
-  </form>
+  <view class="buttonView">
+    <button bindtap="chooseNewImage">选择图片</button>
+    <button class="btn_ok" form-type="submit">确定</button>
+  </view>
 </view>
+</form>

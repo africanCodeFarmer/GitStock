@@ -26,7 +26,7 @@ view.rowline{
   width: 90%;
   left: 5%;
   height: 1000rpx;
-  top:4%;
+  top:20rpx;
   position: fixed;
   z-index: 1000;
 }
@@ -59,7 +59,7 @@ view.rowline{
 .tr{
   display: flex;
   flex-direction: row;
-  border-top: 1rpx solid gray;
+  border-top: 1px solid gray;
 }
 
 .td{
@@ -68,7 +68,12 @@ view.rowline{
 }
 
 .times{
-  width: 120rpx;
+  width: 110rpx;
+  border-right: 1rpx solid gray;
+}
+
+scroll-view{
+  height: 1020rpx;
 }
 
 .texts{
@@ -76,29 +81,39 @@ view.rowline{
   margin-right: 4rpx;
 }
 
-#buttons{
-  margin-top: 22rpx;
+view#buttons{
+  position: fixed;
+  bottom: 0;
+  height: 100rpx;
+  width: 100%;
+  z-index:9999;
+}
+view#buttons button{
+  height: 80rpx;
 }
 .b1{
   position: fixed;
   left: 20rpx;
   bottom: 20rpx;
+  width: 26%;
 }
 .b2{
+  width: 36%;
   position: fixed;
-  left: 220rpx;
+  left: 32%;
   bottom: 20rpx;
 }
 .b3{
   position: fixed;
-  right: 150rpx;
+  right: 20rpx;
   bottom: 20rpx;
+  width: 26%;
 }
-.b4{
+/* .b4{
   position: fixed;
   right:20rpx;
   bottom: 20rpx;
-}
+} */
 
 .leftButton{
   background-color: rgb(255, 134, 134);

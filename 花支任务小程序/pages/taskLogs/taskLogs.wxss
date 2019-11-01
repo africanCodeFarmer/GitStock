@@ -1,8 +1,16 @@
+image.chartImage{
+  width: 50rpx;
+  height: 50rpx;
+  position: fixed;
+  top: 14rpx;
+  right: 14rpx;
+}
+
 view.rowline{
   display: block;
   text-align: center;
   height: 2px;
-  border-top: 1px solid black;
+  /* border-top: 1px solid black; */
   /* margin:0px 10rpx 0px 10 rpx; */
 }
 text.chartsViewTextSub{
@@ -41,9 +49,8 @@ view.chartsView{
   margin-right: 1%;
   height: 520rpx;
   background-color: white;
-  border-top: 1px solid rgba(128, 128, 128, 0.5);
-  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-  top: 300rpx;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  top: 20%;
 }
 .canvas {
     position: absolute;
@@ -55,7 +62,7 @@ view.chartsView{
 view.rowline{
   margin:14rpx 10rpx 0rpx 10rpx;
   height: 2rpx;
-  border-bottom: 1rpx solid rgba(128, 128, 128, 0.4);
+  border-bottom: 1rpx solid black;
 }
 
 #textView{
@@ -122,13 +129,13 @@ button.redButton{
 
 button.showGraphButton{
   position: fixed;
-  top: 150rpx;
+  top: 10rpx;
   right: 10rpx;
   background-color: lightblue;
 }
 
 .headerDate{
-  border-bottom: 1rpx solid rgba(0, 0, 0, 0.8);
+  border: 1rpx solid rgba(0, 0, 0, 0.8);
 
 
   display: block;
@@ -143,7 +150,6 @@ button.showGraphButton{
   margin-top: 10rpx;
   color: gray;
 
- 
   word-break:break-all;
 }
 

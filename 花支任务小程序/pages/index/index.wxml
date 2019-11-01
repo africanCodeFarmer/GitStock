@@ -112,7 +112,7 @@
   <view class="rowline"></view>
   <form bindsubmit="changeSubmit">
     <view id="inputView">
-      <textarea name="input_value" class="modalTextAndInput" style="width:80%;height:160rpx;" placeholder="输入格式:金额+任意空格+注释" auto-focus="true"></textarea>
+      <textarea name="input_value" class="modalTextAndInput" style="width:80%;height:160rpx;" placeholder="输入格式:金额 任意空格 注释" auto-focus="true"></textarea>
     </view>
 
     <text>\n</text>

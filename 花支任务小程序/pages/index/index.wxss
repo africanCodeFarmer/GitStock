@@ -1,5 +1,5 @@
 view.panel{
-  border-bottom: 1rpx solid rgba(128, 128, 128, 0.5);
+  /* border-bottom: 1rpx solid rgba(128, 128, 128, 0.5); */
   margin-left: 20rpx;
   margin-right: 20rpx;
   height: 640rpx;
@@ -53,6 +53,8 @@ image.dragoncat{
   left: 0;
   width: 40%;
   margin: 20rpx;
+  height: 60rpx;
+  vertical-align: middle;
 }
 
 #historyCloseButton{
@@ -61,6 +63,8 @@ image.dragoncat{
   right: 0;
   margin: 20rpx;
   width: 40%;
+  height: 60rpx;
+  vertical-align: middle;
   background-color: rgb(159, 221, 159)
 }
 
@@ -82,7 +86,7 @@ image.dragoncat{
   z-index: 999;
   border-radius: 6%;
   position: fixed;
-  top: 4%;
+  top: 120rpx;
   left: 5%;
   width: 90%;
   border: 1px gray solid;
@@ -161,7 +165,7 @@ image.dragoncat{
   z-index: 999;
   position: absolute;
   border-radius: 6%;
-  top: 4%;
+  top: 120rpx;
   left: 10%;
   width:80%;
   height: 40%;

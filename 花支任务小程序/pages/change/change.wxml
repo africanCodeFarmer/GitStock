@@ -1,12 +1,23 @@
-<text>\n</text>
-
-<form bindsubmit="formSubmit">  
-  <view id="myView">
-    <input class="myInput" name="new_name" placeholder="此处输入名字" value="{{aimName}}"></input><text>\n</text>
-    <input class="myInput" name="new_price" placeholder="此处输入价格" value="{{aimPrice}}"></input><text>\n</text>
-    <image src="{{aimImagePath}}"></image>
+<form bindsubmit="formSubmit">
+<view>
+  <view class="userInfoView">
+    <view class="userNameView">
+      <view class="onerow">目标名字 </view>
+      <view class="tworow"><input maxlength="20" name="new_name" value="{{aimName}}"></input></view>
+    </view>
+    <view class="userSloganView">
+      <view class="onerow">目标价格 </view>
+      <view class="tworow"><input maxlength="32" name="new_price"  value="{{aimPrice}}"></input></view>
+    </view>
+    <view class="userImageView">
+      <view class="onerow">图片 </view>
+      <view class="tworow"><image src="{{aimImagePath}}"></image></view>
+    </view>
   </view>
 
-  <button bindtap="chooseNewImage">选择新图片</button>
-  <button form-type="submit" class="btn_ok">确定新目标</button>
+  <view class="buttonView">
+    <button bindtap="chooseNewImage">选择图片</button>
+    <button class="btn_ok" form-type="submit">确定</button>
+  </view>
+</view>
 </form>

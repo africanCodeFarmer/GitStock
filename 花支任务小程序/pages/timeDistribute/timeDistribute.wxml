@@ -1,6 +1,6 @@
 <form bindsubmit="changeDistribute">
 
-  <scroll-view scroll-x="true"> 
+  <scroll-view scroll-y="true"> 
     <view class="tr" wx:for="{{columns}}" style="{{columns[index]}}">
       <text class="td times">{{index+6}}-{{index+7}}</text>
       <input class="td texts" type="text" placeholder="" name="{{index}}" value="{{distributes[index]}}"></input>
@@ -10,22 +10,22 @@
 
   <view id="buttons">
     <button class="leftButton b1" bindtap="wantClear">清空规划</button>
-    <button class="rightButton b2" form-type="submit">更新规划</button>
-    <button bindtap="showTask" class="b3">显示任务</button>
-    <button bindtap="wantBack" class="b4">返回</button>
+    <button bindtap="showTask" class="b2">显示任务</button>
+    <button class="rightButton b3" form-type="submit">更新规划</button>
+    <!-- <button bindtap="wantBack" class="b4">返回</button> -->
   </view>
   
 </form>
 
 <view id="taskView" wx:if="{{showTaskView}}" animation="{{animation}}">
-  <text id="taskViewHead">今日剩余任务</text>
+  <text id="taskViewHead">今日剩余任务数 {{taskCount}}</text>
   <view class="rowline"></view>
   <!-- <image class="rundog" src="./photos/rundog.gif"></image> -->
   <scroll-view id="taskScrollView" scroll-y="true">
     <view class="taskColumn" wx:for="{{notCheckedTasks}}">
-      <text wx:if="{{tasksGrade[index]=='0'}}" style="color:red;">{{item}}</text>
-      <text wx:if="{{tasksGrade[index]=='1'}}" style="color:goldenrod;">{{item}}</text>
-      <text wx:if="{{tasksGrade[index]=='2'}}" style="color:black;">{{item}}</text>
+      <text wx:if="{{tasksGrade[index]=='0'}}" style="color:red;">{{index+1}}.{{item}}</text>
+      <text wx:if="{{tasksGrade[index]=='1'}}" style="color:goldenrod;">{{index+1}}.{{item}}</text>
+      <text wx:if="{{tasksGrade[index]=='2'}}" style="color:black;">{{index+1}}.{{item}}</text>
     </view>
   </scroll-view>
 

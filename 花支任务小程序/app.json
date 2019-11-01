@@ -5,14 +5,18 @@
     }
   },
   "pages": [
-    "pages/task/task",
-    "pages/logs/logs",
-    "pages/taskLogs/taskLogs",
-    "pages/index/index",
-
     "pages/timeDistribute/timeDistribute",
-    "pages/changeTaskSet/changeTaskSet",
-    "pages/change/change"
+
+    "pages/taskLogs/taskLogs",
+    "pages/logs/logs",
+    "pages/index/index",
+    "pages/task/task",
+    
+
+
+    "pages/change/change",
+    "pages/changeTaskSet/changeTaskSet"
+
   ],
   "tabBar":{
     "list":[
@@ -22,7 +26,12 @@
       {"text":"记账","pagePath":"pages/index/index",
       "iconPath": "/photos/jz.png","selectedIconPath": "/photos/sjz.png"
       },
-      
+      {
+        "text": "规划",
+        "pagePath": "pages/timeDistribute/timeDistribute",
+        "iconPath": "/photos/gh.png",
+        "selectedIconPath": "/photos/sgh.png"
+      },
       {"text": "记账日志","pagePath": "pages/logs/logs",
       "iconPath": "/photos/zdrz.png","selectedIconPath": "/photos/szdrz.png"
       },

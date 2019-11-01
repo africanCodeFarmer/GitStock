@@ -1,6 +1,7 @@
-<button bindtap="clearLogs" size="mini" id="clearButton">清空历史</button>
-<button id="clearAllButton" bindtap="clearAllStorage" size="mini">清空缓存</button>
-<button class="showGraphButton" bindtap="showChartsView" size="mini">本月图表</button>
+<!-- <button bindtap="clearLogs" size="mini" id="clearButton">清空历史</button>
+<button id="clearAllButton" bindtap="clearAllStorage" size="mini">清空缓存</button> -->
+<!-- <button class="showGraphButton" bindtap="showChartsView" size="mini">本月图表</button> -->
+<image class="chartImage" src="../../photos/chartIcon.png" bindtap="showChartsView"></image>
 
 <view id="myView" class="grayView">
   <view wx:for="{{nowDayTaskLogs}}">
