@@ -32,7 +32,7 @@ view.rowline{
 }
 
 #taskScrollView{
-  height: 800rpx;
+  height: 810rpx;
   width: 90%;
   left: 5%;
   position: absolute;
@@ -50,34 +50,44 @@ view.rowline{
 
 .clear{
   position: absolute;
-  right: 0;
-  width:40rpx;
-  height: 40rpx;
+  right: 4rpx;
+  width:32rpx;
+  height: 32rpx;
   margin: 10rpx;
 }
 
 .tr{
   display: flex;
   flex-direction: row;
-  border-top: 1px solid gray;
+  border: 1rpx solid gray;
 }
 
 .td{
-  height: 60rpx;
+  height: 50rpx;
   margin-left: 10rpx;
+  font-size: 20rpx;
 }
 
 .times{
-  width: 110rpx;
+  width: 70rpx;
   border-right: 1rpx solid gray;
 }
 
 scroll-view{
-  height: 1020rpx;
+  width: 96%;
+  height: 900rpx;
+  margin:20rpx 2% 0rpx 2%;
+}
+
+#one_scroll-view{
+  width: 96%;
+  height: 900rpx;
+  margin:60rpx 2% 0rpx 2%;
+  border: 1rpx solid gray;
 }
 
 .texts{
-  width: 74%;
+  width: 76%;
   margin-right: 4rpx;
 }
 

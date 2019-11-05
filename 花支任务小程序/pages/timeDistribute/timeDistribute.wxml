@@ -1,6 +1,6 @@
 <form bindsubmit="changeDistribute">
 
-  <scroll-view scroll-y="true"> 
+  <scroll-view scroll-y="true" id="one_scroll-view"> 
     <view class="tr" wx:for="{{columns}}" style="{{columns[index]}}">
       <text class="td times">{{index+6}}-{{index+7}}</text>
       <input class="td texts" type="text" placeholder="" name="{{index}}" value="{{distributes[index]}}"></input>

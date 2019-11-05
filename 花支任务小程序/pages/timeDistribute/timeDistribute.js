@@ -4,9 +4,10 @@ Page({
     taskCount:0,
 
     //时间分配行
-    columns:["","","","","","","","","","","","","","","","","","border-bottom:1px solid gray;"],
+    columns:["","","","","","","","","","","","","","","","","",""],
     distributes:[],
-
+    //border-bottom:1px solid gray;
+    
     //显示任务 相关
     notCheckedTasks:[],
     tasksGrade:[],
