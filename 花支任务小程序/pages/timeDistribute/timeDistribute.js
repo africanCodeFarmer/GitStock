@@ -1,8 +1,12 @@
+var util = require('../../utils/util.js'); 
+
 Page({
   data:{
     //hideButton:"display:none;",
     taskCount:0,
-
+    
+    hour:0,
+    
     //时间分配行
     columns:["","","","","","","","","","","","","","","","","",""],
     distributes:[],
@@ -124,8 +128,14 @@ Page({
   },
 
   onShow:function(){
+    //获取当前时间
+    var datestamp = util.formatTime(new Date())
+    var time = datestamp.split(" ")[1]
+    var hour = time.split(":")[0]
+
     this.setData({
-      distributes: wx.getStorageSync('timeDistribute') || []
+      distributes: wx.getStorageSync('timeDistribute') || [],
+      hour: hour
     })
   },
 
