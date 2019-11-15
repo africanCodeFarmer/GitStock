@@ -135,7 +135,7 @@ button.showGraphButton{
 }
 
 .headerDate{
-  border: 1rpx solid rgba(0, 0, 0, 0.8);
+  /* border: 1rpx solid rgba(0, 0, 0, 0.8); */
 
 
   display: block;

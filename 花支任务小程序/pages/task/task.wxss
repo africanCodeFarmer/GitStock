@@ -1,6 +1,6 @@
 image.girl{
   position: absolute;
-  right: 20rpx;
+  right: 18rpx;
   top: 20rpx;
   width: 80rpx;
   height: 80rpx;

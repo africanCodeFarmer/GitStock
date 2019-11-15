@@ -516,8 +516,8 @@ Page({
     var tempAimPrice = parseFloat(this.data.aimPrice)
 
     this.setData({
-      aimPercent: (((tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock) / (tempAimPrice + tempDhStock))*100).toFixed(2),
-      avail_stock: tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock - tempDhStock + tempDdStock,
+      aimPercent: (((tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock - tempDhStock) / (tempAimPrice))*100).toFixed(2),
+      avail_stock: (tepmWxStock + tempZfbStock + tempYhkStock + tempQtStock - tempDhStock + tempDdStock).toFixed(2),
     })
 
 

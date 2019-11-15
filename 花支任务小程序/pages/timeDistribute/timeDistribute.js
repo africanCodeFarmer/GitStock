@@ -66,10 +66,36 @@ Page({
         grade.push(dayTasks[i].substring(0, 1))
       }
 
+    //排序算法 0红 1橙 2黑
+    var l=0,r=grade.length-1
+    for (var i=0;i<grade.length;i++){
+      if(grade[i]=='0'){
+        var tempGrade = grade[i];
+        var tempTemp = temp[i];
+        grade[i]=grade[l];
+        temp[i]=temp[l];
+        grade[l]=tempGrade;
+        temp[l]=tempTemp;
+        l++;
+      }
+      else if(grade[i]=='2'){
+        var tempGrade = grade[i];
+        var tempTemp = temp[i];
+        grade[i] = grade[r];
+        temp[i] = temp[r];
+        grade[r] = tempGrade;
+        temp[r] = tempTemp;
+        i--;
+        r--;
+      } 
+      if (r==i)
+        break;
+    }
+
     this.setData({
       notCheckedTasks:temp,
+      tasksGrade: grade,
       showTaskView:true,
-      tasksGrade:grade,
       taskCount: temp.length
     })
 

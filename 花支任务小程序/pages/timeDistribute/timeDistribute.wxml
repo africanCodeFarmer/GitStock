@@ -2,7 +2,7 @@
 
   <scroll-view scroll-y="true" id="one_scroll-view"> 
     <view class="tr" wx:for="{{columns}}" style="{{columns[index]}}{{hour==index+6?'border-top:1rpx solid red;border-bottom:1rpx solid red;':''}}">
-      <text class="td times" style="{{hour==index+6?'color:red;':''}}">{{index+6}}-{{index+7}}</text>
+      <text class="td times" style="{{hour==index+6?'color:red;font-size:22rpx;font-weight:bold;':''}}">{{index+6}}-{{index+7}}</text>
       <input class="td texts" type="text" placeholder="" name="{{index}}" value="{{distributes[index]}}"></input>
       <image src="photos/clear.png" class="clear" bindtap="wantClearColumn" id="{{index}}"></image>
     </view>

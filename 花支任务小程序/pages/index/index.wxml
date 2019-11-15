@@ -18,7 +18,7 @@
     <image src="{{aimImagePath}}" class='userinfo-avatar' bindtap="change"></image>
     <view id="headerText">
       <text style="margin-top:10rpx;font-size:32rpx;">{{aimName}}: {{aimPrice}}</text>
-      <text style="color:gray;margin-top:10rpx;font-size:22rpx;">距离实现目标: {{(100-aimPercent)<0?"已经实现啦!!!":(100-aimPercent)+"%"}}</text>
+      <text style="color:gray;margin-top:10rpx;font-size:22rpx;">已达到: {{(100-aimPercent)<0?"实现啦!!!":(aimPercent)+"%"}}</text>
     </view>
 </view>
  
