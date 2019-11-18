@@ -1,3 +1,85 @@
+view.addview_head{
+  display: block;
+  margin: 10rpx auto;
+  font-size: 32rpx;
+  text-align: center;
+}
+
+textarea.addview_textarea{
+  /* background-color: lightgray; */
+  margin: 10rpx 2%;
+  width: 96%;
+  height: 200rpx;
+}
+
+button.addview_button{
+  display: inline-block;
+  width: 120rpx;
+  height: 60rpx;
+  margin: 10rpx;
+  font-size: 22rpx;
+}
+
+view.addview_buttonview{
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content:space-around;
+  height: 100rpx;
+  position: absolute;
+  bottom: 0;
+  width: 96%;
+  margin: 10rpx 2%;
+  /* background-color: gray; */
+  z-index: 1001;
+}
+
+view.addview{
+  z-index: 1000;
+  top: 6%;
+  position: absolute;
+  height: 400rpx;
+  display: flex;
+  flex-direction: column;
+  margin: 10%;
+  width: 80%;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 4%;
+}
+
+view.principleTR{
+  margin:10rpx 2% 0rpx 2%;
+  width: 96%;
+  /* background-color: lightgray; */
+  border-bottom: 1rpx solid rgba(128, 128, 128, 0.4);
+}
+
+view.principleTextView{
+  word-break: break-all;
+  /* font-size: 24rpx; */
+}
+
+swiper{
+  display: block;
+  height: 1140rpx;
+}
+
+image.addicon{
+  width: 64rpx;
+  height: 64rpx;
+  
+  display: block;
+  margin: 10rpx auto;
+}
+
+scroll-view#two_scroll-view{
+  /* background-color: gray; */
+  height: 1000rpx;
+  margin: 0rpx 2% 0rpx 2%;
+  width: 96%;
+}
+
 view.taskColumn{
   border-bottom: 1rpx solid rgba(128, 128, 128, 0.5);
   line-height: 48rpx;

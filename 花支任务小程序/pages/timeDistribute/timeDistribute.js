@@ -2,11 +2,16 @@ var util = require('../../utils/util.js');
 
 Page({
   data:{
+    principles: [],
+    showAddView:false,
+    addviewAnimation: "",
+    edittext:"",
+    editid:-1,
+    edit:false,
     //hideButton:"display:none;",
     taskCount:0,
-    
     hour:0,
-    
+
     //时间分配行
     columns:["","","","","","","","","","","","","","","","","",""],
     distributes:[],
@@ -27,6 +32,15 @@ Page({
     this.animation = wx.createAnimation({
       duration: 1000,
       timingFunction: 'linear',
+    })
+
+    this.addviewAnimation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'linear',
+    })
+    this.addviewAnimation.opacity(0).step({ duration: 0 }).opacity(1).step({ duration: 200 })
+    this.setData({
+      addviewAnimation: this.addviewAnimation.export(),
     })
   },
 
@@ -161,7 +175,8 @@ Page({
 
     this.setData({
       distributes: wx.getStorageSync('timeDistribute') || [],
-      hour: hour
+      hour: hour,
+      principles: wx.getStorageSync('principles') || [],
     })
   },
 
@@ -196,4 +211,83 @@ Page({
   //     title: '滑动了',
   //   })
   // }
+
+  showAddView:function(edit=false){
+    if(edit==true)
+      this.setData({
+        edit:true,
+      })
+    else
+      this.setData({
+        edit:false,
+        edittext: "",
+        editid: -1,
+      })
+    
+    this.setData({
+      showAddView: true,
+    })
+
+    this.addviewAnimation.opacity(1).step({ duration: 200 })
+    this.setData({
+      addviewAnimation: this.addviewAnimation.export(),
+    })
+  },
+
+  closeAddView:function(){
+    this.addviewAnimation.opacity(0).step({ duration: 200 })
+    this.setData({
+      addviewAnimation: this.addviewAnimation.export(),
+    })
+
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showAddView: false
+      })
+    }, 200)
+  },
+
+  //add和update合并了
+  addprinciple:function(e){
+    var input = e.detail.value['addview_textarea']
+    if(input!=""){
+      var principles = wx.getStorageSync('principles') || []
+
+      if(this.data.edit==true){
+        var editid = this.data.editid
+        principles[editid]=input
+      }
+      else
+        principles.push(input) 
+
+      wx.setStorageSync('principles', principles)
+      this.setData({
+        principles:principles,
+      })
+    }
+    this.closeAddView()
+  },
+
+  editprinciple:function(e){
+    this.showAddView(true)
+    var edittext = e.currentTarget.dataset.text ||　""
+    var editid = e.currentTarget.id || -1
+    this.setData({
+      edittext:edittext,
+      editid:editid,
+    })
+  },
+
+  delete:function(e){
+    var editid = e.currentTarget.id || -1
+    var principles = wx.getStorageSync('principles') || []
+    principles.splice(editid,1)
+    this.setData({
+      principles: principles
+    })
+    wx.setStorageSync('principles', principles)
+
+    this.closeAddView()
+  }
 })

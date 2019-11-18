@@ -1,21 +1,38 @@
-<form bindsubmit="changeDistribute">
+<swiper vertical>
+  <form bindsubmit="changeDistribute">
+  <swiper-item>
+    <scroll-view scroll-y="true" id="one_scroll-view"> 
+      <view class="tr" wx:for="{{columns}}" style="{{columns[index]}}{{hour==index+6?'border-top:1rpx solid red;border-bottom:1rpx solid red;':''}}">
+        <text class="td times" style="{{hour==index+6?'color:red;font-size:22rpx;font-weight:bold;':''}}">{{index+6}}-{{index+7}}</text>
+        <input class="td texts" type="text" placeholder="" name="{{index}}" value="{{distributes[index]}}"></input>
+        <image src="photos/clear.png" class="clear" bindtap="wantClearColumn" id="{{index}}"></image>
+      </view>
+    </scroll-view>
 
-  <scroll-view scroll-y="true" id="one_scroll-view"> 
-    <view class="tr" wx:for="{{columns}}" style="{{columns[index]}}{{hour==index+6?'border-top:1rpx solid red;border-bottom:1rpx solid red;':''}}">
-      <text class="td times" style="{{hour==index+6?'color:red;font-size:22rpx;font-weight:bold;':''}}">{{index+6}}-{{index+7}}</text>
-      <input class="td texts" type="text" placeholder="" name="{{index}}" value="{{distributes[index]}}"></input>
-      <image src="photos/clear.png" class="clear" bindtap="wantClearColumn" id="{{index}}"></image>
+    <view id="buttons">
+      <button class="leftButton b1" bindtap="wantClear">清空规划</button>
+      <button bindtap="showTask" class="b2">显示任务</button>
+      <button class="rightButton b3" form-type="submit">更新规划</button>
+      <!-- <button bindtap="wantBack" class="b4">返回</button> -->
+    </view>
+  </swiper-item>
+  </form>
+
+  <swiper-item>
+  <view style="margin:0rpx auto;text-align:center;font-size:32rpx;margin-bottom:4rpx;">人生准则</view>
+  <view class="rowline"></view>
+
+  <scroll-view scroll-y id="two_scroll-view">
+    <view wx:for="{{principles}}">
+      <view class="principleTR">
+        <view id="{{index}}" class="principleTextView" bindtap="editprinciple" data-text="{{principles[index]}}">{{index+1}}.{{principles[index]}}</view>
+      </view>
     </view>
   </scroll-view>
 
-  <view id="buttons">
-    <button class="leftButton b1" bindtap="wantClear">清空规划</button>
-    <button bindtap="showTask" class="b2">显示任务</button>
-    <button class="rightButton b3" form-type="submit">更新规划</button>
-    <!-- <button bindtap="wantBack" class="b4">返回</button> -->
-  </view>
-  
-</form>
+  <image class="addicon" src="photos/addicon.png" bindtap="showAddView"></image>
+  </swiper-item>
+</swiper>
 
 <view id="taskView" wx:if="{{showTaskView}}" animation="{{animation}}">
   <text id="taskViewHead">今日剩余任务数 {{taskCount}}</text>
@@ -31,3 +48,24 @@
 
   <button bindtap="closeTaskView" id="taskViewButton">关闭</button>
 </view>
+
+
+
+
+
+
+<form bindsubmit="addprinciple">
+<view class="addview" animation="{{addviewAnimation}}" wx:if="{{showAddView}}">
+  <view class="addview_head">{{edit==true?'编辑窗口':'添加窗口'}}</view>
+  <view class="rowline"></view>
+
+  <textarea type="text" focus class="addview_textarea" name="addview_textarea" value="{{edittext}}"></textarea>
+
+  <view class="addview_buttonview">
+    <button id="{{editid}}" class="addview_button leftButton" bindtap="delete">删除</button>
+    <button wx:if="{{edit}}" class="addview_button rightButton" form-type="submit">编辑</button>
+    <button wx:else class="addview_button rightButton" form-type="submit">添加</button>
+    <button class="addview_button" bindtap="closeAddView">关闭</button>
+  </view>
+</view>
+</form>
