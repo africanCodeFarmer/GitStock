@@ -251,21 +251,32 @@ Page({
   //add和update合并了
   addprinciple:function(e){
     var input = e.detail.value['addview_textarea']
+    var msg="";
     if(input!=""){
       var principles = wx.getStorageSync('principles') || []
 
       if(this.data.edit==true){
         var editid = this.data.editid
         principles[editid]=input
+        msg="编辑成功"
       }
-      else
+      else{
         principles.push(input) 
+        msg="添加成功"
+      }
 
       wx.setStorageSync('principles', principles)
       this.setData({
         principles:principles,
       })
     }
+
+    wx.showToast({
+      title: msg,
+      icon:'none',
+      duration:1000,
+    })
+
     this.closeAddView()
   },
 
@@ -288,6 +299,11 @@ Page({
     })
     wx.setStorageSync('principles', principles)
 
+    wx.showToast({
+      title: '删除成功',
+      icon:'none',
+      duration:1000,
+    })
     this.closeAddView()
   }
 })

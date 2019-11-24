@@ -7,8 +7,9 @@
     <text id="headerNote" space="ensp">
     {{userNote}}</text>
     <text id="headerRight">Lv{{grade}}: {{exp}}/{{upNeedExp}}</text>
-    <progress id="headerProgress"  stroke-width="20rpx" border-radius="10" percent="{{(exp/upNeedExp)*100}}" activeColor="rgb(159, 221, 159)" active="true" active-mode="forwards">
+    <progress id="headerProgress"  stroke-width="20rpx" border-radius="10" percent="{{(exp/upNeedExp)*100}}" activeColor="rgb(159, 221, 159)">
     </progress>
+    <!-- active="true" active-mode="forwards" -->
   </view>
 </view>
 

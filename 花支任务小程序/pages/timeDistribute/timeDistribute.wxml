@@ -1,4 +1,20 @@
-<swiper vertical>
+<swiper vertical easing-function="easeInCubic">
+  <swiper-item>
+  <view style="margin:0rpx auto;text-align:center;font-size:32rpx;margin-bottom:4rpx;">人生准则</view>
+  <view class="rowline"></view>
+
+  <scroll-view scroll-y id="two_scroll-view">
+    <view wx:for="{{principles}}">
+      <view class="principleTR">
+        <view id="{{index}}" class="principleTextView" bindtap="editprinciple" data-text="{{principles[index]}}">{{index+1}}.{{principles[index]}}</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <image class="addicon" src="photos/addicon.png" bindtap="showAddView"></image>
+  <!-- <view class="bottomLine"></view> -->
+  </swiper-item>
+
   <form bindsubmit="changeDistribute">
   <swiper-item>
     <scroll-view scroll-y="true" id="one_scroll-view"> 
@@ -18,20 +34,6 @@
   </swiper-item>
   </form>
 
-  <swiper-item>
-  <view style="margin:0rpx auto;text-align:center;font-size:32rpx;margin-bottom:4rpx;">人生准则</view>
-  <view class="rowline"></view>
-
-  <scroll-view scroll-y id="two_scroll-view">
-    <view wx:for="{{principles}}">
-      <view class="principleTR">
-        <view id="{{index}}" class="principleTextView" bindtap="editprinciple" data-text="{{principles[index]}}">{{index+1}}.{{principles[index]}}</view>
-      </view>
-    </view>
-  </scroll-view>
-
-  <image class="addicon" src="photos/addicon.png" bindtap="showAddView"></image>
-  </swiper-item>
 </swiper>
 
 <view id="taskView" wx:if="{{showTaskView}}" animation="{{animation}}">

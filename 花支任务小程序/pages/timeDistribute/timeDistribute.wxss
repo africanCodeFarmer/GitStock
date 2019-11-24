@@ -1,3 +1,14 @@
+view.bottomLine{
+  position: absolute;
+  bottom: 20rpx;
+  height: 4rpx;
+  background-color: black;
+  border-radius: 12%;
+  width: 60%;
+  margin: 0rpx 20%;
+  border: 1px solid black;
+}
+
 view.addview_head{
   display: block;
   margin: 10rpx auto;
@@ -58,6 +69,7 @@ view.principleTR{
 view.principleTextView{
   word-break: break-all;
   /* font-size: 24rpx; */
+  text-align: center;
 }
 
 swiper{
@@ -68,7 +80,7 @@ swiper{
 image.addicon{
   width: 64rpx;
   height: 64rpx;
-  
+
   display: block;
   margin: 10rpx auto;
 }
@@ -114,7 +126,7 @@ view.rowline{
 }
 
 #taskScrollView{
-  height: 810rpx;
+  height: 800rpx;
   width: 90%;
   left: 5%;
   position: absolute;
