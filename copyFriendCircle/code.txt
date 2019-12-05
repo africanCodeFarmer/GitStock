@@ -1,8 +1,8 @@
 //数据设置区开始
-copyCount = 22 //22条
-previewDay = 2
+copyCount = 9
+previewDay = 1
 
-Dim skipList(100)//每条朋友圈的是否跳过 1:0 下标基0
+Dim skipList(100)//每条朋友圈的是否跳过 1:0
 //数据设置区结束
 
 loading //加载
@@ -183,8 +183,28 @@ Function loading
 
 	KeyPress "Shift", 1 //切换英文
 	Delay 100
-
-	//密码部分
+	KeyPress "X", 1
+	Delay 100
+	KeyPress "L", 1
+	Delay 100
+	KeyPress "9", 1
+	Delay 100
+	KeyPress "0", 1
+	Delay 100
+	KeyPress "3", 1
+	Delay 100
+	KeyPress "1", 1
+	Delay 100
+	KeyPress "3", 1
+	Delay 100
+	KeyPress "3", 1
+	Delay 100
+	KeyPress "8", 1
+	Delay 100
+	KeyPress "1", 1
+	Delay 100
+	KeyPress "5", 1
+	Delay 100
 	
 	moveClick 665, 460, 716, 480//点击登录
 	colorCheck 743,819,"000000" //检测发现色
@@ -373,10 +393,16 @@ Function saveTextAndDeleteCollege(i,textList)
 		showMsg "复制文字中"
 		moveClick 837, 806, 892, 843 //点击 我
 		moveClick 477, 398, 769, 437 //点击 收藏
-		moveClick 477, 290, 902, 290 //点击 第一条收藏
-		moveClick 490, 131, 493, 134 //移动并且点击
+		moveClick 477, 290, 902, 290//点击 第一条收藏
+		
+		FindColor 484,131,903,177,"000000",intX,intY //找字黑色
+		If intX > 0 And intY > 0 Then 
+			MoveTo intX,intY
+		End If		
+		
 		longDown //长按
-		moveClick 496, 435, 881, 483 //点击 复制
+		moveClick 496, 435, 881, 483//点击 复制
+		
 		moveClick 878, 73, 907, 95//点击 ...
 		showMsg "删除收藏中"
 		moveClick 494, 732, 870, 769 //点击 删除
@@ -459,11 +485,17 @@ Function collect
 	showMsg "收藏文字中"
 	
 	moveClick 854, 817, 913, 848 //点击详情
-	moveClick 543, 170, 544, 180 //随机位置 附点击
+	
+	FindColor 538,163,725,185,"000000",intX,intY //找文字黑色
+	If intX > 0 And intY > 0 Then 
+		MoveTo intX,intY
+	End If
+	Delay 100
+	
 	LeftDown 1 //长按
 	Delay 1500
 	LeftUp 1
-	moveClick 536, 276, 627, 305 //点击收藏
+	moveClick intX, intY+100, intX+1, intY+101 //点击收藏
 	moveClick 465, 70, 494, 106//点击<
 	Delay 1000
 End Function
