@@ -181,32 +181,25 @@ Function loading
 	colorCheck 599,824,"99715E" //登录颜色检测
 	moveClick 610, 351, 620, 366//点击输入框
 
-	KeyPress "Shift", 1 //切换英文
-	Delay 100
-	KeyPress "X", 1
-	Delay 100
-	KeyPress "L", 1
-	Delay 100
-	KeyPress "9", 1
-	Delay 100
-	KeyPress "0", 1
-	Delay 100
-	KeyPress "3", 1
-	Delay 100
-	KeyPress "1", 1
-	Delay 100
-	KeyPress "3", 1
-	Delay 100
-	KeyPress "3", 1
-	Delay 100
-	KeyPress "8", 1
-	Delay 100
-	KeyPress "1", 1
-	Delay 100
-	KeyPress "5", 1
-	Delay 100
+	printPassword  //输入密码
 	
 	moveClick 665, 460, 716, 480//点击登录
+
+	//检测登录失败 6次检测
+	checkCount =0
+	while  checkCount<6
+	FindColor 510,502,870,555,"956B57",intX,intY
+		Delay reactTime * 2
+		If intX > 0 And intY > 0 Then 
+			moveClick intX, intY, intX + 1, intY + 1//点击确认
+			moveClick 850,359,851,360 //点击x
+			printPassword //再次输入密码
+			moveClick 665, 460, 716, 480//点击登录
+			checkCount = 4
+		End If
+		checkCount = checkCount+1
+	Wend	
+
 	colorCheck 743,819,"000000" //检测发现色
 	
 	moveClick 737, 809, 757, 823//点击 发现
@@ -606,7 +599,32 @@ Function hideMsg()
 	Delay 100
 End Function
 
-
+Function printPassword
+	KeyPress "Shift", 1 //切换英文
+	Delay 100
+	KeyPress "X", 1
+	Delay 100
+	KeyPress "L", 1
+	Delay 100
+	KeyPress "9", 1
+	Delay 100
+	KeyPress "0", 1
+	Delay 100
+	KeyPress "3", 1
+	Delay 100
+	KeyPress "1", 1
+	Delay 100
+	KeyPress "3", 1
+	Delay 100
+	KeyPress "3", 1
+	Delay 100
+	KeyPress "8", 1
+	Delay 100
+	KeyPress "1", 1
+	Delay 100
+	KeyPress "5", 1
+	Delay 100
+End Function
 
 //结束反馈 测试模块
 //hideMsg
