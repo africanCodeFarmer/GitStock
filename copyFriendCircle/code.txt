@@ -1,26 +1,26 @@
 //数据设置区开始
-copyCount = 9
+copyCount = 17
 previewDay = 1
 
 Dim skipList(100)//每条朋友圈的是否跳过 1:0
 //数据设置区结束
 
-loading //加载
+//loading //加载
 
-showMsg "程序开始了"
-moveClick 1409, 800, 1408, 802 //点击 home
-
-showMsg "点击微信了"
-moveClick 851,461,890,501
-
-showMsg "点击通讯录"
-moveClick 613,808,646,844
-
-showMsg "点击了商家"
-moveClick 476,489,871,529
-
-showMsg "点击朋友圈"
-moveClick 470,347,908,396
+//showMsg "程序开始了"
+//moveClick 1409, 800, 1408, 802 //点击 home
+//
+//showMsg "点击微信了"
+//moveClick 851,461,890,501
+//
+//showMsg "点击通讯录"
+//moveClick 613,808,646,844
+//
+//showMsg "点击了商家"
+//moveClick 476,489,871,529
+//
+//showMsg "点击朋友圈"
+//moveClick 470,347,908,396
 
 showMsg "点击空白处"
 Delay 1000
@@ -170,14 +170,19 @@ Function loading
 	
 	showMsg "加载微信中"
 	moveClick 851, 463, 891, 500//点击 微信
+	Delay 4000
 	colorCheck 743, 819, "000000"//检测发现色
 	moveClick 854, 811, 875, 826//点击 我
-	colorCheck 490, 678, "EF8F27"//设置设检测
-	
+	Delay 4000
+	colorCheck 490, 678, "EF8F27"//检测设置色
 	moveClick 476, 669, 575, 711//点击 设置
-	moveClick 667,835,713,852 //点击 退出
-	moveClick 646,672,730,702 //点击 退出登录
+	Delay 4000
+	moveClick 667, 835, 713, 852//点击 退出
+	Delay 4000
+	moveClick 646, 672, 730, 702//点击 退出登录
+	Delay 4000
 	moveClick 762, 512, 807, 530//点击 退出
+	Delay 4000
 	colorCheck 599,824,"99715E" //登录颜色检测
 	moveClick 610, 351, 620, 366//点击输入框
 
@@ -468,7 +473,12 @@ Function saveImage
 		saveImage = 1
 	End If
 
-	moveClick 690, 725, 775, 772 //保存图片
+	If GetPixelColor(789, 750) = "010101" Then 
+		moveClick 650, 664, 731, 689 //出现识别二维码
+	Else 
+			moveClick 690, 725, 775, 772 //保存图片
+	End If
+
 	//moveClick 646, 672, 734, 695 //点击 保存我自己的图片
 	Delay 1000
 End Function
