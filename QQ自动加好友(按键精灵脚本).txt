@@ -1,0 +1,106 @@
+total = 100
+cur = 1
+
+While cur <= total
+	Rem HEAD
+	click 864, 150 //点击 好友
+	If GetPixelColor(506, 74) = "010101" Then //如果没点到好友
+			scrollUp 
+			Goto HEAD
+	End If
+	
+	showMsg "我开始加好友"
+	//如果无加好友按钮:排己
+	FindColor 466,822,678,855,"010101",intX,intY
+	If intX > 0 And intY > 0 Then 
+	Else 
+		Goto SKIP
+	End If
+
+	colorLoadDelay 460,855,"FFFFFF" //检测 加好友(白色
+	Delay 500
+	
+	MoveTo 558, 828
+	click 558, 828//点击加好友
+	colorLoadDelay 506, 71, "000000"//检测 返回(黑色
+	
+	//检测问题底栏灰色:有问题直接不加
+	If GetPixelColor(458,212) = "F9F9F9" Then
+		showMsg "这我怎么知道"
+		click 506, 71//点击返回
+		Goto SKIP
+	End If
+	If GetPixelColor(458,242) = "F7F7F7" Then //需要回答问题
+		showMsg "既然要回答啊"
+		click 506, 71//点击返回
+		Goto SKIP
+	End If
+	
+	click 909, 76//点击下一步
+	
+	showMsg "我要发送请求"
+	colorLoadDelay 909, 76, "2C2C2C"//检测 发送(黑色
+	click 909, 76//点击发送
+	
+	Rem SKIP
+	showMsg "我得点击返回"
+
+	Do Until GetPixelColor(507, 71) = "303030"
+			click 507, 71//点击返回
+			Delay 1000
+	Loop
+	
+	cur = cur + 1
+	scrollUp //下拉
+Wend
+
+//长按
+Function longDown
+	MoveTo 477, 190
+	Delay 200
+	LeftDown 1
+	Delay 1500
+	LeftUp 1
+	Delay 200
+End Function
+//鼠标点击
+Function click(x, y)
+	MoveTo x, y
+	Delay 200
+	LeftClick 1
+	Delay 200
+End Function
+//颜色检测
+Function colorLoadDelay(x,y,color)
+	Do Until GetPixelColor(x,y) = color //判断加载完成
+		Delay 200
+	Loop
+End Function
+//显示消息
+Function showMsg(str)
+	Call Plugin.Msg.ShowScrTXT(0, 0, 1440, 900, str, "000000")
+	Delay 100
+End Function
+//隐藏消息
+Function hideMsg()
+	Call Plugin.Msg.HideScrTXT()
+	Delay 100
+End Function
+//上拉列表
+Function scrollUp
+	X = 459
+	minY = 128
+	maxY = 182
+	MoveTo X, maxY
+	Delay 10
+	LeftDown 1
+	Delay 10
+	tempY = maxY
+	While tempY > 128
+		MoveTo X,tempY
+		tempY = tempY - 1
+		Delay 10
+	Wend
+	LeftUp 1
+	Delay 10
+End Function
