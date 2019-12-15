@@ -1,12 +1,15 @@
 //数据设置区开始
-copyCount = 17
-previewDay = 1
+copyCount = 2
+previewDay = 2
 
 Dim skipList(100)//每条朋友圈的是否跳过 1:0
+
+skipList(3) = 1
+
 //数据设置区结束
 
 //loading //加载
-
+//
 //showMsg "程序开始了"
 //moveClick 1409, 800, 1408, 802 //点击 home
 //
@@ -20,16 +23,20 @@ Dim skipList(100)//每条朋友圈的是否跳过 1:0
 //moveClick 476,489,871,529
 //
 //showMsg "点击朋友圈"
-//moveClick 470,347,908,396
-
-showMsg "点击空白处"
-Delay 1000
-moveClick 462,351,822,364
-
-preview previewDay //预加载
-
-showMsg "点开动态了"
-moveClick 563,560,581,567
+//moveClick 470, 347, 908, 396
+//
+//MoveTo 554, 399 //特殊时期
+//Delay 1000
+//LeftClick 1
+//
+//showMsg "点击空白处"
+//Delay 1000
+//moveClick 462,351,822,364
+//
+//preview previewDay //预加载
+//
+//showMsg "点开动态了"
+//moveClick 563,560,581,567
 
 //朋友圈数据准备
 total = 0 //朋友圈总数
@@ -157,7 +164,8 @@ Function loading
 	moveClick 762, 463, 799, 499 //点击 Tim
 	colorCheck 832, 534, "EBE8E7" //颜色检测
 	moveClick 725, 549, 798, 561 //点击 重新登陆
-	moveClick 834, 825, 857, 842 //点击 公文包图片
+	moveClick 834, 825, 857, 842//点击 公文包图片
+	Delay 2000
 	moveClick 509, 509, 570, 522 //点击 好友动态
 	colorCheck 898, 77, "592A11"//颜色检测+
 	moveClick 891, 72, 904, 84 //点击 +
@@ -170,19 +178,19 @@ Function loading
 	
 	showMsg "加载微信中"
 	moveClick 851, 463, 891, 500//点击 微信
-	Delay 4000
+	Delay 2000
 	colorCheck 743, 819, "000000"//检测发现色
 	moveClick 854, 811, 875, 826//点击 我
-	Delay 4000
+	Delay 2000
 	colorCheck 490, 678, "EF8F27"//检测设置色
 	moveClick 476, 669, 575, 711//点击 设置
-	Delay 4000
+	Delay 2000
 	moveClick 667, 835, 713, 852//点击 退出
-	Delay 4000
+	Delay 2000
 	moveClick 646, 672, 730, 702//点击 退出登录
-	Delay 4000
+	Delay 2000
 	moveClick 762, 512, 807, 530//点击 退出
-	Delay 4000
+	Delay 2000
 	colorCheck 599,824,"99715E" //登录颜色检测
 	moveClick 610, 351, 620, 366//点击输入框
 
@@ -209,7 +217,7 @@ Function loading
 	
 	moveClick 737, 809, 757, 823//点击 发现
 	moveClick 737, 809, 757, 823 //点击 发现
-	
+	Delay 2000
 	moveClick 474, 132, 587, 173//点击 朋友圈
 	colorCheck 889, 85, "24211F"//检测相机色
 	moveClick 471,81,480,88 //点击 返回
@@ -341,7 +349,9 @@ Function weChatRelay(relayCount,dataList,textList,vedioList)
 		moveClick 465, 87, 523, 113//点击粘贴
 	End If
 	
-	colorCheck 839,70,"60C107" //颜色检测
+	colorCheck 839, 70, "60C107"//颜色检测
+	
+	Delay 1000
 	moveClick 837, 72, 893, 97//点击发表
 	
 	colorCheck 476,84,"EAEAE9" //颜色检测
@@ -475,8 +485,10 @@ Function saveImage
 
 	If GetPixelColor(789, 750) = "010101" Then 
 		moveClick 650, 664, 731, 689 //出现识别二维码
+	ElseIf GetPixelColor(646, 709) = "999999" Then
+		moveClick 676,635,677,636 //出现公众号
 	Else 
-			moveClick 690, 725, 775, 772 //保存图片
+		moveClick 690, 725, 775, 772 //保存图片
 	End If
 
 	//moveClick 646, 672, 734, 695 //点击 保存我自己的图片
@@ -613,26 +625,6 @@ Function printPassword
 	KeyPress "Shift", 1 //切换英文
 	Delay 100
 	KeyPress "X", 1
-	Delay 100
-	KeyPress "L", 1
-	Delay 100
-	KeyPress "9", 1
-	Delay 100
-	KeyPress "0", 1
-	Delay 100
-	KeyPress "3", 1
-	Delay 100
-	KeyPress "1", 1
-	Delay 100
-	KeyPress "3", 1
-	Delay 100
-	KeyPress "3", 1
-	Delay 100
-	KeyPress "8", 1
-	Delay 100
-	KeyPress "1", 1
-	Delay 100
-	KeyPress "5", 1
 	Delay 100
 End Function
 

@@ -1,9 +1,11 @@
-total = 100
+total = 40
 cur = 1
 
 While cur <= total
 	Rem HEAD
-	click 864, 150 //点击 好友
+	click 864, 150//点击 好友
+	Delay 500
+	
 	If GetPixelColor(506, 74) = "010101" Then //如果没点到好友
 			scrollUp 
 			Goto HEAD
