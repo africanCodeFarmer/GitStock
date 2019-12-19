@@ -1,5 +1,5 @@
 //数据设置区开始
-copyCount = 3
+copyCount = 1
 previewDay = 1
 
 Dim skipList(100)//每条朋友圈的是否跳过 1:0
@@ -402,7 +402,7 @@ Function deleteImageOrVedio(num)
 	moveClick 851,462,891,501 //点击 微信
 End Function
 
-//保存文本和删除收藏
+//复制文本和删除收藏
 Function saveTextAndDeleteCollege(i,textList)
 	If textList(i - 1) = 1 Then //有文本
 		showMsg "复制文字中"
@@ -410,6 +410,7 @@ Function saveTextAndDeleteCollege(i,textList)
 		moveClick 477, 398, 769, 437 //点击 收藏
 		moveClick 477, 290, 902, 290//点击 第一条收藏
 		
+		Delay 1000
 		FindColor 484,131,903,177,"000000",intX,intY //找字黑色
 		If intX > 0 And intY > 0 Then 
 			MoveTo intX,intY
@@ -505,9 +506,9 @@ End Function
 //收藏
 Function collect
 	showMsg "收藏文字中"
-	
 	moveClick 854, 817, 913, 848 //点击详情
-	
+
+	Delay 2000
 	FindColor 538,163,885,191,"000000",intX,intY //找文字黑色
 	If intX > 0 And intY > 0 Then 
 		MoveTo intX,intY

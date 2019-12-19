@@ -1,4 +1,4 @@
-total = 40
+total = 100
 cur = 1
 
 While cur <= total
@@ -38,6 +38,17 @@ While cur <= total
 		Goto SKIP
 	End If
 	
+	//粘贴广告语
+	FindColor 630,186,834,202,"000000",intX,intY
+	If intX > 0 And intY > 0 Then 
+	Else 
+		Delay 1000
+		click 631, 190
+		longDown 
+		Delay 500
+		click 627,161
+	End If
+	
 	click 909, 76//点击下一步
 	
 	showMsg "我要发送请求"
@@ -58,7 +69,6 @@ Wend
 
 //长按
 Function longDown
-	MoveTo 477, 190
 	Delay 200
 	LeftDown 1
 	Delay 1500

@@ -1,7 +1,7 @@
 x = 495 //偏移量x85 y104
 y = 193
 index = 1
-needNum = 40 //需求数
+needNum = 20 //需求数
 curNum = 1//当前添加数
 
 bottom = false//到底标记
@@ -23,6 +23,14 @@ While curNum <= needNum
 		Delay 1500
 	End If
 	
+	//已经添加判定
+	FindPic 639,267,683,761,"Attachment:\音.bmp",0.9,intX,intY
+	If intX > 0 And intY > 0 Then 
+		showMsg "已经添加了"
+		clickBack 
+		Goto Tail
+	End If
+
 	showMsg "添加通讯录"
 	FindColor 628,340,757,564,"956B57",intX,intY //点击添加到通讯录
 	If intX > 0 And intY > 0 Then 
