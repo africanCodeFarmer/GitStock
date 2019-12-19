@@ -1,10 +1,8 @@
 //数据设置区开始
-copyCount = 2
-previewDay = 2
+copyCount = 3
+previewDay = 1
 
 Dim skipList(100)//每条朋友圈的是否跳过 1:0
-
-skipList(3) = 1
 
 //数据设置区结束
 
@@ -293,8 +291,15 @@ Function timRelay(relayCount, dataList, textList, vedioList)
 	showMsg "执行发表了"
 	moveClick 874, 69, 906, 88//点击 发表
 	
-	Delay 1000
-	If GetPixelColor(861, 69) = "2F39FF" Then //上传失败
+	Delay 2000
+	If GetPixelColor(861, 69) = "2F39FF" Then //第一次上传失败
+		showMsg "重新上传中"
+		moveClick 861, 69, 862, 70//点击 红色!
+		moveClick 861, 72, 906, 88//点击 全部开始
+		colorCheck 898, 77,"592A11" //颜色检测+
+	End If
+	
+	If GetPixelColor(861, 69) = "565FFF" Then //再次上传失败
 		showMsg "重新上传中"
 		moveClick 861, 69, 862, 70//点击 红色!
 		moveClick 861, 72, 906, 88//点击 全部开始
@@ -344,6 +349,8 @@ Function weChatRelay(relayCount,dataList,textList,vedioList)
 	//检测有无文本
 	If textList(relayCount - 1) = 1 Then 
 		showMsg "粘贴文本中"
+		
+		Delay 2000
 		moveClick 488, 131, 498, 150//点击 输入框
 		longDown 
 		moveClick 465, 87, 523, 113//点击粘贴
@@ -381,7 +388,7 @@ Function deleteImageOrVedio(num)
 		MoveTo x,y
 		LeftClick 1
 		y = y + 47
-		Delay 100
+		Delay 200
 	Next
 	
 	moveClick 886,69,902,89 //点击 三个竖点
@@ -501,7 +508,7 @@ Function collect
 	
 	moveClick 854, 817, 913, 848 //点击详情
 	
-	FindColor 538,163,725,185,"000000",intX,intY //找文字黑色
+	FindColor 538,163,885,191,"000000",intX,intY //找文字黑色
 	If intX > 0 And intY > 0 Then 
 		MoveTo intX,intY
 	End If
