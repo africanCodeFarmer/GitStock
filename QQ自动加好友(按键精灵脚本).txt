@@ -24,7 +24,18 @@ While cur <= total
 	
 	MoveTo 558, 828
 	click 558, 828//点击加好友
+	Delay 500
+	click 558, 828//点击加好友
+	Delay 500
+	click 558, 828//点击加好友
+	
 	colorLoadDelay 506, 71, "000000"//检测 返回(黑色
+	
+	//免验证检测
+	If GetPixelColor(909, 76) = "2C2C2C" Then
+		showMsg "不用验证哈哈"
+		Goto ADDFRIEND
+	End If
 	
 	//检测问题底栏灰色:有问题直接不加
 	If GetPixelColor(458,212) = "F9F9F9" Then
@@ -34,8 +45,21 @@ While cur <= total
 	End If
 	If GetPixelColor(458,242) = "F7F7F7" Then //需要回答问题
 		showMsg "既然要回答啊"
-		click 506, 71//点击返回
-		Goto SKIP
+		
+		//尝试回答问题
+		click 470, 256
+		longDown 
+		click 470,256-40
+		click 872, 74//点击下一步
+		
+		Delay 200
+		If GetPixelColor(913,110) = "4A4A49" Then
+			showMsg "答案是错误的"
+			click 506, 71//点击返回
+			Goto SKIP
+		Else 
+			Goto ADDFRIEND
+		End If
 	End If
 	
 	//粘贴广告语
@@ -53,6 +77,8 @@ While cur <= total
 	
 	showMsg "我要发送请求"
 	colorLoadDelay 909, 76, "2C2C2C"//检测 发送(黑色
+	
+	Rem ADDFRIEND
 	click 909, 76//点击发送
 	
 	Rem SKIP
