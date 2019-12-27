@@ -12,6 +12,8 @@ Page({
     taskCount:0,
     hour:0,
 
+    principleTRColor:[],
+    
     //时间分配行
     columns:["","","","","","","","","","","","","","","","","",""],
     distributes:[],
@@ -29,6 +31,18 @@ Page({
   },
 
   onLoad:function(){
+    //principleTRColor颜色初始化
+    var principles = wx.getStorageSync("principles") || []
+    var principleTRColor = []
+    for(var i=0;i<principles.length;i++){
+      var r = Math.floor(Math.random() * 256).toString()
+      var g = Math.floor(Math.random() * 256).toString()
+      var b = Math.floor(Math.random() * 256).toString()
+      principleTRColor[i] = r+","+g+","+b+",";
+    }
+    //console.log(principleTRColor)
+    wx.setStorageSync("principleTRColor", principleTRColor)
+
     this.animation = wx.createAnimation({
       duration: 1000,
       timingFunction: 'linear',
@@ -177,6 +191,7 @@ Page({
       distributes: wx.getStorageSync('timeDistribute') || [],
       hour: hour,
       principles: wx.getStorageSync('principles') || [],
+      principleTRColor: wx.getStorageSync('principleTRColor') || [],
     })
   },
 

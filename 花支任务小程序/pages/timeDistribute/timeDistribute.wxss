@@ -60,16 +60,18 @@ view.addview{
 }
 
 view.principleTR{
-  margin:10rpx 2% 0rpx 2%;
-  width: 96%;
-  /* background-color: lightgray; */
-  border-bottom: 1rpx solid rgba(128, 128, 128, 0.4);
+  display: inline-block;
+  width: auto;
+  margin: 10rpx;
+  border: 1rpx solid rgba(128, 128, 128, 0.4);
 }
 
 view.principleTextView{
+  display: inline-block;
   word-break: break-all;
-  /* font-size: 24rpx; */
+  padding: 10rpx;
   text-align: center;
+  vertical-align: center;
 }
 
 swiper{

@@ -4,9 +4,9 @@
   <view class="rowline"></view>
 
   <scroll-view scroll-y id="two_scroll-view">
-    <view wx:for="{{principles}}">
-      <view class="principleTR">
-        <view id="{{index}}" class="principleTextView" bindtap="editprinciple" data-text="{{principles[index]}}">{{index+1}}.{{principles[index]}}</view>
+    <view wx:for="{{principles}}" style="display:inline-block;">
+      <view class="principleTR" style="background-color: rgba({{principleTRColor[index]}}0.2);">
+        <view id="{{index}}" class="principleTextView" bindtap="editprinciple" data-text="{{principles[index]}}">{{principles[index]}}</view>
       </view>
     </view>
   </scroll-view>
