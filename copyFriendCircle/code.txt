@@ -1,5 +1,5 @@
 //数据设置区开始
-copyCount = 1
+copyCount =1
 previewDay = 1
 
 Dim skipList(100)//每条朋友圈的是否跳过 1:0
@@ -148,10 +148,10 @@ Loop
 Function loading
 	showMsg "首次加载中"
 	
-	showMsg "清理内存中"
-	moveClick 1401, 799, 1418, 805//点击 Home
-	moveClick 1401, 439, 1412, 450//点击 清理内存
-	Delay 5000
+//	showMsg "清理内存中"
+//	moveClick 1401, 799, 1418, 805//点击 Home
+//	moveClick 1401, 439, 1412, 450//点击 清理内存
+//	Delay 5000
 	
 	showMsg "开启管理器"
 	moveClick 582, 317, 614, 349 //点击 RE管理器
@@ -407,7 +407,8 @@ Function saveTextAndDeleteCollege(i,textList)
 	If textList(i - 1) = 1 Then //有文本
 		showMsg "复制文字中"
 		moveClick 837, 806, 892, 843 //点击 我
-		moveClick 477, 398, 769, 437 //点击 收藏
+		moveClick 477, 398, 769, 437//点击 收藏
+		Delay 2000
 		moveClick 477, 290, 902, 290//点击 第一条收藏
 		
 		Delay 1000
@@ -518,7 +519,11 @@ Function collect
 	LeftDown 1 //长按
 	Delay 1500
 	LeftUp 1
-	moveClick intX, intY+100, intX+1, intY+101 //点击收藏
+	If intX >= 782 Then 
+		moveClick intX-51, intY + 100, intX -50, intY + 101//点击收藏
+	Else 
+		moveClick intX, intY+100, intX+1, intY+101 //点击收藏
+	End If
 	moveClick 465, 70, 494, 106//点击<
 	Delay 1000
 End Function
