@@ -1,16 +1,36 @@
 total = 100
 cur = 1
 
+bottomX = 460
+bottomY = 136
+isBottom = false
+scrollCount = 0 //底部判定
 While cur <= total
 	Rem HEAD
-	click 864, 150//点击 好友
+	If isBottom = true Then 
+	    showMsg "到达底部了呢"
+		Delay 1000
+		click bottomX, bottomY
+		bottomY = bottomY+46
+	Else 
+		click 864, 150//点击 好友
+	End If
 	Delay 500
 	
-	If GetPixelColor(506, 74) = "010101" Then //如果没点到好友
+	If isBottom = false Then 
+		If GetPixelColor(506, 74) = "010101" Then //如果没点到好友
 			scrollUp 
+			
+			//底部判定
+			scrollCount = scrollCount + 1
+			If scrollCount = 2 Then 
+				isBottom = true
+			End If
+			
 			Goto HEAD
+		End If
 	End If
-	
+
 	showMsg "我开始加好友"
 	//如果无加好友按钮:排己
 	FindColor 466,822,678,855,"010101",intX,intY
@@ -28,6 +48,15 @@ While cur <= total
 	click 558, 828//点击加好友
 	Delay 500
 	click 558, 828//点击加好友
+	
+	//拒绝被添加判定
+	If GetPixelColor(472,124) = "FFFFFF" Then
+		If GetPixelColor(480,124) = "FFFFFF" Then
+			showMsg "用户拒绝添加"
+			Delay 1000
+			Goto SKIP
+		End If
+	End If
 	
 	colorLoadDelay 506, 71, "000000"//检测 返回(黑色
 	
@@ -92,6 +121,7 @@ While cur <= total
 	cur = cur + 1
 	scrollUp //下拉
 Wend
+
 
 //长按
 Function longDown
