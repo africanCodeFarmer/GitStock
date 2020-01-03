@@ -1,5 +1,5 @@
 //数据设置区开始
-copyCount =1
+copyCount =2
 previewDay = 1
 
 Dim skipList(100)//每条朋友圈的是否跳过 1:0
@@ -431,7 +431,7 @@ End Function
 
 //点击<
 Function clickBack
-	moveClick 464, 67, 490, 101
+	moveClick 474,77, 485,93
 End Function
 
 //长按

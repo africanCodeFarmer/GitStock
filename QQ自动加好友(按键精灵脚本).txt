@@ -4,8 +4,9 @@ cur = 1
 bottomX = 460
 bottomY = 136
 isBottom = false
-scrollCount = 0 //底部判定
 While cur <= total
+	scrollCount = 0//底部判定
+	
 	Rem HEAD
 	If isBottom = true Then 
 	    showMsg "到达底部了呢"
@@ -23,7 +24,7 @@ While cur <= total
 			
 			//底部判定
 			scrollCount = scrollCount + 1
-			If scrollCount = 2 Then 
+			If scrollCount = 3 Then 
 				isBottom = true
 			End If
 			

@@ -1,5 +1,6 @@
 x = 495 //偏移量x85 y104
 y = 193
+
 index = 1
 needNum = 80 //需求数
 curNum = 1//当前添加数
@@ -23,8 +24,15 @@ While curNum <= needNum
 		Delay 1500
 	End If
 	
-	//已经添加判定
-	FindPic 639,267,683,761,"Attachment:\音.bmp",0.9,intX,intY
+	FindPic 599,224,772,753,"Attachment:\音.bmp",0.9,intX,intY
+	If intX > 0 And intY > 0 Then 
+		showMsg "已经添加了"
+		clickBack 
+		Goto Tail
+	End If
+	
+	//再次判定已经添加 通过颜色
+	FindPic 470,275,916,761,"Attachment:\息.bmp",0.9,intX,intY
 	If intX > 0 And intY > 0 Then 
 		showMsg "已经添加了"
 		clickBack 
