@@ -1,4 +1,4 @@
-total = 100
+total = 500
 cur = 1
 
 bottomX = 460
@@ -73,13 +73,21 @@ While cur <= total
 		click 506, 71//点击返回
 		Goto SKIP
 	End If
+	
+	problemX = 470
+	problemY = 256
 	If GetPixelColor(458,242) = "F7F7F7" Then //需要回答问题
 		showMsg "既然要回答啊"
 		
-		//尝试回答问题
-		click 470, 256
-		longDown 
-		click 470,256-40
+		//尝试回答3个问题 y轴偏移105
+		For i=1 To 3 
+			click problemX, problemY
+			longDown 
+			click problemX, problemY - 40
+			problemY = problemY + 105
+			Delay 1000
+		Next
+		
 		click 872, 74//点击下一步
 		
 		Delay 200
