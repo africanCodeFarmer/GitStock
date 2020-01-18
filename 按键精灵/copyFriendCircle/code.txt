@@ -1,0 +1,650 @@
+//数据设置区开始
+copyCount =2
+previewDay = 1
+
+Dim skipList(100)//每条朋友圈的是否跳过 1:0
+
+//数据设置区结束
+
+//loading //加载
+//
+//showMsg "程序开始了"
+//moveClick 1409, 800, 1408, 802 //点击 home
+//
+//showMsg "点击微信了"
+//moveClick 851,461,890,501
+//
+//showMsg "点击通讯录"
+//moveClick 613,808,646,844
+//
+//showMsg "点击了商家"
+//moveClick 476,489,871,529
+//
+//showMsg "点击朋友圈"
+//moveClick 470, 347, 908, 396
+//
+//MoveTo 554, 399 //特殊时期
+//Delay 1000
+//LeftClick 1
+//
+//showMsg "点击空白处"
+//Delay 1000
+//moveClick 462,351,822,364
+//
+//preview previewDay //预加载
+//
+//showMsg "点开动态了"
+//moveClick 563,560,581,567
+
+//朋友圈数据准备
+total = 0 //朋友圈总数
+Dim dataList(100) //每条朋友圈的照片数
+Dim textList(100) //每条朋友圈的有无文本 1:0
+Dim vedioList(100) //每条朋友圈的是否视频 1:0
+
+showMsg "开始保存图"
+
+Rem saveList//外循环
+Delay 1000
+
+While skipList(total) = 1//跳过
+	showMsg "跳过此条了"
+	skip total
+	total = total + 1
+Wend
+
+If total = copyCount Then //采集结束
+	showMsg "达到转发数"
+	Goto over
+End If
+
+minmax = findNum
+min = minmax(0)
+max = minmax(1)
+
+If min="" Then
+	showMsg "检测为单张"
+	dataList(total) = 1
+	total = total + 1
+
+	//单张视频检测
+	isVedio = saveImage
+	If isVedio = 1 Then 
+		showMsg "检测为视频"
+		vedioList(total-1)=1	
+	End If
+	
+	saveBackMsg 1 //反馈消息
+	
+	//保存简介
+	FindColor 460,785,915,801,"FFFFFF",intX,intY
+	If intX > 0 And intY > 0 Then //有简介 
+		collect //执行收藏函数
+		textList(total-1)=1
+	Else //无简介 
+		showMsg "检测无文本"
+		textList(total-1)=0
+	End If
+
+	leftSlide
+	Goto saveList
+End If
+
+While min <= max //内循环开始
+	Delay 500
+	minmax = findNum
+	min = minmax(0)
+	max = minmax(1)
+	
+	hideMsg 
+	showMsg "正在处理: " & min & " / " & max
+	
+	saveImage
+	
+	//本组 保存完成检测
+	If min = max Then 
+		dataList(total) = max //max张
+		total = total + 1	
+		
+		saveBackMsg max //反馈消息
+		
+		//保存简介
+		FindColor 460,785,915,801,"FFFFFF",intX,intY
+		If intX > 0 And intY > 0 Then //有简介 
+			collect //执行收藏函数
+			textList(total-1)=1
+		Else //无简介 
+			showMsg "检测无文本"
+			textList(total-1)=0
+		End If
+		
+		leftSlide
+		Goto saveList
+	End If
+	
+	leftSlide
+Wend //内循环结束
+
+Rem over //return
+
+//返回微信主界面
+showMsg "点击返回了"
+For i = 1 To 3
+	clickBack
+Next
+
+relayCount=copyCount //转发次数
+Do Until relayCount = 0
+	If skipList(relayCount - 1) = 0 Then //如果不跳过
+		saveTextAndDeleteCollege relayCount, textList //复制收藏文字和删除收藏
+		weChatRelay relayCount,dataList,textList,vedioList //微信转发
+		timRelay relayCount, dataList, textList, vedioList//tim转发		
+		deleteImageOrVedio dataList(relayCount-1) //删除图片
+	End If
+	relayCount = relayCount -1
+Loop
+
+//加载
+Function loading
+	showMsg "首次加载中"
+	
+//	showMsg "清理内存中"
+//	moveClick 1401, 799, 1418, 805//点击 Home
+//	moveClick 1401, 439, 1412, 450//点击 清理内存
+//	Delay 5000
+	
+	showMsg "开启管理器"
+	moveClick 582, 317, 614, 349 //点击 RE管理器
+	colorCheck 458, 138, "D1A62F"//颜色检测
+	moveClick 1401, 799, 1418, 805//点击 Home
+	
+	showMsg "加载Tim中"
+	moveClick 762, 463, 799, 499 //点击 Tim
+	colorCheck 832, 534, "EBE8E7" //颜色检测
+	moveClick 725, 549, 798, 561 //点击 重新登陆
+	moveClick 834, 825, 857, 842//点击 公文包图片
+	Delay 2000
+	moveClick 509, 509, 570, 522 //点击 好友动态
+	colorCheck 898, 77, "592A11"//颜色检测+
+	moveClick 891, 72, 904, 84 //点击 +
+	moveClick 521, 117, 548, 132 //点击 说说
+	colorCheck 897, 69, "969494" //检测发表色
+	moveClick 475, 69, 505, 85 //点击 取消
+	colorCheck 470, 78, "F7F3F1"//检测返回色
+	moveClick 487, 69, 501, 84//点击 返回
+	moveClick 1401, 799, 1418, 805//点击 Home
+	
+	showMsg "加载微信中"
+	moveClick 851, 463, 891, 500//点击 微信
+	Delay 2000
+	colorCheck 743, 819, "000000"//检测发现色
+	moveClick 854, 811, 875, 826//点击 我
+	Delay 2000
+	colorCheck 490, 678, "EF8F27"//检测设置色
+	moveClick 476, 669, 575, 711//点击 设置
+	Delay 2000
+	moveClick 667, 835, 713, 852//点击 退出
+	Delay 2000
+	moveClick 646, 672, 730, 702//点击 退出登录
+	Delay 2000
+	moveClick 762, 512, 807, 530//点击 退出
+	Delay 2000
+	colorCheck 599,824,"99715E" //登录颜色检测
+	moveClick 610, 351, 620, 366//点击输入框
+
+	printPassword  //输入密码
+	
+	moveClick 665, 460, 716, 480//点击登录
+
+	//检测登录失败 6次检测
+	checkCount =0
+	while  checkCount<6
+	FindColor 510,502,870,555,"956B57",intX,intY
+		Delay reactTime * 2
+		If intX > 0 And intY > 0 Then 
+			moveClick intX, intY, intX + 1, intY + 1//点击确认
+			moveClick 850,359,851,360 //点击x
+			printPassword //再次输入密码
+			moveClick 665, 460, 716, 480//点击登录
+			checkCount = 4
+		End If
+		checkCount = checkCount+1
+	Wend	
+
+	colorCheck 743,819,"000000" //检测发现色
+	
+	moveClick 737, 809, 757, 823//点击 发现
+	moveClick 737, 809, 757, 823 //点击 发现
+	Delay 2000
+	moveClick 474, 132, 587, 173//点击 朋友圈
+	colorCheck 889, 85, "24211F"//检测相机色
+	moveClick 471,81,480,88 //点击 返回
+End Function
+
+//tim转发
+Function timRelay(relayCount, dataList, textList, vedioList)
+	showMsg "执行转发中"
+	moveClick 1409, 800, 1408, 802 //点击 home
+	moveClick 761, 462, 799, 498 //点击 Tim
+	moveClick 834, 824, 857, 841//点击 公文包图片
+	moveClick 471, 505, 588, 530//点击 好友动态
+
+	colorCheck 898, 77,"592A11" //颜色检测+
+	moveClick 892, 71, 903, 84//点击 +
+	moveClick 517, 114, 552, 165//点击 说说
+	colorCheck 648,69,"413A35" //检测说说背景色 判断加载完成
+	
+	If GetPixelColor(878, 73) = "000000" Then //处理Tim上次卡发表问题
+		showMsg "上次未发表"
+		Delay 1000
+		moveClick 477, 71, 504, 81//点击 取消
+		moveClick 664, 787, 714, 803//点击 不保存
+		
+		colorCheck 898, 77,"592A11" //颜色检测+
+		moveClick 892, 71, 903, 84//点击 +
+		moveClick 517, 114, 552, 165//点击 说说
+		colorCheck 648,69,"413A35" //检测说说背景色 判断加载完成
+	End If
+
+	
+	Do Until GetPixelColor(651,701) = "FC9B2A"//判断是否弹窗
+		moveClick 479, 228, 598, 342//点击 照片/视频
+	Loop
+	
+	Delay 200
+	moveClick 647, 701, 735, 718//点击 从手机相册
+	
+	//选取图片 Tim
+	If vedioList(relayCount - 1) = 0 Then 
+		showMsg "选取图片中"
+		x = 587
+		y = 112
+		count = 1
+		For j = 1 To dataList(relayCount - 1) //xy轴偏差量都是153
+			moveClick x, y, x, y //勾选操作
+			If count < 3 Then 
+				x = x + 153
+				count = count + 1
+			Else
+				y = y + 153
+				x=587
+				count = 1
+			End If
+		Next
+		moveClick 835,824,898,841//点击 确定
+	Else 
+		showMsg "选取视频中"
+		moveClick 478, 113, 595, 238//点击视频本身
+		Delay 2000
+		moveClick 872,71,907,87 //点击 完成
+	End If
+	
+	//检测有无文本 Tim
+	If textList(relayCount - 1) = 1 Then 
+		showMsg "粘贴文本中"
+		moveClick 472, 114, 474, 130//点击 输入框
+		moveClick 472,114,474,130//点击 输入框 两遍防止错误
+		longDown 
+		moveClick 467,77,513,98//点击粘贴
+	End If
+	
+	showMsg "执行发表了"
+	moveClick 874, 69, 906, 88//点击 发表
+	
+	Delay 2000
+	If GetPixelColor(861, 69) = "2F39FF" Then //第一次上传失败
+		showMsg "重新上传中"
+		moveClick 861, 69, 862, 70//点击 红色!
+		moveClick 861, 72, 906, 88//点击 全部开始
+		colorCheck 898, 77,"592A11" //颜色检测+
+	End If
+	
+	If GetPixelColor(861, 69) = "565FFF" Then //再次上传失败
+		showMsg "重新上传中"
+		moveClick 861, 69, 862, 70//点击 红色!
+		moveClick 861, 72, 906, 88//点击 全部开始
+		colorCheck 898, 77,"592A11" //颜色检测+
+	End If	
+	
+	moveClick 467, 71, 520, 85//点击 返回
+	moveClick 467,71,520,85 //点击 返回 (两次返回->解决没返回问题)
+	showMsg "已完成转发"
+End Function
+
+//微信转发
+Function weChatRelay(relayCount,dataList,textList,vedioList)
+	showMsg "执行转发中"
+	moveClick 721,801,769,837 //点击 发现
+	moveClick 468, 130, 888, 174//点击 朋友圈
+	Delay 1000
+	
+	moveClick 880,79,898,92//点击 摄像机
+	moveClick 496, 467, 882, 514//点击 从相册
+	
+	//选取图片
+	If vedioList(relayCount - 1) = 0 Then 
+		showMsg "选取图片中"
+		x = 550
+		y = 130
+		count = 1
+		For j = 1 To dataList(relayCount - 1) //xy轴偏差量都是116
+			moveClick x, y, x, y //勾选操作
+			If count < 4 Then 
+				x = x + 116
+				count = count + 1
+			Else
+				y = y + 116
+				x=550
+				count = 1
+			End If
+		Next
+		moveClick 804, 72, 894, 98//点击 完成
+	Else 
+		showMsg "选取视频中"
+		moveClick 464, 121, 564, 217//点击视频
+		colorCheck 897,824,"60C107" //颜色检测
+		moveClick 839,801,900,823 //点击 完成
+	End If
+	
+	//检测有无文本
+	If textList(relayCount - 1) = 1 Then 
+		showMsg "粘贴文本中"
+		
+		Delay 2000
+		moveClick 488, 131, 498, 150//点击 输入框
+		longDown 
+		moveClick 465, 87, 523, 113//点击粘贴
+	End If
+	
+	colorCheck 839, 70, "60C107"//颜色检测
+	
+	Delay 1000
+	moveClick 837, 72, 893, 97//点击发表
+	
+	colorCheck 476,84,"EAEAE9" //颜色检测
+	clickBack //返回 
+	showMsg "已完成转发"
+End Function
+
+//颜色检测
+Function colorCheck(x,y,color)
+	Do Until GetPixelColor(x,y) = color //判断加载完成
+		Delay 100
+	Loop
+	Delay 1000
+End Function
+
+//删除图片视频
+Function deleteImageOrVedio(num)
+	showMsg "删除操作中"
+	moveClick 1409, 800, 1408, 802//点击 home
+	moveClick 580,314,615,351//点击 文件管理器
+	moveClick 886,69,902,89 //点击 三个竖点
+	moveClick 742,258,779,277//点击 刷新
+	
+	x = 900
+	y = 227
+	For i = 1 To num
+		MoveTo x,y
+		LeftClick 1
+		y = y + 47
+		Delay 200
+	Next
+	
+	moveClick 886,69,902,89 //点击 三个竖点
+	moveClick 889, 110, 898, 133//点击 删除
+	moveClick 775,512,806,527 //点击 是
+	showMsg "删除完成了"
+	
+	Delay 1000
+	showMsg "打开微信"
+	moveClick 1409, 800, 1408, 802//点击 home
+	moveClick 851,462,891,501 //点击 微信
+End Function
+
+//复制文本和删除收藏
+Function saveTextAndDeleteCollege(i,textList)
+	If textList(i - 1) = 1 Then //有文本
+		showMsg "复制文字中"
+		moveClick 837, 806, 892, 843 //点击 我
+		moveClick 477, 398, 769, 437//点击 收藏
+		Delay 2000
+		moveClick 477, 290, 902, 290//点击 第一条收藏
+		
+		Delay 1000
+		FindColor 484,131,903,177,"000000",intX,intY //找字黑色
+		If intX > 0 And intY > 0 Then 
+			MoveTo intX,intY
+		End If		
+		
+		longDown //长按
+		moveClick 496, 435, 881, 483//点击 复制
+		
+		moveClick 878, 73, 907, 95//点击 ...
+		showMsg "删除收藏中"
+		moveClick 494, 732, 870, 769 //点击 删除
+		moveClick 697, 487, 864, 532//点击 确认删除
+		showMsg "返回主界面"
+		clickBack //点击 <
+	End If
+End Function
+
+//点击<
+Function clickBack
+	moveClick 474,77, 485,93
+End Function
+
+//长按
+Function longDown
+	LeftDown 1
+	Delay 1000
+	LeftUp 1
+	Delay 1000
+End Function
+
+//保存反馈
+Function saveBackMsg(num)
+	hideMsg 
+	Delay 1000
+	showMsg "本组图片保存完毕 共" & num & "张"
+	Delay 1000
+	hideMsg 
+End Function
+
+//跳过函数
+Function skip(total)
+	showMsg "跳过朋友圈"
+	
+	minmax = findNum
+	max = minmax(1)
+	If max = "" Then 
+		max=1
+	End If
+	
+	While max > 0
+		leftSlide
+		max = max-1
+	Wend
+End Function
+
+//模拟左滑
+Function leftSlide
+	MoveTo 883, 206
+	Delay 100
+	LeftDown 1
+	Delay 400
+	For i = 1 To 30
+		MoveR -10,0
+		Delay 10
+	Next 	
+	Delay 1
+	LeftUp 1
+	Delay 200
+End Function
+
+//保存图片 返回值1为vedio
+Function saveImage
+	moveClick 872, 73, 907, 97//点击 ...
+	
+	//检测是不是视频
+	FindPic 690,740,710,760,"Attachment:\shi.bmp",0.9,intX,intY
+	If intX > 0 And intY > 0 Then 
+		saveImage = 1
+	End If
+
+	If GetPixelColor(789, 750) = "010101" Then 
+		moveClick 650, 664, 731, 689 //出现识别二维码
+	ElseIf GetPixelColor(646, 709) = "999999" Then
+		moveClick 676,635,677,636 //出现公众号
+	Else 
+		moveClick 690, 725, 775, 772 //保存图片
+	End If
+
+	//moveClick 646, 672, 734, 695 //点击 保存我自己的图片
+	Delay 1000
+End Function
+
+//收藏
+Function collect
+	showMsg "收藏文字中"
+	moveClick 854, 817, 913, 848 //点击详情
+
+	Delay 2000
+	FindColor 538,163,885,191,"000000",intX,intY //找文字黑色
+	If intX > 0 And intY > 0 Then 
+		MoveTo intX,intY
+	End If
+	Delay 100
+	
+	LeftDown 1 //长按
+	Delay 1500
+	LeftUp 1
+	If intX >= 782 Then 
+		moveClick intX-51, intY + 100, intX -50, intY + 101//点击收藏
+	Else 
+		moveClick intX, intY+100, intX+1, intY+101 //点击收藏
+	End If
+	moveClick 465, 70, 494, 106//点击<
+	Delay 1000
+End Function
+
+//移动鼠标并点击
+Function moveClick(x1,y1,x2,y2)
+	xy = randomXY(x1,y1,x2,y2)
+	MoveTo xy(0), xy(1)
+	Delay 500
+	LeftClick 1
+	Delay 500
+End Function
+
+//找数字 返回min/max
+//b 503,92,512,104 s 524,92,533,104
+Function findNum()
+	Dim minmax(2)
+	For i = 1 To 9
+		FindPic 503,92,512,104,"Attachment:\b"&i&".bmp",0.9,intX,intY
+		If intX > 0 And intY > 0 Then 
+			minmax(0)=i
+		End If
+	Next
+
+	For i = 2 To 9
+		FindPic 524,92,533,104,"Attachment:\s"&i&".bmp",0.9,intX,intY
+		If intX > 0 And intY > 0 Then 
+			minmax(1)=i
+		End If
+	Next
+	findNum = minmax
+End Function
+
+//预加载num日
+Function preview(num)
+	showMsg "开始下拉了"
+	
+	//要拉回来的次数
+	scrollCount = 0
+	
+	//先把今天拉下去 拉4次
+	For i = 1 To 4
+		MouseWheel - 1 
+		Delay 1000
+		scrollCount = scrollCount + 1
+	Next
+	
+	//找黑色日期
+	FindColor 461,188,553,853,"000000",intX,intY
+	While num>0
+		while intX<0 And intY<0
+			MouseWheel - 1 
+			Delay 500
+			showMsg "开始下拉了"
+			scrollCount = scrollCount+1
+			FindColor 461, 188, 553, 853, "000000", intX, intY
+			Delay 100
+		Wend
+		
+		If num=1 Then  
+    		Goto break 
+		End If  
+		
+		while intX>0 And intY>0
+			MouseWheel - 1 
+			Delay 500
+			showMsg "开始下拉了"
+			scrollCount = scrollCount+1
+			FindColor 461, 188, 553, 853, "000000", intX, intY
+			Delay 100
+		Wend
+		num = num - 1
+	Wend
+
+	Rem break
+	showMsg "预加载完毕"
+	
+	scrollBack scrollCount //执行拉回函数
+	showMsg "预加载结束"
+End Function
+
+//预加载拉回
+Function scrollBack(scrollCount)
+	showMsg "开始上拉了"
+	For i=1 To scrollCount
+		MouseWheel 1
+		Delay 500
+	Next
+End Function
+
+//随机坐标(左上,右下) 返回(x,y)
+Function randomXY(x1, y1, x2, y2)
+	Randomize
+	Dim xy(2)
+	xy(0) = int(Rnd() * (x2 - x1 + 1) + x1)
+	xy(1) = int(Rnd() * (y2 - y1 + 1) + y1)
+	randomXY = xy //返回值
+End Function
+
+//显示消息
+Function showMsg(str)
+	Call Plugin.Msg.ShowScrTXT(0, 0, 1440, 900, str, "000000")
+	Delay 100
+End Function
+//隐藏消息
+Function hideMsg()
+	Call Plugin.Msg.HideScrTXT()
+	Delay 100
+End Function
+
+Function printPassword
+	KeyPress "Shift", 1 //切换英文
+	Delay 100
+	KeyPress "X", 1
+	Delay 100
+End Function
+
+//结束反馈 测试模块
+//hideMsg
+//str="已完成 "
+//For i=0 to total-1
+// 	str = str & i & "(count:" & dataList(i) & " text:"&textList(i)&") vedio:"&vedioList(i)&") "
+//Next
+//showMsg str
