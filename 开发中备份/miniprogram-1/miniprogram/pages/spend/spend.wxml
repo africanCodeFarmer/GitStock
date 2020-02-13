@@ -1,0 +1,39 @@
+<import src="../public/public.wxml" />
+<template is="custom" />
+
+<view class="padding text-left">
+  <view class="padding-xl radius shadow-warp bg-white">
+
+    <van-row>
+      <van-col span="20"><text style="font-size:20px;">我的余额</text></van-col>
+      <van-col span="4">
+        <van-button plain round type="default" icon="setting-o" size="small" bind:click="stock_setting">
+        </van-button>
+      </van-col>
+    </van-row>
+
+    <van-divider borderColor="#000"/>
+
+    <van-row wx:for="{{stocks}}">
+      <van-col span="12">
+        <text style="font-size:14px;">{{item.name}}:{{item.value}}</text>
+      </van-col>
+      <van-col span="4">
+        <text style="font-size:11px;">{{item.status}}</text>
+      </van-col>
+      <van-col span="4">
+        <van-button plain round  type="default" size="mini">
+          <text style="font-size:16px;">+</text>
+        </van-button>
+      </van-col>
+      <van-col span="4">
+        <van-button plain round  type="primary" size="mini">
+          <text style="font-size:16px;">-</text>
+        </van-button>
+      </van-col>
+      <van-divider borderColor="#000"/>
+    </van-row>
+
+  </view>
+</view>
+  

@@ -1,0 +1,57 @@
+{
+  "pages": [
+    
+    
+    "pages/spend/spend",
+    "pages/spend/stock_setting/stock_setting",
+    "pages/spend/stock_setting/stock_CURD/stock_CURD",
+    "pages/task/task",
+    "pages/analyse/analyse",
+    "pages/spendLog/spendLog",
+    "pages/taskLog/taskLog"
+  ],
+  "window": {
+    "navigationStyle":"custom"
+  },
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+		"custom": true,
+		"color": "#000000",
+		"selectedColor": "#000000",
+		"backgroundColor": "#000000",
+		"list": [
+			{
+				"pagePath": "pages/spend/spend"
+			},
+			{
+				"pagePath": "pages/task/task"
+      },
+      {
+				"pagePath": "pages/analyse/analyse"
+      },
+      {
+				"pagePath": "pages/spendLog/spendLog"
+      },
+      {
+				"pagePath": "pages/taskLog/taskLog"
+      }
+		]
+	},
+  "usingComponents":{
+    "van-button": "@vant/weapp/button",
+    "van-icon":  "@vant/weapp/icon",
+    "van-divider": "@vant/weapp/divider",
+    "van-panel": "@vant/weapp/panel",
+    "van-row": "@vant/weapp/row",
+    "van-col": "@vant/weapp/col",
+    "van-popup": "@vant/weapp/popup",
+    "van-cell": "@vant/weapp/cell",
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-swipe-cell": "@vant/weapp/swipe-cell",
+    "van-radio": "@vant/weapp/radio",
+    "van-radio-group": "@vant/weapp/radio-group",
+    "van-field": "@vant/weapp/field",
+    "van-dialog": "@vant/weapp/dialog",
+    "cu-custom": "style/colorui/components/cu-custom"
+  }
+}

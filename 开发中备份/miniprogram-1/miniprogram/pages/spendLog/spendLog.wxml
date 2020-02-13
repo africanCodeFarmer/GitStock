@@ -1,0 +1,4 @@
+<import src="../public/public.wxml" />
+<template is="custom" />
+
+花支日志页
