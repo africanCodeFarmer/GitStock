@@ -5,6 +5,7 @@
     "pages/spend/spend",
     "pages/spend/stock_setting/stock_setting",
     "pages/spend/stock_setting/stock_CURD/stock_CURD",
+    "pages/spend/stock_setting/comment_CURD/comment_CURD",
     "pages/task/task",
     "pages/analyse/analyse",
     "pages/spendLog/spendLog",
@@ -52,6 +53,8 @@
     "van-radio-group": "@vant/weapp/radio-group",
     "van-field": "@vant/weapp/field",
     "van-dialog": "@vant/weapp/dialog",
+    "van-collapse": "@vant/weapp/collapse",
+    "van-collapse-item": "@vant/weapp/collapse-item",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }

@@ -11,6 +11,8 @@ Page({
     stock_id_error:"",
     stock_value:0.0,
     stocks:[],
+
+    activeNames: [],
   },
   getStock:function(id){
     var stocks = this.data.stocks
@@ -126,8 +128,13 @@ Page({
     });
   },
   edit:function(e){
-    this.setData({stock_id_error:""})
+    this.setData({stock_id_error:"",activeNames:['1']})
     var id = e.target.id;
     this.getInput(id);
   },
+  onChange_van_collapse:function(event){
+    this.setData({
+      activeNames: event.detail
+    });
+  }
 })

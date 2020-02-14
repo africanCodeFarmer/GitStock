@@ -16,24 +16,74 @@
 
     <van-row wx:for="{{stocks}}">
       <van-col span="12">
-        <text style="font-size:14px;">{{item.name}}:{{item.value}}</text>
+        <text style="font-size:14px;">{{item.name}}: {{item.value}}</text>
       </van-col>
       <van-col span="4">
         <text style="font-size:11px;">{{item.status}}</text>
       </van-col>
       <van-col span="4">
-        <van-button plain round  type="default" size="mini">
+        <van-button plain round  type="default" size="mini" bind:click="addMoney">
           <text style="font-size:16px;">+</text>
         </van-button>
       </van-col>
       <van-col span="4">
-        <van-button plain round  type="primary" size="mini">
+        <van-button plain round  type="primary" size="mini" bind:click="reduceMoney">
           <text style="font-size:16px;">-</text>
         </van-button>
       </van-col>
       <van-divider borderColor="#000"/>
     </van-row>
 
+    <van-row>
+      <van-divider borderColor="#000"/>
+      <van-col span="16">总余额: 0</van-col>
+      <van-col span="8" class="text-right">
+        <van-button plain round  type="info" size="small">
+          <text style="font-size:13px;"> 余额间转账 </text>
+        </van-button>
+      </van-col>
+    </van-row>
+
   </view>
 </view>
   
+<van-popup 
+  show="{{ show_money_popup }}" 
+  bind:close="onClose_money_popup"
+  closeable
+  position="bottom"
+  custom-style="height: 50%;"
+>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;">文本</van-divider>
+  
+  <van-row>
+    <van-col offset="2" span="20">
+      <van-cell-group>
+        <van-field
+          value="{{ value }}"
+          placeholder="请输入金额 注释"
+          border="{{ false }}"
+          bind:change="onChange"
+        >
+          <van-button slot="button" round size="small" type="primary" icon="arrow"></van-button>
+        </van-field>
+      </van-cell-group>
+    </van-col>
+    <van-col span="2"></van-col>
+  </van-row>
+
+  <van-divider contentPosition="center" customStyle="font-size: 11px;border-color: #FFF;margin-bottom:10rpx;margin-top:10rpx;">可选金额块</van-divider>
+  <!-- 金额块 -->
+  <view style="margin:0rpx 10%;">
+    <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{money_blocks}}">
+      <van-button type="info" plain size="mini">{{money_blocks[index]}}元</van-button>
+    </view>
+  </view>
+  <van-divider contentPosition="center" customStyle="font-size: 11px;border-color: #FFF;margin-bottom:0rpx;">常用注释块</van-divider>
+  <!-- 注释块 -->
+  <view style="margin:0rpx 10%;">
+    <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{comments}}">
+      <van-button color="Grey" size="mini">{{item.name}}</van-button>
+    </view>
+  </view>
+</van-popup>
