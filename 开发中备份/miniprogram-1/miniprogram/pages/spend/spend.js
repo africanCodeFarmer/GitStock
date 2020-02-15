@@ -1,4 +1,5 @@
 const app = getApp()
+var util = require('../public/public.js');
 
 Page({
   data:{
@@ -17,7 +18,9 @@ Page({
     input_comment:"",
     input_value_comment:"",
     go_spend_sign:"", //+-符号
-    input_value_comment_error:""
+    input_value_comment_error:"",
+
+    spendLogs:[]
   },
   go_spend:function(){
     var str = this.data.input_value_comment
@@ -41,7 +44,24 @@ Page({
 
     this.updateStockFromStocks(stock)
     
-    //待01.写日志操作
+    //写日志操作
+    var time = util.formatTime(new Date()).split(' ')[0]
+    var detail_time = util.formatTime(new Date()).split(' ')[1]
+    var spendLogs = this.data.spendLogs
+    if(!this.checkTimeExistSpendLogs(time)) //时间不存在
+      spendLogs.unshift({"time":time,"datas":[]})
+    var spendLog = this.use_time_getSpendLog(time)
+    var log = {
+      "id":spendLog.datas.length>0?spendLog.datas[0].id+1:1,
+      "detail_time":detail_time,
+      "name":stock.name,
+      "value":value,
+      "comment":comment,
+      "spend_type":this.data.spend_type,
+      "operate":sign
+    }
+    spendLog.datas.unshift(log)
+    this.update_spendLogs(spendLog) //更新日志
 
     this.setData({
       show_money_popup:false,
@@ -50,6 +70,29 @@ Page({
       input_comment:"",
       input_value_comment_error:"",
     })
+  },
+  update_spendLogs:function(spendLog){
+    var spendLogs = this.data.spendLogs
+    for(var i in spendLogs){ //保存日志
+      if(spendLogs[i].time == spendLog.time){
+        spendLogs[i] = spendLog
+        break
+      }
+    }
+    wx.setStorageSync('spendLogs', spendLogs)
+  },
+  use_time_getSpendLog:function(time){
+    var spendLogs = this.data.spendLogs
+    for(var i in spendLogs)
+      if(spendLogs[i].time == time)
+        return spendLogs[i]
+  },
+  checkTimeExistSpendLogs:function(time){
+    var spendLogs = this.data.spendLogs
+    for(var i in spendLogs)
+      if(spendLogs[i].time == time)
+        return true
+    return false
   },
   updateStockFromStocks:function(stock){
     var stocks = this.data.stocks
@@ -124,11 +167,15 @@ Page({
     var comments = wx.getStorageSync('comments') || []
     var money_blocks = wx.getStorageSync('blocks') || []
     var spend_types = wx.getStorageSync('types') || []
+    var spendLogs = wx.getStorageSync('spendLogs') || []
+    
     this.setData({
       stocks:stocks,
       comments:comments,
       money_blocks:money_blocks,
       spend_types:spend_types,
+      spend_type:spend_types.length>0?spend_types[0].text:"",
+      spendLogs:spendLogs,
     })
   },
   stock_setting:function(){
