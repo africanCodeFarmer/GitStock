@@ -40,9 +40,9 @@ Page({
     }
     var comment = {"id":"","name":""}
     var comments = this.data.comments
-    comment.id = comments.length>0?comments[0].id+1:1
+    comment.id = comments.length>0?comments[comments.length-1].id+1:1
     comment.name = this.data.comment_name
-    comments.unshift(comment)
+    comments.push(comment)
     wx.setStorageSync('comments', comments)
     this.setData({comments:comments})
     this.reset()

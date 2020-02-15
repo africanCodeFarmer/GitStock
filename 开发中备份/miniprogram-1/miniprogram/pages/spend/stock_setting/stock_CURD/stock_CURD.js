@@ -82,8 +82,8 @@ Page({
 
     if(name!=null){
       var stocks = wx.getStorageSync('stocks') || []
-      stocks.unshift({
-        "id":stocks.length>0?stocks[0].id+1:1,
+      stocks.push({
+        "id":stocks.length>0?stocks[stocks.length-1].id+1:1,
         "name":name,
         "value":value,
         "status":status,
