@@ -38,7 +38,7 @@
       <van-divider borderColor="#000"/>
       <van-col span="16">总余额: 0</van-col>
       <van-col span="8" class="text-right">
-        <van-button plain round  type="info" size="small">
+        <van-button plain round  type="info" size="small" bind:click="transferMoney">
           <text style="font-size:13px;"> 余额间转账 </text>
         </van-button>
       </van-col>
@@ -95,4 +95,51 @@
       </view>
     </view>
   </van-tree-select>
+</van-popup>
+
+<van-popup 
+  show="{{ show_money_transfer_popup }}" 
+  bind:close="onClose_money_transfer_popup"
+  position="bottom"
+  custom-style="height: 50%;"
+>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;">转账窗口</van-divider>
+
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;color:#EE0A24;font-size:13px;">{{transfer_error}}</van-divider>
+
+  <van-row>
+    <van-col offset="2" span="20">
+      <van-picker id="transfer_picker" visible-item-count="2" columns="{{ picker_columns }}" bind:change="onChange_picker" />
+    </van-col>
+    <van-col span="2" /> 
+  </van-row>
+
+  <view style="height:20rpx;"></view>
+
+  <van-row>
+    <van-col offset="2" span="20">
+      <van-cell-group>
+        <van-field
+          name="transfer_value"
+          value="{{transfer_value}}"
+          placeholder="请输入金额"
+          border="{{ false }}"
+          bind:change="onChange_transfer_value"
+          error-message="{{transfer_value_error}}"
+        >
+          <van-button slot="button" round size="small" type="primary" icon="arrow" bind:click="go_transfer"></van-button>
+        </van-field>
+      </van-cell-group>
+    </van-col>
+    <van-col span="2"></van-col>
+  </van-row>
+
+  <van-divider contentPosition="center" customStyle="font-size: 11px;border-color: #FFF;margin-bottom:10rpx;margin-top:10rpx;">可选金额块</van-divider>
+  
+  <!-- 金额块 -->
+  <view style="margin:0rpx 10%;">
+    <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{money_blocks}}">
+      <van-button type="info" plain size="mini" data-value="{{item.value}}" bind:click="onClick_transfer_block">{{item.value}}元</van-button>
+    </view>
+  </view>
 </van-popup>
