@@ -1,4 +1,36 @@
 <import src="../public/public.wxml" />
 <template is="custom" />
 
-花支日志页
+<van-tabs sticky>
+  <van-tab title="日志">
+    <!-- head -->
+    <van-sticky>
+      <van-panel>
+        <van-row>
+          <van-col span="12">
+              <van-search
+                value="{{ value }}"
+                placeholder="请输入搜索关键词"
+                bind:search="onSearch"
+                shape="round"
+                background="#fff"
+              />
+          </van-col>
+          <van-col span="6">
+            <van-cell title="类型" border="{{false}}" arrow-direction="down"  is-link bind:click="" />
+          </van-col>
+          <van-col span="6">
+            <van-cell title="时间" border="{{false}}" arrow-direction="down"  is-link bind:click="" />
+          </van-col>
+        </van-row>
+      </van-panel>
+    </van-sticky>
+
+    <!-- content -->
+    <van-panel title="2020/2/2" label="..." status="+10">
+    
+    </van-panel>
+  </van-tab>
+
+  <van-tab title="统计"></van-tab>
+</van-tabs>

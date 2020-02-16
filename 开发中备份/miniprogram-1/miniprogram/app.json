@@ -1,6 +1,6 @@
 {
   "pages": [
-
+    "pages/spendLog/spendLog",
     
     "pages/spend/spend",
     "pages/spend/stock_setting/stock_setting",
@@ -13,7 +13,7 @@
 
     "pages/task/task",
     "pages/analyse/analyse",
-    "pages/spendLog/spendLog",
+    
     "pages/taskLog/taskLog"
   ],
   "window": {
@@ -62,6 +62,10 @@
     "van-collapse-item": "@vant/weapp/collapse-item",
     "van-tree-select": "@vant/weapp/tree-select",
     "van-picker": "@vant/weapp/picker",
+    "van-tab": "@vant/weapp/tab",
+    "van-tabs": "@vant/weapp/tabs",
+    "van-sticky": "@vant/weapp/sticky",
+    "van-search": "@vant/weapp/search",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }
