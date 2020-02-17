@@ -7,21 +7,18 @@
     <van-sticky offset-top="{{ 60 }}">
       <van-panel>
         <van-row>
-          <van-col span="12">
+          <van-col offset="1" span="22">
               <van-search
-                value="{{ value }}"
-                placeholder="请输入搜索关键词"
+                name="search_value"
+                placeholder="请输入搜索关键字"
                 bind:search="onSearch"
+                bind:cancel="onCancel_search"
+                show-action
                 shape="round"
                 background="#fff"
               />
           </van-col>
-          <van-col span="6">
-            <van-cell title="类型" border="{{false}}" arrow-direction="down"  is-link bind:click="" />
-          </van-col>
-          <van-col span="6">
-            <van-cell title="时间" border="{{false}}" arrow-direction="down"  is-link bind:click="" />
-          </van-col>
+          <van-col span="1"></van-col>
         </van-row>
       </van-panel>
     </van-sticky>
@@ -42,7 +39,8 @@
       </view>
 
       <!-- content-content -->
-      <van-swipe-cell right-width="{{ 90 }}" wx:for="{{item.datas}}" wx:for-item="datas">
+      <view wx:for="{{item.datas}}" wx:for-item="datas">
+      <van-swipe-cell right-width="{{ 90 }}">
         <van-cell label="{{datas.spend_type}} {{datas.detail_time}}" center>
           <view slot="title">
             <text>{{datas.name}} </text>
@@ -61,6 +59,7 @@
           <van-button custom-style="height:100%;" type="danger" icon="delete" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}"></van-button>
         </view>
       </van-swipe-cell>
+      </view>
     </van-panel>
   </van-tab>
 
@@ -68,6 +67,7 @@
 </van-tabs>
 
 <van-divider hairline contentPosition="center">已经到底啦</van-divider>
+<van-divider hairline />
 <van-divider hairline />
 <van-divider hairline />
 
@@ -110,10 +110,7 @@
 
   <!-- 分类块 -->
   <van-row>
-    <van-col offset="2" span="8">
-      <van-cell title="可选类型"></van-cell>
-    </van-col>
-    <van-col span="14">
+    <van-col offset="4" span="20">
       
       <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{spend_types}}">
         <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">

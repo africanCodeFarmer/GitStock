@@ -68,6 +68,7 @@ Page({
     var spendLog = this.use_time_getSpendLog(time)
     var log = {
       "id":spendLog.datas.length>0?spendLog.datas[0].id+1:1,
+      "time":time,
       "detail_time":detail_time,
       "name":fromName,
       "value":this.data.transfer_value,
@@ -80,6 +81,7 @@ Page({
     spendLog.datas.unshift(log)
     var log = {
       "id":spendLog.datas.length>0?spendLog.datas[0].id+1:1,
+      "time":time,
       "detail_time":detail_time,
       "name":toName,
       "value":this.data.transfer_value,
@@ -144,6 +146,7 @@ Page({
     var spendLog = this.use_time_getSpendLog(time)
     var log = {
       "id":spendLog.datas.length>0?spendLog.datas[0].id+1:1,
+      "time":time,
       "detail_time":detail_time,
       "name":stock.name,
       "value":value,

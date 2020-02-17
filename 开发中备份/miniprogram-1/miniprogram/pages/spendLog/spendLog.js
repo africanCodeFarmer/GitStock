@@ -8,6 +8,42 @@ Page({
     spendLogData:[],
     spend_types:[],
   },
+  onCancel_search:function(){
+    this.setData({
+      spendLogs:wx.getStorageSync('spendLogs') || []
+    })
+  },
+  //时间 注释 消费类型 字段名 金额搜索
+  search:function(value){
+    //name comment string.indexOf()>=0
+    var ans = [];
+    var spendLogs = wx.getStorageSync('spendLogs') || []
+
+    for(var i in spendLogs){
+      ans.push({
+        time:spendLogs[i].time,
+        datas:[]
+      })
+
+      var datas = spendLogs[i].datas
+      for(var j in datas){
+        var name = datas[j].name
+        var comment = datas[j].comment || ""
+        var time = datas[j].time
+        var spend_type = datas[j].spend_type || ""
+        var spend_money = datas[j].value
+        if(name.indexOf(value)>=0 || comment.indexOf(value)>=0 || time.indexOf(value)>=0 || spend_type.indexOf(value)>=0 || spend_money.indexOf(value)>=0)
+          ans[i].datas.push(datas[j])
+      }
+      if(ans[i].datas.length==0) //无数据
+        ans.splice(i,1)
+    }
+    this.setData({spendLogs:ans}) //更新搜索数据
+  },
+  onSearch:function(e){
+    var value = e.detail
+    this.search(value)
+  },
   edit_choose_type:function(e){
     var text = e.target.dataset.text
     var icon = e.target.dataset.icon
@@ -21,16 +57,33 @@ Page({
     spendLogData.comment = e.detail
     this.setData({spendLogData:spendLogData})
   },
+  updateSpendLogData:function(spendLogData){
+    var spendLogs = this.data.spendLogs
+    for(var i in spendLogs){
+      if(spendLogs[i].time == spendLogData.time){
+        var datas = spendLogs[i].datas
+        for(var j in datas){
+          if(datas[j].id == spendLogData.id){
+            datas[j] = spendLogData
+            break
+          }
+        }  
+        spendLogs[i].datas = datas 
+        break
+      }
+    }
+    this.setData({spendLogs:spendLogs})
+    wx.setStorageSync('spendLogs', spendLogs)
+  },
   update:function(){
-    //1.消费类型布局及修改不保存但数据残留bug 2.更新缓存
-    console.log(this.data.spendLogData)
+    this.updateSpendLogData(this.data.spendLogData)
     this.setData({show_edit_dialog:false})
   },
   onClose_edit_dialog:function(){
     this.setData({show_edit_dialog:false})
   },
   getSpendLogData_useTimeAndID:function(time,id){
-    var spendLogs = this.data.spendLogs
+    var spendLogs = wx.getStorageSync('spendLogs') || []
     for(var i in spendLogs){
       if(spendLogs[i].time == time){
         var spendLogDatas = spendLogs[i].datas
