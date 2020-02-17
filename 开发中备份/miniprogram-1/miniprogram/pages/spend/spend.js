@@ -73,7 +73,9 @@ Page({
       "value":this.data.transfer_value,
       "comment":"转账给"+toName,
       "spend_type":null,
-      "operate":'-'
+      "operate":'-',
+      "remain":fromStock.value,
+      "icon":"refund"
     }
     spendLog.datas.unshift(log)
     var log = {
@@ -83,7 +85,9 @@ Page({
       "value":this.data.transfer_value,
       "comment":"从"+fromName+"收款",
       "spend_type":null,
-      "operate":'+'
+      "operate":'+',
+      "remain":toStock.value,
+      "icon":"refund"
     }
     spendLog.datas.unshift(log)
     this.update_spendLogs(spendLog) //更新转账日志
@@ -103,6 +107,12 @@ Page({
   onClose_money_transfer_popup:function(){
     this.setData({show_money_transfer_popup:false})
   },
+  getSpendType_useSpendType(spendType){
+    var spend_types = this.data.spend_types
+    for(var i in spend_types)
+      if(spend_types[i].text == spendType)
+        return spend_types[i]
+  },
   go_spend:function(){
     var str = this.data.input_value_comment
     var sign = this.data.go_spend_sign
@@ -111,7 +121,7 @@ Page({
     var input_clip = this.data.input_value_comment.split(' ')
     var value = input_clip.length>0?input_clip[0]:""
     var comment = input_clip.length>1?input_clip[input_clip.length-1]:""
-    
+    var icon = this.getSpendType_useSpendType(this.data.spend_type).icon
     if(value==""){
       this.setData({input_value_comment_error:"正确格式:金额 注释"})
       return;
@@ -139,7 +149,9 @@ Page({
       "value":value,
       "comment":comment,
       "spend_type":this.data.spend_type,
-      "operate":sign
+      "icon":icon,
+      "operate":sign,
+      "remain":stock.value,
     }
     spendLog.datas.unshift(log)
     this.update_spendLogs(spendLog) //更新日志
