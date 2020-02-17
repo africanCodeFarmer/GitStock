@@ -27,8 +27,31 @@
     </van-sticky>
 
     <!-- content -->
-    <van-panel title="2020/2/2" label="..." status="+10">
-    
+    <van-panel>
+      <!-- content-header -->
+      <view slot="header" style="background-color:#f1f1f1;">
+        <van-row>
+          <van-col offset="2" span="12">
+            2020/2/2
+          </van-col>
+          <van-col span="8" class="text-right">
+            +10
+          </van-col>
+          <van-col span="2"></van-col>
+        </van-row>
+      </view>
+
+      <!-- content-content -->
+      <van-swipe-cell right-width="{{ 90 }}">
+        <van-cell  title="单元格" icon="setting-o" label="20:20:20" center>
+          <view slot='right-icon'>内容</view>
+        </van-cell>
+        <view slot="right" style="height:100%;">
+          <van-button custom-style="height:100%;" type="primary" icon="edit" id="{{item.id}}" bind:click="edit"></van-button>
+          <van-button custom-style="height:100%;" type="danger" icon="delete" id="{{item.id}}" data-value="{{item.value}}" bind:click="delete"></van-button>
+        </view>
+      </van-swipe-cell>
+
     </van-panel>
   </van-tab>
 
