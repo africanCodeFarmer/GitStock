@@ -7,13 +7,21 @@ Page({
     show_edit_dialog:false,
     spendLogData:[],
     spend_types:[],
+    show_spendLog_day:0,
+  },
+  onReachBottom:function(){
+    var show_spendLog_day = this.data.show_spendLog_day+1
+    var spendLogs = this.data.spendLogs
+    if(show_spendLog_day < spendLogs.length){
+      this.setData({show_spendLog_day:show_spendLog_day})
+    }
   },
   onCancel_search:function(){
     this.setData({
       spendLogs:wx.getStorageSync('spendLogs') || []
     })
   },
-  //时间 注释 消费类型 字段名 金额搜索
+  //名称 注释搜索
   search:function(value){
     //name comment string.indexOf()>=0
     var ans = [];
@@ -29,10 +37,8 @@ Page({
       for(var j in datas){
         var name = datas[j].name
         var comment = datas[j].comment || ""
-        var time = datas[j].time
-        var spend_type = datas[j].spend_type || ""
-        var spend_money = datas[j].value
-        if(name.indexOf(value)>=0 || comment.indexOf(value)>=0 || time.indexOf(value)>=0 || spend_type.indexOf(value)>=0 || spend_money.indexOf(value)>=0)
+        
+        if(name.indexOf(value)>=0 || comment.indexOf(value)>=0)
           ans[i].datas.push(datas[j])
       }
       if(ans[i].datas.length==0) //无数据
@@ -137,9 +143,20 @@ Page({
     this.getTabBar().init();
     var spendLogs = wx.getStorageSync('spendLogs') || []
     var spend_types = wx.getStorageSync('types') || []
+
+    //计算最开始要显示几天的日志
+    var show_spendLog_day = this.data.show_spendLog_day
+    var count_data = 0
+    for(var i in spendLogs){
+      count_data += spendLogs[i].datas.length
+      if(count_data<=10)
+        show_spendLog_day +=1
+    }
+
     this.setData({
       spendLogs:spendLogs,
       spend_types:spend_types,
+      show_spendLog_day:show_spendLog_day,
     })
   }
 })

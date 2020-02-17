@@ -15,6 +15,7 @@
                 bind:cancel="onCancel_search"
                 show-action
                 shape="round"
+                action-text="还原"
                 background="#fff"
               />
           </van-col>
@@ -24,15 +25,15 @@
     </van-sticky>
 
     <!-- content -->
-    <van-panel wx:for="{{spendLogs}}">
+    <van-panel wx:for="{{spendLogs}}" wx:if="{{index<=show_spendLog_day}}">
       <!-- content-header -->
-      <view slot="header" style="background-color:#f1f1f1;line-height:60rpx;">
+      <view slot="header" style="background-color:#f1f1f1;line-height:60rpx;margin-top:20rpx;">
         <van-row>
           <van-col offset="2" span="12">
-            {{item.time}}
+            <text style="font-size:20px;">{{item.time}}</text>
           </van-col>
           <van-col span="8" class="text-right">
-            +10
+            <text style="font-size:17px;color:#353535;">???</text>
           </van-col>
           <van-col span="2"></van-col>
         </van-row>
@@ -41,17 +42,22 @@
       <!-- content-content -->
       <view wx:for="{{item.datas}}" wx:for-item="datas">
       <van-swipe-cell right-width="{{ 90 }}">
-        <van-cell label="{{datas.spend_type}} {{datas.detail_time}}" center>
+        <van-cell use-label-slot center>
+          <view slot="label">
+            <text style="font-size:13px;color:#B2B2B2;">{{datas.detail_time}} </text>
+            <text style="font-size:11px;color:#B2B2B2;">{{datas.spend_type==null?'':datas.spend_type}}</text>
+          </view>
           <view slot="title">
-            <text>{{datas.name}} </text>
-            <text>{{datas.comment}}</text>
+            <text style="font-size:17px;">{{datas.name}} </text>
+            <text style="font-size:14px;color:#888888;">{{datas.comment}}</text>
           </view>
           <view slot="icon">
             <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;"></text>
           </view>
           <view slot='right-icon'>
-            <view class="text-right">{{datas.operate}}{{datas.value}}</view>
-            <view>余额:{{datas.remain}}</view>
+            <view wx:if="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
+            <view wx:if="{{datas.operate=='-'}}" class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
+            <view style="font-size:14px;color:#353535;">余额:{{datas.remain}}</view>
           </view>
         </van-cell>
         <view slot="right" style="height:100%;">
@@ -86,7 +92,6 @@
       <van-field
         label="注释"
         value="{{ spendLogData.comment }}"
-        placeholder="请输入注释"
         border="{{ false }}"
         bind:change="onChange_spendLogData_comment"
       />

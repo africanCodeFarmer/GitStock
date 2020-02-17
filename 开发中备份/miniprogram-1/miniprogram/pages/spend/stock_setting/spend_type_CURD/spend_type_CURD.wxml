@@ -1,18 +1,6 @@
 <import src="../../../public/public.wxml" />
 <template is="custom_inner" data="{{...custom_data}}"/>
 
-<van-cell-group title="所有消费类型">
-  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{types}}">
-    <van-cell title="{{item.text}}" value="">
-      <view slot="icon" class="cuIcon-{{item.icon}}" style="margin-right:10rpx;"/>
-    </van-cell>
-    <view slot="right">
-      <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
-      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-text="{{item.text}}" bind:click="delete"></van-button>
-    </view>
-  </van-swipe-cell>
-</van-cell-group>
-
 <van-cell-group title="编辑/添加">
 <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
   <van-collapse-item title="..." icon="expand-o" name="1">
@@ -61,6 +49,18 @@
     </van-cell>
   </van-collapse-item>
 </van-collapse>
+</van-cell-group>
+
+<van-cell-group title="所有消费类型">
+  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{types}}">
+    <van-cell title="{{item.text}}" value="">
+      <view slot="icon" class="cuIcon-{{item.icon}}" style="margin-right:10rpx;"/>
+    </van-cell>
+    <view slot="right">
+      <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
+      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-text="{{item.text}}" bind:click="delete"></van-button>
+    </view>
+  </van-swipe-cell>
 </van-cell-group>
 
 <van-dialog id="van-dialog" />
