@@ -39,7 +39,7 @@ Page({
       }
     }
     wx.setStorageSync('stocks', stocks)
-    this.setData({stocks:stocks})
+    this.setData({stocks:stocks,activeNames: []})
     this.resetInput()
   },
   getInput:function(id){

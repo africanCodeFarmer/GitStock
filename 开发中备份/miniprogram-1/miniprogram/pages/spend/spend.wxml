@@ -19,7 +19,7 @@
       <view slot="right-icon">
         <view class="text-right">{{item.value}}RMB</view>
         <view class="margin-top margin-left">
-          <van-button plain round  type="primary" size="mini" bind:click="transferMoney">
+          <van-button plain round  type="primary" size="mini" bind:click="onClick_achieve" id="{{item.id}}" data-name="{{item.name}}">
             <text style="font-size:11px;">完成</text>
           </van-button>
         </view>
@@ -40,9 +40,9 @@
     <van-divider borderColor="#000"/>
 
     <van-row>
-      <van-col span="16">实现总数: 0</van-col>
+      <van-col span="16">实现总数: {{target_achieved_count}}</van-col>
       <van-col span="8" class="text-right">
-        <van-button plain round  type="info" size="small" bind:click="transferMoney">
+        <van-button plain round  type="info" size="small" bind:click="onClick_show_target_achieved_popup">
           <text style="font-size:13px;"> 查看已完成目标 </text>
         </van-button>
       </van-col>
@@ -196,5 +196,33 @@
   </view>
 </van-popup>
 
+<van-popup 
+  show="{{ show_target_achieved_popup }}" 
+  bind:close="onClose_target_achieved_popup"
+  position="bottom"
+  custom-style="height: 50%;"
+>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;">已完成目标</van-divider>
+
+  <view style="margin-bottom:10%;">
+    <van-cell title="{{item.name}}" use-label-slot border="{{false}}" wx:for="{{targets_achieved}}">
+      <view slot="right-icon">
+        <view class="text-right">{{item.value}}RMB</view>
+      </view>
+      <view slot="icon">
+        <image src="{{item.iconPath}}" style="width:100rpx;height:100rpx;margin-right:20rpx;border-radius: 25px;"/>
+      </view>
+      <view slot="label">
+        <view>{{item.desc}}</view>
+        <view>{{item.achieved_time}}</view>
+      </view>
+    </van-cell>
+  </view>
+</van-popup>
+
 <van-divider hairline />
 <van-divider hairline />
+<van-divider hairline />
+<van-divider hairline />
+
+<van-dialog id="van-dialog" />

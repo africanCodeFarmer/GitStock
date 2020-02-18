@@ -1,5 +1,6 @@
 const app = getApp()
 var util = require('../public/public.js');
+import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data:{
@@ -27,6 +28,48 @@ Page({
     transfer_error:"",
     transfer_value:null,
     transfer_value_error:"",
+
+    show_target_achieved_popup:false,
+    targets_achieved:[],
+    target_achieved_count:0,
+  },
+  onClick_show_target_achieved_popup:function(){
+    this.setData({show_target_achieved_popup:true})
+  },
+  onClose_target_achieved_popup:function(){
+    this.setData({show_target_achieved_popup:false})
+  },
+  onClick_achieve:function(e){
+    var id = e.target.id
+    var name = e.target.dataset.name
+    console.log(name)
+    Dialog.confirm({
+      title: '完成',
+      message: "你已经买了"+name+"吗!?"
+    }).then(() => {
+      // on confirm
+      var targets = wx.getStorageSync('targets') || []
+      var time = util.formatTime(new Date())
+      for(var i in targets){
+        if(targets[i].id==id){
+          targets[i].achieved=true
+          targets[i].achieved_time = time
+        }
+      }
+      this.setData({targets:targets})
+      wx.setStorageSync('targets', targets)
+
+      //更新完成和未完成目标
+      targets = this.getWhereTargets({"achieved":false})
+      var targets_achieved = this.getWhereTargets({"achieved":true})
+      this.setData({
+        targets:targets,
+        targets_achieved:targets_achieved,
+        target_achieved_count:targets_achieved.length,
+      })
+    }).catch(() => {
+      // on cancel
+    });
   },
   onClick_transfer_block:function(e){
     var value = e.target.dataset.value
@@ -272,6 +315,15 @@ Page({
   onClose_money_popup:function(){
     this.setData({show_money_popup:false})
   },
+  getWhereTargets:function(where){
+    var targets = wx.getStorageSync('targets') || []
+    var ans = []
+    for(var i in targets){
+      if(targets[i].achieved==where.achieved)
+        ans.push(targets[i])
+    }
+    return where.achieved==false?ans:ans.reverse()
+  },
   onShow:function(){
     this.getTabBar().init();
     var stocks = wx.getStorageSync('stocks') || []
@@ -279,7 +331,8 @@ Page({
     var money_blocks = wx.getStorageSync('blocks') || []
     var spend_types = wx.getStorageSync('types') || []
     var spendLogs = wx.getStorageSync('spendLogs') || []
-    var targets = wx.getStorageSync('targets') || []
+    var targets = this.getWhereTargets({"achieved":false})
+    var targets_achieved = this.getWhereTargets({"achieved":true})
     //转账窗口
     var pickers = []
     for(var i in stocks)
@@ -294,6 +347,8 @@ Page({
       spendLogs:spendLogs,
       picker_columns:[{values:pickers},{values:pickers}],
       targets:targets,
+      targets_achieved:targets_achieved,
+      target_achieved_count:targets_achieved.length,
     })
   },
   stock_setting:function(){

@@ -1015,7 +1015,7 @@ Page({
       }
     }
     wx.setStorageSync('types', types)
-    this.setData({types:types})
+    this.setData({types:types,activeNames: []})
     this.reset()
   },
 })

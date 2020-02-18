@@ -94,6 +94,7 @@ Page({
       "iconPath":this.data.fileList[0].url,
       "achieved":this.data.radio_value=='0'?false:true,
       "create_time":time,
+      "achieved_time":null,
     }
     targets.push(target)
     wx.setStorageSync('targets', targets)
@@ -160,6 +161,7 @@ Page({
       "iconPath":this.data.fileList[0].url,
       "achieved":this.data.radio_value=='0'?false:true,
       "create_time":time,
+      "achieved_time":null,
     }
 
     var targets = wx.getStorageSync('targets') || []

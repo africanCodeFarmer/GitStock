@@ -104,7 +104,7 @@ Page({
       }
     }
     wx.setStorageSync('comments', comments)
-    this.setData({comments:comments})
+    this.setData({comments:comments,activeNames: []})
     this.reset()
   },
 })

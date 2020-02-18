@@ -104,7 +104,7 @@ Page({
       }
     }
     wx.setStorageSync('blocks', blocks)
-    this.setData({blocks:blocks})
+    this.setData({blocks:blocks,activeNames: []})
     this.reset()
   },
 })
