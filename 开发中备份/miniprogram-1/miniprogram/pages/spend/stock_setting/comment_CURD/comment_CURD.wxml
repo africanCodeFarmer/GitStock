@@ -2,37 +2,37 @@
 <template is="custom_inner" data="{{...custom_data}}"/>
 
 <van-cell-group title="编辑/添加">
-<van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
-  <van-collapse-item title="..." icon="expand-o" name="1">
-    <van-field
-      name="comment_id"
-      value="{{ comment_id }}"
-      label="ID"
-      type="number"
-      readonly
-      bind:change="update_comment_id"
-      error-message="{{comment_id_error}}"
-    />
-    <van-field
-      name="comment_name"
-      value="{{ comment_name }}"
-      label="名称"
-      placeholder="请输入名称"
-      required
-      bind:change="update_comment_name"
-      error="{{comment_name_error}}"
-    />
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="reset">重置</van-button>
-    </van-cell>
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="update">编辑</van-button>
-    </van-cell>
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="add">添加</van-button>
-    </van-cell>
-  </van-collapse-item>
-</van-collapse>
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
+      <van-field
+        name="comment_id"
+        value="{{ comment_id }}"
+        label="ID"
+        type="number"
+        readonly
+        bind:change="update_comment_id"
+        error-message="{{comment_id_error}}"
+      />
+      <van-field
+        name="comment_name"
+        value="{{ comment_name }}"
+        label="名称"
+        placeholder="请输入名称"
+        required
+        bind:change="update_comment_name"
+        error="{{comment_name_error}}"
+      />
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="reset">重置</van-button>
+      </van-cell>
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="update">编辑</van-button>
+      </van-cell>
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="add">添加</van-button>
+      </van-cell>
+    </van-collapse-item>
+  </van-collapse>
 </van-cell-group>
 
 <van-cell-group title="所有注释块">

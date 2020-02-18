@@ -4,14 +4,17 @@ import Dialog from '@vant/weapp/dialog/dialog';
 Page({
   data:{
     spendLogs:[],
-    show_edit_dialog:false,
     spendLogData:[],
+    
+    show_edit_dialog:false,
     spend_types:[],
+
     show_spendLog_day:0,
   },
   onReachBottom:function(){
     var show_spendLog_day = this.data.show_spendLog_day+1
     var spendLogs = this.data.spendLogs
+
     if(show_spendLog_day < spendLogs.length){
       this.setData({show_spendLog_day:show_spendLog_day})
 
@@ -33,7 +36,6 @@ Page({
   },
   //名称 注释搜索
   search:function(value){
-    //name comment string.indexOf()>=0
     var ans = [];
     var spendLogs = wx.getStorageSync('spendLogs') || []
 

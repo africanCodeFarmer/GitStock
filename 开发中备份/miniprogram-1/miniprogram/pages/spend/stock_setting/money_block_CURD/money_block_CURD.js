@@ -4,10 +4,12 @@ Page({
   data: {
     custom_data:{"backText":"设置","content":"可选金额块"},
     activeNames:[],
+
     block_id:null,
     block_value:null,
     block_value_error:false,
     block_id_error:"",
+
     blocks:[],
   },
   reset:function(){
@@ -38,6 +40,7 @@ Page({
       this.setData({block_value_error:true})
       return;
     }
+
     var block = {"id":"","value":""}
     var blocks = this.data.blocks
     block.id = blocks.length>0?blocks[blocks.length-1].id+1:1
@@ -59,7 +62,6 @@ Page({
       message: '你确定删除'+value+'吗?'
     }).then(() => {
       // on confirm
-
       var blocks = this.data.blocks
       for(var i in blocks){
         if(blocks[i].id == id){
@@ -89,15 +91,15 @@ Page({
   getBlock:function(id){
     var blocks = this.data.blocks
     for(var i in blocks)
-      if(blocks[i].id == id){
+      if(blocks[i].id == id)
         return blocks[i]
-      }
   },
   update:function(){
     if(this.data.block_id==null){
       this.setData({block_id_error:"无ID无法编辑"})
       return;
     }
+    
     var block = {"id":"","value":""}
     block.id = this.data.block_id
     block.value = this.data.block_value

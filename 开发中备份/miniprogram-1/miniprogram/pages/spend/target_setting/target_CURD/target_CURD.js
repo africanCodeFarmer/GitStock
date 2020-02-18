@@ -113,7 +113,6 @@ Page({
       message: '你确定删除'+name+'吗?'
     }).then(() => {
       // on confirm
-
       var targets = this.data.targets
       for(var i in targets){
         if(targets[i].id == id){

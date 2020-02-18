@@ -4,10 +4,12 @@ Page({
   data: {
     custom_data:{"backText":"设置","content":"常用注释块"},
     activeNames:[],
+
     comment_id:null,
     comment_name:null,
     comment_name_error:false,
     comment_id_error:"",
+
     comments:[],
   },
   reset:function(){
@@ -38,6 +40,7 @@ Page({
       this.setData({comment_name_error:true})
       return;
     }
+
     var comment = {"id":"","name":""}
     var comments = this.data.comments
     comment.id = comments.length>0?comments[comments.length-1].id+1:1
@@ -59,7 +62,6 @@ Page({
       message: '你确定删除'+name+'吗?'
     }).then(() => {
       // on confirm
-
       var comments = this.data.comments
       for(var i in comments){
         if(comments[i].id == id){
@@ -89,15 +91,15 @@ Page({
   getComment:function(id){
     var comments = this.data.comments
     for(var i in comments)
-      if(comments[i].id == id){
+      if(comments[i].id == id)
         return comments[i]
-      }
   },
   update:function(){
     if(this.data.comment_id==null){
       this.setData({comment_id_error:"无ID无法编辑"})
       return;
     }
+    
     var comment = {"id":"","name":""}
     comment.id = this.data.comment_id
     comment.name = this.data.comment_name

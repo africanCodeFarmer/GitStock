@@ -37,7 +37,6 @@ Component({
 				url: this.data.list[event.detail].url
 			});
 		},
-
 		init() {
 			const page = getCurrentPages().pop();
 			this.setData({

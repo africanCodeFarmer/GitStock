@@ -2,37 +2,37 @@
 <template is="custom_inner" data="{{...custom_data}}"/>
 
 <van-cell-group title="编辑/添加">
-<van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
-  <van-collapse-item title="..." icon="expand-o" name="1">
-    <van-field
-      name="block_id"
-      value="{{ block_id }}"
-      label="ID"
-      type="number"
-      readonly
-      bind:change="update_block_id"
-      error-message="{{block_id_error}}"
-    />
-    <van-field
-      name="block_value"
-      value="{{ block_value }}"
-      label="金额"
-      placeholder="请输入金额"
-      required
-      bind:change="update_block_value"
-      error="{{block_value_error}}"
-    />
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="reset">重置</van-button>
-    </van-cell>
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="update">编辑</van-button>
-    </van-cell>
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="add">添加</van-button>
-    </van-cell>
-  </van-collapse-item>
-</van-collapse>
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
+      <van-field
+        name="block_id"
+        value="{{ block_id }}"
+        label="ID"
+        type="number"
+        readonly
+        bind:change="update_block_id"
+        error-message="{{block_id_error}}"
+      />
+      <van-field
+        name="block_value"
+        value="{{ block_value }}"
+        label="金额"
+        placeholder="请输入金额"
+        required
+        bind:change="update_block_value"
+        error="{{block_value_error}}"
+      />
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="reset">重置</van-button>
+      </van-cell>
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="update">编辑</van-button>
+      </van-cell>
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="add">添加</van-button>
+      </van-cell>
+    </van-collapse-item>
+  </van-collapse>
 </van-cell-group>
 
 <van-cell-group title="所有金额块">

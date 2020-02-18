@@ -2,81 +2,81 @@
 <template is="custom_inner" data="{{...custom_data}}"/>
 
 <van-cell-group title="编辑/添加">
-<van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
-  <van-collapse-item title="..." icon="expand-o" name="1">
-    <van-field
-      name="target_id"
-      value="{{ target_id }}"
-      label="ID"
-      type="number"
-      readonly
-      bind:change="update_target_id"
-      error-message="{{target_id_error}}"
-    />
-    <van-field
-      name="target_name"
-      value="{{ target_name }}"
-      label="目标名称"
-      placeholder="请输入目标名称"
-      required
-      bind:change="update_target_name"
-      error="{{target_name_error}}"
-    />
-    <van-field
-      name="target_desc"
-      value="{{ target_desc }}"
-      label="目标描述"
-      placeholder="请输入目标描述"
-      required
-      bind:change="update_target_desc"
-      error="{{target_desc_error}}"
-    />
-    <van-field
-      name="target_value"
-      value="{{ target_value }}"
-      label="目标金额"
-      type="digit"
-      placeholder="请输入目标金额"
-      required
-      bind:change="update_target_value"
-      error="{{target_value_error}}"
-    />
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
+      <van-field
+        name="target_id"
+        value="{{ target_id }}"
+        label="ID"
+        type="number"
+        readonly
+        bind:change="update_target_id"
+        error-message="{{target_id_error}}"
+      />
+      <van-field
+        name="target_name"
+        value="{{ target_name }}"
+        label="目标名称"
+        placeholder="请输入目标名称"
+        required
+        bind:change="update_target_name"
+        error="{{target_name_error}}"
+      />
+      <van-field
+        name="target_desc"
+        value="{{ target_desc }}"
+        label="目标描述"
+        placeholder="请输入目标描述"
+        required
+        bind:change="update_target_desc"
+        error="{{target_desc_error}}"
+      />
+      <van-field
+        name="target_value"
+        value="{{ target_value }}"
+        label="目标金额"
+        type="digit"
+        placeholder="请输入目标金额"
+        required
+        bind:change="update_target_value"
+        error="{{target_value_error}}"
+      />
 
-    <van-cell required>
-      <van-row>
-        <van-col span="6" class="text-left" style="color:black;">目标图片</van-col>
-        <van-col span="18" class="text-left">
-          <view style="margin-top:20rpx;"></view>
-          <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" max-count="1" bind:delete="afterRead_delete"/>
-        </van-col>
-      </van-row>
-      <view wx:if="{{target_iconPath_error}}" style="color:#EE0A24;">请选择目标图片</view>
-    </van-cell>
+      <van-cell required>
+        <van-row>
+          <van-col span="6" class="text-left" style="color:black;">目标图片</van-col>
+          <van-col span="18" class="text-left">
+            <view style="margin-top:20rpx;"></view>
+            <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" max-count="1" bind:delete="afterRead_delete"/>
+          </van-col>
+        </van-row>
+        <view wx:if="{{target_iconPath_error}}" style="color:#EE0A24;">请选择目标图片</view>
+      </van-cell>
 
-    <van-cell>
-      <van-row>
-        <van-col span="6" class="text-left" style="color:black;">完成情况</van-col>
-        <van-col span="18" class="text-left">
-        <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
-          <van-radio name="0">false</van-radio>
-          <van-divider hairline />
-          <van-radio name="1">true</van-radio>
-        </van-radio-group>
-        </van-col>
-      </van-row>
-    </van-cell>
+      <van-cell>
+        <van-row>
+          <van-col span="6" class="text-left" style="color:black;">完成情况</van-col>
+          <van-col span="18" class="text-left">
+          <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
+            <van-radio name="0">false</van-radio>
+            <van-divider hairline />
+            <van-radio name="1">true</van-radio>
+          </van-radio-group>
+          </van-col>
+        </van-row>
+      </van-cell>
 
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="reset">重置</van-button>
-    </van-cell>
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="update">编辑</van-button>
-    </van-cell>
-    <van-cell class="center">
-      <van-button plain hairline type="" size="large" bind:click="add">添加</van-button>
-    </van-cell>
-  </van-collapse-item>
-</van-collapse>
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="reset">重置</van-button>
+      </van-cell>
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="update">编辑</van-button>
+      </van-cell>
+      <van-cell class="center">
+        <van-button plain hairline type="" size="large" bind:click="add">添加</van-button>
+      </van-cell>
+    </van-collapse-item>
+  </van-collapse>
 </van-cell-group>
 
 <van-cell-group title="所有花支目标">
@@ -101,6 +101,7 @@
       <van-button custom-style="height:100%;" hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
       <van-button custom-style="height:100%;" hairline icon="delete" type="danger" id="{{item.id}}" data-name="{{item.name}}" bind:click="delete"></van-button>
     </view>
+    
   </van-swipe-cell>
 </van-cell-group>
 

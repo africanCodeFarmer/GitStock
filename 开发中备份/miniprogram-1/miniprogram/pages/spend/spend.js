@@ -8,11 +8,12 @@ Page({
     choose_spend_type :0,
     spend_type:"",
 
-    money_blocks:{},
     stocks:{},
     stock:{},
+
     show_money_popup:false,
     money_popup_title:"",
+    money_blocks:{},
     comments:{},
 
     input_value:"",
@@ -33,9 +34,9 @@ Page({
     targets_achieved:[],
     target_achieved_count:0,
     
-    target_percent:[],
+    target_percent:[], //目标们的百分比
 
-    money_allow_count:0,
+    money_allow_count:0, //总余额
   },
   onClick_show_target_achieved_popup:function(){
     this.setData({show_target_achieved_popup:true})
@@ -203,7 +204,7 @@ Page({
     if(!this.checkTimeExistSpendLogs(time)) //时间不存在
       spendLogs.unshift({"time":time,"datas":[],"day_spend":0})
 
-    //根据花支出修改大类中的day_spend
+    //根据花支修改大类中的day_spend
     var day_spend =  spendLogs[0].day_spend
     if(sign=='-'){ //-
       spendLogs[0].day_spend = (parseFloat(day_spend)-parseFloat(value)).toFixed(2)
@@ -378,7 +379,8 @@ Page({
     var spendLogs = wx.getStorageSync('spendLogs') || []
     var targets = this.getWhereTargets({"achieved":false})
     var targets_achieved = this.getWhereTargets({"achieved":true})
-    //转账窗口
+    
+    //转账
     var pickers = []
     for(var i in stocks)
       pickers.push(stocks[i].name)

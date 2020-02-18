@@ -2,17 +2,19 @@ import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data: {
+    custom_data:{"backText":"设置","content":"消费类型"},
+    activeNames:[],
+
     activeNames_icon:[],
     icons:[],
     filled_icons:false,
-
-    custom_data:{"backText":"设置","content":"消费类型"},
-    activeNames:[],
+    
     type_id:null,
     type_text:null,
     type_text_error:false,
     type_id_error:"",
     type_icon:"round",
+
     types:[],
   },
   fill_icons:function(){
@@ -968,7 +970,6 @@ Page({
       message: '你确定删除'+text+'吗?'
     }).then(() => {
       // on confirm
-
       var types = this.data.types
       for(var i in types){
         if(types[i].id == id){
@@ -1008,6 +1009,7 @@ Page({
       this.setData({type_id_error:"无ID无法编辑"})
       return;
     }
+    
     var type = {"id":"","text":""}
     type.id = this.data.type_id
     type.text = this.data.type_text

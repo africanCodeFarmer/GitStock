@@ -50,7 +50,6 @@
 
   </view>
 </view>
-<!-- 目标板块结束 -->
 
 <!-- 余额板块 -->
 <view class="padding text-left">
@@ -139,6 +138,7 @@
           <van-button type="info" plain size="mini" data-value="{{item.value}}" bind:click="onClick_money_block">{{item.value}}元</van-button>
         </view>
       </view>
+
       <van-divider contentPosition="center" customStyle="font-size: 11px;border-color: #FFF;margin-bottom:0rpx;">常用注释块</van-divider>
       <!-- 注释块 -->
       <view style="margin:0rpx 10%;">
@@ -188,7 +188,6 @@
   </van-row>
 
   <van-divider contentPosition="center" customStyle="font-size: 11px;border-color: #FFF;margin-bottom:10rpx;margin-top:10rpx;">可选金额块</van-divider>
-  
   <!-- 金额块 -->
   <view style="margin:0rpx 10%;">
     <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{money_blocks}}">

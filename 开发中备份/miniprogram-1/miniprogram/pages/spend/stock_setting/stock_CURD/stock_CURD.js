@@ -3,16 +3,17 @@ import Dialog from '@vant/weapp/dialog/dialog';
 Page({
   data: {
     custom_data:{"backText":"设置","content":"余额字段"},
-    stock_status:["allow","not allow","wait"],
+    activeNames: [],
+    
     radio_value:'1',
     stock_id:null,
     stock_name:null,
     stock_name_error:false,
     stock_id_error:"",
     stock_value:0.0,
-    stocks:[],
 
-    activeNames: [],
+    stocks:[],
+    stock_status:["allow","not allow","wait"],
   },
   getStock:function(id){
     var stocks = this.data.stocks
@@ -26,6 +27,7 @@ Page({
       this.setData({stock_id_error:"无ID无法编辑"})
       return;
     }
+
     var stock = {"id":"","name":"","value":"","status":""}
     stock.id = this.data.stock_id
     stock.name = this.data.stock_name
@@ -122,7 +124,6 @@ Page({
       message: '你确定删除'+name+'吗?'
     }).then(() => {
       // on confirm
-
       var stocks = this.data.stocks
       for(var i in stocks){
         if(stocks[i].id == id){

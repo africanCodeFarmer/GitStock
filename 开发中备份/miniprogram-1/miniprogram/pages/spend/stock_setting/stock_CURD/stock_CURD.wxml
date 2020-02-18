@@ -2,8 +2,8 @@
 <template is="custom_inner" data="{{...custom_data}}"/>
 
 <van-cell-group title="编辑/添加">
-<van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
-  <van-collapse-item title="..." icon="expand-o" name="1">
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
       <van-field
         name="stock_id"
         value="{{ stock_id }}"
@@ -32,18 +32,18 @@
       />
 
       <van-cell>
-      <van-row>
-        <van-col span="6" class="text-left" style="color:black;">状态</van-col>
-        <van-col span="18" class="text-left">
-        <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
-          <van-radio name="1">allow </van-radio>
-          <van-divider hairline />
-          <van-radio name="2">not allow </van-radio>
-          <van-divider hairline />
-          <van-radio name="3">wait </van-radio>
-        </van-radio-group>
-        </van-col>
-      </van-row>
+        <van-row>
+          <van-col span="6" class="text-left" style="color:black;">状态</van-col>
+          <van-col span="18" class="text-left">
+            <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
+              <van-radio name="1">allow </van-radio>
+              <van-divider hairline />
+              <van-radio name="2">not allow </van-radio>
+              <van-divider hairline />
+              <van-radio name="3">wait </van-radio>
+            </van-radio-group>
+          </van-col>
+        </van-row>
       </van-cell>
 
       <van-cell class="center">
@@ -55,8 +55,8 @@
       <van-cell class="text-center">
         <van-button plain hairline type="" size="large" bind:click="add">添加</van-button>
       </van-cell>
-  </van-collapse-item>
-</van-collapse>
+    </van-collapse-item>
+  </van-collapse>
 </van-cell-group>
 
 <van-cell-group title="所有字段">

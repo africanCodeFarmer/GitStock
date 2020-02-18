@@ -3,7 +3,7 @@
 
 <van-tabs sticky>
   <van-tab title="日志">
-    <!-- head -->
+    <!-- header -->
     <van-sticky offset-top="{{ 60 }}">
       <view style="border-bottom:1px solid #F5F6F8">
         <van-search
@@ -36,30 +36,30 @@
 
       <!-- content-content -->
       <view wx:for="{{item.datas}}" wx:for-item="datas">
-      <van-swipe-cell right-width="{{ 110 }}">
-        <van-cell use-label-slot center>
-          <view slot="label">
-            <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.spend_type==null?'转账':datas.spend_type}}</view>
-            <view style="font-size:14px;color:#B2B2B2;">{{datas.detail_time}} </view>
+        <van-swipe-cell right-width="{{ 110 }}">
+          <van-cell use-label-slot center>
+            <view slot="label">
+              <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.spend_type==null?'转账':datas.spend_type}}</view>
+              <view style="font-size:14px;color:#B2B2B2;">{{datas.detail_time}} </view>
+            </view>
+            <view slot="title">
+              <text style="font-size:17px;">{{datas.name}} </text>
+              <text style="font-size:14px;color:#888888;">{{datas.comment}}</text>
+            </view>
+            <view slot="icon">
+              <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:40px;"></text>
+            </view>
+            <view slot='right-icon'>
+              <view wx:if="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
+              <view wx:if="{{datas.operate=='-'}}" class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
+              <view style="font-size:14px;color:#353535;">余额: {{datas.remain}}</view>
+            </view>
+          </van-cell>
+          <view slot="right" style="height:100%;">
+            <van-button custom-style="height:100%;" type="primary" icon="" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}">编辑</van-button>
+            <van-button custom-style="height:100%;" type="danger" icon="" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}">删除</van-button>
           </view>
-          <view slot="title">
-            <text style="font-size:17px;">{{datas.name}} </text>
-            <text style="font-size:14px;color:#888888;">{{datas.comment}}</text>
-          </view>
-          <view slot="icon">
-            <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:40px;"></text>
-          </view>
-          <view slot='right-icon'>
-            <view wx:if="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
-            <view wx:if="{{datas.operate=='-'}}" class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
-            <view style="font-size:14px;color:#353535;">余额:{{datas.remain}}</view>
-          </view>
-        </van-cell>
-        <view slot="right" style="height:100%;">
-          <van-button custom-style="height:100%;" type="primary" icon="" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}">编辑</van-button>
-          <van-button custom-style="height:100%;" type="danger" icon="" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}">删除</van-button>
-        </view>
-      </van-swipe-cell>
+        </van-swipe-cell>
       </view>
     </van-panel>
   </van-tab>
@@ -111,14 +111,12 @@
 
   <!-- 分类块 -->
   <van-row>
-    <van-col offset="4" span="20">
-      
+    <van-col offset="4" span="20">  
       <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{spend_types}}">
         <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
           <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
         </van-cell>
       </view>
-
     </van-col>
   </van-row>
 </van-dialog>
