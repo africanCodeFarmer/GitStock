@@ -15,7 +15,7 @@
                 bind:cancel="onCancel_search"
                 show-action
                 shape="round"
-                action-text="还原"
+                action-text=" 还原"
                 background="#fff"
               />
           </van-col>
@@ -29,11 +29,11 @@
       <!-- content-header -->
       <view slot="header" style="background-color:#f1f1f1;line-height:60rpx;margin-top:20rpx;">
         <van-row>
-          <van-col offset="2" span="12">
+          <van-col offset="2" span="6">
             <text style="font-size:20px;">{{item.time}}</text>
           </van-col>
-          <van-col span="8" class="text-right">
-            <text style="font-size:17px;color:#353535;">???</text>
+          <van-col span="14" class="text-right">
+            <text style="font-size:17px;color:#353535;">日花支: {{item.day_spend}}</text>
           </van-col>
           <van-col span="2"></van-col>
         </van-row>
@@ -44,15 +44,15 @@
       <van-swipe-cell right-width="{{ 90 }}">
         <van-cell use-label-slot center>
           <view slot="label">
-            <text style="font-size:13px;color:#B2B2B2;">{{datas.detail_time}} </text>
-            <text style="font-size:11px;color:#B2B2B2;">{{datas.spend_type==null?'':datas.spend_type}}</text>
+            <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.spend_type==null?'转账':datas.spend_type}}</view>
+            <view style="font-size:14px;color:#B2B2B2;">{{datas.detail_time}} </view>
           </view>
           <view slot="title">
             <text style="font-size:17px;">{{datas.name}} </text>
             <text style="font-size:14px;color:#888888;">{{datas.comment}}</text>
           </view>
           <view slot="icon">
-            <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;"></text>
+            <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:40px;"></text>
           </view>
           <view slot='right-icon'>
             <view wx:if="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
@@ -61,8 +61,8 @@
           </view>
         </van-cell>
         <view slot="right" style="height:100%;">
-          <van-button custom-style="height:100%;" type="primary" icon="edit" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}"></van-button>
-          <van-button custom-style="height:100%;" type="danger" icon="delete" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}"></van-button>
+          <van-button custom-style="height:100%;" type="primary" icon="" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}">编辑</van-button>
+          <van-button custom-style="height:100%;" type="danger" icon="" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}">删除</van-button>
         </view>
       </van-swipe-cell>
       </view>
@@ -91,7 +91,8 @@
     <van-col offset="2" span="20">
       <van-field
         label="注释"
-        value="{{ spendLogData.comment }}"
+        placeholder="请输入注释"
+        value="{{spendLogData.comment}}"
         border="{{ false }}"
         bind:change="onChange_spendLogData_comment"
       />

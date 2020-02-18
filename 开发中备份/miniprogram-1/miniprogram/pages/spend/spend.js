@@ -64,7 +64,7 @@ Page({
     var detail_time = util.formatTime(new Date()).split(' ')[1]
     var spendLogs = this.data.spendLogs
     if(!this.checkTimeExistSpendLogs(time)) //时间不存在
-      spendLogs.unshift({"time":time,"datas":[]})
+      spendLogs.unshift({"time":time,"datas":[],"day_spend":0})
     var spendLog = this.use_time_getSpendLog(time)
     var log = {
       "id":spendLog.datas.length>0?spendLog.datas[0].id+1:1,
@@ -142,7 +142,16 @@ Page({
     var detail_time = util.formatTime(new Date()).split(' ')[1]
     var spendLogs = this.data.spendLogs
     if(!this.checkTimeExistSpendLogs(time)) //时间不存在
-      spendLogs.unshift({"time":time,"datas":[]})
+      spendLogs.unshift({"time":time,"datas":[],"day_spend":0})
+
+    //根据花支出修改大类中的day_spend
+    var day_spend =  spendLogs[0].day_spend
+    if(sign=='-'){ //-
+      spendLogs[0].day_spend = parseFloat(day_spend)-parseFloat(value)
+    }else{ //+
+      spendLogs[0].day_spend = parseFloat(day_spend)+parseFloat(value)
+    }
+
     var spendLog = this.use_time_getSpendLog(time)
     var log = {
       "id":spendLog.datas.length>0?spendLog.datas[0].id+1:1,
