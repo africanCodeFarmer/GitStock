@@ -46,6 +46,11 @@ Page({
     wx.setStorageSync('comments', comments)
     this.setData({comments:comments})
     this.reset()
+
+    wx.showToast({
+      icon:'none',
+      title: '添加成功',
+    })
   },
   delete:function(e){
     var name = e.target.dataset.name
@@ -106,5 +111,10 @@ Page({
     wx.setStorageSync('comments', comments)
     this.setData({comments:comments,activeNames: []})
     this.reset()
+
+    wx.showToast({
+      icon:'none',
+      title: '编辑成功',
+    })
   },
 })

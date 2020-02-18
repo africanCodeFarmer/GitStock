@@ -14,11 +14,21 @@ Page({
     var spendLogs = this.data.spendLogs
     if(show_spendLog_day < spendLogs.length){
       this.setData({show_spendLog_day:show_spendLog_day})
+
+      wx.showToast({
+        icon:'none',
+        title: '数据已追加',
+      })
     }
   },
   onCancel_search:function(){
     this.setData({
       spendLogs:wx.getStorageSync('spendLogs') || []
+    })
+
+    wx.showToast({
+      icon:'none',
+      title: '数据已还原',
     })
   },
   //名称 注释搜索
@@ -49,6 +59,11 @@ Page({
   onSearch:function(e){
     var value = e.detail
     this.search(value)
+
+    wx.showToast({
+      icon:'none',
+      title: '数据已刷新',
+    })
   },
   edit_choose_type:function(e){
     var text = e.target.dataset.text
@@ -84,6 +99,11 @@ Page({
   update:function(){
     this.updateSpendLogData(this.data.spendLogData)
     this.setData({show_edit_dialog:false})
+
+    wx.showToast({
+      icon:'none',
+      title: '编辑成功',
+    })
   },
   onClose_edit_dialog:function(){
     this.setData({show_edit_dialog:false})

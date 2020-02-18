@@ -10,9 +10,9 @@
     "pages/spend/stock_setting/comment_CURD/comment_CURD",
     "pages/spend/stock_setting/money_block_CURD/money_block_CURD",
     "pages/spend/stock_setting/spend_type_CURD/spend_type_CURD",    
-    "pages/spendLog/spendLog",
     
-
+    
+    "pages/spendLog/spendLog",
     "pages/task/task",
     "pages/analyse/analyse",
     

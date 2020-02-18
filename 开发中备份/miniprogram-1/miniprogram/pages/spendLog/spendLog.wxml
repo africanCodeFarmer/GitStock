@@ -5,23 +5,18 @@
   <van-tab title="日志">
     <!-- head -->
     <van-sticky offset-top="{{ 60 }}">
-      <van-panel>
-        <van-row>
-          <van-col offset="1" span="22">
-              <van-search
-                name="search_value"
-                placeholder="请输入搜索关键字"
-                bind:search="onSearch"
-                bind:cancel="onCancel_search"
-                show-action
-                shape="round"
-                action-text=" 还原"
-                background="#fff"
-              />
-          </van-col>
-          <van-col span="1"></van-col>
-        </van-row>
-      </van-panel>
+      <view style="border-bottom:1px solid #F5F6F8">
+        <van-search
+          name="search_value"
+          placeholder="请输入搜索关键字"
+          bind:search="onSearch"
+          bind:cancel="onCancel_search"
+          show-action
+          shape="round"
+          action-text=" 还原"
+          background="#fff"
+        />
+      </view>
     </van-sticky>
 
     <!-- content -->
@@ -30,10 +25,10 @@
       <view slot="header" style="background-color:#f1f1f1;line-height:60rpx;margin-top:20rpx;">
         <van-row>
           <van-col offset="2" span="6">
-            <text style="font-size:20px;">{{item.time}}</text>
+            <text style="font-size:20px;font-weight:blod;">{{item.time}}</text>
           </van-col>
           <van-col span="14" class="text-right">
-            <text style="font-size:17px;color:#353535;">日花支: {{item.day_spend}}</text>
+            <text style="font-size:17px;color:#353535;">今日总账: {{item.day_spend>0?'+':''}}{{item.day_spend}}</text>
           </van-col>
           <van-col span="2"></van-col>
         </van-row>
@@ -41,7 +36,7 @@
 
       <!-- content-content -->
       <view wx:for="{{item.datas}}" wx:for-item="datas">
-      <van-swipe-cell right-width="{{ 90 }}">
+      <van-swipe-cell right-width="{{ 110 }}">
         <van-cell use-label-slot center>
           <view slot="label">
             <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.spend_type==null?'转账':datas.spend_type}}</view>

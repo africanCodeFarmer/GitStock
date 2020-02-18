@@ -41,6 +41,11 @@ Page({
     wx.setStorageSync('stocks', stocks)
     this.setData({stocks:stocks,activeNames: []})
     this.resetInput()
+
+    wx.showToast({
+      icon:'none',
+      title: '编辑成功',
+    })
   },
   getInput:function(id){
     var stock = this.getStock(id)
@@ -100,6 +105,11 @@ Page({
         stock_name_error:true
       })
     }
+
+    wx.showToast({
+      icon:'none',
+      title: '添加成功',
+    })
   },
   onShow:function(){
     var stocks = wx.getStorageSync('stocks') || []

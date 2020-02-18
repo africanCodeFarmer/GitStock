@@ -100,6 +100,11 @@ Page({
     wx.setStorageSync('targets', targets)
     this.setData({targets:targets})
     this.reset()
+
+    wx.showToast({
+      icon:'none',
+      title: '添加成功',
+    })
   },
   delete:function(e){
     var name = e.target.dataset.name
@@ -174,5 +179,10 @@ Page({
     wx.setStorageSync('targets', targets)
     this.setData({targets:targets,activeNames:[]})
     this.reset()
+
+    wx.showToast({
+      icon:'none',
+      title: '编辑成功',
+    })
   },
 })

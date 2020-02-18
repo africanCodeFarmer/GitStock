@@ -46,6 +46,11 @@ Page({
     wx.setStorageSync('blocks', blocks)
     this.setData({blocks:blocks})
     this.reset()
+
+    wx.showToast({
+      icon:'none',
+      title: '添加成功',
+    })
   },
   delete:function(e){
     var value = e.target.dataset.value
@@ -106,5 +111,10 @@ Page({
     wx.setStorageSync('blocks', blocks)
     this.setData({blocks:blocks,activeNames: []})
     this.reset()
+
+    wx.showToast({
+      icon:'none',
+      title: '编辑成功',
+    })
   },
 })

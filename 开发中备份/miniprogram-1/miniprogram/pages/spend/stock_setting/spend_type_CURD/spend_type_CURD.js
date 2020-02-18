@@ -955,6 +955,11 @@ Page({
     wx.setStorageSync('types', types)
     this.setData({types:types})
     this.reset()
+
+    wx.showToast({
+      icon:'none',
+      title: '添加成功',
+    })
   },
   delete:function(e){
     var text = e.target.dataset.text
@@ -1017,5 +1022,10 @@ Page({
     wx.setStorageSync('types', types)
     this.setData({types:types,activeNames: []})
     this.reset()
+
+    wx.showToast({
+      icon:'none',
+      title: '编辑成功',
+    })
   },
 })

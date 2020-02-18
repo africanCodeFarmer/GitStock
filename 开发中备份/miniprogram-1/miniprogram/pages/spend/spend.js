@@ -32,6 +32,10 @@ Page({
     show_target_achieved_popup:false,
     targets_achieved:[],
     target_achieved_count:0,
+    
+    target_percent:[],
+
+    money_allow_count:0,
   },
   onClick_show_target_achieved_popup:function(){
     this.setData({show_target_achieved_popup:true})
@@ -42,7 +46,7 @@ Page({
   onClick_achieve:function(e){
     var id = e.target.id
     var name = e.target.dataset.name
-    console.log(name)
+
     Dialog.confirm({
       title: '完成',
       message: "你已经买了"+name+"吗!?"
@@ -66,6 +70,14 @@ Page({
         targets:targets,
         targets_achieved:targets_achieved,
         target_achieved_count:targets_achieved.length,
+      })
+
+      //刷新百分比
+      this.refresh_target_percent()
+
+      wx.showToast({
+        icon:'none',
+        title: '完成目标',
       })
     }).catch(() => {
       // on cancel
@@ -97,8 +109,8 @@ Page({
 
     var fromStock = this.getStock_useName(fromName)
     var toStock = this.getStock_useName(toName)
-    fromStock.value = parseFloat(fromStock.value)-parseFloat(this.data.transfer_value)
-    toStock.value = parseFloat(toStock.value)+parseFloat(this.data.transfer_value)
+    fromStock.value = (parseFloat(fromStock.value)-parseFloat(this.data.transfer_value)).toFixed(2)
+    toStock.value = (parseFloat(toStock.value)+parseFloat(this.data.transfer_value)).toFixed(2)
     this.updateStockFromStocks(fromStock)
     this.updateStockFromStocks(toStock)
 
@@ -143,6 +155,11 @@ Page({
       transfer_value:null,
       show_money_transfer_popup:false,
     })
+
+    wx.showToast({
+      icon:'none',
+      title: '完成转账',
+    })
   },
   onChange_picker(event) {
   },
@@ -173,11 +190,10 @@ Page({
     }
 
     if(sign=='-'){ //-
-      stock.value = parseFloat(stock.value)-parseFloat(value)
+      stock.value = (parseFloat(stock.value)-parseFloat(value)).toFixed(2)
     }else{ //+
-      stock.value = parseFloat(stock.value)+parseFloat(value)
+      stock.value = (parseFloat(stock.value)+parseFloat(value)).toFixed(2)
     }
-
     this.updateStockFromStocks(stock)
     
     //写日志操作
@@ -190,9 +206,9 @@ Page({
     //根据花支出修改大类中的day_spend
     var day_spend =  spendLogs[0].day_spend
     if(sign=='-'){ //-
-      spendLogs[0].day_spend = parseFloat(day_spend)-parseFloat(value)
+      spendLogs[0].day_spend = (parseFloat(day_spend)-parseFloat(value)).toFixed(2)
     }else{ //+
-      spendLogs[0].day_spend = parseFloat(day_spend)+parseFloat(value)
+      spendLogs[0].day_spend = (parseFloat(day_spend)+parseFloat(value)).toFixed(2)
     }
 
     var spendLog = this.use_time_getSpendLog(time)
@@ -217,6 +233,14 @@ Page({
       input_value:"",
       input_comment:"",
       input_value_comment_error:"",
+    })
+
+    //更新allow总余额
+    this.get_money_allow_count(this.data.stocks)
+
+    wx.showToast({
+      icon:'none',
+      title: '完成操作',
     })
   },
   update_spendLogs:function(spendLog){
@@ -324,6 +348,27 @@ Page({
     }
     return where.achieved==false?ans:ans.reverse()
   },
+  get_money_allow_count:function(stocks){
+    var money_allow_count = 0
+    for(var i in stocks){
+      if(stocks[i].status == "allow")
+        money_allow_count = (parseFloat(money_allow_count)+parseFloat(stocks[i].value)).toFixed(2)
+    }
+    this.setData({money_allow_count:money_allow_count})
+
+    this.refresh_target_percent()
+  },
+  //更新目标百分比进度条
+  refresh_target_percent:function(){
+    var targets = this.data.targets
+    var money_allow_count = parseFloat(this.data.money_allow_count)
+    var target_percent = []
+    for(var i in targets){
+      var percent = (money_allow_count/parseFloat(targets[i].value)).toFixed(2)*100
+      target_percent.push(percent)
+    }
+    this.setData({target_percent:target_percent})
+  },
   onShow:function(){
     this.getTabBar().init();
     var stocks = wx.getStorageSync('stocks') || []
@@ -350,6 +395,9 @@ Page({
       targets_achieved:targets_achieved,
       target_achieved_count:targets_achieved.length,
     })
+
+    //获取allow总余额
+    this.get_money_allow_count(stocks);
   },
   stock_setting:function(){
     wx.navigateTo({

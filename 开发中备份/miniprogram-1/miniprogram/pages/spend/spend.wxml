@@ -6,7 +6,7 @@
   <view class="padding-xl radius shadow-warp bg-white">
 
     <van-row>
-      <van-col span="20"><text style="font-size:20px;">我的目标</text></van-col>
+      <van-col span="20"><text style="font-size:20px;">我的花支目标</text></van-col>
       <van-col span="4">
         <van-button plain round type="default" icon="setting-o" size="small" bind:click="target_setting">
         </van-button>
@@ -31,7 +31,7 @@
         <view>{{item.desc}}</view>
         <view class="flex">
           <view class="cu-progress round sm striped active">
-            <view class="bg-green" style="width:60%;">20%</view>
+            <view class="bg-green" style="width:{{target_percent[index]}}%;">{{target_percent[index]}}%</view>
           </view>
         </view>
       </view>
@@ -68,7 +68,8 @@
 
     <van-row wx:for="{{stocks}}">
       <van-col span="12">
-        <text style="font-size:14px;">{{item.name}}: {{item.value}}</text>
+        <text style="font-size:14px;">{{item.name}}: </text>
+        <text style="font-size:13px;">{{item.value}}</text>
       </van-col>
       <van-col span="4">
         <text style="font-size:11px;">{{item.status}}</text>
@@ -88,7 +89,7 @@
 
     <van-row>
       <van-divider borderColor="#000"/>
-      <van-col span="16">总余额: 0</van-col>
+      <van-col span="16">总余额(allow): {{money_allow_count}}</van-col>
       <van-col span="8" class="text-right">
         <van-button plain round  type="info" size="small" bind:click="transferMoney">
           <text style="font-size:13px;"> 余额间转账 </text>
@@ -111,7 +112,7 @@
   bind:click-nav="onClickNav"
   >
     <view slot="content">
-      <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;">{{money_popup_title}}</van-divider>
+      <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">{{money_popup_title}}</van-divider>
       
       <van-row>
         <van-col offset="1" span="22">
@@ -155,7 +156,7 @@
   position="bottom"
   custom-style="height: 50%;"
 >
-  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;">转账窗口</van-divider>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">转账</van-divider>
 
   <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;color:#EE0A24;font-size:13px;">{{transfer_error}}</van-divider>
 
@@ -202,7 +203,7 @@
   position="bottom"
   custom-style="height: 50%;"
 >
-  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;">已完成目标</van-divider>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">已完成目标</van-divider>
 
   <view style="margin-bottom:10%;">
     <van-cell title="{{item.name}}" use-label-slot border="{{false}}" wx:for="{{targets_achieved}}">
