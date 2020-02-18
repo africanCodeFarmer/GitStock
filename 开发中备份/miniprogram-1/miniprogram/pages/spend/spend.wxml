@@ -1,6 +1,58 @@
 <import src="../public/public.wxml" />
 <template is="custom" />
 
+<!-- 目标板块 -->
+<view class="padding text-left">
+  <view class="padding-xl radius shadow-warp bg-white">
+
+    <van-row>
+      <van-col span="20"><text style="font-size:20px;">我的目标</text></van-col>
+      <van-col span="4">
+        <van-button plain round type="default" icon="setting-o" size="small" bind:click="target_setting">
+        </van-button>
+      </van-col>
+    </van-row>
+
+    <van-divider borderColor="#000"/>
+
+    <van-cell title="{{item.name}}" use-label-slot border="{{false}}" wx:for="{{targets}}">
+      <view slot="right-icon">
+        <view class="text-right">{{item.value}}RMB</view>
+        <view class="margin-top margin-left">
+          <van-button plain round  type="primary" size="mini" bind:click="transferMoney">
+            <text style="font-size:11px;">完成</text>
+          </van-button>
+        </view>
+      </view>
+      <view slot="icon">
+        <image src="{{item.iconPath}}" style="width:100rpx;height:100rpx;margin-right:20rpx;border-radius: 25px;"/>
+      </view>
+      <view slot="label">
+        <view>{{item.desc}}</view>
+        <view class="flex">
+          <view class="cu-progress round sm striped active">
+            <view class="bg-green" style="width:60%;">20%</view>
+          </view>
+        </view>
+      </view>
+    </van-cell>
+
+    <van-divider borderColor="#000"/>
+
+    <van-row>
+      <van-col span="16">实现总数: 0</van-col>
+      <van-col span="8" class="text-right">
+        <van-button plain round  type="info" size="small" bind:click="transferMoney">
+          <text style="font-size:13px;"> 查看已完成目标 </text>
+        </van-button>
+      </van-col>
+    </van-row>
+
+  </view>
+</view>
+<!-- 目标板块结束 -->
+
+<!-- 余额板块 -->
 <view class="padding text-left">
   <view class="padding-xl radius shadow-warp bg-white">
 
@@ -46,7 +98,7 @@
 
   </view>
 </view>
-  
+
 <van-popup 
   show="{{ show_money_popup }}" 
   bind:close="onClose_money_popup"
@@ -143,3 +195,6 @@
     </view>
   </view>
 </van-popup>
+
+<van-divider hairline />
+<van-divider hairline />

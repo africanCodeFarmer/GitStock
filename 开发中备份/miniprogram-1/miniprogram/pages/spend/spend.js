@@ -279,7 +279,7 @@ Page({
     var money_blocks = wx.getStorageSync('blocks') || []
     var spend_types = wx.getStorageSync('types') || []
     var spendLogs = wx.getStorageSync('spendLogs') || []
-
+    var targets = wx.getStorageSync('targets') || []
     //转账窗口
     var pickers = []
     for(var i in stocks)
@@ -293,11 +293,17 @@ Page({
       spend_type:spend_types.length>0?spend_types[0].text:"",
       spendLogs:spendLogs,
       picker_columns:[{values:pickers},{values:pickers}],
+      targets:targets,
     })
   },
   stock_setting:function(){
     wx.navigateTo({
       url: 'stock_setting/stock_setting',
+    })
+  },
+  target_setting:function(){
+    wx.navigateTo({
+      url: 'target_setting/target_setting',
     })
   },
 })

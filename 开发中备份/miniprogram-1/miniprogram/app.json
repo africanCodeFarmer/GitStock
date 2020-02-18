@@ -1,8 +1,10 @@
 {
   "pages": [
     
-    
+
     "pages/spend/spend",
+    "pages/spend/target_setting/target_setting",
+    "pages/spend/target_setting/target_CURD/target_CURD",
     "pages/spend/stock_setting/stock_setting",
     "pages/spend/stock_setting/stock_CURD/stock_CURD",
     "pages/spend/stock_setting/comment_CURD/comment_CURD",
@@ -66,6 +68,7 @@
     "van-tabs": "@vant/weapp/tabs",
     "van-sticky": "@vant/weapp/sticky",
     "van-search": "@vant/weapp/search",
+    "van-uploader": "@vant/weapp/uploader",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }
