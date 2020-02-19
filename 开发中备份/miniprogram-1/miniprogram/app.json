@@ -1,8 +1,8 @@
 {
   "pages": [
+
     "pages/spendLog/spendLog",
-    "pages/spendLog/statistic/statistic",
-    
+
     "pages/spend/spend",
     "pages/spend/target_setting/target_setting",
     "pages/spend/target_setting/target_CURD/target_CURD",
@@ -15,6 +15,15 @@
     "pages/task/task",
     "pages/analyse/analyse",
     "pages/taskLog/taskLog"
+  ],
+  "subPackages": [
+      {
+          "root": "packageTab1", 
+          "pages": [
+              "ec-canvas/ec-canvas",
+              "spendLog/statistic/statistic"
+          ]
+      }
   ],
   "window": {
     "navigationStyle":"custom"
@@ -67,7 +76,6 @@
     "van-sticky": "@vant/weapp/sticky",
     "van-search": "@vant/weapp/search",
     "van-uploader": "@vant/weapp/uploader",
-    "ec-canvas": "ec-canvas/ec-canvas",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }

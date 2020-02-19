@@ -13,7 +13,7 @@ Page({
   },
   onClick_statistic:function(){
     wx.navigateTo({
-      url: 'statistic/statistic',
+      url: '../../packageTab1/spendLog/statistic/statistic',
     })
   },
   onReachBottom:function(){

@@ -1,0 +1,10 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">{{custom_data.backText}}</view>
+	<view slot="content">{{custom_data.content}}</view>
+</cu-custom>
+
+<view class="margin-top">
+  <view class="box">
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+  </view>
+</view>
