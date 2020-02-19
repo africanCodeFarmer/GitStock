@@ -5,8 +5,20 @@ App({
     Custom:null,
     CustomBar:null,
   },
-
+  fill_default_spend_type:function(){
+    var spend_types = wx.getStorageSync('types') || []
+    if(spend_types.length==0){
+      spend_types.push({
+        id:'1',
+        text:'默认消费类',
+        icon:"question"
+      })
+      wx.setStorageSync('types', spend_types)
+    }
+  },
   onLaunch: function () {
+    this.fill_default_spend_type() //填充默认消费类型
+
     wx.getSystemInfo({
       success: e => {
         this.globalData.StatusBar = e.statusBarHeight;

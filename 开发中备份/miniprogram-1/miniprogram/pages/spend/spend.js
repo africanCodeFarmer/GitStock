@@ -365,7 +365,7 @@ Page({
     var money_allow_count = parseFloat(this.data.money_allow_count)
     var target_percent = []
     for(var i in targets){
-      var percent = (money_allow_count/parseFloat(targets[i].value)).toFixed(2)*100
+      var percent = ((money_allow_count/parseFloat(targets[i].value))*100).toFixed(2)
       target_percent.push(percent)
     }
     this.setData({target_percent:target_percent})
@@ -379,7 +379,7 @@ Page({
     var spendLogs = wx.getStorageSync('spendLogs') || []
     var targets = this.getWhereTargets({"achieved":false})
     var targets_achieved = this.getWhereTargets({"achieved":true})
-    
+
     //转账
     var pickers = []
     for(var i in stocks)

@@ -13,7 +13,7 @@ Page({
     type_text:null,
     type_text_error:false,
     type_id_error:"",
-    type_icon:"round",
+    type_icon:"question",
 
     types:[],
   },
@@ -925,7 +925,7 @@ Page({
       type_text:null,
       type_text_error:false,
       type_id_error:"",
-      type_icon:"round",
+      type_icon:"question",
     })
   },
   onShow:function(){
@@ -966,6 +966,15 @@ Page({
   delete:function(e){
     var text = e.target.dataset.text
     var id = e.target.id
+
+    if(id==1){
+      wx.showToast({
+        icon:'none',
+        title: '无法删除',
+      })
+      return;
+    }
+
     Dialog.confirm({
       message: '你确定删除'+text+'吗?'
     }).then(() => {

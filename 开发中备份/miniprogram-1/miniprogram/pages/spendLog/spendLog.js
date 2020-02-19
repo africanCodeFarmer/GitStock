@@ -34,7 +34,7 @@ Page({
       title: '数据已还原',
     })
   },
-  //名称 注释搜索
+  //名称 注释 时间搜索
   search:function(value){
     var ans = [];
     var spendLogs = wx.getStorageSync('spendLogs') || []
@@ -49,8 +49,9 @@ Page({
       for(var j in datas){
         var name = datas[j].name
         var comment = datas[j].comment || ""
+        var time = datas[j].time
         
-        if(name.indexOf(value)>=0 || comment.indexOf(value)>=0)
+        if(name.indexOf(value)>=0 || comment.indexOf(value)>=0 || time.indexOf(value)>=0)
           ans[i].datas.push(datas[j])
       }
       if(ans[i].datas.length==0) //无数据
