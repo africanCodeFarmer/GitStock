@@ -11,6 +11,11 @@ Page({
 
     show_spendLog_day:0,
   },
+  onClick_statistic:function(){
+    wx.navigateTo({
+      url: 'statistic/statistic',
+    })
+  },
   onReachBottom:function(){
     var show_spendLog_day = this.data.show_spendLog_day+1
     var spendLogs = this.data.spendLogs

@@ -1,7 +1,7 @@
 <import src="../public/public.wxml" />
 <template is="custom" />
 
-<van-tabs sticky>
+<van-tabs bind:disabled="onClick_statistic">
   <van-tab title="日志">
     <!-- header -->
     <van-sticky offset-top="{{ 60 }}">
@@ -64,7 +64,8 @@
     </van-panel>
   </van-tab>
 
-  <van-tab title="统计"></van-tab>
+  <!-- 统计页 -->
+  <van-tab title="统计" disabled title-style="color:#323233;"></van-tab>
 </van-tabs>
 
 <van-divider hairline contentPosition="center">已经到底啦</van-divider>

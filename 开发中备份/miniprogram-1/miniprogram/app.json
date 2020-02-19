@@ -1,5 +1,8 @@
 {
   "pages": [
+    "pages/spendLog/spendLog",
+    "pages/spendLog/statistic/statistic",
+    
     "pages/spend/spend",
     "pages/spend/target_setting/target_setting",
     "pages/spend/target_setting/target_CURD/target_CURD",
@@ -8,7 +11,7 @@
     "pages/spend/stock_setting/comment_CURD/comment_CURD",
     "pages/spend/stock_setting/money_block_CURD/money_block_CURD",
     "pages/spend/stock_setting/spend_type_CURD/spend_type_CURD",    
-    "pages/spendLog/spendLog",
+    
     "pages/task/task",
     "pages/analyse/analyse",
     "pages/taskLog/taskLog"
@@ -64,6 +67,7 @@
     "van-sticky": "@vant/weapp/sticky",
     "van-search": "@vant/weapp/search",
     "van-uploader": "@vant/weapp/uploader",
+    "ec-canvas": "ec-canvas/ec-canvas",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }
