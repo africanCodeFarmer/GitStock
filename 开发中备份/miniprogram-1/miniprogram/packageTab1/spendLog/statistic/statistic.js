@@ -1,8 +1,8 @@
 import * as echarts from '../../ec-canvas/echarts';
 var util = require('../../../pages/public/public')
 
-let column_chart = null;
-let pie_chart = null;
+var column_chart = null;
+var pie_chart = null;
 
 Page({
   data: {
@@ -15,7 +15,64 @@ Page({
     custom_data:{"backText":"花支日志","content":"统计"},
 
     show_timeChoose_popup:false,
+
+    month_spend:0,
+    month_income:0,
+    month_title:0,
   },
+  getSpendLogs_useTime(time){
+    var result = []
+    var spendLogs = wx.getStorageSync('spendLogs') || []
+    for(var i in spendLogs){
+      if(spendLogs[i].time.indexOf(time)>=0)
+        result.push(spendLogs[i])
+    }
+    return result;
+  },
+  fill_month_income_and_month_spend(month_spendLogs){
+    var month_income = 0
+    var month_spend = 0
+    for(var i in month_spendLogs){
+      var day_spend = month_spendLogs[i].day_spend
+      if(day_spend>=0)
+        month_income += parseFloat(day_spend)
+      else
+        month_spend += parseFloat(day_spend)
+    }
+    month_income = month_income.toFixed(2)
+    month_spend = month_spend.toFixed(2)
+
+    this.setData({
+      month_income:month_income,
+      month_spend:month_spend
+    })
+  },
+  fill_month_title:function(time){
+    this.setData({month_title:time})
+  },
+  update_column_chart:function(month_spendLogs){
+    var datas=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for(var i in month_spendLogs){
+      var time = parseInt(month_spendLogs[i].time.substr(8,2))-1 //数组基0
+      datas[time]=parseFloat(month_spendLogs[i].day_spend).toFixed(2)
+    }
+    //2.21任务 用datas更新柱状图报错
+    this.updateChart_column_chart(datas)
+  },
+  onShow:function(){
+    var time = util.formatTime(new Date()).split(' ')[0]
+    var yearAndMonth = time.substr(0,7) //2020/02
+
+    //填充时间
+    this.fill_month_title(time)
+    //获取本月spendLogs
+    var month_spendLogs = this.getSpendLogs_useTime(yearAndMonth)
+    //填充月收入和月支出
+    this.fill_month_income_and_month_spend(month_spendLogs)
+    //更新柱状图
+    this.update_column_chart(month_spendLogs)
+  },
+
   timeChoose:function(e){
     console.log(util.formatTime(new Date(e.detail)))
     this.onClose_timeChoose_popup()
@@ -43,6 +100,74 @@ Page({
     })
   },
 
+  //柱状图更新数据
+  updateChart_column_chart:function(datas){
+    var option = {
+      title:{
+        text:"本月每日花支"
+      },
+      color: ['#37a2da', '#32c5e9', '#67e0e3'],
+      grid: {
+        left: 0,
+        right: 0,
+        bottom: 15,
+        top: 60,
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          axisTick: { show: false },
+          data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',16,'17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
+          axisLine: {
+            lineStyle: {
+              color: '#999'
+            }
+          },
+          axisLabel: {
+            color: '#666'
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          axisTick: { show: false },
+          // data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
+          axisLine: {
+            lineStyle: {
+              color: '#999'
+            }
+          },
+          axisLabel: {
+            color: '#666'
+          }
+        }
+      ],
+      tooltip: {
+        trigger: 'axis',
+        formatter: '{b}日: {c}',
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      series: [
+        {
+          name: '花支',
+          type: 'line',
+          label: {
+            normal: {
+              show: false,
+              position: 'inside'
+            }
+          },
+          data: datas,
+        }
+      ]
+    };
+
+    column_chart.setOption(option);
+  },
   //柱状图初始化
   initChart_column:function(canvas, width, height) {
     column_chart = echarts.init(canvas, null, {
