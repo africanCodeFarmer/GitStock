@@ -76,6 +76,7 @@
     "van-sticky": "@vant/weapp/sticky",
     "van-search": "@vant/weapp/search",
     "van-uploader": "@vant/weapp/uploader",
+    "van-datetime-picker": "@vant/weapp/datetime-picker",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }
