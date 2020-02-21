@@ -51,7 +51,6 @@ Page({
       })
 
       var datas = spendLogs[i].datas
- 
       for(var j in datas){
         var name = datas[j].name
         var comment = datas[j].comment || ""
@@ -66,7 +65,6 @@ Page({
       }
     }
     this.setData({spendLogs:ans}) //更新搜索数据
-    console.log(ans)
   },
   onSearch:function(e){
     var value = e.detail
