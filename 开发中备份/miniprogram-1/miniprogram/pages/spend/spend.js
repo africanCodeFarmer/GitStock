@@ -185,8 +185,8 @@ Page({
     var input_clip = this.data.input_value_comment.split(' ')
     var value = input_clip.length>0?input_clip[0]:""
     var comment = input_clip.length>1?input_clip[input_clip.length-1]:""
-    //+时 icon:"moneybag" spend_type:"收入"
     var icon = this.getSpendType_useSpendType(this.data.spend_type)==null?"moneybag":this.getSpendType_useSpendType(this.data.spend_type).icon
+
     if(value==""){
       this.setData({input_value_comment_error:"正确格式:金额 注释"})
       return;
@@ -323,7 +323,7 @@ Page({
     var id = e.target.id
     var stock = this.getStock(id)
     var money_popup_title = '+ '+stock.name
-    var spend_type = "收入" //消费类型
+    var spend_type = "收入"
     this.setData({
       show_money_popup:true,
       stock:stock,
@@ -334,19 +334,23 @@ Page({
   },
   reduceMoney:function(e){
     //-时需要选择类型
+    var spend_types = wx.getStorageSync('types') || []
     this.setData({
-      spend_types : wx.getStorageSync('types') || []
+      spend_types : spend_types
     })
+    var spend_type = this.data.spend_type
+    if(spend_type=="收入")
+      spend_type = spend_types[0].text
 
     var id = e.target.id
     var stock = this.getStock(id)
     var money_popup_title = '- '+stock.name
-    var spend_type = this.data.spend_type
     this.setData({
       show_money_popup:true,
       stock:stock,
       money_popup_title:money_popup_title,
-      go_spend_sign:'-'
+      go_spend_sign:'-',
+      spend_type:spend_type
     })
   },
   onClose_money_popup:function(){
