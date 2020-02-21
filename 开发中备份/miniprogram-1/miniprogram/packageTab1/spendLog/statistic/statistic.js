@@ -14,7 +14,7 @@ function initChart_column(canvas, width, height) {
 
   var option = {
     title:{
-      text:"本月每日花支情况"
+      text:"本月日总账情况"
     },
     color: ['#37a2da', '#32c5e9', '#67e0e3'],
     grid: {
@@ -89,7 +89,7 @@ function initChart_pie(canvas, width, height) {
 
   var option = {
     title: {
-        text: '本月消费类型情况',
+        text: '本月各消费类型支出情况',
         left: 'left',
     },
     tooltip: {

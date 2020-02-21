@@ -7,6 +7,7 @@ App({
   },
   fill_default_spend_type:function(){
     var spend_types = wx.getStorageSync('types') || []
+
     if(spend_types.length==0){
       spend_types.push({
         id:'1',

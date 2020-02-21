@@ -51,18 +51,22 @@ Page({
       })
 
       var datas = spendLogs[i].datas
+ 
       for(var j in datas){
         var name = datas[j].name
         var comment = datas[j].comment || ""
         var time = datas[j].time
         
-        if(name.indexOf(value)>=0 || comment.indexOf(value)>=0 || time.indexOf(value)>=0)
+        if(name.indexOf(value)>=0 || comment.indexOf(value)>=0 || time.indexOf(value)>=0){
           ans[i].datas.push(datas[j])
+        }
       }
-      if(ans[i].datas.length==0) //无数据
-        ans.splice(i,1)
+      if(ans[i].datas.length==0){ //无数据
+        ans[i]=null
+      }
     }
     this.setData({spendLogs:ans}) //更新搜索数据
+    console.log(ans)
   },
   onSearch:function(e){
     var value = e.detail

@@ -13,7 +13,7 @@
       </van-col>
     </van-row>
 
-    <van-divider borderColor="#000"/>
+    <van-divider hairline />
 
     <van-cell title="{{item.name}}" use-label-slot border="{{false}}" wx:for="{{targets}}">
       <view slot="right-icon">
@@ -37,7 +37,7 @@
       </view>
     </van-cell>
 
-    <van-divider borderColor="#000"/>
+    <van-divider hairline />
 
     <van-row>
       <van-col span="16">实现总数: {{target_achieved_count}}</van-col>
@@ -63,7 +63,7 @@
       </van-col>
     </van-row>
 
-    <van-divider borderColor="#000"/>
+    <van-divider hairline />
 
     <van-row wx:for="{{stocks}}">
       <van-col span="12">
@@ -83,11 +83,12 @@
           <text style="font-size:16px;">-</text>
         </van-button>
       </van-col>
-      <van-divider borderColor="#000"/>
+      <van-divider hairline />
     </van-row>
 
+    <van-divider hairline />
+
     <van-row>
-      <van-divider borderColor="#000"/>
       <van-col span="16">总余额(allow): {{money_allow_count}}</van-col>
       <van-col span="8" class="text-right">
         <van-button plain round  type="info" size="small" bind:click="transferMoney">

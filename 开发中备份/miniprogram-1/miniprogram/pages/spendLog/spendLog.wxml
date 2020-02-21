@@ -20,19 +20,21 @@
     </van-sticky>
 
     <!-- content -->
-    <view class="padding" wx:for="{{spendLogs}}" wx:if="{{index<=show_spendLog_day}}">
+    <view class="padding" wx:for="{{spendLogs}}" wx:if="{{index<=show_spendLog_day && spendLogs[index]!=null}}">
       <view class="padding-xl radius shadow bg-white">
         <!-- content-header -->
-        <view style="line-height:60rpx;margin-bottom:20rpx;">
+        <view style="line-height:60rpx;">
           <van-row>
             <van-col span="8">
-              <text style="font-size:20px;font-weight:blod;">{{item.time}}</text>
+              <text style="font-size:20px;font-weight:blod;color:#000000;">{{item.time}}</text>
             </van-col>
             <van-col span="16" class="text-right">
               <text style="font-size:17px;color:#353535;">今日总账: {{item.day_spend>0?'+':''}}{{item.day_spend}}</text>
             </van-col>
           </van-row>
         </view>
+
+        <van-divider hairline />
 
         <!-- content-content -->
         <view wx:for="{{item.datas}}" wx:for-item="datas">
@@ -50,8 +52,9 @@
                 <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:40px;"></text>
               </view>
               <view slot='right-icon'>
-                <view wx:if="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
-                <view wx:if="{{datas.operate=='-'}}" class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
+                <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
+                <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
+                <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
                 <view style="font-size:14px;color:#353535;">余额: {{datas.remain}}</view>
               </view>
             </van-cell>
