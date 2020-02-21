@@ -138,7 +138,7 @@ Page({
     var id = e.target.id
     var time = e.target.dataset.time
     var spendLogs = this.data.spendLogs
-    var delete_msg= e.target.dataset.message
+    var delete_msg= e.target.dataset.message+"\n\n注意\n本操作不会影响到今日总账\n删除后会出现空账情况"
 
     Dialog.confirm({
       title: '删除',
@@ -150,7 +150,6 @@ Page({
           var spendLogData = spendLogs[i].datas
           for(var j in spendLogData){
             if(spendLogData[j].id == id){
-              delete_msg = "确定删除"+spendLogData[j].name+" "+spendLogData[j].comment+"?"
               spendLogData.splice(j,1)
               break
             }

@@ -1,24 +1,187 @@
 import * as echarts from '../../ec-canvas/echarts';
 var util = require('../../../pages/public/public')
 
-var column_chart = null;
 var pie_chart = null;
+var column_chart = null;
+
+//柱状图初始化
+function initChart_column(canvas, width, height) {
+  column_chart = echarts.init(canvas, null, {
+    width: width,
+    height: height
+  });
+  canvas.setChart(column_chart);
+
+  var option = {
+    title:{
+      text:"本月每日花支情况"
+    },
+    color: ['#37a2da', '#32c5e9', '#67e0e3'],
+    grid: {
+      left: 0,
+      right: 0,
+      bottom: 15,
+      top: 60,
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        axisTick: { show: false },
+        data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',16,'17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
+        axisLine: {
+          lineStyle: {
+            color: '#999'
+          }
+        },
+        axisLabel: {
+          color: '#666'
+        }
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        axisTick: { show: false },
+        axisLine: {
+          lineStyle: {
+            color: '#999'
+          }
+        },
+        axisLabel: {
+          color: '#666'
+        }
+      }
+    ],
+    tooltip: {
+      trigger: 'axis',
+      formatter: '{b}日: {c}',
+      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+      }
+    },
+    series: [
+      {
+        name: '花支',
+        type: 'line',
+        label: {
+          normal: {
+            show: false,
+            position: 'inside'
+          }
+        },
+        data: [],
+      }
+    ]
+  };
+
+  column_chart.setOption(option);
+  return column_chart;
+}
+
+//饼图初始化
+function initChart_pie(canvas, width, height) {
+  pie_chart = echarts.init(canvas, null, {
+    width: width,
+    height: height
+  });
+  canvas.setChart(pie_chart);
+
+  var option = {
+    title: {
+        text: '本月消费类型情况',
+        left: 'left',
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: '{b}: {c}\n{d}%'
+    },
+    visualMap: {
+        show: false,
+        min: 80,
+        max: 600,
+        inRange: {
+            colorLightness: [0, 1]
+        }
+    },
+    series: [
+      {
+          name: '访问来源',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '50%'],
+          data:[].sort(function (a, b) { return a.value - b.value; }),
+          roseType: 'radius',
+          label: {
+            show: true,
+            formatter: "{b}\n{d}%"
+          },
+          labelLine: {
+              smooth: 0.2,
+              length: 10,
+              length2: 20
+          },
+          animationType: 'scale',
+          animationEasing: 'elasticOut',
+          animationDelay: function (idx) {
+              return Math.random() * 200;
+          }
+      }
+    ]
+  };
+
+  pie_chart.setOption(option);
+  return pie_chart;
+}
+
+//更新柱状图
+function updateChart_column(datas){
+  if(column_chart==null)
+    return;
+
+  var option = column_chart.getOption()
+  option.series[0].data = datas
+  column_chart.setOption(option)
+}
+
+//更新饼图
+function updateChart_pie(datas){
+  if(pie_chart==null)
+    return;
+    
+  var option = pie_chart.getOption()
+  option.series[0].data = datas
+  pie_chart.setOption(option)
+}
 
 Page({
   data: {
     currentDate: new Date().getTime(),
     minDate: new Date().getTime(),
 
-    ec_column_chart: {},
-    ec_pie_chart: {},
+    ec_column_chart: {
+      onInit: initChart_column
+    },
+    ec_pie_chart: {
+      onInit: initChart_pie
+    },
 
     custom_data:{"backText":"花支日志","content":"统计"},
 
     show_timeChoose_popup:false,
+    canvas_height:400,
 
     month_spend:0,
     month_income:0,
     month_title:0,
+  },
+  onClick_loadChart:function(){
+    this.onShow()
+
+    wx.showToast({
+      icon:'none',
+      title: '本月图表加载完毕',
+    })
   },
   getSpendLogs_useTime(time){
     var result = []
@@ -56,8 +219,38 @@ Page({
       var time = parseInt(month_spendLogs[i].time.substr(8,2))-1 //数组基0
       datas[time]=parseFloat(month_spendLogs[i].day_spend).toFixed(2)
     }
-    //2.21任务 用datas更新柱状图报错
-    this.updateChart_column_chart(datas)
+
+    //调用页面更新柱状图函数
+    updateChart_column(datas)
+  },
+  update_pie_chart:function(month_spendLogs){
+    //获取所有类型{默认消费类:0,饮食:0}
+    var month_spend_types = []
+    var spend_types = wx.getStorageSync('types') || []
+    for(var i in spend_types)
+      month_spend_types[spend_types[i].text]=0
+
+    //统计每种类型
+    for(var i in month_spendLogs){
+      var month_spendLog_datas = month_spendLogs[i].datas
+      for(var j in month_spendLog_datas){
+        if(month_spendLog_datas[j].spend_type!=null && month_spendLog_datas[j].operate=='-') //不为转账且是消费
+        month_spend_types[month_spendLog_datas[j].spend_type] += parseFloat(month_spendLog_datas[j].value)
+      }
+    }
+
+    //拼装datas
+    var datas = []
+    for(var i in month_spend_types){
+      month_spend_types[i]=month_spend_types[i].toFixed(2)
+      datas.push({
+        name:i,
+        value: month_spend_types[i]
+      })
+    }
+
+    //调用页面更新饼图函数
+    updateChart_pie(datas)
   },
   onShow:function(){
     var time = util.formatTime(new Date()).split(' ')[0]
@@ -71,11 +264,30 @@ Page({
     this.fill_month_income_and_month_spend(month_spendLogs)
     //更新柱状图
     this.update_column_chart(month_spendLogs)
+    //更新饼图
+    this.update_pie_chart(month_spendLogs)
   },
-
   timeChoose:function(e){
-    console.log(util.formatTime(new Date(e.detail)))
+    var time = util.formatTime(new Date(e.detail)).split(' ')[0]
+    var yearAndMonth = time.substr(0,7)
+
+    //填充时间
+    this.fill_month_title(yearAndMonth)
+    //获取本月spendLogs
+    var month_spendLogs = this.getSpendLogs_useTime(yearAndMonth)
+    //填充月收入和月支出
+    this.fill_month_income_and_month_spend(month_spendLogs)
+    //更新柱状图
+    this.update_column_chart(month_spendLogs)
+    //更新饼图
+    this.update_pie_chart(month_spendLogs)
+
     this.onClose_timeChoose_popup()
+
+    wx.showToast({
+      icon:'none',
+      title: '本月图表加载完毕',
+    })
   },
   onInput_timeChoose:function(event) {
     this.setData({
@@ -83,254 +295,9 @@ Page({
     });
   },
   onClick_timeChoose:function(){
-    this.setData({show_timeChoose_popup:true})
+    this.setData({show_timeChoose_popup:true,canvas_height:0})
   },
   onClose_timeChoose_popup:function(){
-    this.setData({show_timeChoose_popup:false})
-  },
-
-  onLoad:function(){
-    this.setData({
-      ec_pie_chart: {
-        onInit: this.initChart_pie
-      },
-      ec_column_chart: {
-        onInit: this.initChart_column
-      },
-    })
-  },
-
-  //柱状图更新数据
-  updateChart_column_chart:function(datas){
-    var option = {
-      title:{
-        text:"本月每日花支"
-      },
-      color: ['#37a2da', '#32c5e9', '#67e0e3'],
-      grid: {
-        left: 0,
-        right: 0,
-        bottom: 15,
-        top: 60,
-        containLabel: true
-      },
-      xAxis: [
-        {
-          type: 'category',
-          axisTick: { show: false },
-          data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',16,'17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
-          axisLine: {
-            lineStyle: {
-              color: '#999'
-            }
-          },
-          axisLabel: {
-            color: '#666'
-          }
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value',
-          axisTick: { show: false },
-          // data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
-          axisLine: {
-            lineStyle: {
-              color: '#999'
-            }
-          },
-          axisLabel: {
-            color: '#666'
-          }
-        }
-      ],
-      tooltip: {
-        trigger: 'axis',
-        formatter: '{b}日: {c}',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-      },
-      series: [
-        {
-          name: '花支',
-          type: 'line',
-          label: {
-            normal: {
-              show: false,
-              position: 'inside'
-            }
-          },
-          data: datas,
-        }
-      ]
-    };
-
-    column_chart.setOption(option);
-  },
-  //柱状图初始化
-  initChart_column:function(canvas, width, height) {
-    column_chart = echarts.init(canvas, null, {
-      width: width,
-      height: height
-    });
-    canvas.setChart(column_chart);
-
-    var option = {
-      title:{
-        text:"本月每日花支"
-      },
-      color: ['#37a2da', '#32c5e9', '#67e0e3'],
-      // legend: {
-      //   data: [],
-      //   right:0
-      // },
-      grid: {
-        left: 0,
-        right: 0,
-        bottom: 15,
-        top: 60,
-        containLabel: true
-      },
-      xAxis: [
-        {
-          type: 'category',
-          axisTick: { show: false },
-          data: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',16,'17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
-          axisLine: {
-            lineStyle: {
-              color: '#999'
-            }
-          },
-          axisLabel: {
-            color: '#666'
-          }
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value',
-          axisTick: { show: false },
-          // data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
-          axisLine: {
-            lineStyle: {
-              color: '#999'
-            }
-          },
-          axisLabel: {
-            color: '#666'
-          }
-        }
-      ],
-      tooltip: {
-        trigger: 'axis',
-        formatter: '{b}日: {c}',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-      },
-      series: [
-        {
-          name: '花支',
-          type: 'line',
-          label: {
-            normal: {
-              show: false,
-              position: 'inside'
-            }
-          },
-          data: [0,10000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1099,0,0,0,0,0,0,0,0,0,0,0],
-        }
-      ]
-    };
-
-    column_chart.setOption(option);
-    return column_chart;
-  },
-
-  //饼图初始化
-  initChart_pie:function(canvas, width, height) {
-    pie_chart = echarts.init(canvas, null, {
-      width: width,
-      height: height
-    });
-    canvas.setChart(pie_chart);
-
-    var option = {
-      title: {
-          text: '本月消费类型情况',
-          left: 'left',
-      },
-      tooltip: {
-          trigger: 'item',
-          //formatter: '{a} {b} : {c} ({d}%)'
-          formatter: '{b}: {c}\n{d}%'
-      },
-      visualMap: {
-          show: false,
-          min: 80,
-          max: 600,
-          inRange: {
-              colorLightness: [0, 1]
-          }
-      },
-      series: [
-          {
-              name: '访问来源',
-              type: 'pie',
-              radius: '55%',
-              center: ['50%', '50%'],
-              data: [
-                  {value: 335, name: '直接访问'},
-                  {value: 310, name: '邮件营销'},
-                  {value: 274, name: '联盟广告'},
-                  {value: 235, name: '视频广告'},
-                  {value: 400, name: '搜索引擎'}
-              ].sort(function (a, b) { return a.value - b.value; }),
-              roseType: 'radius',
-              label: {
-                show: true,
-                formatter: "{b}\n{d}%"
-              },
-              labelLine: {
-                  // lineStyle: {
-                  //     color: '#000'
-                  // },
-                  smooth: 0.2,
-                  length: 10,
-                  length2: 20
-              },
-              // itemStyle: {
-              //   normal: {
-              //     label: {
-              //       show: true,
-              //       position: 'inner',
-              //       formatter: function(params) {
-              //         return (params.percent - 0).toFixed(0) + '%'
-              //       }
-              //     },
-              //     labelLine: {
-              //       show: false
-              //     }
-              //   },
-              //   emphasis: {
-              //     label: {
-              //       show: true,
-              //       formatter: "{b}\n{d}%"
-              //     }
-              //   }
-              // },
-
-              animationType: 'scale',
-              animationEasing: 'elasticOut',
-              animationDelay: function (idx) {
-                  return Math.random() * 200;
-              }
-          }
-      ]
-    };
-
-    pie_chart.setOption(option);
-    return pie_chart;
+    this.setData({show_timeChoose_popup:false,canvas_height:400})
   },
 })

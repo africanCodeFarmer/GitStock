@@ -6,12 +6,17 @@
 <view class="padding">
   <view class="padding-xl radius shadow bg-white">
     <van-row>
-      <van-col span="16">
+      <van-col span="12">
         <view class="text-left" style="font-size:20px;">时间: {{month_title}}</view>
       </van-col>
-      <van-col span="8">
+      <van-col span="6">
         <view class="text-right">
-          <van-button plain round type="info" size="small" bind:click="onClick_timeChoose">时间选择</van-button>
+          <van-button plain round size="small" bind:click="onClick_timeChoose">时间选择</van-button>
+        </view>
+      </van-col>
+      <van-col span="6">
+        <view class="text-right">
+          <van-button plain round type="primary" size="small" bind:click="onClick_loadChart">加载图表</van-button>
         </view>
       </van-col>
     </van-row>
@@ -31,7 +36,7 @@
 
 <view class="padding">
   <view class="padding-xl radius shadow bg-white">
-    <view class="box">
+    <view class="box" style="height:{{canvas_height}}rpx;">
       <ec-canvas id="column_chart" canvas-id="column_chart" ec="{{ ec_column_chart }}"></ec-canvas>
     </view>
   </view>
@@ -39,7 +44,7 @@
 
 <view class="padding">
   <view class="padding-xl radius shadow bg-white">
-    <view class="box" style="height:600rpx;">
+    <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
       <ec-canvas id="pie_chart" canvas-id="pie_chart" ec="{{ ec_pie_chart }}"></ec-canvas>
     </view>
   </view>
@@ -57,5 +62,6 @@
   value="{{ currentDate }}"
   bind:cancel="onClose_timeChoose_popup"
   bind:confirm="timeChoose"
+  confirm-button-text="加载"
   />
 </van-popup>
