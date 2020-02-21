@@ -101,28 +101,30 @@
     <van-col span="2"></van-col>
   </van-row>
 
-  <van-row>
-    <van-col offset="2" span="8">
-      <van-cell title="消费类型"></van-cell>
-    </van-col>
-    <van-col span="12">
-      <van-cell title="{{spendLogData.spend_type}}">
-        <view slot="icon">
-          <text class="cuIcon-{{spendLogData.icon}}"></text>
-        </view>
-      </van-cell>
-    </van-col>
-    <van-col span="2"></van-col>
-  </van-row>
-
-  <!-- 分类块 -->
-  <van-row>
-    <van-col offset="4" span="20">  
-      <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{spend_types}}">
-        <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
-          <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
+  <view wx:if="{{spendLogData.spend_type!='收入'}}">
+    <van-row>
+      <van-col offset="2" span="8">
+        <van-cell title="消费类型"></van-cell>
+      </van-col>
+      <van-col span="12">
+        <van-cell title="{{spendLogData.spend_type}}">
+          <view slot="icon">
+            <text class="cuIcon-{{spendLogData.icon}}"></text>
+          </view>
         </van-cell>
-      </view>
-    </van-col>
-  </van-row>
+      </van-col>
+      <van-col span="2"></van-col>
+    </van-row>
+
+    <!-- 分类块 -->
+    <van-row>
+      <van-col offset="4" span="20">  
+        <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{spend_types}}">
+          <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
+            <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
+          </van-cell>
+        </view>
+      </van-col>
+    </van-row>
+  </view>
 </van-dialog>

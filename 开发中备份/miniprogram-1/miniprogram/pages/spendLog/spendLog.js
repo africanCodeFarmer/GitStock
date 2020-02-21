@@ -136,6 +136,15 @@ Page({
     var id = e.target.id
     var time = e.target.dataset.time
     var spendLogData = this.getSpendLogData_useTimeAndID(time,id)
+
+    if(spendLogData.spend_type==null){
+      wx.showToast({
+        icon:'none',
+        title: '转账不可编辑',
+      })
+      return;
+    }
+
     this.setData({show_edit_dialog:true,spendLogData:spendLogData})
   },
   delete:function(e){
