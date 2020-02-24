@@ -40,8 +40,8 @@
     <van-divider hairline />
 
     <van-row>
-      <van-col span="16">实现总数: {{target_achieved_count}}</van-col>
-      <van-col span="8" class="text-right">
+      <van-col span="8">实现总数: {{target_achieved_count}}</van-col>
+      <van-col span="16" class="text-right">
         <van-button plain round  type="info" size="small" bind:click="onClick_show_target_achieved_popup">
           <text style="font-size:13px;"> 查看实现目标 </text>
         </van-button>
