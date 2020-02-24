@@ -1,3 +1,11 @@
+// 花支类型json
+// types{
+//   id
+//   text 名
+//   icon //class="cuIcon-?"
+//   type 花支类- 收入类+
+// }
+
 import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({

@@ -1,3 +1,11 @@
+// 余额字段json
+// stocks{
+//   id
+//   name
+//   value
+//   status:allow|not allow|wait
+// }
+
 import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({

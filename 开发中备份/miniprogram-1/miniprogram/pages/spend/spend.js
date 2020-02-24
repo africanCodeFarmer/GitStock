@@ -49,7 +49,7 @@ Page({
     var name = e.target.dataset.name
 
     Dialog.confirm({
-      title: '完成',
+      title: '实现',
       message: "你已经买了"+name+"吗!?"
     }).then(() => {
       // on confirm
@@ -78,7 +78,7 @@ Page({
 
       wx.showToast({
         icon:'none',
-        title: '完成目标',
+        title: '实现目标',
       })
     }).catch(() => {
       // on cancel

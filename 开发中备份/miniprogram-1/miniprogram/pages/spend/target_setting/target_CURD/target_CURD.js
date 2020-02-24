@@ -1,3 +1,15 @@
+// 花支目标json 
+// targets{
+//   id
+//   name 目标名
+//   desc 目标描述
+//   value 目标金额
+//   iconPath 
+//   achieved 完成boolean
+//   create_time
+//   achieve_time 完成时间
+// }
+
 import Dialog from '@vant/weapp/dialog/dialog';
 var util = require('../../../public/public.js');
 

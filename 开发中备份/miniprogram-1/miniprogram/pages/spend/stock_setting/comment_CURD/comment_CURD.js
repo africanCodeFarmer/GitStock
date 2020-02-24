@@ -1,3 +1,9 @@
+// 注释块json
+// comments{
+//   id
+//   name
+// }
+
 import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({

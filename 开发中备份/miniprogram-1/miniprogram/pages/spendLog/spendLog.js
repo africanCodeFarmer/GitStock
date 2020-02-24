@@ -1,3 +1,22 @@
+// 花支日志json
+// spendLogs{
+//   time 年月日
+//   day_spend 日花支
+//   day_income 日收入
+//   datas{ 
+//     id
+//     time 年月日
+//     detail_time 时分秒
+//     name 字段名
+//     value 金额
+//     comment 注释
+//     remain 余额
+//     icon 图标 
+//     spend_type 类型 //转账时为null
+//     operate 操作 +-
+//   }
+// }
+
 const app = getApp()
 import Dialog from '@vant/weapp/dialog/dialog';
 

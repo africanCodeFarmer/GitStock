@@ -1,3 +1,9 @@
+// 金额块json
+// blocks{
+//   id
+//   value
+// }
+
 import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
