@@ -12,7 +12,14 @@ App({
       spend_types.push({
         id:'1',
         text:'默认消费类',
-        icon:"question"
+        icon:"question",
+        type:'-',
+      })
+      spend_types.push({
+        id:'2',
+        text:'默认收入类',
+        icon:"question",
+        type:'+',
       })
       wx.setStorageSync('types', spend_types)
     }

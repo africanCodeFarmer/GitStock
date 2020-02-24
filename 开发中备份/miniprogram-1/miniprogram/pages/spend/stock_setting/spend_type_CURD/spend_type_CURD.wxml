@@ -23,8 +23,22 @@
         error="{{type_text_error}}"
       />
       
+      <!-- 选择类型 -->
+      <van-cell>
+        <van-row>
+          <van-col span="6" class="text-left" style="color:black;">类型</van-col>
+          <van-col span="18" class="text-left">
+            <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
+              <van-radio name="-">花支类</van-radio>
+              <van-divider hairline />
+              <van-radio name="+">收入类</van-radio>
+            </van-radio-group>
+          </van-col>
+        </van-row>
+      </van-cell>
+
       <!-- 挑选图标 -->
-      <van-cell title="挑选图标" required>
+      <van-cell title="挑选图标">
         <view slot="right-icon" class="cuIcon-{{type_icon}}"></view>
       </van-cell>
 
@@ -51,9 +65,9 @@
   </van-collapse>
 </van-cell-group>
 
-<van-cell-group title="所有消费类型">
+<van-cell-group title="所有类型">
   <van-swipe-cell right-width="{{ 90 }}" wx:for="{{types}}">
-    <van-cell title="{{item.text}}" value="">
+    <van-cell title="{{item.text}}" value="{{item.type=='-'?'花支类':'收入类'}}">
       <view slot="icon" class="cuIcon-{{item.icon}}" style="margin-right:10rpx;"/>
     </van-cell>
     <view slot="right">
@@ -62,5 +76,6 @@
     </view>
   </van-swipe-cell>
 </van-cell-group>
+
 
 <van-dialog id="van-dialog" />

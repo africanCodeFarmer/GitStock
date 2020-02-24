@@ -2,6 +2,7 @@ import * as echarts from '../../ec-canvas/echarts';
 var util = require('../../../pages/public/public')
 
 var pie_chart = null;
+var income_pie_chart = null;
 var column_chart = null;
 
 //柱状图初始化
@@ -14,9 +15,9 @@ function initChart_column(canvas, width, height) {
 
   var option = {
     title:{
-      text:"本月日总账情况"
+      text:"本月每日支出情况"
     },
-    color: ['#37a2da', '#32c5e9', '#67e0e3'],
+    color: ['#E64340','#09BB07'],
     grid: {
       left: 0,
       right: 0,
@@ -55,7 +56,7 @@ function initChart_column(canvas, width, height) {
     ],
     tooltip: {
       trigger: 'axis',
-      formatter: '{b}日: {c}',
+      formatter: '{b}日\n{a0}: {c0}\n{a1}: +{c1}',
       axisPointer: {            // 坐标轴指示器，坐标轴触发有效
         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
       }
@@ -63,7 +64,20 @@ function initChart_column(canvas, width, height) {
     series: [
       {
         name: '花支',
-        type: 'line',
+        type: 'bar',
+        stack:'情况',
+        label: {
+          normal: {
+            show: false,
+            position: 'inside'
+          }
+        },
+        data: [],
+      },
+      {
+        name: '收入',
+        type: 'bar',
+        stack:'情况',
         label: {
           normal: {
             show: false,
@@ -89,7 +103,7 @@ function initChart_pie(canvas, width, height) {
 
   var option = {
     title: {
-        text: '本月各消费类型支出情况',
+        text: '本月各花支类型支出情况',
         left: 'left',
     },
     tooltip: {
@@ -134,13 +148,70 @@ function initChart_pie(canvas, width, height) {
   return pie_chart;
 }
 
+//收入饼图初始化
+function initChart_income_pie(canvas, width, height) {
+  income_pie_chart = echarts.init(canvas, null, {
+    width: width,
+    height: height
+  });
+  canvas.setChart(income_pie_chart);
+
+  var option = {
+    title: {
+        text: '本月各收入类型收入情况',
+        left: 'left',
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: '{b}: {c}\n{d}%'
+    },
+    visualMap: {
+        show: false,
+        min: 80,
+        max: 600,
+        inRange: {
+            colorLightness: [0, 1]
+        }
+    },
+    series: [
+      {
+          name: '访问来源',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '50%'],
+          data:[].sort(function (a, b) { return a.value - b.value; }),
+          roseType: 'radius',
+          label: {
+            show: true,
+            formatter: "{b}\n{d}%"
+          },
+          labelLine: {
+              smooth: 0.2,
+              length: 10,
+              length2: 20
+          },
+          animationType: 'scale',
+          animationEasing: 'elasticOut',
+          animationDelay: function (idx) {
+              return Math.random() * 200;
+          }
+      }
+    ]
+  };
+
+  income_pie_chart.setOption(option);
+  return income_pie_chart;
+}
+
 //更新柱状图
-function updateChart_column(datas){
+function updateChart_column(data_spends,data_incomes){
   if(column_chart==null)
     return;
 
   var option = column_chart.getOption()
-  option.series[0].data = datas
+  //0花支 1收入
+  option.series[0].data = data_spends
+  option.series[1].data = data_incomes
   column_chart.setOption(option)
 }
 
@@ -154,6 +225,16 @@ function updateChart_pie(datas){
   pie_chart.setOption(option)
 }
 
+//更新收入饼图
+function updateChart_income_pie(datas){
+  if(income_pie_chart==null)
+    return;
+    
+  var option = income_pie_chart.getOption()
+  option.series[0].data = datas
+  income_pie_chart.setOption(option)
+}
+
 Page({
   data: {
     currentDate: new Date().getTime(),
@@ -164,6 +245,9 @@ Page({
     },
     ec_pie_chart: {
       onInit: initChart_pie
+    },
+    ec_income_pie_chart:{
+      onInit: initChart_income_pie
     },
 
     custom_data:{"backText":"花支日志","content":"统计"},
@@ -196,11 +280,8 @@ Page({
     var month_income = 0
     var month_spend = 0
     for(var i in month_spendLogs){
-      var day_spend = month_spendLogs[i].day_spend
-      if(day_spend>=0)
-        month_income += parseFloat(day_spend)
-      else
-        month_spend += parseFloat(day_spend)
+      month_spend += parseFloat(month_spendLogs[i].day_spend)
+      month_income += parseFloat(month_spendLogs[i].day_income)
     }
     month_income = month_income.toFixed(2)
     month_spend = month_spend.toFixed(2)
@@ -214,21 +295,25 @@ Page({
     this.setData({month_title:time})
   },
   update_column_chart:function(month_spendLogs){
-    var datas=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    var data_spends=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    var data_incomes=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for(var i in month_spendLogs){
       var time = parseInt(month_spendLogs[i].time.substr(8,2))-1 //数组基0
-      datas[time]=parseFloat(month_spendLogs[i].day_spend).toFixed(2)
+      data_spends[time]=-(parseFloat(month_spendLogs[i].day_spend).toFixed(2))
+      data_incomes[time]=parseFloat(month_spendLogs[i].day_income).toFixed(2)
     }
 
     //调用页面更新柱状图函数
-    updateChart_column(datas)
+    updateChart_column(data_spends,data_incomes)
   },
   update_pie_chart:function(month_spendLogs){
     //获取所有类型{默认消费类:0,饮食:0}
     var month_spend_types = []
     var spend_types = wx.getStorageSync('types') || []
-    for(var i in spend_types)
-      month_spend_types[spend_types[i].text]=0
+    for(var i in spend_types){
+      if(spend_types[i].type=='-')
+        month_spend_types[spend_types[i].text]=0
+    }
 
     //统计每种类型
     for(var i in month_spendLogs){
@@ -252,6 +337,37 @@ Page({
     //调用页面更新饼图函数
     updateChart_pie(datas)
   },
+  update_income_pie_chart:function(month_spendLogs){
+    //获取所有类型{默认消费类:0,饮食:0}
+    var month_spend_types = []
+    var spend_types = wx.getStorageSync('types') || []
+    for(var i in spend_types){
+      if(spend_types[i].type=='+')
+        month_spend_types[spend_types[i].text]=0
+    }
+
+    //统计每种类型
+    for(var i in month_spendLogs){
+      var month_spendLog_datas = month_spendLogs[i].datas
+      for(var j in month_spendLog_datas){
+        if(month_spendLog_datas[j].spend_type!=null && month_spendLog_datas[j].operate=='+') //不为转账且是收入
+        month_spend_types[month_spendLog_datas[j].spend_type] += parseFloat(month_spendLog_datas[j].value)
+      }
+    }
+
+    //拼装datas
+    var datas = []
+    for(var i in month_spend_types){
+      month_spend_types[i]=month_spend_types[i].toFixed(2)
+      datas.push({
+        name:i,
+        value: month_spend_types[i]
+      })
+    }
+
+    //调用页面更新饼图函数
+    updateChart_income_pie(datas)
+  },
   onShow:function(){
     var time = util.formatTime(new Date()).split(' ')[0]
     var yearAndMonth = time.substr(0,7) //2020/02
@@ -266,6 +382,8 @@ Page({
     this.update_column_chart(month_spendLogs)
     //更新饼图
     this.update_pie_chart(month_spendLogs)
+    //更新收入饼图
+    this.update_income_pie_chart(month_spendLogs)
   },
   timeChoose:function(e){
     var time = util.formatTime(new Date(e.detail)).split(' ')[0]
@@ -281,6 +399,8 @@ Page({
     this.update_column_chart(month_spendLogs)
     //更新饼图
     this.update_pie_chart(month_spendLogs)
+    //更新收入饼图
+    this.update_income_pie_chart(month_spendLogs)
 
     this.onClose_timeChoose_popup()
 

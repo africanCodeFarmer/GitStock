@@ -1,7 +1,7 @@
 <import src="../public/public.wxml" />
 <template is="custom" />
 
-<van-tabs bind:disabled="onClick_statistic">
+<van-tabs bind:disabled="onClick_statistic" z-index="{{101}}">
   <van-tab title="日志">
     <!-- header -->
     <van-sticky offset-top="{{ 60 }}">
@@ -29,7 +29,12 @@
               <text style="font-size:20px;font-weight:blod;color:#000000;">{{item.time}}</text>
             </van-col>
             <van-col span="16" class="text-right">
-              <text style="font-size:17px;color:#353535;">今日总账: {{item.day_spend>0?'+':''}}{{item.day_spend}}</text>
+              <view style="font-size:14px;color:#353535;">
+                今日花支: {{item.day_spend}}
+              </view>
+              <view style="font-size:14px;color:#353535;">
+                今日收入: {{item.day_income}}
+              </view>
             </van-col>
           </van-row>
         </view>

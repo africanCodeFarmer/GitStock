@@ -2,13 +2,14 @@ import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data: {
-    custom_data:{"backText":"设置","content":"消费类型"},
+    custom_data:{"backText":"设置","content":"花支类型"},
     activeNames:[],
 
     activeNames_icon:[],
     icons:[],
     filled_icons:false,
     
+    radio_value:'-', //type 花费类- 收入类+
     type_id:null,
     type_text:null,
     type_text_error:false,
@@ -16,6 +17,9 @@ Page({
     type_icon:"question",
 
     types:[],
+  },
+  onChange_radio:function(e){
+    this.setData({radio_value:e.detail})
   },
   fill_icons:function(){
     var icons = [{
@@ -921,6 +925,7 @@ Page({
   },
   reset:function(){
     this.setData({
+      radio_value:'-',
       type_id:null,
       type_text:null,
       type_text_error:false,
@@ -948,11 +953,13 @@ Page({
       this.setData({type_text_error:true})
       return;
     }
-    var type = {"id":"","text":"","icon":""}
+
+    var type = {"id":"","text":"","icon":"","type":""}
     var types = this.data.types
     type.id = types.length>0?types[types.length-1].id+1:1
     type.text = this.data.type_text
     type.icon = this.data.type_icon
+    type.type = this.data.radio_value
     types.push(type)
     wx.setStorageSync('types', types)
     this.setData({types:types})
@@ -967,7 +974,7 @@ Page({
     var text = e.target.dataset.text
     var id = e.target.id
 
-    if(id==1){
+    if(id==1 || id==2){
       wx.showToast({
         icon:'none',
         title: '无法删除',
@@ -1003,7 +1010,8 @@ Page({
     this.setData({
       type_id:type.id,
       type_text:type.text,
-      type_icon:type.icon
+      type_icon:type.icon,
+      radio_value:type.type
     })
   },
   getType:function(id){
@@ -1023,6 +1031,7 @@ Page({
     type.id = this.data.type_id
     type.text = this.data.type_text
     type.icon = this.data.type_icon
+    type.type = this.data.radio_value
     var types = wx.getStorageSync('types') || []
     for(var i in types){
       if(types[i].id == type.id){

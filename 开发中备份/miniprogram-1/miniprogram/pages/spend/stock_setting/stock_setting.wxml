@@ -8,6 +8,6 @@
   url="comment_CURD/comment_CURD"/>
   <van-cell icon="balance-o" title="可选金额块" value="" is-link link-type="navigateTo"
   url="money_block_CURD/money_block_CURD"/>
-  <van-cell icon="balance-pay" title="消费类型" value="" is-link link-type="navigateTo"
+  <van-cell icon="balance-pay" title="花支类型" value="" is-link link-type="navigateTo"
   url="spend_type_CURD/spend_type_CURD"/>
 </van-cell-group>

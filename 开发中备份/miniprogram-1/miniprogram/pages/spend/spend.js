@@ -120,7 +120,7 @@ Page({
     var detail_time = util.formatTime(new Date()).split(' ')[1]
     var spendLogs = this.data.spendLogs
     if(!this.checkTimeExistSpendLogs(time)) //时间不存在
-      spendLogs.unshift({"time":time,"datas":[],"day_spend":0})
+      spendLogs.unshift({"time":time,"datas":[],"day_spend":0,"day_income":0})
     var spendLog = this.use_time_getSpendLog(time)
     var log = {
       "id":spendLog.datas.length>0?spendLog.datas[0].id+1:1,
@@ -204,14 +204,15 @@ Page({
     var detail_time = util.formatTime(new Date()).split(' ')[1]
     var spendLogs = this.data.spendLogs
     if(!this.checkTimeExistSpendLogs(time)) //时间不存在
-      spendLogs.unshift({"time":time,"datas":[],"day_spend":0})
+      spendLogs.unshift({"time":time,"datas":[],"day_spend":0,"day_income":0})
 
-    //根据花支修改大类中的day_spend
+    //根据花支修改大类中的day_spend day_income
     var day_spend =  spendLogs[0].day_spend
+    var day_income = spendLogs[0].day_income
     if(sign=='-'){ //-
-      spendLogs[0].day_spend = (parseFloat(day_spend)-parseFloat(value)).toFixed(2)
-    }else{ //+
       spendLogs[0].day_spend = (parseFloat(day_spend)+parseFloat(value)).toFixed(2)
+    }else{ //+
+      spendLogs[0].day_income = (parseFloat(day_income)+parseFloat(value)).toFixed(2)
     }
 
     var spendLog = this.use_time_getSpendLog(time)
@@ -301,7 +302,10 @@ Page({
   onClickNav:function(e){
     var index = e.detail.index
     var spend_type = this.data.spend_types[index]
-    this.setData({spend_type:spend_type.text})
+    this.setData({
+      spend_type:spend_type.text,
+      choose_spend_type:index
+    })
   },
   getStock_useName(name){
     var stocks = this.data.stocks
@@ -315,32 +319,38 @@ Page({
       if(stocks[i].id == id)
         return stocks[i]
   },
-  addMoney:function(e){
-    //+时不用选类型 spend_type="收入"
+  init_spend_type:function(type){
+    //type 花费类为- 收入类为+
+    var result = []
+    var types = wx.getStorageSync('types') || []
+    for(var i in types)
+      if(types[i].type == type)
+      result.push(types[i])
+
+    //更新默认spend_type(text)
+    //更新spend_types
+    //类型默认选第一个
     this.setData({
-      spend_types:[]
+      choose_spend_type:0,
+      spend_type:result[0].text,
+      spend_types:result
     })
+  },
+  addMoney:function(e){
+    this.init_spend_type('+') //初始化可选类型
+    
     var id = e.target.id
     var stock = this.getStock(id)
     var money_popup_title = '+ '+stock.name
-    var spend_type = "收入"
     this.setData({
       show_money_popup:true,
       stock:stock,
       money_popup_title:money_popup_title,
-      go_spend_sign:'+',
-      spend_type:spend_type
+      go_spend_sign:'+'
     })
   },
   reduceMoney:function(e){
-    //-时需要选择类型
-    var spend_types = wx.getStorageSync('types') || []
-    this.setData({
-      spend_types : spend_types
-    })
-    var spend_type = this.data.spend_type
-    if(spend_type=="收入")
-      spend_type = spend_types[0].text
+    this.init_spend_type('-') //初始化可选类型
 
     var id = e.target.id
     var stock = this.getStock(id)
@@ -349,8 +359,7 @@ Page({
       show_money_popup:true,
       stock:stock,
       money_popup_title:money_popup_title,
-      go_spend_sign:'-',
-      spend_type:spend_type
+      go_spend_sign:'-'
     })
   },
   onClose_money_popup:function(){
