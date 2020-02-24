@@ -25,10 +25,10 @@
 
     <van-row>
       <van-col span="12">
-        <view class="text-left">每日花支合计: {{month_spend}}</view>
+        <view class="text-left">每日花支总计: {{month_spend}}</view>
       </van-col>
       <van-col span="12">
-        <view class="text-right">每日收入合计: {{month_income}}</view>
+        <view class="text-right">每日收入总计: {{month_income}}</view>
       </van-col>
     </van-row>
   </view>
@@ -44,7 +44,7 @@
 
 <view class="padding">
   <view class="padding-xl radius shadow bg-white">
-    <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
+    <view class="box" style="height:{{canvas_height==0?0:canvas_height+200}}rpx;">
       <ec-canvas id="pie_chart" canvas-id="pie_chart" ec="{{ ec_pie_chart }}"></ec-canvas>
     </view>
   </view>
@@ -52,7 +52,7 @@
 
 <view class="padding">
   <view class="padding-xl radius shadow bg-white">
-    <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
+    <view class="box" style="height:{{canvas_height==0?0:canvas_height+200}}rpx;">
       <ec-canvas id="income_pie_chart" canvas-id="income_pie_chart" ec="{{ ec_income_pie_chart }}"></ec-canvas>
     </view>
   </view>

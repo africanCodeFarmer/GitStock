@@ -89,7 +89,7 @@
     <van-divider hairline />
 
     <van-row>
-      <van-col span="16">总余额(allow): {{money_allow_count}}</van-col>
+      <van-col span="16">allow总计: {{money_allow_count}}</van-col>
       <van-col span="8" class="text-right">
         <van-button plain round  type="info" size="small" bind:click="transferMoney">
           <text style="font-size:13px;"> 余额间转账 </text>

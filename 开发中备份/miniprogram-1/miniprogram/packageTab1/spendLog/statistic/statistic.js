@@ -15,7 +15,7 @@ function initChart_column(canvas, width, height) {
 
   var option = {
     title:{
-      text:"本月每日支出情况"
+      text:"本月每日花支收入情况"
     },
     color: ['#E64340','#09BB07'],
     grid: {
@@ -120,26 +120,27 @@ function initChart_pie(canvas, width, height) {
     },
     series: [
       {
-          name: '访问来源',
-          type: 'pie',
-          radius: '55%',
-          center: ['50%', '50%'],
-          data:[].sort(function (a, b) { return a.value - b.value; }),
-          roseType: 'radius',
-          label: {
-            show: true,
-            formatter: "{b}\n{d}%"
-          },
-          labelLine: {
-              smooth: 0.2,
-              length: 10,
-              length2: 20
-          },
-          animationType: 'scale',
-          animationEasing: 'elasticOut',
-          animationDelay: function (idx) {
-              return Math.random() * 200;
-          }
+        top:75,
+        name: '访问来源',
+        type: 'pie',
+        radius: '55%',
+        center: ['50%', '50%'],
+        data:[].sort(function (a, b) { return a.value - b.value; }),
+        roseType: 'radius',
+        label: {
+          show: true,
+          formatter: "{b}\n{d}%"
+        },
+        labelLine: {
+            smooth: 0.2,
+            length: 10,
+            length2: 20
+        },
+        animationType: 'scale',
+        animationEasing: 'elasticOut',
+        animationDelay: function (idx) {
+            return Math.random() * 200;
+        }
       }
     ]
   };
@@ -175,26 +176,27 @@ function initChart_income_pie(canvas, width, height) {
     },
     series: [
       {
-          name: '访问来源',
-          type: 'pie',
-          radius: '55%',
-          center: ['50%', '50%'],
-          data:[].sort(function (a, b) { return a.value - b.value; }),
-          roseType: 'radius',
-          label: {
-            show: true,
-            formatter: "{b}\n{d}%"
-          },
-          labelLine: {
-              smooth: 0.2,
-              length: 10,
-              length2: 20
-          },
-          animationType: 'scale',
-          animationEasing: 'elasticOut',
-          animationDelay: function (idx) {
-              return Math.random() * 200;
-          }
+        top:75,
+        name: '访问来源',
+        type: 'pie',
+        radius: '55%',
+        center: ['50%', '50%'],
+        data:[].sort(function (a, b) { return a.value - b.value; }),
+        roseType: 'radius',
+        label: {
+          show: true,
+          formatter: "{b}\n{d}%"
+        },
+        labelLine: {
+            smooth: 0.2,
+            length: 10,
+            length2: 20
+        },
+        animationType: 'scale',
+        animationEasing: 'elasticOut',
+        animationDelay: function (idx) {
+            return Math.random() * 200;
+        }
       }
     ]
   };
@@ -365,7 +367,7 @@ Page({
       })
     }
 
-    //调用页面更新饼图函数
+    //调用页面更新收入饼图函数
     updateChart_income_pie(datas)
   },
   onShow:function(){

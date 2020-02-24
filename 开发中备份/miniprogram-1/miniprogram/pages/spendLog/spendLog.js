@@ -130,9 +130,21 @@ Page({
       }
     }
   },
+  init_spend_types:function(type){
+    var types = wx.getStorageSync('types') || []
+    var result = []
+    for(var i in types)
+      if(types[i].type == type)
+        result.push(types[i])
+    this.setData({
+      spend_types:result
+    })
+  },
   edit:function(e){
     var id = e.target.id
     var time = e.target.dataset.time
+    var operate = e.target.dataset.operate
+    this.init_spend_types(operate) //更新编辑窗口可选类型
     var spendLogData = this.getSpendLogData_useTimeAndID(time,id)
 
     if(spendLogData.spend_type==null){
@@ -148,7 +160,17 @@ Page({
   delete:function(e){
     var id = e.target.id
     var time = e.target.dataset.time
+    var spend_type = e.target.dataset.spend_type
     var spendLogs = this.data.spendLogs
+
+    if(spend_type==null){
+      wx.showToast({
+        icon:'none',
+        title: '转账不可删除',
+      })
+      return;
+    }
+
     var delete_msg= e.target.dataset.message+"\n\n注意\n本操作不会影响到今日总账\n删除后会出现空账情况"
 
     Dialog.confirm({

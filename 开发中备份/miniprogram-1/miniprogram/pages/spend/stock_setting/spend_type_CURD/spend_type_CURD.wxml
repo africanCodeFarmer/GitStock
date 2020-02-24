@@ -77,5 +77,4 @@
   </van-swipe-cell>
 </van-cell-group>
 
-
 <van-dialog id="van-dialog" />

@@ -8,7 +8,7 @@
       <view style="border-bottom:1px solid #F5F6F8">
         <van-search
           name="search_value"
-          placeholder="请输入搜索关键字"
+          placeholder="支持: 时间 字段名 注释搜索"
           bind:search="onSearch"
           bind:cancel="onCancel_search"
           show-action
@@ -64,8 +64,8 @@
               </view>
             </van-cell>
             <view slot="right" style="height:100%;">
-              <van-button custom-style="height:100%;" type="primary" icon="" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}">编辑</van-button>
-              <van-button custom-style="height:100%;" type="danger" icon="" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}">删除</van-button>
+              <van-button custom-style="height:100%;" type="primary" icon="" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}" data-operate="{{datas.operate}}" >编辑</van-button>
+              <van-button custom-style="height:100%;" type="danger" icon="" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}" data-spend_type="{{datas.spend_type}}">删除</van-button>
             </view>
           </van-swipe-cell>
         </view>
@@ -106,7 +106,7 @@
     <van-col span="2"></van-col>
   </van-row>
 
-  <view wx:if="{{spendLogData.spend_type!='收入'}}">
+  <view>
     <van-row>
       <van-col offset="2" span="8">
         <van-cell title="消费类型"></van-cell>
