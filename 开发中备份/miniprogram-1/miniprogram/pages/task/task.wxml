@@ -8,15 +8,10 @@
     <van-tab title="今日任务">
       <view class="padding-xl radius shadow bg-white"> 
         <van-row>
-          <van-col span="13">
+          <van-col span="16">
             <text style="font-size:20px;">我的今日任务: 99个</text>
           </van-col>
-          <van-col span="6" class="text-right">
-            <van-button plain round type="primary" size="small" bind:click="target_setting">
-              新增日期
-            </van-button>
-          </van-col>
-          <van-col span="5" class="text-right">
+          <van-col span="8" class="text-right">
             <van-button plain round type="default" icon="setting-o" size="small" bind:click="task_setting">
             </van-button>
           </van-col>
@@ -57,6 +52,13 @@
         </scroll-view>
         <!-- content end-->
 
+        <van-row>
+          <van-col span="24" class="text-center">
+            <van-button plain round type="primary" icon="plus" size="small" bind:click="">
+            </van-button>
+          </van-col>
+        </van-row>
+
         <van-divider hairline />
 
         <van-row>
@@ -70,11 +72,8 @@
       </view>
     </van-tab>
 
-    <!-- <van-tab title="每日任务">内容 2</van-tab>
+    <van-tab title="每日任务">内容 2</van-tab>
     <van-tab title="限时任务">内容 3</van-tab>
-    <van-tab title="02/26">内容 4</van-tab>
-    <van-tab title="02/27">内容 5</van-tab>
-    <van-tab title="02/28">内容 6</van-tab> -->
 
   </van-tabs>
 </view>

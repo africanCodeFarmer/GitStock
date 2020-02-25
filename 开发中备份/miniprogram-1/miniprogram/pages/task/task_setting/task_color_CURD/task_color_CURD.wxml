@@ -5,30 +5,25 @@
   <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
     <van-collapse-item title="..." icon="expand-o" name="1">
       <van-field
-        name="comment_id"
-        value="{{ comment_id }}"
+        name="task_color_id"
+        value="{{ task_color_id }}"
         label="ID"
         type="number"
         readonly
-        bind:change="update_comment_id"
-        error-message="{{comment_id_error}}"
+        bind:change="update_task_color_id"
+        error-message="{{task_color_id_error}}"
       />
       
       <!-- 挑选颜色 -->
       <van-cell title="挑选颜色">
         <view slot="right-icon">
-          <view style="height:50rpx;width:50rpx;background-color:{{picker_color}}"></view>
+          <view style="height:50rpx;width:50rpx;background-color:{{picker_color}};"></view>
         </view>
       </van-cell>
 
       <van-cell>
-        <van-collapse value="{{ activeNames_icon }}" bind:change="onChange_van_collapse_color">
+        <van-collapse value="{{ activeNames_color }}" bind:change="onChange_van_collapse_color">
           <van-collapse-item title="调色面板" name="1">
-            <van-search
-              placeholder="支持: rgb格式如0 0 0,hex格式如#000"
-              bind:search="onSearch"
-              shape="round"
-            />
             <color-picker class="color-picker" colorData="{{colorData}}" rpxRatio="{{rpxRatio}}" bindchangecolor="onChangeColor"></color-picker>
           </van-collapse-item>
         </van-collapse>
@@ -48,11 +43,15 @@
 </van-cell-group>
 
 <van-cell-group title="所有任务颜色">
-  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{comments}}">
-    <van-cell title="{{item.name}}" value=""/>
+  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{task_colors}}">
+    <van-cell>
+      <view slot="icon">
+        <view style="height:50rpx;width:50rpx;background-color:{{item.value}}"></view>
+      </view>
+    </van-cell>
     <view slot="right">
       <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
-      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-name="{{item.name}}" bind:click="delete"></van-button>
+      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-value="{{item.value}}" bind:click="delete"></van-button>
     </view>
   </van-swipe-cell>
 </van-cell-group>

@@ -24,8 +24,31 @@ App({
       wx.setStorageSync('types', spend_types)
     }
   },
+  fill_default_task_type:function(){
+    var task_types = wx.getStorageSync('task_types') || []
+    if(task_types.length==0){
+      task_types.push({
+        id:'1',
+        name:'默认任务类',
+        icon:"question",
+      })
+      wx.setStorageSync('task_types', task_types)
+    }
+  },
+  fill_default_task_color:function(){
+    var task_colors = wx.getStorageSync('task_colors') || []
+    if(task_colors.length==0){
+      task_colors.push({
+        id:'1',
+        value:"#000000"
+      })
+      wx.setStorageSync('task_colors', task_colors)
+    }
+  },
   onLaunch: function () {
     this.fill_default_spend_type() //填充默认消费类型
+    this.fill_default_task_type() //填充默认任务类型
+    this.fill_default_task_color() //填充默认任务颜色
 
     wx.getSystemInfo({
       success: e => {

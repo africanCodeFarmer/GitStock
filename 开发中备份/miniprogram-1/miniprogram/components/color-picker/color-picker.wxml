@@ -12,9 +12,9 @@
                 <view class="picker" style="top:{{barY}}rpx;"></view>
             </view>
         </view>
-        <!-- <view class="data-area">
-            <text>R:{{pickerData.red}} G:{{pickerData.green}} B:{{pickerData.blue}}</text>
-            <text>HEX:{{pickerData.hex}}</text>
-        </view> -->
+        <view class="data-area">
+            <text>R: {{pickerData.red}} G: {{pickerData.green}} B: {{pickerData.blue}}</text>
+            <text>HEX: {{pickerData.hex}}</text>
+        </view>
     </view>
 </view>
