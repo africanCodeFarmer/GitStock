@@ -23,7 +23,7 @@
     <view class="padding" wx:for="{{spendLogs}}" wx:if="{{index<=show_spendLog_day && spendLogs[index]!=null}}">
       <view class="padding-xl radius shadow bg-white">
         <!-- content-header -->
-        <view style="line-height:60rpx;">
+        <view>
           <van-row>
             <van-col span="8">
               <text style="font-size:20px;font-weight:blod;color:#000000;">{{item.time}}</text>
@@ -46,8 +46,7 @@
           <van-swipe-cell right-width="{{ 110 }}">
             <van-cell use-label-slot center>
               <view slot="label">
-                <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.spend_type==null?'转账':datas.spend_type}}</view>
-                <view style="font-size:14px;color:#B2B2B2;">{{datas.detail_time}} </view>
+                <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.detail_time}} {{datas.spend_type==null?'转账':datas.spend_type}}</view>
               </view>
               <view slot="title">
                 <text style="font-size:17px;">{{datas.name}} </text>
@@ -72,6 +71,7 @@
 
       </view>
     </view>
+    <!-- content end -->
   </van-tab>
 
   <!-- 统计页 -->

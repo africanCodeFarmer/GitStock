@@ -120,7 +120,7 @@ function initChart_pie(canvas, width, height) {
     },
     series: [
       {
-        top:75,
+        top:50,
         name: '访问来源',
         type: 'pie',
         radius: '55%',
@@ -176,7 +176,7 @@ function initChart_income_pie(canvas, width, height) {
     },
     series: [
       {
-        top:75,
+        top:50,
         name: '访问来源',
         type: 'pie',
         radius: '55%',
