@@ -1,7 +1,10 @@
 {
   "pages": [
-    "pages/spendLog/spendLog",
+    "pages/task/task_setting/task_color_CURD/task_color_CURD",
     "pages/task/task",
+    "pages/task/task_setting/task_setting",
+
+    "pages/spendLog/spendLog",
     "pages/spend/spend",
     "pages/spend/stock_setting/spend_type_CURD/spend_type_CURD",  
 

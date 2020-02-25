@@ -1,4 +1,80 @@
 <import src="../public/public.wxml" />
 <template is="custom" />
 
-任务页
+<!-- 任务板块 -->
+<view class="padding text-left">
+  <van-tabs active="{{active_tab}}" bind:change="onChange">
+    
+    <van-tab title="今日任务">
+      <view class="padding-xl radius shadow bg-white"> 
+        <van-row>
+          <van-col span="13">
+            <text style="font-size:20px;">我的今日任务: 99个</text>
+          </van-col>
+          <van-col span="6" class="text-right">
+            <van-button plain round type="primary" size="small" bind:click="target_setting">
+              新增日期
+            </van-button>
+          </van-col>
+          <van-col span="5" class="text-right">
+            <van-button plain round type="default" icon="setting-o" size="small" bind:click="task_setting">
+            </van-button>
+          </van-col>
+        </van-row>
+
+        <van-divider hairline />
+
+        <!-- content -->
+        <scroll-view style="height:500rpx;" scroll-y>
+          <van-radio-group value="{{ radio }}" bind:change="onChange">
+            
+            
+            <van-swipe-cell right-width="{{ 110 }}">
+              <van-cell title="测试任务" use-label-slot border="{{false}}">
+                <view slot="right-icon">
+                  <view class="text-right">时间: 1h</view>
+                  <view class="text-right">完成次数: 0</view>
+                </view>
+                <view slot="icon">
+                  <view class="flex" style="margin-right:5rpx;">
+                    <van-radio name="1" checked-color="#07c160"></van-radio>
+                    <view style="inline-block;width:5rpx;"></view>
+                    <text style="font-size:21px;" class="cuIcon-question"></text>
+                  </view>
+                </view>
+                <view slot="label">
+                  <view>2020/02/02 12:12:12</view>
+                </view>
+              </van-cell>
+
+              <view slot="right" style="height:100%;">
+                <van-button custom-style="height:100%;" type="primary" bind:click="edit">编辑</van-button>
+                <van-button custom-style="height:100%;" type="danger" bind:click="delete">删除</van-button>
+              </view>
+            </van-swipe-cell>
+
+          </van-radio-group>
+        </scroll-view>
+        <!-- content end-->
+
+        <van-divider hairline />
+
+        <van-row>
+          <van-col span="10">今日任务完成: 1个</van-col>
+          <van-col span="14" class="text-right">
+            <van-button plain round  type="info" size="small" bind:click="onClick_show_target_achieved_popup">
+              <text style="font-size:13px;"> 查看已经完成今日任务 </text>
+            </van-button>
+          </van-col>
+        </van-row>
+      </view>
+    </van-tab>
+
+    <!-- <van-tab title="每日任务">内容 2</van-tab>
+    <van-tab title="限时任务">内容 3</van-tab>
+    <van-tab title="02/26">内容 4</van-tab>
+    <van-tab title="02/27">内容 5</van-tab>
+    <van-tab title="02/28">内容 6</van-tab> -->
+
+  </van-tabs>
+</view>
