@@ -21,6 +21,7 @@
         required
         bind:change="update_type_text"
         error="{{type_text_error}}"
+        error-message="{{type_text_validate_error}}"
       />
       
       <!-- 选择类型 -->
@@ -29,9 +30,9 @@
           <van-col span="6" class="text-left" style="color:black;">类型</van-col>
           <van-col span="18" class="text-left">
             <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
-              <van-radio name="-">花支类</van-radio>
+              <van-radio name="-" disabled="{{type_id==null?false:true}}">花支类</van-radio>
               <van-divider hairline />
-              <van-radio name="+">收入类</van-radio>
+              <van-radio name="+" disabled="{{type_id==null?false:true}}">收入类</van-radio>
             </van-radio-group>
           </van-col>
         </van-row>

@@ -14,8 +14,8 @@ Component({
 			},
 			{
 				icon: 'home-o',
-				text: '分析',
-				url: '/pages/analyse/analyse'
+				text: '主页',
+				url: '/pages/home/home'
 			},
 			{
 				icon: 'balance-list-o',

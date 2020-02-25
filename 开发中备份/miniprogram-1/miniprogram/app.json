@@ -1,17 +1,20 @@
 {
   "pages": [
+    "pages/task/task",
     "pages/spend/spend",
+    "pages/spend/stock_setting/spend_type_CURD/spend_type_CURD",  
+
     "pages/spendLog/spendLog",
     "pages/spend/target_setting/target_setting",
     "pages/spend/target_setting/target_CURD/target_CURD",
     "pages/spend/stock_setting/stock_setting",
-    "pages/spend/stock_setting/spend_type_CURD/spend_type_CURD",  
+    
     "pages/spend/stock_setting/stock_CURD/stock_CURD",
     "pages/spend/stock_setting/comment_CURD/comment_CURD",
     "pages/spend/stock_setting/money_block_CURD/money_block_CURD",  
     
-    "pages/task/task",
-    "pages/analyse/analyse",
+  
+    "pages/home/home",
     "pages/taskLog/taskLog"
   ],
   "subPackages": [
@@ -40,7 +43,7 @@
 				"pagePath": "pages/task/task"
       },
       {
-				"pagePath": "pages/analyse/analyse"
+				"pagePath": "pages/home/home"
       },
       {
 				"pagePath": "pages/spendLog/spendLog"

@@ -21,6 +21,7 @@ Page({
     type_id:null,
     type_text:null,
     type_text_error:false,
+    type_text_validate_error:"",
     type_id_error:"",
     type_icon:"question",
 
@@ -937,6 +938,7 @@ Page({
       type_id:null,
       type_text:null,
       type_text_error:false,
+      type_text_validate_error:"",
       type_id_error:"",
       type_icon:"question",
     })
@@ -956,9 +958,20 @@ Page({
   update_type_text:function(e){
     this.setData({type_text:e.detail})
   },
+  add_name_validate:function(name){
+    var types = wx.getStorageSync('types') || []
+    for(var i in types)
+      if(types[i].text==name)
+        return true;
+    return false;
+  },
   add:function(){
     if(this.data.type_text == null){
       this.setData({type_text_error:true})
+      return;
+    }
+    if(this.add_name_validate(this.data.type_text)){
+      this.setData({type_text_validate_error:"名称已存在"})
       return;
     }
 
@@ -1029,6 +1042,46 @@ Page({
         return types[i]
       }
   },
+  update_spendLogs:function(oldType,newType){
+    // 花支类型json
+    // types{
+    //   id
+    //   text 名
+    //   icon //class="cuIcon-?"
+    //   type 花支类- 收入类+
+    // }
+
+    // 花支日志json
+    // spendLogs{
+    //   time 年月日
+    //   day_spend 日花支
+    //   day_income 日收入
+    //   datas{ 
+    //     id
+    //     time 年月日
+    //     detail_time 时分秒
+    //     name 字段名
+    //     value 金额
+    //     comment 注释
+    //     remain 余额
+    //     icon 图标 
+    //     spend_type 类型 //转账时为null
+    //     operate 操作 +-
+    //   }
+    // }
+    var spendLogs = wx.getStorageSync('spendLogs') || []
+    for(var i in spendLogs){
+      var datas = spendLogs[i].datas
+      for(var j in datas){
+        if(oldType.text == datas[j].spend_type && oldType.icon == datas[j].icon){
+          datas[j].icon = newType.icon
+          datas[j].spend_type = newType.text
+        }
+      }
+      spendLogs[i].datas = datas
+    }
+    wx.setStorageSync('spendLogs', spendLogs)
+  },
   update:function(){
     if(this.data.type_id==null){
       this.setData({type_id_error:"无ID无法编辑"})
@@ -1043,6 +1096,7 @@ Page({
     var types = wx.getStorageSync('types') || []
     for(var i in types){
       if(types[i].id == type.id){
+        this.update_spendLogs(types[i],type) //更新花支日志类型
         types[i]=type
         break;
       }

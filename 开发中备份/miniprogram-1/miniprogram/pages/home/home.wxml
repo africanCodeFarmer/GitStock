@@ -1,0 +1,12 @@
+<import src="../public/public.wxml" />
+<template is="custom" />
+
+<view class="padding text-left">
+  <view class="padding-xl radius shadow bg-white">
+    <van-button plain round type="danger" size="large" bind:click="onClick_clear">
+      清空花支日志数据
+    </van-button>
+  </view>
+</view>
+
+<van-dialog id="van-dialog" />
