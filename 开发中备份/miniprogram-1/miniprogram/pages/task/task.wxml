@@ -16,46 +16,53 @@
 
     <van-divider hairline />
 
-    <van-tabs active="{{active_tab}}" bind:change="onChange_tab">
-      <van-tab title="{{index}}" wx:for="{{tasks[0].types}}">
-      <!-- content -->
-        <view style="height:20rpx;"></view>
-        <scroll-view style="height:500rpx;" scroll-y>
-          <van-radio-group value="{{ radio }}" bind:change="onChange">  
+    <swiper indicator-dots="{{true}}" style="height:400px;" bindchange="onChange_tab">
+      <swiper-item wx:for="{{tasks[0].types}}">
+        <view stype="font-size:17px;" class="text-center">{{index}}</view>
 
-            <van-swipe-cell right-width="{{ 110 }}" wx:for="{{item}}" wx:for-item="items" wx:for-index="i">
-              <van-cell use-label-slot border="{{false}}">
-                <view slot="title">
-                  <view style="color:{{items.color}}">{{items.name}}</view>
-                </view>
-                <view slot="right-icon">
-                  <view class="text-right">{{items.duration}}min</view>
-                  <view class="text-right">完成次数: {{items.count}}</view>
-                </view>
-                <view slot="icon">
-                  <view class="flex" style="margin-right:5rpx;">
-                    <van-radio name="1" checked-color="#07c160"></van-radio>
-                    <view style="inline-block;width:5rpx;"></view>
-                    <text style="font-size:21px;" class="cuIcon-{{items.icon}}"></text>
+        <scroll-view style="margin-top:20rpx;height:80%;border-bottom:1px solid #F5F6F8;border-top:1px solid #F5F6F8" scroll-y>
+
+          <van-radio-group value="{{ radio }}" bind:change="onChange_radio">  
+            <view checked-color="#07c160" wx:for="{{item}}" wx:for-item="items" wx:for-index="i">
+              <van-row>
+                <van-col span="2">
+                  <view>
+                    <van-radio name="{{index}} {{items.id}}"></van-radio>
                   </view>
-                </view>
-                <view slot="label">
-                  <view>{{items.create_time}}</view>
-                </view>
-              </van-cell>
+                </van-col>
+                <van-col span="22">
+                  <van-swipe-cell right-width="{{ 110 }}" disabled="{{true}}">
+                    <view>
+                      <van-row>
+                        <van-col span="2">
+                          <text style="font-size:20px;" class="cuIcon-{{items.icon}}"></text>
+                        </van-col>
+                        <van-col span="14">
+                          <view>
+                            <text style="color:{{items.color}};word-break: keep-all;word-wrap: break-word;">{{items.name}}</text>
+                          </view>
+                          <view >{{items.create_time}}</view>
+                        </van-col>
+                        <van-col span="8">
+                          <view class="text-right">{{items.duration}}min</view>
+                          <view class="text-right">完成次数: {{items.count}}</view>
+                        </van-col>
+                      </van-row>
+                    </view>
 
-              <view slot="right" style="height:100%;">
-                <van-button custom-style="height:100%;" type="primary" bind:click="edit" id="{{items.id}}" data-title="{{index}}">编辑</van-button>
-                <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{items.id}}" data-title="{{index}}">删除</van-button>
-              </view>
-            </van-swipe-cell>
-
+                    <view slot="right" style="height:100%;">
+                      <van-button custom-style="height:100%;" type="primary" bind:click="edit" id="{{items.id}}" data-title="{{index}}">编辑</van-button>
+                      <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{items.id}}" data-title="{{index}}">删除</van-button>
+                    </view>
+                  </van-swipe-cell>
+                </van-col>
+              </van-row>
+            </view>
           </van-radio-group>
-
         </scroll-view>
-      </van-tab>
-      <!-- content end-->
-    </van-tabs>
+
+      </swiper-item>
+    </swiper>
 
     <van-row>
       <van-col span="24" class="text-center">

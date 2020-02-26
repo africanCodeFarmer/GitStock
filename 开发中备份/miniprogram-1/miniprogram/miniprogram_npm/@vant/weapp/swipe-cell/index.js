@@ -117,6 +117,7 @@ component_1.VantComponent({
             var _a = event.currentTarget.dataset.key, position = _a === void 0 ? 'outside' : _a;
             this.$emit('click', position);
             if (!this.offset) {
+                this.open('right');
                 return;
             }
             if (this.data.asyncClose) {

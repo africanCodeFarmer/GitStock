@@ -25,6 +25,10 @@ Page({
     editID:0,
     editTaskTitle:"",
   },
+  onChange_radio:function(e){
+    var titleAndID = e.detail
+    console.log(titleAndID)
+  },
   go_update:function(e){
     var id = this.data.editID
     var task_title = this.data.editTaskTitle
@@ -197,7 +201,13 @@ Page({
     })
   },
   onChange_tab:function(e){
-    var title = e.detail.title
+    var index = e.detail.current
+    var change = {
+      "0":"today",
+      "1":"everyday",
+      "2":"limitTime",
+    }
+    var title = change[index]
     this.setData({
       task_title:title,
     })
