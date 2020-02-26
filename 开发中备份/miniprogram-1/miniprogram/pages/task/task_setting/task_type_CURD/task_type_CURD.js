@@ -1,7 +1,7 @@
 // 花支类型json
 // task_types{
 //   id
-//   name 名
+//   text 名
 //   icon //class="cuIcon-?"
 // }
 
@@ -17,8 +17,8 @@ Page({
     filled_icons:false,
     
     task_type_id:null,
-    task_type_name:null,
-    task_type_name_error:false,
+    task_type_text:null,
+    task_type_text_error:false,
     task_type_id_error:"",
     task_type_icon:"question",
 
@@ -930,8 +930,8 @@ Page({
     this.setData({
       task_type_id:null,
       task_type_id_error:"",
-      task_type_name:null,
-      task_type_name_error:false,
+      task_type_text:null,
+      task_type_text_error:false,
       task_type_icon:"question",
     })
   },
@@ -947,19 +947,19 @@ Page({
   update_task_type_id:function(e){
     this.setData({task_type_id:e.detail})
   },
-  update_task_type_name:function(e){
-    this.setData({task_type_name:e.detail})
+  update_task_type_text:function(e){
+    this.setData({task_type_text:e.detail})
   },
   add:function(){
-    if(this.data.task_type_name == null){
-      this.setData({task_type_name_error:true})
+    if(this.data.task_type_text == null){
+      this.setData({task_type_text_error:true})
       return;
     }
 
-    var task_type = {"id":"","name":"","icon":""}
+    var task_type = {"id":"","text":"","icon":""}
     var task_types = this.data.task_types
     task_type.id = task_types.length>0?task_types[task_types.length-1].id+1:1
-    task_type.name = this.data.task_type_name
+    task_type.text = this.data.task_type_text
     task_type.icon = this.data.task_type_icon
     task_types.push(task_type)
     wx.setStorageSync('task_types', task_types)
@@ -972,7 +972,7 @@ Page({
     })
   },
   delete:function(e){
-    var name = e.target.dataset.name
+    var text = e.target.dataset.text
     var id = e.target.id
 
     if(id==1){
@@ -984,7 +984,7 @@ Page({
     }
 
     Dialog.confirm({
-      message: '你确定删除'+name+'吗?'
+      message: '你确定删除'+text+'吗?'
     }).then(() => {
       // on confirm
       var task_types = this.data.task_types
@@ -1010,7 +1010,7 @@ Page({
     var task_type = this.getTaskType(id)
     this.setData({
       task_type_id:task_type.id,
-      task_type_name:task_type.name,
+      task_type_text:task_type.text,
       task_type_icon:task_type.icon,
     })
   },
@@ -1027,9 +1027,9 @@ Page({
       return;
     }
     
-    var task_type = {"id":"","name":"","icon":""}
+    var task_type = {"id":"","text":"","icon":""}
     task_type.id = this.data.task_type_id
-    task_type.name = this.data.task_type_name
+    task_type.text = this.data.task_type_text
     task_type.icon = this.data.task_type_icon
     var task_types = wx.getStorageSync('task_types') || []
     for(var i in task_types){

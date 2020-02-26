@@ -3,23 +3,23 @@
 
 <!-- 任务板块 -->
 <view class="padding text-left">
-  <van-tabs active="{{active_tab}}" bind:change="onChange">
-    
-    <van-tab title="今日任务">
-      <view class="padding-xl radius shadow bg-white"> 
-        <van-row>
-          <van-col span="16">
-            <text style="font-size:20px;">我的今日任务: 99个</text>
-          </van-col>
-          <van-col span="8" class="text-right">
-            <van-button plain round type="default" icon="setting-o" size="small" bind:click="task_setting">
-            </van-button>
-          </van-col>
-        </van-row>
+  <view class="padding-xl radius shadow bg-white"> 
+    <van-row>
+      <van-col span="16">
+        <text style="font-size:20px;">我的任务</text>
+      </van-col>
+      <van-col span="8" class="text-right">
+        <van-button plain round type="default" icon="setting-o" size="small" bind:click="task_setting">
+        </van-button>
+      </van-col>
+    </van-row>
 
-        <van-divider hairline />
+    <van-divider hairline />
 
-        <!-- content -->
+    <van-tabs active="{{active_tab}}" bind:change="onChange_tab">
+      <van-tab title="today">
+      <!-- content -->
+        <view style="height:20rpx;"></view>
         <scroll-view style="height:500rpx;" scroll-y>
           <van-radio-group value="{{ radio }}" bind:change="onChange">
             
@@ -50,30 +50,93 @@
 
           </van-radio-group>
         </scroll-view>
-        <!-- content end-->
+      </van-tab>
+      <!-- content end-->
 
-        <van-row>
-          <van-col span="24" class="text-center">
-            <van-button plain round type="primary" icon="plus" size="small" bind:click="">
-            </van-button>
-          </van-col>
-        </van-row>
+      <van-tab title="每日任务">内容 2</van-tab>
+      <van-tab title="限时任务">内容 3</van-tab>
+    </van-tabs>
 
-        <van-divider hairline />
+    <van-row>
+      <van-col span="24" class="text-center">
+        <van-button plain round type="primary" icon="plus" size="small" bind:click="onClick_addTask">
+        </van-button>
+      </van-col>
+    </van-row>
 
-        <van-row>
-          <van-col span="10">今日任务完成: 1个</van-col>
-          <van-col span="14" class="text-right">
-            <van-button plain round  type="info" size="small" bind:click="onClick_show_target_achieved_popup">
-              <text style="font-size:13px;"> 查看已经完成今日任务 </text>
-            </van-button>
-          </van-col>
-        </van-row>
-      </view>
-    </van-tab>
+    <van-divider hairline />
 
-    <van-tab title="每日任务">内容 2</van-tab>
-    <van-tab title="限时任务">内容 3</van-tab>
+    <van-row>
+      <van-col span="10">{{task_title}}剩余: 1个</van-col>
+      <van-col span="14" class="text-right">
+        <van-button plain round  type="info" size="small" bind:click="onClick_show_target_achieved_popup">
+          <text style="font-size:13px;"> 查看已完成{{task_title}} </text>
+        </van-button>
+      </van-col>
+    </van-row>
+  </view>
 
-  </van-tabs>
 </view>
+
+<van-popup 
+  show="{{ show_add_task_popup }}" 
+  bind:close="onClose_add_task_popup"
+  position="bottom"
+  custom-style="height: 50%;"
+>
+  <van-tree-select
+  items="{{ task_types }}"
+  main-active-index="{{ choose_task_type }}"
+  bind:click-nav="onClickNav"
+  >
+    <view slot="content">
+      <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">添加{{task_title}}</van-divider>
+      
+      <van-row>
+        <van-col offset="1" span="22">
+          <van-cell-group>
+            <van-field
+              name="task_name"
+              value="{{task_name}}"
+              placeholder="请输入任务"
+              border="{{ false }}"
+              bind:change="update_task_name"
+              error="{{task_name_error}}"
+            >
+              <van-button slot="button" round size="small" type="primary" icon="arrow" bind:click="go_add"></van-button>
+            </van-field>
+          </van-cell-group>
+        </van-col>
+        <van-col span="1"></van-col>
+      </van-row>
+
+      <van-row>
+        <van-col span="24">
+          <view style="font-size:13px;margin:40rpx 0rpx 20rpx 0rpx;" class="text-center"> 时间/分钟: {{task_duration}}</view>
+        </van-col>
+      </van-row>
+      <!-- 时间块 -->
+      <view style="margin:0rpx 10%;">
+        <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_durations}}">
+          <van-button type="info" plain size="mini" data-value="{{item.value}}" bind:click="onClick_task_duration_block">{{item.value}}</van-button>
+        </view>
+      </view>
+
+      <van-row>
+        <van-col span="24">
+          <view style="color:{{task_color}};font-size:13px;margin:40rpx 0rpx 20rpx 0rpx;" class="text-center">
+            任务颜色: 
+            <button style="display:inline-block;height:25rpx;width:25rpx;background-color:{{task_color}};"></button>
+          </view>
+        </van-col>
+      </van-row>
+
+      <!-- 颜色块 -->
+      <view style="margin:0rpx 10%;">
+        <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_colors}}">
+          <button style="height:25rpx;width:25rpx;background-color:{{item.value}};" data-color="{{item.value}}" bindtap="onClick_task_color"></button>
+        </view>
+      </view>
+    </view>
+  </van-tree-select>
+</van-popup>

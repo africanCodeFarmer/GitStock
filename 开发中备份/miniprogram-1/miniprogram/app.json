@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/task/task",
+    "pages/task/task_setting/task_duration_CURD/task_duration_CURD",
     "pages/task/task_setting/task_type_CURD/task_type_CURD",
     "pages/task/task_setting/task_color_CURD/task_color_CURD",
     

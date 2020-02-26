@@ -14,13 +14,13 @@
         error-message="{{task_type_id_error}}"
       />
       <van-field
-        name="task_type_name"
-        value="{{ task_type_name }}"
+        name="task_type_text"
+        value="{{ task_type_text }}"
         label="名称"
         placeholder="请输入名称"
         required
-        bind:change="update_task_type_name"
-        error="{{task_type_name_error}}"
+        bind:change="update_task_type_text"
+        error="{{task_type_text_error}}"
       />
       
       <!-- 选择类型 -->
@@ -67,12 +67,12 @@
 
 <van-cell-group title="所有类型">
   <van-swipe-cell right-width="{{ 90 }}" wx:for="{{task_types}}">
-    <van-cell title="{{item.name}}">
+    <van-cell title="{{item.text}}">
       <view slot="icon" class="cuIcon-{{item.icon}}" style="margin-right:10rpx;"/>
     </van-cell>
     <view slot="right">
       <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
-      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-name="{{item.name}}" bind:click="delete"></van-button>
+      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-text="{{item.text}}" bind:click="delete"></van-button>
     </view>
   </van-swipe-cell>
 </van-cell-group>

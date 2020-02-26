@@ -10,13 +10,13 @@ App({
 
     if(spend_types.length==0){
       spend_types.push({
-        id:'1',
+        id:1,
         text:'默认消费类',
         icon:"question",
         type:'-',
       })
       spend_types.push({
-        id:'2',
+        id:2,
         text:'默认收入类',
         icon:"question",
         type:'+',
@@ -28,8 +28,8 @@ App({
     var task_types = wx.getStorageSync('task_types') || []
     if(task_types.length==0){
       task_types.push({
-        id:'1',
-        name:'默认任务类',
+        id:1,
+        text:'默认任务类',
         icon:"question",
       })
       wx.setStorageSync('task_types', task_types)
@@ -39,7 +39,7 @@ App({
     var task_colors = wx.getStorageSync('task_colors') || []
     if(task_colors.length==0){
       task_colors.push({
-        id:'1',
+        id:1,
         value:"#000000"
       })
       wx.setStorageSync('task_colors', task_colors)

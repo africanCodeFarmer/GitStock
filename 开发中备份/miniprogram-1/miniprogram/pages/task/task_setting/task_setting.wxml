@@ -2,8 +2,10 @@
 <template is="custom_inner" data="{{...custom_data}}"/>
 
 <van-cell-group title="数据设置">
-  <van-cell icon="eye-o" title="任务颜色" value="" is-link link-type="navigateTo"
-  url="task_color_CURD/task_color_CURD"/>
   <van-cell icon="label-o" title="任务类型" value="" is-link link-type="navigateTo"
   url="task_type_CURD/task_type_CURD"/>
+  <van-cell icon="clock" title="任务时间" value="" is-link link-type="navigateTo"
+  url="task_duration_CURD/task_duration_CURD"/>
+  <van-cell icon="eye-o" title="任务颜色" value="" is-link link-type="navigateTo"
+  url="task_color_CURD/task_color_CURD"/>
 </van-cell-group>
