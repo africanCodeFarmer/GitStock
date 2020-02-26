@@ -17,44 +17,44 @@
     <van-divider hairline />
 
     <van-tabs active="{{active_tab}}" bind:change="onChange_tab">
-      <van-tab title="today">
+      <van-tab title="{{index}}" wx:for="{{tasks[0].types}}">
       <!-- content -->
         <view style="height:20rpx;"></view>
         <scroll-view style="height:500rpx;" scroll-y>
-          <van-radio-group value="{{ radio }}" bind:change="onChange">
-            
-            
-            <van-swipe-cell right-width="{{ 110 }}">
-              <van-cell title="测试任务" use-label-slot border="{{false}}">
+          <van-radio-group value="{{ radio }}" bind:change="onChange">  
+
+            <van-swipe-cell right-width="{{ 110 }}" wx:for="{{item}}" wx:for-item="items" wx:for-index="i">
+              <van-cell use-label-slot border="{{false}}">
+                <view slot="title">
+                  <view style="color:{{items.color}}">{{items.name}}</view>
+                </view>
                 <view slot="right-icon">
-                  <view class="text-right">时间: 1h</view>
-                  <view class="text-right">完成次数: 0</view>
+                  <view class="text-right">{{items.duration}}min</view>
+                  <view class="text-right">完成次数: {{items.count}}</view>
                 </view>
                 <view slot="icon">
                   <view class="flex" style="margin-right:5rpx;">
                     <van-radio name="1" checked-color="#07c160"></van-radio>
                     <view style="inline-block;width:5rpx;"></view>
-                    <text style="font-size:21px;" class="cuIcon-question"></text>
+                    <text style="font-size:21px;" class="cuIcon-{{items.icon}}"></text>
                   </view>
                 </view>
                 <view slot="label">
-                  <view>2020/02/02 12:12:12</view>
+                  <view>{{items.create_time}}</view>
                 </view>
               </van-cell>
 
               <view slot="right" style="height:100%;">
-                <van-button custom-style="height:100%;" type="primary" bind:click="edit">编辑</van-button>
-                <van-button custom-style="height:100%;" type="danger" bind:click="delete">删除</van-button>
+                <van-button custom-style="height:100%;" type="primary" bind:click="edit" id="{{items.id}}" data-title="{{index}}">编辑</van-button>
+                <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{items.id}}" data-title="{{index}}">删除</van-button>
               </view>
             </van-swipe-cell>
 
           </van-radio-group>
+
         </scroll-view>
       </van-tab>
       <!-- content end-->
-
-      <van-tab title="每日任务">内容 2</van-tab>
-      <van-tab title="限时任务">内容 3</van-tab>
     </van-tabs>
 
     <van-row>
@@ -90,7 +90,7 @@
   bind:click-nav="onClickNav"
   >
     <view slot="content">
-      <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">添加{{task_title}}</van-divider>
+      <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">{{editing==true?'编辑':'添加'}}{{task_title}}任务</van-divider>
       
       <van-row>
         <van-col offset="1" span="22">
@@ -103,7 +103,7 @@
               bind:change="update_task_name"
               error="{{task_name_error}}"
             >
-              <van-button slot="button" round size="small" type="primary" icon="arrow" bind:click="go_add"></van-button>
+              <van-button slot="button" round size="small" type="primary" icon="arrow" bind:click="{{editing==true?'go_update':'go_add'}}"></van-button>
             </van-field>
           </van-cell-group>
         </van-col>
@@ -112,7 +112,7 @@
 
       <van-row>
         <van-col span="24">
-          <view style="font-size:13px;margin:40rpx 0rpx 20rpx 0rpx;" class="text-center"> 时间/分钟: {{task_duration}}</view>
+          <view style="font-size:13px;margin:40rpx 0rpx 20rpx 0rpx;" class="text-center">{{task_title=='limitTime'?'限时':'时间'}}/分钟: {{task_duration}}</view>
         </van-col>
       </van-row>
       <!-- 时间块 -->
