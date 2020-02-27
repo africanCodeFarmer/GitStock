@@ -16,14 +16,14 @@
 
     <van-divider hairline />
 
-    <swiper indicator-dots="{{true}}" style="height:400px;" bindchange="onChange_tab">
-      <swiper-item wx:for="{{tasks[0].types}}">
+    <swiper indicator-dots="{{true}}" style="height:360px;" bindchange="onChange_tab">
+      <swiper-item wx:for="{{tasks[0].types}}" wx:for-item="item">
         <van-row>
-          <van-col span="8" class="text-left">
+          <van-col span="12" class="text-left">
             <view style="font-size:17px;">{{index}}</view>
           </van-col>
-          <van-col span="16" class="text-right">
-            <van-button plain round type="default" size="small" bind:click="onClick_toggle_showTasks">{{showAllTasks==true?'隐藏完成任务':'显示所有任务'}}</van-button>
+          <van-col span="12" class="text-right">
+            <van-button plain round type="default" size="small" bind:click="onClick_toggle_showTasks">{{showAllTasks==true?'隐藏完成任务 '+(item.length-remain_taskCount)+'个':'显示所有任务 '+item.length+'个'}}</van-button>
           </van-col>
         </van-row>
 
@@ -31,7 +31,7 @@
 
           <!-- <radio-group bindchange="onClick_complete">   -->
 
-            <view wx:for="{{item}}" wx:for-item="items" wx:for-index="i" style="margin-top:20rpx;border-bottom:1px solid #F5F6F8;" wx:if="{{showAllTasks==true?'none':items.completed==false}}">
+            <view wx:for="{{item}}" wx:for-item="items" wx:for-index="i" style="margin-top:20rpx;" wx:if="{{showAllTasks==true?'none':items.completed==false}}">
               
               <van-row>
                 <van-col span="2">
@@ -53,15 +53,16 @@
                           </view>
                         </van-col>
                         <van-col span="8">
-                          <view class="text-right" style="color:#353535;font-size:13px;">{{items.duration}}min</view>
+                          <view class="text-right" style="color:#353535;font-size:13px;">{{index=='limitTime'?'限时: ':'时长: '}}{{items.duration}}min</view>
                         </van-col>
                       </van-row>
                       <van-row>
                         <van-col offset="2" span="14">
-                          <view style="color:#b2b2b2;font-size:11px;">{{items.create_time}}</view>
+                          <van-count-down time="{{items.remain_time}}" wx:if="{{index=='limitTime'}}"/>
+                          <view wx:else style="color:#b2b2b2;font-size:11px;">{{items.create_time}}</view>
                         </van-col>
                         <van-col span="8">
-                          <!-- <view class="text-right" style="color:#b2b2b2;font-size:11px;">已完成: {{items.count}}次</view> -->
+                          <view wx:if="{{index=='everyday'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">已完成: {{items.count}}次</view>
                         </van-col>
                       </van-row>
 
@@ -89,13 +90,9 @@
     </van-row>
 
     <van-divider hairline />
-
     <van-row>
-      <van-col span="10">{{task_title}}剩余: 1个</van-col>
+      <van-col span="10">{{task_title}}剩余: {{remain_taskCount}}个</van-col>
       <van-col span="14" class="text-right">
-        <van-button plain round  type="info" size="small" bind:click="onClick_show_target_achieved_popup">
-          <text style="font-size:13px;"> 查看已完成{{task_title}} </text>
-        </van-button>
       </van-col>
     </van-row>
   </view>

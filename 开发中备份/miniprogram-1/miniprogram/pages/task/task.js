@@ -26,6 +26,7 @@ Page({
     editTaskTitle:"",
 
     showAllTasks:true,
+    remain_taskCount:0,
   },
   //显示所有任务 隐藏已完成任务
   onClick_toggle_showTasks:function(){
@@ -49,10 +50,12 @@ Page({
         if(specificTasks[i].completed==false){
           specificTasks[i].completed = true
           specificTasks[i].complete_time = util.formatTime(new Date()) 
+          specificTasks[i].count++
         }
         else{
           specificTasks[i].completed = false
           specificTasks[i].complete_time = ""
+          specificTasks[i].count--
         }
       }
     }
@@ -61,6 +64,9 @@ Page({
       tasks:tasks
     })
     wx.setStorageSync('tasks', tasks)
+
+    //更新剩余
+    this.refresh_remain_taskCount(this.data.task_title)
   },
   go_update:function(e){
     var id = this.data.editID
@@ -77,6 +83,7 @@ Page({
         specificTasks[i].type = this.data.task_type
         specificTasks[i].icon = this.getTaskType_useText(this.data.task_type).icon
         specificTasks[i].create_time = time
+        specificTasks[i].remain_time = this.data.task_title=='limitTime'?parseInt(this.data.task_duration)*60*1000:""
         break;
       }
     }
@@ -165,7 +172,10 @@ Page({
     var dayIndex = this.data.task_title
     var time = util.formatTime(new Date()).split(' ')[0]
     tasks = this.tasks_checkUpdateTime(tasks) //检测一下时间
-    var taskTime = util.formatTime(new Date())
+    var remain_time = this.data.task_title=='limitTime'?parseInt(this.data.task_duration)*60*1000:"" //s
+    var date = new Date()
+    var taskTime = this.data.task_title=='limitTime'?util.formatTime(new Date(date.setMinutes(date.getMinutes()+(remain_time/60000)))):util.formatTime(date)
+
     var task = {
       id:tasks[0].types[dayIndex].length>0?(tasks[0].types[dayIndex].length+1):1,
       completed:false,
@@ -176,9 +186,9 @@ Page({
       icon:this.getTaskType_useText(this.data.task_type).icon,
       duration:this.data.task_duration,
       count:0,
-      remain_time:"",
+      remain_time:remain_time,
       complete_time:"",
-    }
+    }    
     tasks[0].types[dayIndex].unshift(task)
     
     wx.setStorageSync('tasks', tasks)
@@ -233,6 +243,16 @@ Page({
       show_add_task_popup:false,
     })
   },
+  refresh_remain_taskCount:function(task_title){
+    var tasks = this.data.tasks
+    var specificTasks = tasks[0].types[task_title]
+    var remain_taskCount = 0
+    for(var i in specificTasks){
+      if(specificTasks[i].completed==false)
+        remain_taskCount+=1;
+    }
+    this.setData({remain_taskCount:remain_taskCount})
+  },
   onChange_tab:function(e){
     var index = e.detail.current
     var change = {
@@ -244,6 +264,9 @@ Page({
     this.setData({
       task_title:title,
     })
+
+    //统计该类有多少未完成任务
+    this.refresh_remain_taskCount(this.data.task_title);
   },
   //日期变更时更新tasks json
   tasks_checkUpdateTime:function(tasks){
@@ -283,6 +306,34 @@ Page({
       task_type:task_type,
       tasks:tasks,
     })
+
+    this.refresh_remain_taskCount(this.data.task_title)
+    this.refresh_limitTime_remain_time() //刷新限时任务时间
+  },
+  refresh_limitTime_remain_time:function(){
+    var tasks = this.data.tasks
+    var specificTasks = tasks[0].types.limitTime
+    //根据create_time和现在时间计算更新remain_time
+    for(var i in specificTasks){
+      var create_time = specificTasks[i].create_time
+      //计算剩余时间
+      var one = create_time.split(' ')[0].split('/')
+      var two = create_time.split(' ')[1].split(':')
+      var limit_time = new Date()
+      limit_time.setFullYear(one[0])
+      limit_time.setMonth(one[1]-1)
+      limit_time.setDate(one[2])
+      limit_time.setHours(two[0])
+      limit_time.setMinutes(two[1])
+      limit_time.setSeconds(two[2])
+      var current_time = new Date()
+      var remain_time = limit_time-current_time
+
+      specificTasks[i].remain_time = remain_time
+    }
+    tasks[0].types.limitTime = specificTasks
+    this.setData({tasks:tasks})
+    wx.setStorageSync('tasks', tasks)
   },
   task_setting:function(){
     wx.navigateTo({
