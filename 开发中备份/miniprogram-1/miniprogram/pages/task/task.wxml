@@ -22,43 +22,43 @@
 
         <scroll-view style="margin-top:20rpx;height:80%;border-bottom:1px solid #F5F6F8;border-top:1px solid #F5F6F8" scroll-y>
 
-          <van-radio-group value="{{ radio }}" bind:change="onChange_radio">  
-            <view checked-color="#07c160" wx:for="{{item}}" wx:for-item="items" wx:for-index="i">
-              <van-row>
-                <van-col span="2">
-                  <view>
-                    <van-radio name="{{index}} {{items.id}}"></van-radio>
-                  </view>
-                </van-col>
-                <van-col span="22">
-                  <van-swipe-cell right-width="{{ 110 }}" disabled="{{true}}">
-                    <view>
-                      <van-row>
-                        <van-col span="2">
-                          <text style="font-size:20px;" class="cuIcon-{{items.icon}}"></text>
-                        </van-col>
-                        <van-col span="14">
-                          <view>
-                            <text style="color:{{items.color}};word-break: keep-all;word-wrap: break-word;">{{items.name}}</text>
-                          </view>
-                          <view >{{items.create_time}}</view>
-                        </van-col>
-                        <van-col span="8">
-                          <view class="text-right">{{items.duration}}min</view>
-                          <view class="text-right">完成次数: {{items.count}}</view>
-                        </van-col>
-                      </van-row>
-                    </view>
+          <!-- <radio-group bindchange="onClick_complete">   -->
 
-                    <view slot="right" style="height:100%;">
-                      <van-button custom-style="height:100%;" type="primary" bind:click="edit" id="{{items.id}}" data-title="{{index}}">编辑</van-button>
-                      <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{items.id}}" data-title="{{index}}">删除</van-button>
+            <view wx:for="{{item}}" wx:for-item="items" wx:for-index="i" style="margin-top:20rpx;border-bottom:1px solid #F5F6F8;">
+              <!-- 单选框 -->
+              <!-- <radio checked="{{items.completed}}" value="{{index}} {{items.id}}" style="transform:scale(0.7);"></radio> -->
+
+              <!-- 滑动单元格 -->
+              <van-swipe-cell right-width="{{ 110 }}" disabled="{{true}}">
+                <van-row>
+                  <van-col span="2">
+                    <text style="font-size:20px;" class="cuIcon-{{items.icon}}"></text>
+                  </van-col>
+                  <van-col span="14">
+                    <view>
+                      <text style="color:{{items.color}};word-break: keep-all;word-wrap: break-word;font-size:14px;">{{items.name}}</text>
                     </view>
-                  </van-swipe-cell>
-                </van-col>
-              </van-row>
+                  </van-col>
+                  <van-col span="8">
+                    <view class="text-right" style="color:#353535;font-size:13px;">{{items.duration}}min</view>
+                  </van-col>
+                </van-row>
+                <van-row>
+                  <van-col offset="2" span="14">
+                    <view style="color:#b2b2b2;font-size:11px;">{{items.create_time}}</view>
+                  </van-col>
+                  <van-col span="8">
+                    <view class="text-right" style="color:#b2b2b2;font-size:11px;">已完成: {{items.count}}次</view>
+                  </van-col>
+                </van-row>
+
+                <view slot="right" style="height:100%;">
+                  <van-button custom-style="height:100%;" type="primary" bind:click="edit" id="{{items.id}}" data-title="{{index}}">编辑</van-button>
+                  <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{items.id}}" data-title="{{index}}">删除</van-button>
+                </view>
+              </van-swipe-cell>
             </view>
-          </van-radio-group>
+          <!-- </radio-group> -->
         </scroll-view>
 
       </swiper-item>

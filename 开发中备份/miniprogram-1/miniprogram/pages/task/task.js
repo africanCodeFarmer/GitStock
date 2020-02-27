@@ -25,9 +25,29 @@ Page({
     editID:0,
     editTaskTitle:"",
   },
-  onChange_radio:function(e){
-    var titleAndID = e.detail
-    console.log(titleAndID)
+  onClick_complete:function(e){
+    var titleAndID = e.detail.value
+    var dayIndex = titleAndID.split(' ')[0]
+    var id = titleAndID.split(' ')[1]
+    
+    var tasks = this.data.tasks
+    tasks = this.tasks_checkUpdateTime(tasks)
+    var specificTasks = tasks[0].types[dayIndex]
+    
+    //完成任务
+    for(var i in specificTasks){
+      if(specificTasks[i].id == id){
+        specificTasks[i].completed = true
+        specificTasks[i].complete_time = util.formatTime(new Date()) 
+      }
+    }
+    tasks[0].types[dayIndex] = specificTasks
+    this.setData({
+      tasks:tasks
+    })
+    wx.setStorageSync('tasks', tasks)
+
+    console.log(tasks)
   },
   go_update:function(e){
     var id = this.data.editID
