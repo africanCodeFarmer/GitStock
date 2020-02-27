@@ -24,9 +24,18 @@ Page({
     editing:false,
     editID:0,
     editTaskTitle:"",
+
+    showAllTasks:true,
+  },
+  //显示所有任务 隐藏已完成任务
+  onClick_toggle_showTasks:function(){
+    var showAllTasks = this.data.showAllTasks==true?false:true
+    this.setData({
+      showAllTasks:showAllTasks
+    })
   },
   onClick_complete:function(e){
-    var titleAndID = e.detail.value
+    var titleAndID = e.target.id
     var dayIndex = titleAndID.split(' ')[0]
     var id = titleAndID.split(' ')[1]
     
@@ -34,11 +43,17 @@ Page({
     tasks = this.tasks_checkUpdateTime(tasks)
     var specificTasks = tasks[0].types[dayIndex]
     
-    //完成任务
+    //完成或取消完成
     for(var i in specificTasks){
       if(specificTasks[i].id == id){
-        specificTasks[i].completed = true
-        specificTasks[i].complete_time = util.formatTime(new Date()) 
+        if(specificTasks[i].completed==false){
+          specificTasks[i].completed = true
+          specificTasks[i].complete_time = util.formatTime(new Date()) 
+        }
+        else{
+          specificTasks[i].completed = false
+          specificTasks[i].complete_time = ""
+        }
       }
     }
     tasks[0].types[dayIndex] = specificTasks
@@ -46,8 +61,6 @@ Page({
       tasks:tasks
     })
     wx.setStorageSync('tasks', tasks)
-
-    console.log(tasks)
   },
   go_update:function(e){
     var id = this.data.editID
