@@ -153,6 +153,9 @@ Page({
     tasks[0].types[task_title] = specificTasks
     wx.setStorageSync('tasks', tasks)
     this.setData({tasks:tasks})
+
+    //更新剩余
+    this.refresh_remain_taskCount(this.data.task_title)
   },
   getTaskType_useText(text){
     var task_types = this.data.task_types
@@ -309,12 +312,17 @@ Page({
 
     this.refresh_remain_taskCount(this.data.task_title)
     this.refresh_limitTime_remain_time() //刷新限时任务时间
+
+    console.log(tasks)
   },
   refresh_limitTime_remain_time:function(){
     var tasks = this.data.tasks
     var specificTasks = tasks[0].types.limitTime
     //根据create_time和现在时间计算更新remain_time
     for(var i in specificTasks){
+      if(specificTasks[i].remain_time<=0 || specificTasks[i].completed ) //时间为0 或者 已经完成跳过
+        continue;
+
       var create_time = specificTasks[i].create_time
       //计算剩余时间
       var one = create_time.split(' ')[0].split('/')
@@ -339,5 +347,16 @@ Page({
     wx.navigateTo({
       url: 'task_setting/task_setting',
     })
+  },
+  finish_remain_time:function(e){
+    var tasks = this.data.tasks
+    var specificTasks = tasks[0].types.limitTime
+    for(var i in specificTasks)
+      if(specificTasks[i].id == e.target.id)
+        specificTasks[i].remain_time=-1000
+    tasks[0].types.limitTime =specificTasks
+
+    this.setData({tasks:tasks})
+    wx.setStorageSync('tasks', tasks)
   },
 })

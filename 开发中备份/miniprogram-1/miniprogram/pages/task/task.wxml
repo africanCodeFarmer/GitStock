@@ -36,7 +36,9 @@
               <van-row>
                 <van-col span="2">
                   <!-- 单选框 -->
-                  <van-icon name="{{items.completed==true?'checked':'passed'}}" bind:click="onClick_complete" id="{{index}} {{items.id}}" size="20px" color="{{items.completed==true?'#07C160':''}}">
+                  <van-icon wx:if="{{items.remain_time=='' || items.remain_time>0}}" name="{{items.completed==true?'checked':'passed'}}" bind:click="onClick_complete" id="{{index}} {{items.id}}" size="20px" color="{{items.completed==true?'#07C160':''}}">
+                  </van-icon>
+                  <van-icon wx:else name="close" size="20px">
                   </van-icon>
                 </van-col>
                 <van-col span="22">
@@ -58,7 +60,7 @@
                       </van-row>
                       <van-row>
                         <van-col offset="2" span="14">
-                          <van-count-down time="{{items.remain_time}}" wx:if="{{index=='limitTime'}}"/>
+                          <van-count-down time="{{items.remain_time}}" wx:if="{{index=='limitTime'}}" id="{{items.id}}" bind:finish="{{items.remain_time>0 && items.completed==false?'finish_remain_time':''}}"/>
                           <view wx:else style="color:#b2b2b2;font-size:11px;">{{items.create_time}}</view>
                         </van-col>
                         <van-col span="8">
