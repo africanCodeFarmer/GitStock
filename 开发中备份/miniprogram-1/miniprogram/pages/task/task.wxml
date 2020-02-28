@@ -36,7 +36,7 @@
               <van-row>
                 <van-col span="2">
                   <!-- 单选框 -->
-                  <van-icon wx:if="{{items.remain_time=='' || items.remain_time>0}}" name="{{items.completed==true?'checked':'passed'}}" bind:click="onClick_complete" id="{{index}} {{items.id}}" size="20px" color="{{items.completed==true?'#07C160':''}}">
+                  <van-icon wx:if="{{items.remain_time=='' || items.remain_time>0 ||items.completed}}" name="{{items.completed==true?'checked':'circle'}}" bind:click="onClick_complete" id="{{index}} {{items.id}}" size="20px" color="{{items.completed==true?'#07C160':''}}">
                   </van-icon>
                   <van-icon wx:else name="close" size="20px">
                   </van-icon>
@@ -59,12 +59,15 @@
                         </van-col>
                       </van-row>
                       <van-row>
-                        <van-col offset="2" span="14">
-                          <van-count-down time="{{items.remain_time}}" wx:if="{{index=='limitTime'}}" id="{{items.id}}" bind:finish="{{items.remain_time>0 && items.completed==false?'finish_remain_time':''}}"/>
+                        <van-col offset="2" span="{{index=='limitTime'?10:12}}">
+                          <!-- 倒计时 -->
+                          <van-count-down time="{{items.remain_time}}" wx:if="{{index=='limitTime'&&items.completed==false}}" id="{{items.id}}" bind:finish="{{items.remain_time>0 && items.completed==false?'finish_remain_time':''}}"/>
+                           <view wx:elif="{{index=='limitTime'&&items.completed}}" style="color:#b2b2b2;font-size:11px;">完成用时: {{m.numberToFix(items.duration-items.remain_time/60000)}}min</view>
                           <view wx:else style="color:#b2b2b2;font-size:11px;">{{items.create_time}}</view>
                         </van-col>
-                        <van-col span="8">
+                        <van-col span="{{index=='limitTime'?12:10}}">
                           <view wx:if="{{index=='everyday'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">已完成: {{items.count}}次</view>
+                          <view wx:if="{{index=='limitTime'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">{{items.create_time}}</view>
                         </van-col>
                       </van-row>
 
@@ -133,29 +136,42 @@
         <van-col span="1"></van-col>
       </van-row>
 
-      <van-row>
+      <!-- <van-row>
         <van-col span="24">
           <view style="font-size:13px;margin:40rpx 0rpx 20rpx 0rpx;" class="text-center">{{task_title=='limitTime'?'限时':'时间'}}/分钟: {{task_duration}}</view>
         </van-col>
+      </van-row> -->
+      <van-row>
+        <van-col offset="1" span="22">
+          <van-field
+            label="{{task_title=='limitTime'?'限时':'时长'}}/分钟"
+            name="task_duration"
+            value="{{task_duration}}"
+            type="number"
+            placeholder="请输入{{task_title=='limitTime'?'限时':'时长'}}"
+            border="{{ false }}"
+            bind:change="update_task_duration"
+            error="{{task_duration_error}}"
+          />
+        </van-col>
+        <van-col span="1"></van-col>
       </van-row>
+
       <!-- 时间块 -->
-      <view style="margin:0rpx 10%;">
+      <view style="margin:0rpx 10% 20rpx 10%;">
         <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_durations}}">
           <van-button type="info" plain size="mini" data-value="{{item.value}}" bind:click="onClick_task_duration_block">{{item.value}}</van-button>
         </view>
       </view>
 
       <van-row>
-        <van-col span="24">
-          <view style="color:{{task_color}};font-size:13px;margin:40rpx 0rpx 20rpx 0rpx;" class="text-center">
-            任务颜色: 
-            <button style="display:inline-block;height:25rpx;width:25rpx;background-color:{{task_color}};"></button>
-          </view>
+        <van-col span="24" class="text-left">
+          <view style="color:{{task_color}};margin-left:9%;">任务颜色</view>
         </van-col>
       </van-row>
 
       <!-- 颜色块 -->
-      <view style="margin:0rpx 10%;">
+      <view style="margin:10rpx 10% 0rpx 10%;">
         <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_colors}}">
           <button style="height:25rpx;width:25rpx;background-color:{{item.value}};" data-color="{{item.value}}" bindtap="onClick_task_color"></button>
         </view>
@@ -163,3 +179,11 @@
     </view>
   </van-tree-select>
 </van-popup>
+
+<!-- wxs_toFixed实现 -->
+<wxs module="m">
+  var numberToFix= function (value) {
+    return value.toFixed(2)
+  }
+ module.exports.numberToFix=numberToFix;
+</wxs>
