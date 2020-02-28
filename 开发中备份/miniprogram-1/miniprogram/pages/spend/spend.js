@@ -244,7 +244,7 @@ Page({
 
     wx.showToast({
       icon:'none',
-      title: '完成操作',
+      title: sign=='-'?'花支完成':'收入完成',
     })
   },
   update_spendLogs:function(spendLog){

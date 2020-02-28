@@ -86,6 +86,7 @@
     "van-uploader": "@vant/weapp/uploader",
     "van-datetime-picker": "@vant/weapp/datetime-picker",
     "van-count-down": "@vant/weapp/count-down",
+    "van-tag": "@vant/weapp/tag",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }

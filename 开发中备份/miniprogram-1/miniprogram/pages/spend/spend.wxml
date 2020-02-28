@@ -104,6 +104,7 @@
   show="{{ show_money_popup }}" 
   bind:close="onClose_money_popup"
   position="bottom"
+  round
   custom-style="height: 50%;"
 >
   <van-tree-select
@@ -155,6 +156,7 @@
   show="{{ show_money_transfer_popup }}" 
   bind:close="onClose_money_transfer_popup"
   position="bottom"
+  round
   custom-style="height: 50%;"
 >
   <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">转账</van-divider>
@@ -201,6 +203,7 @@
   show="{{ show_target_achieved_popup }}" 
   bind:close="onClose_target_achieved_popup"
   position="bottom"
+  round
   custom-style="height: 50%;"
 >
   <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">已实现目标</van-divider>

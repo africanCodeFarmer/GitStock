@@ -5,10 +5,15 @@
 <view class="padding text-left">
   <view class="padding-xl radius shadow bg-white"> 
     <van-row>
-      <van-col span="16">
-        <text style="font-size:20px;">我的任务</text>
+      <van-col span="14">
+        <view class="flex">
+          <text style="font-size:20px;" space="ensp">我的任务 </text>
+          <view style="margin-top:4px;">
+            <van-tag plain type="warning" bindtap="onClick_reveal">展示所有未完成任务</van-tag>
+          </view>
+        </view>
       </van-col>
-      <van-col span="8" class="text-right">
+      <van-col span="10" class="text-right">
         <van-button plain round type="default" icon="setting-o" size="small" bind:click="task_setting">
         </van-button>
       </van-col>
@@ -16,8 +21,8 @@
 
     <van-divider hairline />
 
-    <swiper indicator-dots="{{true}}" style="height:360px;" bindchange="onChange_tab">
-      <swiper-item wx:for="{{tasks[0].types}}" wx:for-item="item">
+    <swiper indicator-dots="{{true}}" style="height:400px;" bindchange="onChange_tab">
+      <swiper-item wx:for="{{tasks[0].types}}" wx:for-item="item" wx:if="{{m.noFindChar('_',index)}}">
         <van-row>
           <van-col span="12" class="text-left">
             <view style="font-size:17px;">{{index}}</view>
@@ -74,7 +79,7 @@
                       <view slot="right" style="height:100%;">
                         <!-- <van-button custom-style="height:100%;margin-right:20rpx;" type="warning" bind:click="edit">完成</van-button> -->
                         <van-button custom-style="height:100%;" type="primary" bind:click="edit" id="{{items.id}}" data-title="{{index}}">编辑</van-button>
-                        <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{items.id}}" data-title="{{index}}">删除</van-button>
+                        <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{items.id}}" data-name="{{items.name}}" data-title="{{index}}">删除</van-button>
                       </view>
                     </van-swipe-cell>
                   </view>
@@ -88,26 +93,23 @@
     </swiper>
 
     <van-row>
-      <van-col span="24" class="text-center">
+      <van-col span="12">
+        {{task_title}}剩余: {{remain_taskCount}}个
+      </van-col>
+      <van-col span="12" class="text-right">
         <van-button plain round type="primary" icon="plus" size="small" bind:click="onClick_addTask">
         </van-button>
       </van-col>
     </van-row>
 
-    <van-divider hairline />
-    <van-row>
-      <van-col span="10">{{task_title}}剩余: {{remain_taskCount}}个</van-col>
-      <van-col span="14" class="text-right">
-      </van-col>
-    </van-row>
   </view>
-
 </view>
 
 <van-popup 
   show="{{ show_add_task_popup }}" 
   bind:close="onClose_add_task_popup"
   position="bottom"
+  round
   custom-style="height: 50%;"
 >
   <van-tree-select
@@ -149,7 +151,8 @@
             value="{{task_duration}}"
             type="number"
             placeholder="请输入{{task_title=='limitTime'?'限时':'时长'}}"
-            border="{{ false }}"
+            title-width="70px"
+            border="{{false}}"
             bind:change="update_task_duration"
             error="{{task_duration_error}}"
           />
@@ -180,10 +183,43 @@
   </van-tree-select>
 </van-popup>
 
+<van-dialog id="van-dialog" />
+
+<van-popup 
+  show="{{ show_task_popup }}" 
+  bind:close="onClose_task_popup"
+  position="bottom"
+  round
+  custom-style="height: 80%;"
+>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">所有未完成任务</van-divider>
+
+  <view style="margin:0rpx 10% 20rpx 10%;" wx:for="{{tasks[0].types}}" wx:if="{{m.noFindChar('_',index)}}">
+    <!-- header -->
+    <view class="text-left" style="font-size:17px;border-bottom:1px solid #F5F6F8;">
+      <van-tag mark type="warning" plain size="large">{{index}}</van-tag>
+    </view>
+    <!-- content -->
+    <view style="width:100%;" wx:for="{{item}}" wx:for-item="items" class="text-left" wx:for-index="i" >
+      <text wx:if="{{items.completed==false}}" style="text-overflow:ellipsis;word-wrap:break-word;color:{{items.color}};font-size:14px;">{{items.name}}</text>
+    </view>
+  </view>
+
+  <van-divider hairline contentPosition="center" custom-style="color:#b2b2b2;font-size:11px;" borderColor="#FFFFFF"></van-divider>
+  <van-divider hairline borderColor="#FFFFFF"/>
+  <van-divider hairline borderColor="#FFFFFF"/>
+  <van-divider hairline borderColor="#FFFFFF"/>
+</van-popup>
+
 <!-- wxs_toFixed实现 -->
 <wxs module="m">
   var numberToFix= function (value) {
     return value.toFixed(2)
   }
  module.exports.numberToFix=numberToFix;
+
+  var noFindChar= function (find,str) {
+    return str.indexOf(find)>=0?false:true;
+  }
+ module.exports.noFindChar=noFindChar;
 </wxs>
