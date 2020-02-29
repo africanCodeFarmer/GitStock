@@ -440,6 +440,9 @@ Page({
     this.getTabBar().init();
 
     var tasks = wx.getStorageSync('tasks') || []
+
+    //tasks[0].time="2020/02/27"
+
     this.setData({tasks:tasks}) //因为tasks_checkUpdateTime用到了tasks
     tasks = this.tasks_checkUpdateTime(tasks)
     var task_types = wx.getStorageSync('task_types') || []
@@ -456,6 +459,8 @@ Page({
 
     this.refresh_remain_taskCount(this.data.task_title)
     this.refresh_limitTime_remain_time() //刷新限时任务时间
+
+    //console.log(tasks)
   },
   refresh_limitTime_remain_time:function(){
     var tasks = this.data.tasks

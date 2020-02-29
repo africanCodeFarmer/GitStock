@@ -12,6 +12,7 @@ Page({
     }).then(() => {
       // on confirm
       wx.clearStorageSync()
+      app.onLaunch()
 
       wx.showToast({
         icon:'none',

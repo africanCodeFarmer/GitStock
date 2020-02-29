@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/taskLog/taskLog",
     "pages/task/task",
     "pages/task/task_setting/task_duration_CURD/task_duration_CURD",
     "pages/task/task_setting/task_type_CURD/task_type_CURD",
@@ -21,8 +22,8 @@
     "pages/spend/stock_setting/money_block_CURD/money_block_CURD",  
     
   
-    "pages/home/home",
-    "pages/taskLog/taskLog"
+    "pages/home/home"
+    
   ],
   "subPackages": [
       {
