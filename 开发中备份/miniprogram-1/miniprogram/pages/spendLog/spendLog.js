@@ -190,7 +190,7 @@ Page({
       return;
     }
 
-    var delete_msg= e.target.dataset.message+"\n\n注意\n本操作不会影响到今日总账\n删除后会出现空账情况"
+    var delete_msg= e.target.dataset.message+"\n\n注意\n本操作不会影响到今日总账"
 
     Dialog.confirm({
       title: '删除',

@@ -2,20 +2,44 @@ const app = getApp()
 import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
+  data:{
+    // steps: [
+    //   {
+    //     text: '步骤一',
+    //     desc: '描述信息'
+    //   },
+    //   {
+    //     text: '步骤二',
+    //     desc: '描述信息'
+    //   },
+    //   {
+    //     text: '步骤三',
+    //     desc: '描述信息'
+    //   },
+    //   {
+    //     text: '步骤四',
+    //     desc: '描述信息'
+    //   }
+    // ]
+  },
   onShow:function(){
     this.getTabBar().init()
   },
   onClick_clear_tasks:function(){
     Dialog.confirm({
       title: '清空',
-      message: '删除所有任务!?'
+      message: '删除任务日志所有数据!?'
     }).then(() => {
       // on confirm
-      wx.removeStorageSync('tasks')
+      var tasks = wx.getStorageSync('tasks') || []
+      for(var i in tasks)
+        if(i!=0)
+          tasks.splice(i,1)
+      wx.setStorageSync('tasks', tasks)
 
       wx.showToast({
         icon:'none',
-        title: '已清空所有任务',
+        title: '已清空任务日志',
       })
     }).catch(() => {
       // on cancel
@@ -24,7 +48,7 @@ Page({
   onClick_clearAll:function(){
     Dialog.confirm({
       title: '清空',
-      message: '删除所有数据!?'
+      message: '删除所有数据!?\n删除所有数据!?\n删除所有数据!?'
     }).then(() => {
       // on confirm
       wx.clearStorageSync()

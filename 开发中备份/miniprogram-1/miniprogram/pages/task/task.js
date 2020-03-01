@@ -100,8 +100,13 @@ Page({
       this.setData({task_duration:0})
     }
 
-    if(this.data.task_title=='limitTime') //刷新限时任务时间
+    if(this.data.task_title=='limitTime'){ //刷新限时任务时间
       this.refresh_limitTime_remain_time()
+      if(this.data.task_duration==''){
+        this.setData({task_duration_error:true})
+        return;
+      }
+    }
 
     var id = this.data.editID
     var task_title = this.data.editTaskTitle
@@ -225,8 +230,13 @@ Page({
         return task_types[i];
   },
   go_add:function(e){
-    if(this.data.task_title=='limitTime') //刷新限时任务时间
+    if(this.data.task_title=='limitTime'){ //刷新限时任务时间
       this.refresh_limitTime_remain_time()
+      if(this.data.task_duration==''){
+        this.setData({task_duration_error:true})
+        return;
+      }
+    }
 
     if(this.data.task_name==null){
       this.setData({

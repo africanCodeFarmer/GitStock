@@ -1,29 +1,26 @@
 {
   "pages": [
-    "pages/taskLog/taskLog",
+    "pages/home/home",
+
     "pages/task/task",
+    "pages/taskLog/taskLog", 
+
+    "pages/spend/spend",
+    "pages/spendLog/spendLog",
+
+    "pages/task/task_setting/task_setting",
     "pages/task/task_setting/task_duration_CURD/task_duration_CURD",
     "pages/task/task_setting/task_type_CURD/task_type_CURD",
     "pages/task/task_setting/task_color_CURD/task_color_CURD",
-    
-    "pages/task/task_setting/task_setting",
 
-    "pages/spendLog/spendLog",
-    "pages/spend/spend",
-    "pages/spend/stock_setting/spend_type_CURD/spend_type_CURD",  
-
-    
     "pages/spend/target_setting/target_setting",
     "pages/spend/target_setting/target_CURD/target_CURD",
-    "pages/spend/stock_setting/stock_setting",
     
+    "pages/spend/stock_setting/stock_setting",
+    "pages/spend/stock_setting/spend_type_CURD/spend_type_CURD",  
     "pages/spend/stock_setting/stock_CURD/stock_CURD",
     "pages/spend/stock_setting/comment_CURD/comment_CURD",
-    "pages/spend/stock_setting/money_block_CURD/money_block_CURD",  
-    
-  
-    "pages/home/home"
-    
+    "pages/spend/stock_setting/money_block_CURD/money_block_CURD"
   ],
   "subPackages": [
       {
@@ -55,10 +52,10 @@
 				"pagePath": "pages/home/home"
       },
       {
-				"pagePath": "pages/spendLog/spendLog"
+				"pagePath": "pages/taskLog/taskLog"
       },
       {
-				"pagePath": "pages/taskLog/taskLog"
+				"pagePath": "pages/spendLog/spendLog"
       }
 		]
 	},
@@ -89,6 +86,9 @@
     "van-datetime-picker": "@vant/weapp/datetime-picker",
     "van-count-down": "@vant/weapp/count-down",
     "van-tag": "@vant/weapp/tag",
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
+    "van-skeleton": "@vant/weapp/skeleton/index",
+    "van-steps": "@vant/weapp/steps/index",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }

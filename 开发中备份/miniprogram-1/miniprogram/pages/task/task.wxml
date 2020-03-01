@@ -3,7 +3,7 @@
 
 <!-- 任务板块 -->
 <view class="padding text-left">
-  <view class="padding-xl radius shadow bg-white"> 
+  <view class="padding radius shadow bg-white"> 
     <van-row>
       <van-col span="14">
         <view class="flex">
@@ -72,7 +72,7 @@
                         </van-col>
                         <van-col span="{{index=='limitTime'?12:10}}">
                           <view wx:if="{{index=='everyday'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">已完成: {{items.count}}次</view>
-                          <view wx:if="{{index=='limitTime'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">{{items.create_time}}</view>
+                          <view wx:if="{{index=='limitTime'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">截止时间: {{items.create_time}}</view>
                         </van-col>
                       </van-row>
 

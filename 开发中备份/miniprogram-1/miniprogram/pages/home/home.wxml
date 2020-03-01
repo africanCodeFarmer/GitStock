@@ -2,14 +2,52 @@
 <template is="custom" />
 
 <view class="padding text-left">
-  <view class="padding-xl radius shadow bg-white">
-    <van-button plain round type="danger" size="large" bind:click="onClick_clear_tasks">
-      清空任务
-    </van-button>
+  <view class="padding radius shadow bg-white">
+    <van-row>
+      <van-col span="4">
+        <image src="dog.gif" style="width:100rpx;height:100rpx;"/>
+      </van-col>
+      <van-col span="20">
+        <van-skeleton title row="1"/>
+      </van-col>
+    </van-row>
   </view>
 </view>
 
+<!-- <view class="padding text-left">
+  <view class="padding radius shadow bg-white">
+    <van-steps
+      steps="{{ steps }}"
+      active="{{ active }}"
+      direction="vertical"
+      active-color="#07C160"
+    />
+  </view>
+</view> -->
+
 <view class="padding text-left">
+  <view class="padding radius shadow bg-white">
+    <van-row>
+      <van-col span="8" class="text-left">
+        <van-button plain round type="danger" size="small" bind:click="onClick_clear_spendLogs">
+          清空花支日志数据
+        </van-button>
+      </van-col>
+      <van-col span="8" class="text-center">
+        <van-button plain round type="danger" size="small" bind:click="onClick_clearAll">
+          清除所有数据
+        </van-button>
+      </van-col>
+      <van-col span="8" class="text-right">
+        <van-button plain round type="danger" size="small" bind:click="onClick_clear_tasks">
+          清空任务日志数据
+        </van-button>
+      </van-col>
+    </van-row>
+  </view>
+</view>
+
+<!-- <view class="padding text-left">
   <view class="padding-xl radius shadow bg-white">
     <van-button plain round type="danger" size="large" bind:click="onClick_clear_spendLogs">
       清空花支日志数据
@@ -23,6 +61,6 @@
       清除所有数据
     </van-button>
   </view>
-</view>
+</view> -->
 
 <van-dialog id="van-dialog" />

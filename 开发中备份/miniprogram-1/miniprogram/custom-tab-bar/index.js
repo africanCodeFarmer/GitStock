@@ -18,14 +18,14 @@ Component({
 				url: '/pages/home/home'
 			},
 			{
-				icon: 'balance-list-o',
-				text: '花支日志',
-				url: '/pages/spendLog/spendLog'
-			},
-			{
 				icon: 'todo-list-o',
 				text: '任务日志',
 				url: '/pages/taskLog/taskLog'
+			},
+			{
+				icon: 'balance-list-o',
+				text: '花支日志',
+				url: '/pages/spendLog/spendLog'
 			}
 		]
 	},

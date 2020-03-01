@@ -4,7 +4,7 @@
 </cu-custom>
 
 <view class="padding">
-  <view class="padding-xl radius shadow bg-white">
+  <view class="padding radius shadow bg-white">
     <van-row>
       <van-col span="12">
         <view class="text-left" style="font-size:20px;">时间: {{month_title}}</view>
@@ -40,7 +40,7 @@
 </view>
 
 <view class="padding">
-  <view class="padding-xl radius shadow bg-white">
+  <view class="padding radius shadow bg-white">
     <view class="box" style="height:{{canvas_height}}rpx;">
       <ec-canvas id="column_chart" canvas-id="column_chart" ec="{{ ec_column_chart }}"></ec-canvas>
     </view>
@@ -48,7 +48,7 @@
 </view>
 
 <view class="padding">
-  <view class="padding-xl radius shadow bg-white">
+  <view class="padding radius shadow bg-white">
     <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
       <ec-canvas id="pie_chart" canvas-id="pie_chart" ec="{{ ec_pie_chart }}"></ec-canvas>
     </view>

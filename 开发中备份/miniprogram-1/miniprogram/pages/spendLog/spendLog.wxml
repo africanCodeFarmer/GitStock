@@ -21,7 +21,7 @@
 
     <!-- content -->
     <view class="padding" wx:for="{{spendLogs}}" wx:if="{{index<=show_spendLog_day && spendLogs[index]!=null}}">
-      <view class="padding-xl radius shadow bg-white">
+      <view class="padding radius shadow bg-white">
         <!-- content-header -->
         <view>
           <van-row>
@@ -44,7 +44,33 @@
         <!-- content-content -->
         <view wx:for="{{item.datas}}" wx:for-item="datas">
           <van-swipe-cell right-width="{{ 110 }}">
-            <van-cell use-label-slot center>
+            
+            <view style="margin:10rpx 2%;border-bottom:1px solid #F5F6F8">
+              <van-row>
+                <van-col offset="1" span="3">
+                  <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:36px;"></text>
+                </van-col>
+                <van-col span="19">
+                  <van-row>
+                    <van-col span="12" class="text-left">
+                      <view>
+                        <text style="font-size:17px;">{{datas.name}} </text>
+                        <text style="font-size:14px;color:#888888;">{{datas.comment}}</text>
+                      </view>
+                      <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.detail_time}} {{datas.spend_type==null?'转账':datas.spend_type}}</view>
+                    </van-col>
+                    <van-col span="12" class="text-right">
+                      <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
+                      <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
+                      <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
+                      <view style="font-size:14px;color:#353535;">余额: {{datas.remain}}</view>
+                    </van-col>
+                  </van-row>
+                </van-col>
+                <van-col span="1"></van-col>
+              </van-row>
+            </view>
+            <!-- <van-cell use-label-slot center>
               <view slot="label">
                 <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.detail_time}} {{datas.spend_type==null?'转账':datas.spend_type}}</view>
               </view>
@@ -61,7 +87,8 @@
                 <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
                 <view style="font-size:14px;color:#353535;">余额: {{datas.remain}}</view>
               </view>
-            </van-cell>
+            </van-cell> -->
+
             <view slot="right" style="height:100%;">
               <van-button custom-style="height:100%;" type="primary" icon="" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}" data-operate="{{datas.operate}}" >编辑</van-button>
               <van-button custom-style="height:100%;" type="danger" icon="" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}" data-spend_type="{{datas.spend_type}}">删除</van-button>
