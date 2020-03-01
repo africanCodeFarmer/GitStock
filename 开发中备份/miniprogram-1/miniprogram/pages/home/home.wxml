@@ -4,38 +4,50 @@
 <view class="padding text-left">
   <view class="padding radius shadow bg-white">
     <van-row>
-      <van-col span="4">
-        <image src="dog.gif" style="width:100rpx;height:100rpx;"/>
-      </van-col>
-      <van-col span="20">
-        <van-skeleton title row="1"/>
+      <!-- <van-col span="4">
+        <image src="dog.gif" style="width:100rpx;height:100rpx;" bindtap="onClick_dog"/>
+      </van-col> -->
+      <van-col span="24">
+        <van-skeleton title row="1" loading="{{show_title_text}}">
+          <view style="font-size:20px;color:black;">{{greet_text}}</view>
+          <!-- <view style="margin-left:20px;font-size:14px;margin-top:5px;">我叫柯基宅,为了不当舔狗,24小时都想奋斗!</view> -->
+        </van-skeleton>
       </van-col>
     </van-row>
   </view>
 </view>
 
-<!-- <view class="padding text-left">
-  <view class="padding radius shadow bg-white">
-    <van-steps
-      steps="{{ steps }}"
-      active="{{ active }}"
-      direction="vertical"
-      active-color="#07C160"
-    />
-  </view>
-</view> -->
-
 <view class="padding text-left">
   <view class="padding radius shadow bg-white">
+
+    <van-row>
+      <van-col span="20"><text style="font-size:20px;">我的原则</text></van-col>
+      <van-col span="4">
+        <van-button plain round type="primary" icon="plus" size="small" bind:click="onClick_add_principle">
+        </van-button>
+      </van-col>
+    </van-row>
+
+    <van-divider hairline />
+
+    <view>
+      <van-tag size="medium" wx:for="{{principles}}" bindtap="edit" id="{{item.id}}">{{item.text}}</van-tag>
+    </view>
+
+  </view>
+</view>
+
+<view style="position:absolute;bottom:0;margin:0px 4% 60px 4%;width:92%;">
+  <view class="shadow">
     <van-row>
       <van-col span="8" class="text-left">
-        <van-button plain round type="danger" size="small" bind:click="onClick_clear_spendLogs">
-          清空花支日志数据
+        <van-button plain round type="danger" size="small" bind:click="onClick_clearAll">
+          清除所有数据
         </van-button>
       </van-col>
       <van-col span="8" class="text-center">
-        <van-button plain round type="danger" size="small" bind:click="onClick_clearAll">
-          清除所有数据
+        <van-button plain round type="danger" size="small" bind:click="onClick_clear_spendLogs">
+          清空花支日志数据
         </van-button>
       </van-col>
       <van-col span="8" class="text-right">
@@ -47,20 +59,29 @@
   </view>
 </view>
 
-<!-- <view class="padding text-left">
-  <view class="padding-xl radius shadow bg-white">
-    <van-button plain round type="danger" size="large" bind:click="onClick_clear_spendLogs">
-      清空花支日志数据
-    </van-button>
-  </view>
-</view>
-
-<view class="padding text-left">
-  <view class="padding-xl radius shadow bg-white">
-    <van-button plain round type="danger" size="large" bind:click="onClick_clearAll">
-      清除所有数据
-    </van-button>
-  </view>
-</view> -->
-
 <van-dialog id="van-dialog" />
+
+<van-popup 
+  show="{{ show_add_principle }}" 
+  bind:close="onClose_add_principle"
+  position="bottom"
+  round
+  custom-style="height: 32%;"
+>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">{{editing?'编辑':'添加'}}原则</van-divider>
+
+  <van-field
+    name="input_principle"
+    value="{{input_principle}}"
+    placeholder="请输入原则"
+    border="{{ false }}"
+    bind:change="change_principle"
+    error="{{input_principle_error}}"
+  >
+    <van-button slot="button" round size="small" type="primary" icon="arrow" bind:click="{{editing?'update_principle':'add_principle'}}"></van-button>
+  </van-field>
+
+  <view wx:if="{{editing}}" class="text-center" style="position:absolute;bottom:60px;right:4%;"> 
+    <van-button round size="small" type="danger" icon="delete" bind:click="delete_principle"></van-button>
+  </view>
+</van-popup>
