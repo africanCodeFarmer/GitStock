@@ -1,110 +1,125 @@
 const app = getApp()
 import Dialog from '@vant/weapp/dialog/dialog';
+var util = require('../public/public.js');
 
 Page({
   data:{
     tasks:[],
-    
+    taskLogsData:{},
+
     show_edit_dialog:false,
+    show_taskLog_day:0,
   },
   onClick_statistic:function(){
-    // wx.navigateTo({
-    //   url: '../../packageTab1/spendLog/statistic/statistic',
-    // })
+    wx.navigateTo({
+      url: '../../packageTab1/taskLog/statistic/statistic',
+    })
   },
   onReachBottom:function(){
-    var show_spendLog_day = this.data.show_spendLog_day+1
-    var spendLogs = this.data.spendLogs
-
-    if(show_spendLog_day < spendLogs.length){
-      this.setData({show_spendLog_day:show_spendLog_day})
-
-      wx.showToast({
-        icon:'none',
-        title: '数据已追加',
-      })
+    var show_taskLog_day = this.data.show_taskLog_day+1
+    if(show_taskLog_day>=this.data.tasks.length){
+      return;
     }
+
+    this.setData({show_taskLog_day:show_taskLog_day})
+    wx.showToast({
+      icon:'none',
+      title: '数据已追加',
+    })
   },
   onCancel_search:function(){
-    // this.setData({
-    //   spendLogs:wx.getStorageSync('spendLogs') || []
-    // })
+    this.setData({
+      tasks:wx.getStorageSync('tasks') || []
+    })
 
-    // wx.showToast({
-    //   icon:'none',
-    //   title: '数据已还原',
-    // })
+    wx.showToast({
+      icon:'none',
+      title: '数据已还原',
+    })
   },
-  //名称 注释 时间搜索
-  search:function(value){
-    var ans = [];
-    var spendLogs = wx.getStorageSync('spendLogs') || []
+  //时间 任务名搜索
+  onSearch:function(e){
+    var value = e.detail
+    var ans = []
+    var tasks = this.data.tasks
+    
+    //利用complete_time实现同时搜索
+    for(var i in tasks){
+      var needPOP = true
+      ans.push(tasks[i]);
+      for(var j in tasks[i].types){
+        if(j.indexOf('_')>=0){ //跳过完成数
+          //tasks[i].types[j]=0
+          continue;
+        }
+        for(var k in tasks[i].types[j]){
+          var taskLogsData = tasks[i].types[j][k] //每条数据
+          if(taskLogsData==null || taskLogsData.completed==false) //跳过null和未完成
+            continue;
 
-    for(var i in spendLogs){
-      ans.push({
-        time:spendLogs[i].time,
-        datas:[]
-      })
-
-      var datas = spendLogs[i].datas
-      for(var j in datas){
-        var name = datas[j].name
-        var comment = datas[j].comment || ""
-        var time = datas[j].time
-        
-        if(name.indexOf(value)>=0 || comment.indexOf(value)>=0 || time.indexOf(value)>=0){
-          ans[i].datas.push(datas[j])
+          //搜索
+          var time = taskLogsData.complete_time.split(' ')[0]
+          if(taskLogsData.name.indexOf(value)>=0 || time.indexOf(value)>=0){
+            needPOP = false
+          }
+          else
+            tasks[i].types[j][k]=null;
         }
       }
-      if(ans[i].datas.length==0){ //无数据
-        ans[i]=null
-      }
+      if(needPOP)
+        ans.pop()
     }
-    this.setData({spendLogs:ans}) //更新搜索数据
-  },
-  onSearch:function(e){
-    // var value = e.detail
-    // this.search(value)
 
-    // wx.showToast({
-    //   icon:'none',
-    //   title: '数据已刷新',
-    // })
+    this.setData({tasks:ans}) //更新搜索数据
+    wx.showToast({
+      icon:'none',
+      title: '数据已刷新',
+    })
   },
   edit_choose_type:function(e){
     var text = e.target.dataset.text
     var icon = e.target.dataset.icon
-    var spendLogData = this.data.spendLogData
-    spendLogData.spend_type = text
-    spendLogData.icon = icon
-    this.setData({spendLogData:spendLogData})
+    var taskLogsData = this.data.taskLogsData
+    taskLogsData.type = text
+    taskLogsData.icon = icon
+    this.setData({taskLogsData:taskLogsData})
   },
-  onChange_spendLogData_comment:function(e){
-    var spendLogData = this.data.spendLogData
-    spendLogData.comment = e.detail
-    this.setData({spendLogData:spendLogData})
-  },
-  updateSpendLogData:function(spendLogData){
-    var spendLogs = this.data.spendLogs
-    for(var i in spendLogs){
-      if(spendLogs[i].time == spendLogData.time){
-        var datas = spendLogs[i].datas
-        for(var j in datas){
-          if(datas[j].id == spendLogData.id){
-            datas[j] = spendLogData
-            break
-          }
-        }  
-        spendLogs[i].datas = datas 
-        break
-      }
-    }
-    this.setData({spendLogs:spendLogs})
-    wx.setStorageSync('spendLogs', spendLogs)
+  onChange_task_name:function(e){
+    var taskLogsData = this.data.taskLogsData
+    taskLogsData.name = e.detail
+    this.setData({taskLogsData:taskLogsData})
   },
   update:function(){
-    this.updateSpendLogData(this.data.spendLogData)
-    this.setData({show_edit_dialog:false})
+    var taskLogsData = this.data.taskLogsData
+    var tasks = this.data.tasks
+    for(var i in tasks){
+      if(tasks[i].time == taskLogsData.time){
+        var specificTasks = tasks[i].types[taskLogsData.title]
+        for(var j in specificTasks){
+          if(specificTasks[j]!=null && specificTasks[j].id == taskLogsData.id){
+            tasks[i].types[taskLogsData.title][j]={
+              completed:specificTasks[j].completed,
+              color:specificTasks[j].color,
+              create_time:specificTasks[j].create_time,
+              duration:specificTasks[j].duration,
+              count:specificTasks[j].count,
+              remain_time:specificTasks[j].remain_time,
+              complete_time:specificTasks[j].complete_time,
+
+              id:taskLogsData.id,
+              name:taskLogsData.name,
+              type:taskLogsData.type,
+              icon:taskLogsData.icon,
+            }
+          }
+        }
+        break;
+      }
+    }
+
+
+    this.setData({tasks:tasks,show_edit_dialog:false})
+    wx.setStorageSync('tasks', tasks)
 
     wx.showToast({
       icon:'none',
@@ -133,64 +148,103 @@ Page({
       if(types[i].type == type)
         result.push(types[i])
     this.setData({
-      spend_types:result
+      task_types:result
     })
   },
   edit:function(e){
     var id = e.target.id
     var time = e.target.dataset.time
-    var operate = e.target.dataset.operate
-    this.init_spend_types(operate) //更新编辑窗口可选类型
-    var spendLogData = this.getSpendLogData_useTimeAndID(time,id)
+    var title = e.target.dataset.title
+    var name = e.target.dataset.name
 
-    if(spendLogData.spend_type==null){
+    var today = util.formatTime(new Date()).split(' ')[0]
+    if(today == time){
       wx.showToast({
         icon:'none',
-        title: '转账不可编辑',
+        title: '今日任务日志不可编辑',
       })
       return;
     }
 
-    this.setData({show_edit_dialog:true,spendLogData:spendLogData})
+    //填充taskLogsData对象
+    this.fillTaskLogsData(time,title,id)
+    this.setData({show_edit_dialog:true})
+  },
+  fillTaskLogsData:function(time,title,id){
+    var tasks = this.data.tasks
+    for(var i in tasks){
+      if(tasks[i].time == time){
+        var specificTasks = tasks[i].types[title]
+        for(var j in specificTasks){
+          if(specificTasks[j]!=null && specificTasks[j].id == id){
+            this.setData({
+              taskLogsData:{
+                id:specificTasks[j].id,
+                completed:specificTasks[j].completed,
+                name:specificTasks[j].name,
+                color:specificTasks[j].color,
+                create_time:specificTasks[j].create_time,
+                type:specificTasks[j].type,
+                icon:specificTasks[j].icon,
+                duration:specificTasks[j].duration,
+                count:specificTasks[j].count,
+                remain_time:specificTasks[j].remain_time,
+                complete_time:specificTasks[j].complete_time,
+
+                //这两个属性用于update
+                title:title,
+                time:time,
+              }
+            })
+            break;
+          }
+        }
+        break
+      }
+    }
   },
   delete:function(e){
     var id = e.target.id
     var time = e.target.dataset.time
-    var spend_type = e.target.dataset.spend_type
-    var spendLogs = this.data.spendLogs
-
-    if(spend_type==null){
+    var title = e.target.dataset.title
+    var name = e.target.dataset.name
+    var tasks = this.data.tasks
+    
+    var today = util.formatTime(new Date()).split(' ')[0]
+    if(today == time){
       wx.showToast({
         icon:'none',
-        title: '转账不可删除',
+        title: '今日任务日志不可删除',
       })
       return;
     }
 
-    var delete_msg= e.target.dataset.message+"\n\n注意\n本操作不会影响到今日总账\n删除后会出现空账情况"
-
     Dialog.confirm({
       title: '删除',
-      message: delete_msg
+      message: '确定删除'+name+'吗?'
     }).then(() => {
       // on confirm
-      for(var i in spendLogs){
-        if(spendLogs[i].time == time){
-          var spendLogData = spendLogs[i].datas
-          for(var j in spendLogData){
-            if(spendLogData[j].id == id){
-              spendLogData.splice(j,1)
-              break
+
+      for(var i in tasks){
+        if(tasks[i].time == time){
+          var specificTasks = tasks[i].types[title]
+          for(var j in specificTasks){
+            if(specificTasks[j]!=null && specificTasks[j].id == id){
+              tasks[i].types[title+"_completed_count"]-- //完成量-1
+              tasks[i].types[title].splice(j,1)
+              break;
             }
           }
-          spendLogs[i].datas = spendLogData
-          if(spendLogData.length==0) //当前时间大类无数据
-            spendLogs.splice(i,1)
-          break
+          break;
         }
       }
-      this.setData({spendLogs:spendLogs})
-      wx.setStorageSync('spendLogs', spendLogs)
+
+      this.setData({tasks:tasks})
+      wx.setStorageSync('tasks', tasks)
+      wx.showToast({
+        icon:'none',
+        title: '删除成功',
+      })
     }).catch(() => {
       // on cancel
     });
@@ -199,27 +253,28 @@ Page({
     this.getTabBar().init();
 
     var tasks = wx.getStorageSync('tasks') || []
-    
+
+    //测试区
+    // tasks[2].time = "2020/03/00"
+    // wx.setStorageSync('tasks', tasks)
+    // this.setData({tasks:tasks})
+
+    var task_types = wx.getStorageSync('task_types') || []
     this.setData({
       tasks:tasks,
+      task_types:task_types,
     })
 
-    // var spendLogs = wx.getStorageSync('spendLogs') || []
-    // var spend_types = wx.getStorageSync('types') || []
-
-    // //计算最开始要显示几天的日志
-    // var show_spendLog_day = this.data.show_spendLog_day
-    // var count_data = 0
-    // for(var i in spendLogs){
-    //   count_data += spendLogs[i].datas.length
-    //   if(count_data<=10)
-    //     show_spendLog_day +=1
-    // }
-
-    // this.setData({
-    //   spendLogs:spendLogs,
-    //   spend_types:spend_types,
-    //   show_spendLog_day:show_spendLog_day,
-    // })
+    //计算最开始要显示几天的日志
+    var show_taskLog_day = this.data.show_taskLog_day
+    var count_data = 0
+    for(var i in tasks){
+      count_data += tasks[i].types.today_completed_count
+      count_data += tasks[i].types.everyday_completed_count
+      count_data += tasks[i].types.limitTime_completed_count
+      if(count_data<=10)
+      show_taskLog_day++
+    }
+    this.setData({show_taskLog_day:show_taskLog_day})
   }
 })

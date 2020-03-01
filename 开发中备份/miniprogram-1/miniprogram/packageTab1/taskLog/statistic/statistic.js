@@ -15,14 +15,13 @@ function initChart_column(canvas, width, height) {
 
   var option = {
     title:{
-      text:"本月每日花支收入情况"
+      text:"本月每日任务完成情况"
     },
-    color: ['#E64340','#09BB07'],
     grid: {
       left: 0,
       right: 0,
       bottom: 15,
-      top: 60,
+      top: 80,
       containLabel: true
     },
     xAxis: [
@@ -54,16 +53,21 @@ function initChart_column(canvas, width, height) {
         }
       }
     ],
+    legend: {
+      data: ['今日任务', '每日任务','限时任务'],
+      right: 0,
+      top:40
+    },
     tooltip: {
       trigger: 'axis',
-      formatter: '{b}日\n{a0}: {c0}\n{a1}: +{c1}',
+      formatter: '{b}日\n{a0}: {c0}\n{a1}: {c1}\n{a2}: {c2}',
       axisPointer: {            // 坐标轴指示器，坐标轴触发有效
         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
       }
     },
     series: [
       {
-        name: '花支',
+        name: '今日任务',
         type: 'bar',
         stack:'情况',
         label: {
@@ -75,7 +79,19 @@ function initChart_column(canvas, width, height) {
         data: [],
       },
       {
-        name: '收入',
+        name: '每日任务',
+        type: 'bar',
+        stack:'情况',
+        label: {
+          normal: {
+            show: false,
+            position: 'inside'
+          }
+        },
+        data: [],
+      },
+      {
+        name: '限时任务',
         type: 'bar',
         stack:'情况',
         label: {
@@ -103,7 +119,7 @@ function initChart_pie(canvas, width, height) {
 
   var option = {
     title: {
-        text: '本月各花支类型支出情况',
+        text: '本月完成任务类型情况',
         left: 'left',
     },
     tooltip: {
@@ -206,14 +222,15 @@ function initChart_income_pie(canvas, width, height) {
 }
 
 //更新柱状图
-function updateChart_column(data_spends,data_incomes){
+function updateChart_column(data_today_completed_count,data_everyday_completed_count,data_limitTime_completed_count){
   if(column_chart==null)
     return;
 
   var option = column_chart.getOption()
-  //0花支 1收入
-  option.series[0].data = data_spends
-  option.series[1].data = data_incomes
+  //0今日任务 1每日任务 2限时任务
+  option.series[0].data = data_today_completed_count
+  option.series[1].data = data_everyday_completed_count
+  option.series[2].data = data_limitTime_completed_count
   column_chart.setOption(option)
 }
 
@@ -252,13 +269,14 @@ Page({
       onInit: initChart_income_pie
     },
 
-    custom_data:{"backText":"花支日志","content":"统计"},
+    custom_data:{"backText":"任务日志","content":"统计"},
 
     show_timeChoose_popup:false,
     canvas_height:400,
 
-    month_spend:0,
-    month_income:0,
+    month_today_completed_count:0,
+    month_everyday_completed_count:0,
+    month_limitTime_completed_count:0,
     month_title:0,
   },
   onClick_loadChart:function(){
@@ -271,65 +289,71 @@ Page({
   },
   getTaskLogs_useTime(time){
     var result = []
-    var spendLogs = wx.getStorageSync('spendLogs') || []
-    for(var i in spendLogs){
-      if(spendLogs[i].time.indexOf(time)>=0)
-        result.push(spendLogs[i])
+    var tasks = wx.getStorageSync('tasks') || []
+    for(var i in tasks){
+      if(tasks[i].time.indexOf(time)>=0)
+        result.push(tasks[i])
     }
     return result;
   },
   fill_month_completed_count(month_taskLogs){
-    var month_income = 0
-    var month_spend = 0
+    var month_today_completed_count = 0
+    var month_everyday_completed_count = 0
+    var month_limitTime_completed_count = 0
     for(var i in month_taskLogs){
-      month_spend += parseFloat(month_taskLogs[i].day_spend)
-      month_income += parseFloat(month_taskLogs[i].day_income)
+      month_today_completed_count += parseInt(month_taskLogs[i].types.today_completed_count)
+      month_everyday_completed_count += parseInt(month_taskLogs[i].types.everyday_completed_count)
+      month_limitTime_completed_count += parseInt(month_taskLogs[i].types.limitTime_completed_count)
     }
-    month_income = month_income.toFixed(2)
-    month_spend = month_spend.toFixed(2)
 
     this.setData({
-      month_income:month_income,
-      month_spend:month_spend
+      month_today_completed_count:month_today_completed_count,
+      month_everyday_completed_count:month_everyday_completed_count,
+      month_limitTime_completed_count:month_limitTime_completed_count
     })
   },
   fill_month_title:function(time){
     this.setData({month_title:time})
   },
   update_column_chart:function(month_taskLogs){
-    var data_spends=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    var data_incomes=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    var data_today_completed_count=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    var data_everyday_completed_count=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    var data_limitTime_completed_count=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for(var i in month_taskLogs){
+      //console.log(month_taskLogs)
       var time = parseInt(month_taskLogs[i].time.substr(8,2))-1 //数组基0
-      data_spends[time]=-(parseFloat(month_taskLogs[i].day_spend).toFixed(2))
-      data_incomes[time]=parseFloat(month_taskLogs[i].day_income).toFixed(2)
+      data_today_completed_count[time]=parseInt(month_taskLogs[i].types.today_completed_count)
+      data_everyday_completed_count[time]=parseInt(month_taskLogs[i].types.everyday_completed_count)
+      data_limitTime_completed_count[time]=parseInt(month_taskLogs[i].types.limitTime_completed_count)
     }
 
     //调用页面更新柱状图函数
-    updateChart_column(data_spends,data_incomes)
+    updateChart_column(data_today_completed_count,data_everyday_completed_count,data_limitTime_completed_count)
   },
   update_pie_chart:function(month_taskLogs){
     //获取所有类型{默认消费类:0,饮食:0}
     var month_task_types = []
-    var task_types = wx.getStorageSync('types') || []
+    var task_types = wx.getStorageSync('task_types') || []
     for(var i in task_types){
-      if(task_types[i].type=='-')
-        month_task_types[task_types[i].text]=0
+      month_task_types[task_types[i].text]=0
     }
 
-    //统计每种类型
+    //统计每种类型 month_task_types[类型名]++
     for(var i in month_taskLogs){
-      var month_taskLog_datas = month_taskLogs[i].datas
-      for(var j in month_taskLog_datas){
-        if(month_taskLog_datas[j].spend_type!=null && month_taskLog_datas[j].operate=='-') //不为转账且是消费
-        month_task_types[month_taskLog_datas[j].spend_type] += parseFloat(month_taskLog_datas[j].value)
+      for(var j in month_taskLogs[i].types){
+        if(j.indexOf('_')>=0) //跳过完成
+          continue;
+        for(var k in month_taskLogs[i].types[j]){
+          var taskLogsData = month_taskLogs[i].types[j][k] //具体的任务
+          if(taskLogsData!=null && taskLogsData.completed)
+            month_task_types[taskLogsData.type]++
+        }
       }
     }
 
     //拼装datas
     var datas = []
     for(var i in month_task_types){
-      month_task_types[i]=month_task_types[i].toFixed(2)
       datas.push({
         name:i,
         value: month_task_types[i]
@@ -376,16 +400,16 @@ Page({
 
     //填充时间
     this.fill_month_title(time)
-    //获取本月spendLogs
+    //获取本月taskLogs
     var month_taskLogs = this.getTaskLogs_useTime(yearAndMonth)
-    //填充月收入和月支出
+    //填充月完成量
     this.fill_month_completed_count(month_taskLogs)
     //更新柱状图
     this.update_column_chart(month_taskLogs)
     //更新饼图
     this.update_pie_chart(month_taskLogs)
     //更新收入饼图
-    this.update_income_pie_chart(month_taskLogs)
+    //this.update_income_pie_chart(month_taskLogs)
   },
   timeChoose:function(e){
     var time = util.formatTime(new Date(e.detail)).split(' ')[0]
@@ -402,7 +426,7 @@ Page({
     //更新饼图
     this.update_pie_chart(month_taskLogs)
     //更新收入饼图
-    this.update_income_pie_chart(month_taskLogs)
+    //this.update_income_pie_chart(month_taskLogs)
 
     this.onClose_timeChoose_popup()
 

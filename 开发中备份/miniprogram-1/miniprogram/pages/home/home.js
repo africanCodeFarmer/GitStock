@@ -5,6 +5,22 @@ Page({
   onShow:function(){
     this.getTabBar().init()
   },
+  onClick_clear_tasks:function(){
+    Dialog.confirm({
+      title: '清空',
+      message: '删除所有任务!?'
+    }).then(() => {
+      // on confirm
+      wx.removeStorageSync('tasks')
+
+      wx.showToast({
+        icon:'none',
+        title: '已清空所有任务',
+      })
+    }).catch(() => {
+      // on cancel
+    });
+  },
   onClick_clearAll:function(){
     Dialog.confirm({
       title: '清空',

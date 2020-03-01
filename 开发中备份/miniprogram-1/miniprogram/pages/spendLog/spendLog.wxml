@@ -124,7 +124,7 @@
     <!-- 分类块 -->
     <van-row>
       <van-col offset="4" span="20">  
-        <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{spend_types}}">
+        <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_types}}">
           <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
             <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
           </van-cell>

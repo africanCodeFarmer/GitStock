@@ -6,22 +6,22 @@ App({
     CustomBar:null,
   },
   fill_default_spend_type:function(){
-    var spend_types = wx.getStorageSync('types') || []
+    var task_types = wx.getStorageSync('types') || []
 
-    if(spend_types.length==0){
-      spend_types.push({
+    if(task_types.length==0){
+      task_types.push({
         id:1,
         text:'默认消费类',
         icon:"question",
         type:'-',
       })
-      spend_types.push({
+      task_types.push({
         id:2,
         text:'默认收入类',
         icon:"question",
         type:'+',
       })
-      wx.setStorageSync('types', spend_types)
+      wx.setStorageSync('types', task_types)
     }
   },
   fill_default_task_type:function(){

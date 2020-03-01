@@ -30,7 +30,8 @@
           "root": "packageTab1", 
           "pages": [
               "ec-canvas/ec-canvas",
-              "spendLog/statistic/statistic"
+              "spendLog/statistic/statistic",
+              "taskLog/statistic/statistic"
           ]
       }
   ],

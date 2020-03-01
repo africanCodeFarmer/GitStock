@@ -108,7 +108,7 @@
   custom-style="height: 50%;"
 >
   <van-tree-select
-  items="{{ spend_types }}"
+  items="{{ task_types }}"
   main-active-index="{{ choose_spend_type }}"
   bind:click-nav="onClickNav"
   >

@@ -20,7 +20,7 @@
     </van-sticky>
 
     <!-- content -->
-    <view class="padding" wx:for="{{tasks}}">
+    <view class="padding" wx:for="{{tasks}}" wx:if="{{(tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count)>0 && index<show_taskLog_day}}">
       <view class="padding-xl radius shadow bg-white">
         <van-row>
           <van-col span="12" class="text-left">
@@ -55,28 +55,39 @@
         <van-divider hairline />
 
         <!-- content-content -->
-        <!-- wx:for="{{items}}" wx:for-item="datas" -->
-        <view>
+        <view wx:for="{{items}}" wx:for-item="datas" wx:if="{{datas!=null &&datas.completed}}" wx:for-index="datas_index">
+          
           <van-swipe-cell right-width="{{ 110 }}" disabled="{{true}}">
             <van-row>
               <van-col span="2">
-                <text style="font-size:20px;" class="cuIcon-question"></text>
+                <text style="font-size:20px;" class="cuIcon-{{datas.icon}}"></text>
               </van-col>
               <van-col span="14">
                 <view>
-                  <text style="color:{{items.color}};word-break: keep-all;word-wrap: break-word;font-size:14px;">任务1</text>
+                  <text style="word-break: keep-all;word-wrap: break-word;font-size:14px;">{{datas.name}}</text>
                 </view>
               </van-col>
               <van-col span="8">
-                <view class="text-right" style="color:#b2b2b2;font-size:11px;">22:22:22</view>
+                <view class="text-right" style="color:#353535;font-size:13px;">{{indexes=='limitTime'?'限时: ':'时长: '}}{{datas.duration}}min</view>
+              </van-col>
+            </van-row>
+            <van-row>
+              <van-col offset="2" span="{{indexes=='limitTime'?10:12}}">
+                <view wx:if="{{indexes=='limitTime'&&datas.completed}}" style="color:#b2b2b2;font-size:11px;">完成用时: {{m.numberToFix(datas.duration-datas.remain_time/60000)}}min</view>
+                <view wx:else style="color:#b2b2b2;font-size:11px;">{{datas.create_time}}</view>
+              </van-col>
+              <van-col span="{{indexes=='limitTime'?12:10}}">
+                <view wx:if="{{indexes=='everyday'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">已完成: {{datas.count}}次</view>
+                <view wx:if="{{indexes=='limitTime'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">{{datas.create_time}}</view>
               </van-col>
             </van-row>
 
             <view slot="right" style="height:100%;">
-              <van-button custom-style="height:100%;" type="primary" bind:click="edit" id="{{items.id}}" data-title="{{index}}">编辑</van-button>
-              <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{items.id}}" data-name="{{items.name}}" data-title="{{index}}">删除</van-button>
+              <van-button custom-style="height:100%;" type="primary" bind:click="edit" id="{{datas.id}}" data-name="{{datas.name}}" data-title="{{indexes}}" data-time="{{tasks[index].time}}">编辑</van-button>
+              <van-button custom-style="height:100%;" type="danger" bind:click="delete" id="{{datas.id}}" data-name="{{datas.name}}" data-title="{{indexes}}" data-time="{{tasks[index].time}}">删除</van-button>
             </view>
           </van-swipe-cell>
+
         </view>
 
       </view>
@@ -106,11 +117,11 @@
   <van-row>
     <van-col offset="2" span="20">
       <van-field
-        label="注释"
-        placeholder="请输入注释"
-        value="{{spendLogData.comment}}"
+        label="任务名称"
+        placeholder="请输入任务名称"
+        value="{{taskLogsData.name}}"
         border="{{ false }}"
-        bind:change="onChange_spendLogData_comment"
+        bind:change="onChange_task_name"
       />
     </van-col>
     <van-col span="2"></van-col>
@@ -119,22 +130,22 @@
   <view>
     <van-row>
       <van-col offset="2" span="8">
-        <van-cell title="消费类型"></van-cell>
+        <van-cell title="任务类型"></van-cell>
       </van-col>
       <van-col span="12">
-        <van-cell title="{{spendLogData.spend_type}}">
+        <van-cell title="{{taskLogsData.type}}">
           <view slot="icon">
-            <text class="cuIcon-{{spendLogData.icon}}"></text>
+            <text class="cuIcon-{{taskLogsData.icon}}"></text>
           </view>
         </van-cell>
       </van-col>
       <van-col span="2"></van-col>
     </van-row>
 
-    <!-- 分类块 -->
+    <!-- 类型块 -->
     <van-row>
       <van-col offset="4" span="20">  
-        <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{spend_types}}">
+        <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_types}}">
           <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
             <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
           </van-cell>
@@ -154,4 +165,8 @@
     return str+'_completed_count';
   }
  module.exports.combineCompleteCountStr=combineCompleteCountStr;
+ var numberToFix= function (value) {
+    return value.toFixed(2)
+  }
+ module.exports.numberToFix=numberToFix;
 </wxs>

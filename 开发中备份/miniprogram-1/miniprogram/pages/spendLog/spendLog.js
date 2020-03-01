@@ -26,7 +26,7 @@ Page({
     spendLogData:[],
     
     show_edit_dialog:false,
-    spend_types:[],
+    task_types:[],
 
     show_spendLog_day:0,
   },
@@ -156,7 +156,7 @@ Page({
       if(types[i].type == type)
         result.push(types[i])
     this.setData({
-      spend_types:result
+      task_types:result
     })
   },
   edit:function(e){
@@ -214,6 +214,11 @@ Page({
       }
       this.setData({spendLogs:spendLogs})
       wx.setStorageSync('spendLogs', spendLogs)
+
+      wx.showToast({
+        icon:'none',
+        title: '删除成功',
+      })
     }).catch(() => {
       // on cancel
     });
@@ -221,7 +226,7 @@ Page({
   onShow:function(){
     this.getTabBar().init();
     var spendLogs = wx.getStorageSync('spendLogs') || []
-    var spend_types = wx.getStorageSync('types') || []
+    var task_types = wx.getStorageSync('types') || []
 
     //计算最开始要显示几天的日志
     var show_spendLog_day = this.data.show_spendLog_day
@@ -234,7 +239,7 @@ Page({
 
     this.setData({
       spendLogs:spendLogs,
-      spend_types:spend_types,
+      task_types:task_types,
       show_spendLog_day:show_spendLog_day,
     })
   }

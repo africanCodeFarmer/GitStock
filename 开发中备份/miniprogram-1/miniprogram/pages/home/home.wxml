@@ -3,6 +3,14 @@
 
 <view class="padding text-left">
   <view class="padding-xl radius shadow bg-white">
+    <van-button plain round type="danger" size="large" bind:click="onClick_clear_tasks">
+      清空任务
+    </van-button>
+  </view>
+</view>
+
+<view class="padding text-left">
+  <view class="padding-xl radius shadow bg-white">
     <van-button plain round type="danger" size="large" bind:click="onClick_clear_spendLogs">
       清空花支日志数据
     </van-button>

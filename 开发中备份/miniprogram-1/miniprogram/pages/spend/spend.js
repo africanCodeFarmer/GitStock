@@ -4,7 +4,7 @@ import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data:{
-    spend_types:[],
+    task_types:[],
     choose_spend_type :0,
     spend_type:"",
 
@@ -171,10 +171,10 @@ Page({
     this.setData({show_money_transfer_popup:false})
   },
   getSpendType_useSpendType(spendType){
-    var spend_types = this.data.spend_types
-    for(var i in spend_types)
-      if(spend_types[i].text == spendType)
-        return spend_types[i]
+    var task_types = this.data.task_types
+    for(var i in task_types)
+      if(task_types[i].text == spendType)
+        return task_types[i]
     return null;
   },
   go_spend:function(){
@@ -301,7 +301,7 @@ Page({
   },
   onClickNav:function(e){
     var index = e.detail.index
-    var spend_type = this.data.spend_types[index]
+    var spend_type = this.data.task_types[index]
     this.setData({
       spend_type:spend_type.text,
       choose_spend_type:index
@@ -333,7 +333,7 @@ Page({
     this.setData({
       choose_spend_type:0,
       spend_type:result[0].text,
-      spend_types:result
+      task_types:result
     })
   },
   addMoney:function(e){
@@ -400,7 +400,7 @@ Page({
     var stocks = wx.getStorageSync('stocks') || []
     var comments = wx.getStorageSync('comments') || []
     var money_blocks = wx.getStorageSync('blocks') || []
-    var spend_types = wx.getStorageSync('types') || []
+    var task_types = wx.getStorageSync('types') || []
     var spendLogs = wx.getStorageSync('spendLogs') || []
     var targets = this.getWhereTargets({"achieved":false})
     var targets_achieved = this.getWhereTargets({"achieved":true})
@@ -414,8 +414,8 @@ Page({
       stocks:stocks,
       comments:comments,
       money_blocks:money_blocks,
-      spend_types:spend_types,
-      spend_type:spend_types.length>0?spend_types[0].text:"",
+      task_types:task_types,
+      spend_type:task_types.length>0?task_types[0].text:"",
       spendLogs:spendLogs,
       picker_columns:[{values:pickers},{values:pickers}],
       targets:targets,
