@@ -11,25 +11,6 @@ var util = require('../public/public.js');
 
 Page({
   data:{
-    // steps: [
-    //   {
-    //     text: '步骤一',
-    //     desc: '描述信息'
-    //   },
-    //   {
-    //     text: '步骤二',
-    //     desc: '描述信息'
-    //   },
-    //   {
-    //     text: '步骤三',
-    //     desc: '描述信息'
-    //   },
-    //   {
-    //     text: '步骤四',
-    //     desc: '描述信息'
-    //   }
-    // ]
-
     show_title_text:false,
 
     greet_text:"",
@@ -148,7 +129,7 @@ Page({
     var principles = this.data.principles
     for(var i in principles)
       if(principles[i].id == this.data.editID)
-      principles[i].text = this.data.input_principle
+        principles[i].text = this.data.input_principle
 
     wx.setStorageSync('principles', principles)
     this.setData({principles:principles})
@@ -162,7 +143,6 @@ Page({
     })
   },
   add_principle:function(){
-
     if(this.data.input_principle==''){
       this.setData({input_principle_error:true})
       return;

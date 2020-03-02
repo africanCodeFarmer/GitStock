@@ -22,20 +22,6 @@
         bind:change="update_task_type_text"
         error="{{task_type_text_error}}"
       />
-      
-      <!-- 选择类型 -->
-      <!-- <van-cell>
-        <van-row>
-          <van-col span="6" class="text-left" style="color:black;">类型</van-col>
-          <van-col span="18" class="text-left">
-            <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
-              <van-radio name="-" disabled="{{type_id==null?false:true}}">花支类</van-radio>
-              <van-divider hairline />
-              <van-radio name="+" disabled="{{type_id==null?false:true}}">收入类</van-radio>
-            </van-radio-group>
-          </van-col>
-        </van-row>
-      </van-cell> -->
 
       <!-- 挑选图标 -->
       <van-cell title="挑选图标">

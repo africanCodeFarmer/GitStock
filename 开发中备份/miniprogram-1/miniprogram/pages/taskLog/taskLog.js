@@ -49,7 +49,6 @@ Page({
       ans.push(tasks[i]);
       for(var j in tasks[i].types){
         if(j.indexOf('_')>=0){ //跳过完成数
-          //tasks[i].types[j]=0
           continue;
         }
         for(var k in tasks[i].types[j]){
@@ -224,7 +223,6 @@ Page({
       message: '确定删除'+name+'吗?'
     }).then(() => {
       // on confirm
-
       for(var i in tasks){
         if(tasks[i].time == time){
           var specificTasks = tasks[i].types[title]
@@ -253,12 +251,6 @@ Page({
     this.getTabBar().init();
 
     var tasks = wx.getStorageSync('tasks') || []
-
-    //测试区
-    // tasks[2].time = "2020/03/00"
-    // wx.setStorageSync('tasks', tasks)
-    // this.setData({tasks:tasks})
-
     var task_types = wx.getStorageSync('task_types') || []
     this.setData({
       tasks:tasks,

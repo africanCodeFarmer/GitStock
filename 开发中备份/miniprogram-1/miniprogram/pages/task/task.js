@@ -152,8 +152,6 @@ Page({
   },
   go_update:function(e){
     if(this.data.task_duration==''){ //无时间填充0
-      // this.setData({task_duration_error:true})
-      // return;
       this.setData({task_duration:0})
     }
 
@@ -304,10 +302,7 @@ Page({
       return;
     }
 
-
     if(this.data.task_duration==''){ //无时间
-      // this.setData({task_duration_error:true})
-      // return;
       this.setData({task_duration:0})
     }
 
@@ -475,7 +470,6 @@ Page({
       tasks[0].types.everyday = specificTasks
 
       //limitTime新日期 复制未完成且remain_time还有剩余的任务(先refresh一下remain_time) 旧日期 未完成任务置null
-      
       this.refresh_limitTime_remain_time() //先刷新一下任务时间
       specificTasks = tasks[0].types.limitTime
       var remainLimitTimeTasks = []
@@ -511,9 +505,6 @@ Page({
     this.getTabBar().init();
 
     var tasks = wx.getStorageSync('tasks') || []
-
-    //tasks[0].time="2020/02/27"
-
     this.setData({tasks:tasks}) //因为tasks_checkUpdateTime用到了tasks
     tasks = this.tasks_checkUpdateTime(tasks)
     var task_types = wx.getStorageSync('task_types') || []

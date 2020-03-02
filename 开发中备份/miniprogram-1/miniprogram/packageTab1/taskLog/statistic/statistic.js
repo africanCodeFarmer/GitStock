@@ -2,7 +2,6 @@ import * as echarts from '../../ec-canvas/echarts';
 var util = require('../../../pages/public/public')
 
 var pie_chart = null;
-var income_pie_chart = null;
 var column_chart = null;
 
 //柱状图初始化
@@ -165,62 +164,6 @@ function initChart_pie(canvas, width, height) {
   return pie_chart;
 }
 
-//收入饼图初始化
-function initChart_income_pie(canvas, width, height) {
-  income_pie_chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(income_pie_chart);
-
-  var option = {
-    title: {
-        text: '本月各收入类型收入情况',
-        left: 'left',
-    },
-    tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c}\n{d}%'
-    },
-    visualMap: {
-        show: false,
-        min: 80,
-        max: 600,
-        inRange: {
-            colorLightness: [0, 1]
-        }
-    },
-    series: [
-      {
-        top:50,
-        name: '访问来源',
-        type: 'pie',
-        radius: '55%',
-        center: ['50%', '50%'],
-        data:[].sort(function (a, b) { return a.value - b.value; }),
-        roseType: 'radius',
-        label: {
-          show: true,
-          formatter: "{b}\n{d}%"
-        },
-        labelLine: {
-            smooth: 0.2,
-            length: 10,
-            length2: 20
-        },
-        animationType: 'scale',
-        animationEasing: 'elasticOut',
-        animationDelay: function (idx) {
-            return Math.random() * 200;
-        }
-      }
-    ]
-  };
-
-  income_pie_chart.setOption(option);
-  return income_pie_chart;
-}
-
 //更新柱状图
 function updateChart_column(data_today_completed_count,data_everyday_completed_count,data_limitTime_completed_count){
   if(column_chart==null)
@@ -244,16 +187,6 @@ function updateChart_pie(datas){
   pie_chart.setOption(option)
 }
 
-//更新收入饼图
-function updateChart_income_pie(datas){
-  if(income_pie_chart==null)
-    return;
-    
-  var option = income_pie_chart.getOption()
-  option.series[0].data = datas
-  income_pie_chart.setOption(option)
-}
-
 Page({
   data: {
     currentDate: new Date().getTime(),
@@ -264,9 +197,6 @@ Page({
     },
     ec_pie_chart: {
       onInit: initChart_pie
-    },
-    ec_income_pie_chart:{
-      onInit: initChart_income_pie
     },
 
     custom_data:{"backText":"任务日志","content":"统计"},
@@ -320,7 +250,6 @@ Page({
     var data_everyday_completed_count=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     var data_limitTime_completed_count=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for(var i in month_taskLogs){
-      //console.log(month_taskLogs)
       var time = parseInt(month_taskLogs[i].time.substr(8,2))-1 //数组基0
       data_today_completed_count[time]=parseInt(month_taskLogs[i].types.today_completed_count)
       data_everyday_completed_count[time]=parseInt(month_taskLogs[i].types.everyday_completed_count)
@@ -363,37 +292,6 @@ Page({
     //调用页面更新饼图函数
     updateChart_pie(datas)
   },
-  update_income_pie_chart:function(month_taskLogs){
-    //获取所有类型{默认消费类:0,饮食:0}
-    var month_task_types = []
-    var task_types = wx.getStorageSync('types') || []
-    for(var i in task_types){
-      if(task_types[i].type=='+')
-        month_task_types[task_types[i].text]=0
-    }
-
-    //统计每种类型
-    for(var i in month_taskLogs){
-      var month_taskLog_datas = month_taskLogs[i].datas
-      for(var j in month_taskLog_datas){
-        if(month_taskLog_datas[j].spend_type!=null && month_taskLog_datas[j].operate=='+') //不为转账且是收入
-        month_task_types[month_taskLog_datas[j].spend_type] += parseFloat(month_taskLog_datas[j].value)
-      }
-    }
-
-    //拼装datas
-    var datas = []
-    for(var i in month_task_types){
-      month_task_types[i]=month_task_types[i].toFixed(2)
-      datas.push({
-        name:i,
-        value: month_task_types[i]
-      })
-    }
-
-    //调用页面更新收入饼图函数
-    updateChart_income_pie(datas)
-  },
   onShow:function(){
     var time = util.formatTime(new Date()).split(' ')[0]
     var yearAndMonth = time.substr(0,7) //2020/02
@@ -408,8 +306,6 @@ Page({
     this.update_column_chart(month_taskLogs)
     //更新饼图
     this.update_pie_chart(month_taskLogs)
-    //更新收入饼图
-    //this.update_income_pie_chart(month_taskLogs)
   },
   timeChoose:function(e){
     var time = util.formatTime(new Date(e.detail)).split(' ')[0]
@@ -425,8 +321,6 @@ Page({
     this.update_column_chart(month_taskLogs)
     //更新饼图
     this.update_pie_chart(month_taskLogs)
-    //更新收入饼图
-    //this.update_income_pie_chart(month_taskLogs)
 
     this.onClose_timeChoose_popup()
 

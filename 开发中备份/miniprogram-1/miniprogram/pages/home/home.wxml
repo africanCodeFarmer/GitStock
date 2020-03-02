@@ -4,13 +4,9 @@
 <view class="padding text-left">
   <view class="padding radius shadow bg-white">
     <van-row>
-      <!-- <van-col span="4">
-        <image src="dog.gif" style="width:100rpx;height:100rpx;" bindtap="onClick_dog"/>
-      </van-col> -->
       <van-col span="16">
         <van-skeleton title row="1" loading="{{show_title_text}}">
           <view style="font-size:20px;color:black;">{{greet_text}}</view>
-          <!-- <view style="margin-left:20px;font-size:14px;margin-top:5px;">我叫柯基宅,为了不当舔狗,24小时都想奋斗!</view> -->
         </van-skeleton>
       </van-col>
       <van-col span="8" class="text-right">

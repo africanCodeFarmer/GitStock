@@ -70,24 +70,6 @@
                 <van-col span="1"></van-col>
               </van-row>
             </view>
-            <!-- <van-cell use-label-slot center>
-              <view slot="label">
-                <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.detail_time}} {{datas.spend_type==null?'转账':datas.spend_type}}</view>
-              </view>
-              <view slot="title">
-                <text style="font-size:17px;">{{datas.name}} </text>
-                <text style="font-size:14px;color:#888888;">{{datas.comment}}</text>
-              </view>
-              <view slot="icon">
-                <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:40px;"></text>
-              </view>
-              <view slot='right-icon'>
-                <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
-                <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
-                <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
-                <view style="font-size:14px;color:#353535;">余额: {{datas.remain}}</view>
-              </view>
-            </van-cell> -->
 
             <view slot="right" style="height:100%;">
               <van-button custom-style="height:100%;" type="primary" icon="" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}" data-operate="{{datas.operate}}" >编辑</van-button>
@@ -98,7 +80,7 @@
 
       </view>
     </view>
-    <!-- content end -->
+
   </van-tab>
 
   <!-- 统计页 -->

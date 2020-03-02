@@ -41,14 +41,6 @@
             <van-col class="text-right" span="12">
               <text>完成: {{tasks[index].types[m.combineCompleteCountStr(indexes)]}}</text>
             </van-col>
-            <!-- <van-col span="16" class="text-right">
-              <view style="font-size:14px;color:#353535;">
-                今日花支: {{item.day_spend}}
-              </view>
-              <view style="font-size:14px;color:#353535;">
-                今日收入: {{item.day_income}}
-              </view>
-            </van-col> -->
           </van-row>
         </view>
 
@@ -92,7 +84,7 @@
 
       </view>
     </view>
-    <!-- content end -->
+
   </van-tab>
 
   <!-- 统计页 -->
@@ -155,7 +147,6 @@
   </view>
 </van-dialog>
 
-<!-- wxs_toFixed实现 -->
 <wxs module="m">
   var noFindChar= function (find,str) {
     return str.indexOf(find)>=0?false:true;
