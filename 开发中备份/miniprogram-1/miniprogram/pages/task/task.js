@@ -57,6 +57,38 @@ Page({
 
     show_task_popup:false,
   },
+  //只排序今日所有任务
+  sortTasks:function(){
+    var tasks = this.data.tasks
+    var task_colors = this.data.task_colors
+    var colorLevel = []
+    for(var i in task_colors)
+    colorLevel[task_colors[i].value]=task_colors[i].id
+
+    //升序排列
+    if(tasks.length>0)
+      for(var i in tasks[0].types){
+        if(i.indexOf('_')>=0)
+          continue;
+
+        //冒泡排序
+        var specificTasks = tasks[0].types[i]
+        for(var j=0;j<specificTasks.length;j++){
+          for(var k=j+1;k<specificTasks.length;k++){
+            if(colorLevel[specificTasks[j].color]>colorLevel[specificTasks[k].color]){
+              //j k 互换
+              var temp = specificTasks[j]
+              specificTasks[j] = specificTasks[k]
+              specificTasks[k] = temp
+            }
+          }
+        }
+        tasks[0].types[i] = specificTasks
+      }
+
+    this.setData({tasks:tasks})
+    wx.setStorageSync('tasks', tasks)
+  },
   onClick_reveal:function(){
     this.setData({show_task_popup:true})
   },
@@ -164,6 +196,8 @@ Page({
     })
     this.reset()
     this.onClose_add_task_popup();
+
+    this.sortTasks()
 
     wx.showToast({
       icon:'none',
@@ -307,6 +341,8 @@ Page({
 
     this.reset()
     this.onClose_add_task_popup()
+
+    this.sortTasks() //任务排序
 
     wx.showToast({
       icon:'none',

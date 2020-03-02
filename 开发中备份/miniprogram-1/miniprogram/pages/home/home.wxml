@@ -34,8 +34,7 @@
     <van-divider hairline />
 
     <scroll-view style="max-height:200px;" scroll-y>
-      <view style="display:inline-block;margin:0px 10rpx 10rpx 0rpx;padding:5rpx 10rpx;font-size:13px;max-width:100%;word-break: keep-all;word-wrap: break-word;background-color:#969799;color:white;border-radius:5px;" wx:for="{{principles}}" bindtap="edit" id="{{item.id}}">{{item.text}}</view>
-      <!-- <van-tag size="medium" wx:for="{{principles}}" bindtap="edit" id="{{item.id}}"  round>{{item.text}}</van-tag> -->
+      <view style="display:inline-block;margin:0px 10rpx 10rpx 0rpx;padding:5rpx 10rpx;font-size:13px;max-width:100%;word-break: keep-all;word-wrap: break-word;background-color:rgba({{item.count}},0,0,0.8);color:white;border-radius:5px;" wx:for="{{principles}}" bindtap="edit" id="{{item.id}}">{{item.text}}</view>
     </scroll-view>
 
   </view>
@@ -61,6 +60,7 @@
     error="{{input_principle_error}}"
   >
     <view slot="left-icon" wx:if="{{editing}}" style="margin-right:20rpx;">
+      <van-button round size="small" type="warning" bind:click="onClick_principle_addCount" custom-style="margin-right:10rpx;">触犯+1次</van-button>
       <van-button round size="small" type="danger" icon="delete" bind:click="delete_principle"></van-button>
     </view>
     <van-button slot="button" round size="small" type="primary" icon="arrow" bind:click="{{editing?'update_principle':'add_principle'}}"></van-button>

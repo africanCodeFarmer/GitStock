@@ -42,7 +42,7 @@
   </van-collapse>
 </van-cell-group>
 
-<van-cell-group title="所有任务颜色">
+<van-cell-group title="所有任务颜色(优先级从上到下)">
   <van-swipe-cell right-width="{{ 90 }}" wx:for="{{task_colors}}">
     <van-cell>
       <view slot="icon">

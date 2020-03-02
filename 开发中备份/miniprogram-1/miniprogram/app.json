@@ -1,10 +1,9 @@
 {
   "pages": [
-    "pages/task/task",
-
     "pages/home/home",
     "pages/home/data_setting/data_setting",
 
+    "pages/task/task",
     "pages/taskLog/taskLog", 
 
     "pages/spend/spend",

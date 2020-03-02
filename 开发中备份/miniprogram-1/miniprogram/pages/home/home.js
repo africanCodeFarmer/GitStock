@@ -48,6 +48,42 @@ Page({
       url: '../home/data_setting/data_setting',
     })
   },
+  onClick_principle_addCount:function(){
+    var principles = this.data.principles
+      for(var i in principles){
+        if(principles[i].id == this.data.editID){
+          principles[i].count+=25
+          break;
+        }
+      }
+    
+    this.setData({principles:principles})
+    wx.setStorageSync('principles', principles)
+
+    this.reset_add_principle()
+
+    wx.showToast({
+      icon:'none',
+      title: '触犯+1次',
+    })
+
+    this.sortPrinciple()
+    this.onClose_add_principle()
+  },
+  sortPrinciple:function(){
+    var principles = this.data.principles
+    for(var i=0;i<principles.length;i++){
+      for(var j=0;j<principles.length;j++){
+        if(principles[i].count>principles[j].count){
+          var temp = principles[i]
+          principles[i] = principles[j]
+          principles[j] = temp
+        }
+      }
+    }
+    this.setData({principles:principles})
+    wx.setStorageSync('principles', principles)
+  },
   delete_principle:function(){
     var id = 0
     var principle = {}

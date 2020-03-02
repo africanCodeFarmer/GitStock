@@ -169,7 +169,7 @@
 
       <van-row>
         <van-col span="24" class="text-left">
-          <view style="color:{{task_color}};margin-left:9%;">任务颜色</view>
+          <view style="color:{{task_color}};margin-left:9%;">任务颜色(优先级从左到右)</view>
         </van-col>
       </van-row>
 
