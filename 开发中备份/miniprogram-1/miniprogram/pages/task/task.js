@@ -40,7 +40,7 @@ Page({
 
     task_duration:0,
     task_duration_error:false,
-    task_color:"#000000",
+    task_color:"",
     task_name:null,
     task_name_error:false,
     choose_task_type: 0,
@@ -348,7 +348,7 @@ Page({
     this.setData({
       task_duration:0,
       task_duration_error:false,
-      task_color:"#000000",
+      task_color:this.data.task_colors[0].value,
       task_name:null,
       task_name_error:false,
       task_type:this.data.task_types[0].text, //.text
@@ -511,7 +511,9 @@ Page({
     var task_type = task_types[0].text
     var task_durations = wx.getStorageSync('task_durations') || []
     var task_colors = wx.getStorageSync('task_colors') || []
+    var task_color = task_colors[0].value
     this.setData({
+      task_color:task_color,
       task_colors:task_colors,
       task_durations:task_durations,
       task_types:task_types,
