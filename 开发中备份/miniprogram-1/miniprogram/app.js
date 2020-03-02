@@ -40,6 +40,10 @@ App({
     if(task_colors.length==0){
       task_colors.push({
         id:1,
+        value:"#ff0000"
+      })
+      task_colors.push({
+        id:2,
         value:"#000000"
       })
       wx.setStorageSync('task_colors', task_colors)
