@@ -1,3 +1,28 @@
+// 任务json
+// tasks{
+//   time 年月日
+//   types{
+//     today{
+//       id 
+//       completed //bool
+//       name
+//       color
+//       create_time //限时任务的create_time是截止时间
+//       type 类型
+//       icon 
+//       duration 整数分钟
+//       count 完成次数
+//       remain_time 剩余时间
+//       complete_time
+//     }
+//     everyday
+//     limitTime
+//     today_completed_count
+//     everyday_completed_count
+//     limitTime_completed_count
+//   }
+// }
+
 const app = getApp()
 var util = require('../public/public.js');
 import Dialog from '@vant/weapp/dialog/dialog';
@@ -469,8 +494,6 @@ Page({
 
     this.refresh_remain_taskCount(this.data.task_title)
     this.refresh_limitTime_remain_time() //刷新限时任务时间
-
-    //console.log(tasks)
   },
   refresh_limitTime_remain_time:function(){
     var tasks = this.data.tasks

@@ -1,4 +1,4 @@
-// 花支类型json
+// 任务类型json
 // task_types{
 //   id
 //   text 名
@@ -1021,6 +1021,24 @@ Page({
         return task_types[i]
       }
   },
+  update_taskLogs_type:function(oldType,newType){
+    var tasks = wx.getStorageSync('tasks') || []
+    for(var i in tasks){
+      for(var j in tasks[i].types){
+        if(j.indexOf('_')>=0){ //跳过统计
+          continue;
+        }
+        var specificTasks = tasks[i].types[j]
+        for(var k in specificTasks){ //每个任务
+          if(specificTasks[k]!=null && specificTasks[k].type == oldType.text){
+            tasks[i].types[j][k].type = newType.text
+            tasks[i].types[j][k].icon = newType.icon
+          }
+        }
+      }
+    }
+    wx.setStorageSync('tasks', tasks)
+  },
   update:function(){
     if(this.data.task_type_id==null){
       this.setData({task_type_id_error:"无ID无法编辑"})
@@ -1034,6 +1052,7 @@ Page({
     var task_types = wx.getStorageSync('task_types') || []
     for(var i in task_types){
       if(task_types[i].id == task_type.id){
+        this.update_taskLogs_type(task_types[i],task_type)
         task_types[i]=task_type
         break;
       }

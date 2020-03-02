@@ -128,6 +128,23 @@ Page({
       if(task_colors[i].id == id)
         return task_colors[i]
   },
+  update_taskLogs_color:function(oldColor,newColor){
+    var tasks = wx.getStorageSync('tasks') || []
+    for(var i in tasks){
+      for(var j in tasks[i].types){
+        if(j.indexOf('_')>=0){ //跳过统计
+          continue;
+        }
+        var specificTasks = tasks[i].types[j]
+        for(var k in specificTasks){ //每个任务
+          if(specificTasks[k]!=null && specificTasks[k].color == oldColor){
+            tasks[i].types[j][k].color = newColor
+          }
+        }
+      }
+    }
+    wx.setStorageSync('tasks', tasks)
+  },
   update:function(){
     if(this.data.task_color_id==null){
       this.setData({task_color_id_error:"无ID无法编辑"})
@@ -140,6 +157,7 @@ Page({
     var task_colors = wx.getStorageSync('task_colors') || []
     for(var i in task_colors){
       if(task_colors[i].id == task_color.id){
+        this.update_taskLogs_color(task_colors[i].value,task_color.value)
         task_colors[i]=task_color
         break;
       }
