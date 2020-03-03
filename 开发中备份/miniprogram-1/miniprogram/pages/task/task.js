@@ -76,6 +76,11 @@ Page({
         for(var j=0;j<specificTasks.length;j++){
           for(var k=j+1;k<specificTasks.length;k++){
             if(colorLevel[specificTasks[j].color]>colorLevel[specificTasks[k].color]){
+              //id互换
+              var tempID = specificTasks[j].id
+              specificTasks[j].id = specificTasks[k].id
+              specificTasks[k].id = tempID
+              
               //j k 互换
               var temp = specificTasks[j]
               specificTasks[j] = specificTasks[k]
