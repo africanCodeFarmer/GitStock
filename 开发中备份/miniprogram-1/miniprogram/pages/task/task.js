@@ -314,8 +314,15 @@ Page({
     var date = new Date()
     var taskTime = this.data.task_title=='limitTime'?util.formatTime(new Date(date.setMinutes(date.getMinutes()+(remain_time/60000)))):util.formatTime(date)
 
+    var maxID = 0
+    for(var i in tasks[0].types[dayIndex]){
+      if(tasks[0].types[dayIndex][i].id > maxID){
+        maxID = tasks[0].types[dayIndex][i].id
+      }
+    }
+
     var task = {
-      id:tasks[0].types[dayIndex].length>0?(tasks[0].types[dayIndex][0].id+1):1,
+      id:maxID+1,
       completed:false,
       name:this.data.task_name,
       color:this.data.task_color,
