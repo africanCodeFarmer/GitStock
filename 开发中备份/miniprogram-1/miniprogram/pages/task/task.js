@@ -1,4 +1,4 @@
-// 任务json
+﻿// 任务json
 // tasks{
 //   time 年月日
 //   types{
@@ -25,6 +25,7 @@
 
 const app = getApp()
 var util = require('../public/public.js');
+
 import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
