@@ -3,9 +3,11 @@
     wx:if="{{ showToolbar }}"
     class="van-picker__toolbar van-hairline--top-bottom toolbar-class"
   >
+    <!-- van-picker__cancel--hover -->
+    <!-- van-picker__confirm--hover -->
     <view
       class="van-picker__cancel"
-      hover-class="van-picker__cancel--hover"
+      hover-class=""
       hover-stay-time="70"
       data-type="cancel"
       bindtap="emit"
@@ -15,7 +17,7 @@
     <view wx:if="{{ title }}" class="van-picker__title van-ellipsis">{{ title }}</view>
     <view
       class="van-picker__confirm"
-      hover-class="van-picker__confirm--hover"
+      hover-class=""
       hover-stay-time="70"
       data-type="confirm"
       bindtap="emit"

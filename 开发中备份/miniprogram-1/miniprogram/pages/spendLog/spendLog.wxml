@@ -1,5 +1,5 @@
 <import src="../public/public.wxml" />
-<template is="custom" />
+<template is="custom" data="{{...custom_data}}"/>
 
 <van-tabs bind:disabled="onClick_statistic" z-index="{{101}}">
   <van-tab title="日志">
@@ -26,13 +26,13 @@
         <view style="border-bottom:1px solid #919191;">
           <van-row>
             <van-col span="8">
-              <text style="font-size:20px;font-weight:blod;color:#000000;">{{item.time}}</text>
+              <text style="font-size:20px;font-weight:blod;" class="whiteColor">{{item.time}}</text>
             </van-col>
             <van-col span="16" class="text-right">
-              <view style="font-size:14px;color:#353535;">
+              <view style="font-size:14px;color:#353535;" class="whiteColor">
                 今日花支: {{item.day_spend}}
               </view>
-              <view style="font-size:14px;color:#353535;">
+              <view style="font-size:14px;color:#353535;" class="whiteColor">
                 今日收入: {{item.day_income}}
               </view>
             </van-col>
@@ -63,7 +63,9 @@
                       <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
                       <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
                       <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
-                      <view style="font-size:14px;color:#353535;">余额: {{datas.remain}}</view>
+                      <view style="font-size:14px;color:#353535;">
+                        <text class="whiteColor">余额: {{datas.remain}}</text>
+                      </view>
                     </van-col>
                   </van-row>
                 </van-col>

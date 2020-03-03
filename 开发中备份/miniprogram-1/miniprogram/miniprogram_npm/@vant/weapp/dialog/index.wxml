@@ -16,7 +16,9 @@
     class="van-dialog__header {{ message || useSlot ? '' : 'van-dialog--isolated' }}"
   >
     <slot wx:if="{{ useTitleSlot }}" name="title" />
-    <block wx:elif="{{ title }}"> {{ title }}</block>
+    <block wx:elif="{{ title }}">
+      <text class="whiteColor">{{ title }}</text>
+    </block>
   </view>
 
   <slot wx:if="{{ useSlot }}" />
@@ -37,7 +39,7 @@
       custom-style="color: {{ cancelButtonColor }}"
       bind:click="onCancel"
     >
-      {{ cancelButtonText }}
+      <text class="whiteColor">{{ cancelButtonText }}</text>
     </van-button>
     <van-button
       wx:if="{{ showConfirmButton }}"

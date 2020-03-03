@@ -30,7 +30,7 @@
             bind:tap="onTap"
           >
             <view class="{{ ellipsis ? 'van-ellipsis' : '' }}" style="{{ item.titleStyle }}">
-              {{ item.title }}
+              <text class="whiteColor">{{ item.title }}</text>
               <van-info
                 wx:if="{{ item.info !== null || item.dot }}"
                 info="{{ item.info }}"

@@ -7,7 +7,7 @@
     <van-row>
       <van-col span="14">
         <view class="flex">
-          <text style="font-size:20px;" space="ensp">我的任务 </text>
+          <text style="font-size:20px;" space="ensp" class="whiteColor">我的任务 </text>
           <view style="margin-top:4px;">
             <van-tag plain type="warning" bindtap="onClick_reveal">展示所有未完成任务</van-tag>
           </view>
@@ -58,7 +58,9 @@
                         </view>
                       </van-col>
                       <van-col span="8">
-                        <view class="text-right" style="color:#353535;font-size:13px;">{{index=='limitTime'?'限时: ':'时长: '}}{{items.duration}}min</view>
+                        <view class="text-right" style="color:#353535;font-size:13px;">
+                          <text class="whiteColor">{{index=='limitTime'?'限时: ':'时长: '}}{{items.duration}}min</text>
+                        </view>
                       </van-col>
                     </van-row>
                     <van-row>

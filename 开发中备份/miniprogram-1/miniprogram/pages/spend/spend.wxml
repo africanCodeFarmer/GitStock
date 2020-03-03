@@ -6,7 +6,7 @@
   <view class="padding radius shadow bg-white views">
 
     <van-row>
-      <van-col span="20"><text style="font-size:20px;">我的余额</text></van-col>
+      <van-col span="20"><text style="font-size:20px;" class="whiteColor">我的余额</text></van-col>
       <van-col span="4">
         <van-button plain round type="default" icon="setting-o" size="small" bind:click="stock_setting">
         </van-button>
@@ -55,7 +55,7 @@
   <view class="padding radius shadow bg-white views">
 
     <van-row>
-      <van-col span="20"><text style="font-size:20px;">我的花支目标</text></van-col>
+      <van-col span="20"><text style="font-size:20px;" class="whiteColor">我的花支目标</text></van-col>
       <van-col span="4">
         <van-button plain round type="default" icon="setting-o" size="small" bind:click="target_setting">
         </van-button>

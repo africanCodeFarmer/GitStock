@@ -2,7 +2,7 @@ import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data: {
-    custom_data:{"backText":"主页","content":"全局数据管理"}
+    custom_data:{"backText":"主页","content":"全局管理"}
   },
   onLoad:function(){
     //设置导航栏颜色

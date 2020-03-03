@@ -7,7 +7,7 @@
   <view class="padding radius shadow bg-white views">
     <van-row>
       <van-col span="12">
-        <view class="text-left" style="font-size:20px;">时间: {{month_title}}</view>
+        <view class="text-left" style="font-size:20px;" class="whiteColor">时间: {{month_title}}</view>
       </van-col>
       <van-col span="6">
         <view class="text-right">

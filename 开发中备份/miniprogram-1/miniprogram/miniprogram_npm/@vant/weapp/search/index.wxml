@@ -45,6 +45,6 @@
     hover-stay-time="70"
   >
     <slot wx:if="{{ useActionSlot }}" name="action" />
-    <view wx:else bind:tap="onCancel" class="cancel-class">{{ actionText }}</view>
+    <view wx:else bind:tap="onCancel" class="cancel-class whiteColor">{{ actionText }}</view>
   </view>
 </view>

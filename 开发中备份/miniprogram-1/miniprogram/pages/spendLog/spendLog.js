@@ -22,6 +22,8 @@ import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data:{
+    custom_data:{},
+    
     spendLogs:[],
     spendLogData:[],
     
@@ -29,6 +31,14 @@ Page({
     task_types:[],
 
     show_spendLog_day:0,
+  },
+  onLoad:function(){
+    //设置导航栏颜色
+    var custom_data = this.data.custom_data
+    custom_data['bgColor'] = getApp().globalData.bgColor
+    this.setData({
+      custom_data:custom_data
+    })
   },
   onClick_statistic:function(){
     wx.navigateTo({

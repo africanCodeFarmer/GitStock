@@ -44,7 +44,7 @@
 
       <van-cell required>
         <van-row>
-          <van-col span="6" class="text-left" style="color:black;">目标图片</van-col>
+          <van-col span="6" class="text-left" style="color:black;" class="whiteColor">目标图片</van-col>
           <van-col span="18" class="text-left">
             <view style="margin-top:20rpx;"></view>
             <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" max-count="1" bind:delete="afterRead_delete"/>
@@ -55,7 +55,7 @@
 
       <van-cell>
         <van-row>
-          <van-col span="6" class="text-left" style="color:black;">实现情况</van-col>
+          <van-col span="6" class="text-left" style="color:black;" class="whiteColor">实现情况</van-col>
           <van-col span="18" class="text-left">
           <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
             <van-radio name="0">false</van-radio>

@@ -1,7 +1,5 @@
 {
   "pages": [
-    "pages/spendLog/spendLog",
-
     "pages/home/home",
     "pages/home/data_setting/data_setting",
 
@@ -9,7 +7,7 @@
     "pages/taskLog/taskLog", 
 
     "pages/spend/spend",
-
+    "pages/spendLog/spendLog",
 
     "pages/task/task_setting/task_setting",
     "pages/task/task_setting/task_duration_CURD/task_duration_CURD",
@@ -92,6 +90,7 @@
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-skeleton": "@vant/weapp/skeleton/index",
     "van-steps": "@vant/weapp/steps/index",
+    "van-transition": "@vant/weapp/transition/index",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }

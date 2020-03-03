@@ -1,6 +1,13 @@
 @import "style/colorui/main.wxss";
 @import "style/colorui/icon.wxss";
 
+.blackColor{
+  color:black;
+}
+.whiteColor{
+  color:white;
+}
+
 van-tabbar{
   --tabbar-background-color:#333333;
 }
@@ -12,15 +19,23 @@ van-search{
 }
 van-tabs{
   --tabs-nav-background-color:#333333;
+  --tab-disabled-text-color:white;
+  --tab-text-color:white;
+  --tab-active-text-color:white;
 }
 van-cell{
   --cell-background-color:#333333;
+  --cell-text-color:white;
+}
+van-field{
+  --field-input-text-color:white;
 }
 view.views{
   background-color: #333333;
 }
 van-dialog{
   --dialog-background-color:#333333;
+  --dialog-has-title-message-text-color:white;
 }
 van-popup{
   --popup-background-color:#333333;
@@ -28,6 +43,7 @@ van-popup{
 van-button{
   --button-plain-background-color:#333333;
   --button-default-background-color:#333333;
+  --button-default-color:white;
 }
 van-tree-select{
   --tree-select-nav-background-color:#333333;
@@ -36,15 +52,22 @@ van-tree-select{
 van-sidebar{
   --sidebar-background-color:#333333;
   --sidebar-selected-background-color:#333333;
+  --sidebar-text-color:white;
+  --sidebar-selected-text-color:white;
 }
 van-picker{
   --picker-background-color:#333333;
+  --picker-action-text-color:#919191;
+  --picker-action-active-color:white;
+  --picker-option-text-color:#919191;
+  --picker-option-selected-text-color:white;
 }
 van-collapse{
   --collapse-item-content-background-color:#333333;
 }
 van-divider{
   --divider-border-color:#333333;
+  --divider-text-color: white;
 }
 
 page{

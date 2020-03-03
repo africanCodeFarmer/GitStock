@@ -24,7 +24,7 @@
       <view class="padding radius shadow bg-white views" style="border-bottom:1px solid #919191;">
         <van-row>
           <van-col span="12" class="text-left">
-            <view style="font-size:20px;color:#000000;">{{tasks[index].time}}</view>
+            <view style="font-size:20px;" class="whiteColor">{{tasks[index].time}}</view>
           </van-col>
           <van-col span="12" class="text-right">
             <view>今日总完成: {{tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count}}</view>
@@ -60,7 +60,9 @@
                 </view>
               </van-col>
               <van-col span="8">
-                <view class="text-right" style="color:#353535;font-size:13px;">{{indexes=='limitTime'?'限时: ':'时长: '}}{{datas.duration}}min</view>
+                <view class="text-right" style="color:#353535;font-size:13px;">
+                  <text class="whiteColor">{{indexes=='limitTime'?'限时: ':'时长: '}}{{datas.duration}}min</text>
+                </view>
               </van-col>
             </van-row>
             <van-row>
