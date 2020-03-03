@@ -1,12 +1,12 @@
 <import src="../public/public.wxml" />
-<template is="custom" />
+<template is="custom" data="{{...custom_data}}"/>
 
 <view class="padding text-left">
-  <view class="padding radius shadow bg-white">
+  <view class="padding radius shadow bg-white views">
     <van-row>
       <van-col span="16">
         <van-skeleton title row="1" loading="{{show_title_text}}">
-          <view style="font-size:20px;color:black;">{{greet_text}}</view>
+          <view style="font-size:20px;">{{greet_text}}</view>
         </van-skeleton>
       </van-col>
       <van-col span="8" class="text-right">
@@ -17,7 +17,7 @@
 </view>
 
 <view class="padding text-left">
-  <view class="padding radius shadow bg-white">
+  <view class="padding radius shadow bg-white views">
 
     <van-row>
       <van-col span="20"><text style="font-size:20px;">我的原则</text></van-col>
@@ -27,7 +27,7 @@
       </van-col>
     </van-row>
 
-    <van-divider hairline />
+    <van-divider hairline borderColor="#919191"/>
 
     <scroll-view style="max-height:200px;" scroll-y>
       <view style="display:inline-block;margin:0px 10rpx 10rpx 0rpx;padding:5rpx 10rpx;font-size:13px;max-width:100%;word-break: keep-all;word-wrap: break-word;background-color:rgba({{item.count}},0,0,0.8);color:white;border-radius:5px;" wx:for="{{principles}}" bindtap="edit" id="{{item.id}}">{{item.text}}</view>
@@ -45,7 +45,7 @@
   round
   custom-style="height: 25%;"
 >
-  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">{{editing?'编辑':'添加'}}原则</van-divider>
+  <van-divider hairline contentPosition="center" customStyle="font-size:17px;">{{editing?'编辑':'添加'}}原则</van-divider>
 
   <van-field
     name="input_principle"

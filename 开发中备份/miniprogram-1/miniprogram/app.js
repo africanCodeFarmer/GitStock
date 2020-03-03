@@ -1,9 +1,11 @@
 //app.js
+
 App({
   globalData:{
     StatusBar:null,
     Custom:null,
     CustomBar:null,
+    bgColor:"bg-black",
   },
   fill_default_spend_type:function(){
     var task_types = wx.getStorageSync('types') || []

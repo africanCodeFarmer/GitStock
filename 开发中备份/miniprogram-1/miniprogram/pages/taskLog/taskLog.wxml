@@ -1,5 +1,5 @@
 <import src="../public/public.wxml" />
-<template is="custom" />
+<template is="custom" data="{{...custom_data}}"/>
 
 <van-tabs bind:disabled="onClick_statistic" z-index="{{101}}">
   <van-tab title="日志">
@@ -21,7 +21,7 @@
 
     <!-- content -->
     <view class="padding" wx:for="{{tasks}}" wx:if="{{(tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count)>0 && index<show_taskLog_day}}">
-      <view class="padding radius shadow bg-white">
+      <view class="padding radius shadow bg-white views" style="border-bottom:1px solid #919191;">
         <van-row>
           <van-col span="12" class="text-left">
             <view style="font-size:20px;color:#000000;">{{tasks[index].time}}</view>
@@ -31,7 +31,7 @@
           </van-col>
         </van-row>
       </view>
-      <view class="padding radius shadow bg-white" wx:for="{{tasks[index].types}}" wx:for-item="items" wx:for-index="indexes" wx:if="{{m.noFindChar('_',indexes) && tasks[index].types[m.combineCompleteCountStr(indexes)]!=0}}">
+      <view class="padding radius shadow bg-white views" wx:for="{{tasks[index].types}}" wx:for-item="items" wx:for-index="indexes" wx:if="{{m.noFindChar('_',indexes) && tasks[index].types[m.combineCompleteCountStr(indexes)]!=0}}">
         <!-- content-header -->
         <view>
           <van-row>
@@ -44,7 +44,7 @@
           </van-row>
         </view>
 
-        <van-divider hairline />
+        <van-divider hairline borderColor="#919191"/>
 
         <!-- content-content -->
         <view wx:for="{{items}}" wx:for-item="datas" wx:if="{{datas!=null &&datas.completed}}" wx:for-index="datas_index">
@@ -122,10 +122,10 @@
   <view>
     <van-row>
       <van-col offset="2" span="8">
-        <van-cell title="任务类型"></van-cell>
+        <van-cell title="任务类型" border="{{ false }}"></van-cell>
       </van-col>
       <van-col span="12">
-        <van-cell title="{{taskLogsData.type}}">
+        <van-cell title="{{taskLogsData.type}}" border="{{ false }}">
           <view slot="icon">
             <text class="cuIcon-{{taskLogsData.icon}}"></text>
           </view>
@@ -138,7 +138,7 @@
     <van-row>
       <van-col offset="4" span="20">  
         <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_types}}">
-          <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
+          <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}" border="{{ false }}">
             <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
           </van-cell>
         </view>

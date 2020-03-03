@@ -4,6 +4,8 @@ import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data:{
+    custom_data:{},
+    
     task_types:[],
     choose_spend_type :0,
     spend_type:"",
@@ -37,6 +39,14 @@ Page({
     target_percent:[], //目标们的百分比
 
     money_allow_count:0, //总余额
+  },
+  onLoad:function(){
+    //设置导航栏颜色
+    var custom_data = this.data.custom_data
+    custom_data['bgColor'] = getApp().globalData.bgColor
+    this.setData({
+      custom_data:custom_data
+    })
   },
   onClick_show_target_achieved_popup:function(){
     this.setData({show_target_achieved_popup:true})

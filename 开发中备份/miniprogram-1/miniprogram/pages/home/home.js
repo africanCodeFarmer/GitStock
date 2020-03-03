@@ -11,6 +11,8 @@ var util = require('../public/public.js');
 
 Page({
   data:{
+    custom_data:{},
+
     show_title_text:false,
 
     greet_text:"",
@@ -23,6 +25,14 @@ Page({
     input_principle_error:false,
 
     principles:[],
+  },
+  onLoad:function(){
+    //设置导航栏颜色
+    var custom_data = this.data.custom_data
+    custom_data['bgColor'] = getApp().globalData.bgColor
+    this.setData({
+      custom_data:custom_data
+    })
   },
   onClick_data_setting:function(){
     wx.navigateTo({

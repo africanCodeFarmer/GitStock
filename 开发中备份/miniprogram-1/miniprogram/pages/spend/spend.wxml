@@ -1,9 +1,9 @@
 <import src="../public/public.wxml" />
-<template is="custom" />
+<template is="custom" data="{{...custom_data}}"/>
 
 <!-- 余额板块 -->
 <view class="padding text-left">
-  <view class="padding radius shadow bg-white">
+  <view class="padding radius shadow bg-white views">
 
     <van-row>
       <van-col span="20"><text style="font-size:20px;">我的余额</text></van-col>
@@ -13,7 +13,7 @@
       </van-col>
     </van-row>
 
-    <van-divider hairline />
+    <van-divider hairline borderColor="#919191"/>
 
     <van-row wx:for="{{stocks}}">
       <van-col span="12">
@@ -36,7 +36,7 @@
       <van-divider hairline />
     </van-row>
 
-    <van-divider hairline />
+    <van-divider hairline borderColor="#919191"/>
 
     <van-row>
       <van-col span="16">allow总计: {{money_allow_count}}</van-col>
@@ -52,7 +52,7 @@
 
 <!-- 目标板块 -->
 <view class="padding text-left">
-  <view class="padding radius shadow bg-white">
+  <view class="padding radius shadow bg-white views">
 
     <van-row>
       <van-col span="20"><text style="font-size:20px;">我的花支目标</text></van-col>
@@ -62,7 +62,7 @@
       </van-col>
     </van-row>
 
-    <van-divider hairline />
+    <van-divider hairline borderColor="#919191"/>
 
     <van-cell title="{{item.name}}" use-label-slot border="{{false}}" wx:for="{{targets}}">
       <view slot="right-icon">
@@ -79,14 +79,14 @@
       <view slot="label">
         <view>{{item.desc}}</view>
         <view class="flex">
-          <view class="cu-progress round sm striped active">
+          <view class="cu-progress round sm striped active views">
             <view class="bg-green" style="width:{{target_percent[index]}}%;">{{target_percent[index]}}%</view>
           </view>
         </view>
       </view>
     </van-cell>
 
-    <van-divider hairline />
+   <van-divider hairline borderColor="#919191"/>
 
     <van-row>
       <van-col span="8">实现总数: {{target_achieved_count}}</van-col>
@@ -112,8 +112,8 @@
   main-active-index="{{ choose_spend_type }}"
   bind:click-nav="onClickNav"
   >
-    <view slot="content">
-      <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">{{money_popup_title}}</van-divider>
+    <view slot="content" class="views">
+      <van-divider hairline contentPosition="center" customStyle="font-size:17px;">{{money_popup_title}}</van-divider>
       
       <van-row>
         <van-col offset="1" span="22">
@@ -122,7 +122,7 @@
               name="input_value_comment"
               value="{{input_value_comment}}"
               placeholder="请输入金额 注释"
-              border="{{ false }}"
+              border="{{false}}"
               bind:change="onChange_input_value_comment"
               error-message="{{input_value_comment_error}}"
             >
@@ -133,7 +133,7 @@
         <van-col span="1"></van-col>
       </van-row>
 
-      <van-divider contentPosition="center" customStyle="font-size: 11px;border-color: #FFF;margin-bottom:10rpx;margin-top:10rpx;">可选金额块</van-divider>
+      <van-divider contentPosition="center" customStyle="font-size: 11px;margin-bottom:10rpx;margin-top:10rpx;">可选金额块</van-divider>
       <!-- 金额块 -->
       <view style="margin:0rpx 10%;">
         <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{money_blocks}}">
@@ -141,7 +141,7 @@
         </view>
       </view>
 
-      <van-divider contentPosition="center" customStyle="font-size: 11px;border-color: #FFF;margin-bottom:0rpx;">常用注释块</van-divider>
+      <van-divider contentPosition="center" customStyle="font-size: 11px;margin-bottom:0rpx;">常用注释块</van-divider>
       <!-- 注释块 -->
       <view style="margin:0rpx 10%;">
         <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{comments}}">
@@ -159,9 +159,9 @@
   round
   custom-style="height: 50%;"
 >
-  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">转账</van-divider>
+  <van-divider hairline contentPosition="center" customStyle="font-size:17px;">转账</van-divider>
 
-  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;color:#EE0A24;font-size:13px;">{{transfer_error}}</van-divider>
+  <van-divider hairline contentPosition="center" customStyle="font-size:13px;">{{transfer_error}}</van-divider>
 
   <van-row>
     <van-col offset="2" span="20">
@@ -190,7 +190,7 @@
     <van-col span="2"></van-col>
   </van-row>
 
-  <van-divider contentPosition="center" customStyle="font-size: 11px;border-color: #FFF;margin-bottom:10rpx;margin-top:10rpx;">可选金额块</van-divider>
+  <van-divider contentPosition="center" customStyle="font-size: 11px;margin-bottom:10rpx;margin-top:10rpx;">可选金额块</van-divider>
   <!-- 金额块 -->
   <view style="margin:0rpx 10%;">
     <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{money_blocks}}">
@@ -206,7 +206,7 @@
   round
   custom-style="height: 50%;"
 >
-  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">已实现目标</van-divider>
+  <van-divider hairline contentPosition="center" customStyle="font-size:17px;">已实现目标</van-divider>
 
   <view style="margin-bottom:10%;">
     <van-cell title="{{item.name}}" use-label-slot border="{{false}}" wx:for="{{targets_achieved}}">

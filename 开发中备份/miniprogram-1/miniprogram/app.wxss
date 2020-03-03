@@ -1,2 +1,52 @@
 @import "style/colorui/main.wxss";
 @import "style/colorui/icon.wxss";
+
+van-tabbar{
+  --tabbar-background-color:#333333;
+}
+van-tag{
+  --tag-plain-background-color:#333333;
+}
+van-search{
+  --search-background-color:#333333;
+}
+van-tabs{
+  --tabs-nav-background-color:#333333;
+}
+van-cell{
+  --cell-background-color:#333333;
+}
+view.views{
+  background-color: #333333;
+}
+van-dialog{
+  --dialog-background-color:#333333;
+}
+van-popup{
+  --popup-background-color:#333333;
+}
+van-button{
+  --button-plain-background-color:#333333;
+  --button-default-background-color:#333333;
+}
+van-tree-select{
+  --tree-select-nav-background-color:#333333;
+  --tree-select-content-background-color:#333333;
+}
+van-sidebar{
+  --sidebar-background-color:#333333;
+  --sidebar-selected-background-color:#333333;
+}
+van-picker{
+  --picker-background-color:#333333;
+}
+van-collapse{
+  --collapse-item-content-background-color:#333333;
+}
+van-divider{
+  --divider-border-color:#333333;
+}
+
+page{
+  background-color:#3A3A3C;
+}

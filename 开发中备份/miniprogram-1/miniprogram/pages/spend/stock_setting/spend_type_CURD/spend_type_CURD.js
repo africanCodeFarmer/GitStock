@@ -27,6 +27,14 @@ Page({
 
     types:[],
   },
+  onLoad:function(){
+    //设置导航栏颜色
+    var custom_data = this.data.custom_data
+    custom_data['bgColor'] = getApp().globalData.bgColor
+    this.setData({
+      custom_data:custom_data
+    })
+  },
   onChange_radio:function(e){
     this.setData({radio_value:e.detail})
   },

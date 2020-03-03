@@ -1,9 +1,9 @@
 <import src="../public/public.wxml" />
-<template is="custom" />
+<template is="custom" data="{{...custom_data}}"/>
 
 <!-- 任务板块 -->
 <view class="padding text-left">
-  <view class="padding radius shadow bg-white"> 
+  <view class="padding radius shadow bg-white views"> 
     <van-row>
       <van-col span="14">
         <view class="flex">
@@ -32,7 +32,7 @@
           </van-col>
         </van-row>
 
-        <scroll-view style="margin-top:20rpx;height:80%;border-bottom:1px solid #F5F6F8;border-top:1px solid #F5F6F8" scroll-y>
+        <scroll-view style="margin-top:20rpx;height:80%;border-bottom:1px solid #919191;border-top:1px solid #919191" scroll-y>
 
           <view wx:for="{{item}}" wx:for-item="items" wx:for-index="i" style="margin-top:20rpx;" wx:if="{{showAllTasks==true?'none':items.completed==false}}">
             
@@ -114,7 +114,7 @@
   bind:click-nav="onClickNav"
   >
     <view slot="content">
-      <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">{{editing==true?'编辑':'添加'}}{{task_title}}任务</van-divider>
+      <van-divider hairline contentPosition="center" customStyle="font-size:17px;">{{editing==true?'编辑':'添加'}}{{task_title}}任务</van-divider>
       
       <van-row>
         <van-col offset="1" span="22">
@@ -182,11 +182,11 @@
   round
   custom-style="height: 80%;"
 >
-  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">所有未完成任务</van-divider>
+  <van-divider hairline contentPosition="center" customStyle="font-size:17px;">所有未完成任务</van-divider>
 
   <view style="margin:0rpx 10% 20rpx 10%;" wx:for="{{tasks[0].types}}" wx:if="{{m.noFindChar('_',index)}}">
     <!-- header -->
-    <view class="text-left" style="font-size:17px;border-bottom:1px solid #F5F6F8;">
+    <view class="text-left" style="font-size:17px;border-bottom:1px solid #919191;">
       <van-tag mark type="warning" plain size="large">{{index}}</van-tag>
     </view>
     <!-- content -->
@@ -195,10 +195,10 @@
     </view>
   </view>
 
-  <van-divider hairline contentPosition="center" custom-style="color:#b2b2b2;font-size:11px;" borderColor="#FFFFFF"></van-divider>
-  <van-divider hairline borderColor="#FFFFFF"/>
-  <van-divider hairline borderColor="#FFFFFF"/>
-  <van-divider hairline borderColor="#FFFFFF"/>
+  <van-divider hairline/>
+  <van-divider hairline/>
+  <van-divider hairline/>
+  <van-divider hairline/>
 </van-popup>
 
 <wxs module="m">

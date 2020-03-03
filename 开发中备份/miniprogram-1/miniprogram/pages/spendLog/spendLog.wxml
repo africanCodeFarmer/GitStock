@@ -21,9 +21,9 @@
 
     <!-- content -->
     <view class="padding" wx:for="{{spendLogs}}" wx:if="{{index<=show_spendLog_day && spendLogs[index]!=null}}">
-      <view class="padding radius shadow bg-white">
+      <view class="padding radius shadow bg-white views">
         <!-- content-header -->
-        <view>
+        <view style="border-bottom:1px solid #919191;">
           <van-row>
             <van-col span="8">
               <text style="font-size:20px;font-weight:blod;color:#000000;">{{item.time}}</text>
@@ -45,7 +45,7 @@
         <view wx:for="{{item.datas}}" wx:for-item="datas">
           <van-swipe-cell right-width="{{ 110 }}">
             
-            <view style="margin:10rpx 2%;border-bottom:1px solid #F5F6F8">
+            <view style="margin:10rpx 2%;">
               <van-row>
                 <van-col offset="1" span="3">
                   <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:36px;"></text>
@@ -118,10 +118,10 @@
   <view>
     <van-row>
       <van-col offset="2" span="8">
-        <van-cell title="消费类型"></van-cell>
+        <van-cell title="花支类型" border="{{false}}"></van-cell>
       </van-col>
       <van-col span="12">
-        <van-cell title="{{spendLogData.spend_type}}">
+        <van-cell title="{{spendLogData.spend_type}}" border="{{false}}">
           <view slot="icon">
             <text class="cuIcon-{{spendLogData.icon}}"></text>
           </view>
@@ -134,7 +134,7 @@
     <van-row>
       <van-col offset="4" span="20">  
         <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_types}}">
-          <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
+          <van-cell border="{{false}}" clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
             <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
           </van-cell>
         </view>

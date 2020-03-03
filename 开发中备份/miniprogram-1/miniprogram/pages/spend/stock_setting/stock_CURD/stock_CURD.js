@@ -23,6 +23,14 @@ Page({
     stocks:[],
     stock_status:["allow","not allow","wait"],
   },
+  onLoad:function(){
+    //设置导航栏颜色
+    var custom_data = this.data.custom_data
+    custom_data['bgColor'] = getApp().globalData.bgColor
+    this.setData({
+      custom_data:custom_data
+    })
+  },
   getStock:function(id){
     var stocks = this.data.stocks
     for(var i in stocks)

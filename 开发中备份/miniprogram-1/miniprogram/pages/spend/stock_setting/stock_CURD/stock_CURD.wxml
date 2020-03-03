@@ -46,13 +46,13 @@
         </van-row>
       </van-cell>
 
-      <van-cell class="center">
+      <van-cell class="center" border="{{false}}">
         <van-button plain hairline type="" size="large" bind:click="resetInput">重置</van-button>
       </van-cell>
-      <van-cell class="center">
+      <van-cell class="center" border="{{false}}">
         <van-button plain hairline type="" size="large" bind:click="update">编辑</van-button>
       </van-cell>
-      <van-cell class="text-center">
+      <van-cell class="text-center" border="{{false}}">
         <van-button plain hairline type="" size="large" bind:click="add">添加</van-button>
       </van-cell>
     </van-collapse-item>

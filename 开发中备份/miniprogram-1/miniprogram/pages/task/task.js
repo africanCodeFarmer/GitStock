@@ -29,6 +29,8 @@ import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data:{
+    custom_data:{},
+    
     active_tab :0,
 
     task_title:"today",
@@ -56,6 +58,14 @@ Page({
     remain_taskCount:0,
 
     show_task_popup:false,
+  },
+  onLoad:function(){
+    //设置导航栏颜色
+    var custom_data = this.data.custom_data
+    custom_data['bgColor'] = getApp().globalData.bgColor
+    this.setData({
+      custom_data:custom_data
+    })
   },
   //只排序今日所有任务
   sortTasks:function(){
