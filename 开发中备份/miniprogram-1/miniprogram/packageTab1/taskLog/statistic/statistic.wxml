@@ -55,14 +55,6 @@
   </view>
 </view>
 
-<!-- <view class="padding">
-  <view class="padding-xl radius shadow bg-white">
-    <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
-      <ec-canvas id="income_pie_chart" canvas-id="income_pie_chart" ec="{{ ec_income_pie_chart }}"></ec-canvas>
-    </view>
-  </view>
-</view> -->
-
 <van-popup 
   show="{{ show_timeChoose_popup }}" 
   bind:close="onClose_timeChoose_popup"

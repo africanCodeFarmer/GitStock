@@ -69,7 +69,6 @@ van-divider{
   --divider-border-color:#333333;
   --divider-text-color: white;
 }
-
 page{
   background-color:#3A3A3C;
 }

@@ -1,11 +1,10 @@
-//app.js
-
 App({
   globalData:{
     StatusBar:null,
     Custom:null,
     CustomBar:null,
-    bgColor:"bg-black",
+    bgColor:"",
+    theme:"",
   },
   fill_default_spend_type:function(){
     var task_types = wx.getStorageSync('types') || []
@@ -52,6 +51,13 @@ App({
     }
   },
   onLaunch: function () {
+    //填充深色主题和导航栏颜色
+    //wx.setStorageSync('theme', "night")
+    var theme = wx.getStorageSync('theme') || "night"
+    wx.setStorageSync('theme', theme)
+    this.globalData.theme = theme
+    this.globalData.bgColor = this.globalData.theme=='night'?'bg-black':'bg-gradual-blue'
+
     this.fill_default_spend_type() //填充默认花支类型
     this.fill_default_task_type() //填充默认任务类型
     this.fill_default_task_color() //填充默认任务颜色

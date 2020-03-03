@@ -27,7 +27,7 @@
             <view style="font-size:20px;" class="whiteColor">{{tasks[index].time}}</view>
           </van-col>
           <van-col span="12" class="text-right">
-            <view>今日总完成: {{tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count}}</view>
+            <view class="whiteColor">今日总完成: {{tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count}}</view>
           </van-col>
         </van-row>
       </view>

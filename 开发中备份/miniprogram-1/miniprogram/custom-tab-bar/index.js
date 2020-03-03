@@ -40,7 +40,7 @@ Component({
 		init() {
 			const page = getCurrentPages().pop();
 			this.setData({
-				active: this.data.list.findIndex(item => item.url === `/${page.route}`)
+				active: this.data.list.findIndex(item => item.url === `/${page.route}`),
 			});
 		}
 	}

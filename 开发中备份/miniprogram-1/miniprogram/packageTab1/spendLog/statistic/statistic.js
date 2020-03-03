@@ -4,6 +4,7 @@ var util = require('../../../pages/public/public')
 var pie_chart = null;
 var income_pie_chart = null;
 var column_chart = null;
+const app = getApp()
 
 //柱状图初始化
 function initChart_column(canvas, width, height) {
@@ -15,7 +16,10 @@ function initChart_column(canvas, width, height) {
 
   var option = {
     title:{
-      text:"本月每日花支收入情况"
+      text:"本月每日花支收入情况",
+      textStyle:{
+        color:app.globalData.theme =='night'?'white':'black',
+      }
     },
     color: ['#E64340','#09BB07'],
     grid: {
@@ -105,6 +109,9 @@ function initChart_pie(canvas, width, height) {
     title: {
         text: '本月各花支类型支出情况',
         left: 'left',
+        textStyle:{
+          color:app.globalData.theme =='night'?'white':'black',
+        }
     },
     tooltip: {
         trigger: 'item',
@@ -161,6 +168,9 @@ function initChart_income_pie(canvas, width, height) {
     title: {
         text: '本月各收入类型收入情况',
         left: 'left',
+        textStyle:{
+          color:app.globalData.theme =='night'?'white':'black',
+        }
     },
     tooltip: {
         trigger: 'item',

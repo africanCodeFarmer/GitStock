@@ -1,8 +1,41 @@
 import Dialog from '@vant/weapp/dialog/dialog';
+const app = getApp()
 
 Page({
   data: {
-    custom_data:{"backText":"主页","content":"全局管理"}
+    custom_data:{"backText":"主页","content":"全局管理"},
+
+    theme:"",
+  },
+  toggle_theme:function(){
+    Dialog.confirm({
+      title: '主题',
+      message:'确定切换主题?',
+    }).then(() => {
+      // on confirm
+      var theme = this.data.theme=='day'?'night':'day'
+      
+      app.globalData.theme = theme
+      app.globalData.bgColor = theme=='night'?'bg-black':'bg-gradual-blue'
+      
+      wx.setStorageSync('theme', theme)
+      this.setData({theme:theme})
+
+      wx.reLaunch({
+        url: '../../home/home',
+      })
+
+      wx.showToast({
+        icon:'none',
+        title: '切换成功',
+      })
+    }).catch(() => {
+      // on cancel
+    });
+  },
+  onShow:function(){
+    var theme = wx.getStorageSync('theme') || "night"
+    this.setData({theme:theme})
   },
   onLoad:function(){
     //设置导航栏颜色

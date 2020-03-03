@@ -3,6 +3,7 @@ var util = require('../../../pages/public/public')
 
 var pie_chart = null;
 var column_chart = null;
+const app = getApp()
 
 //柱状图初始化
 function initChart_column(canvas, width, height) {
@@ -14,7 +15,10 @@ function initChart_column(canvas, width, height) {
 
   var option = {
     title:{
-      text:"本月每日任务完成情况"
+      text:"本月每日任务完成情况",
+      textStyle:{
+        color:app.globalData.theme =='night'?'white':'black',
+      }
     },
     grid: {
       left: 0,
@@ -53,6 +57,9 @@ function initChart_column(canvas, width, height) {
       }
     ],
     legend: {
+      textStyle:{
+        color:app.globalData.theme =='night'?'white':'black',
+      },
       data: ['今日任务', '每日任务','限时任务'],
       right: 0,
       top:40
@@ -120,6 +127,9 @@ function initChart_pie(canvas, width, height) {
     title: {
         text: '本月完成任务类型情况',
         left: 'left',
+        textStyle:{
+          color:app.globalData.theme =='night'?'white':'black',
+        }
     },
     tooltip: {
         trigger: 'item',

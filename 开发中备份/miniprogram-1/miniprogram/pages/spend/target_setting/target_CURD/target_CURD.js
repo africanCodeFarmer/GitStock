@@ -106,6 +106,7 @@ Page({
 
     var targets =this.data.targets
     var time = util.formatTime(new Date())
+
     var target = {
       "id":targets.length==0?1:targets[targets.length-1].id+1,
       "name":this.data.target_name,
