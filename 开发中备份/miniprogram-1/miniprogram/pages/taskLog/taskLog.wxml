@@ -20,7 +20,7 @@
     </van-sticky>
 
     <!-- content -->
-    <view class="padding" wx:for="{{tasks}}" wx:if="{{(tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count)>0 && index<show_taskLog_day}}">
+    <view class="padding" wx:for="{{tasks}}" wx:if="{{(tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count)>0 && index<=show_taskLog_day}}">
       <view class="padding radius shadow bg-white">
         <van-row>
           <van-col span="12" class="text-left">

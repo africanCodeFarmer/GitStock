@@ -150,8 +150,14 @@ Page({
 
     var input_principle = this.data.input_principle
     var principles = this.data.principles
+
+    var maxID=0
+    for(var i in principles)
+      if(principles[i].id>maxID)
+        maxID=principles[i].id
+        
     principles.unshift({
-      id:principles.length>0?(principles[0].id+1):1,
+      id:maxID+1,
       text:input_principle,
       count:0,
     })
@@ -161,6 +167,7 @@ Page({
     this.reset_add_principle()
     this.onClose_add_principle()
 
+    this.sortPrinciple()
     wx.showToast({
       icon:'none',
       title: '添加成功',
