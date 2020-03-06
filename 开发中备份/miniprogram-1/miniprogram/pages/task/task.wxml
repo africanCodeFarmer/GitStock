@@ -5,15 +5,15 @@
 <view class="padding text-left">
   <view class="padding radius shadow bg-white"> 
     <van-row>
-      <van-col span="14">
+      <van-col span="18">
         <view class="flex">
           <text style="font-size:20px;" space="ensp">我的任务 </text>
           <view style="margin-top:4px;">
-            <van-tag plain type="warning" bindtap="onClick_reveal">展示所有未完成任务</van-tag>
+            <van-tag plain type="warning" size="medium" bindtap="onClick_reveal">展示所有未完成任务</van-tag>
           </view>
         </view>
       </van-col>
-      <van-col span="10" class="text-right">
+      <van-col span="6" class="text-right">
         <van-button plain round type="default" icon="setting-o" size="small" bind:click="task_setting">
         </van-button>
       </van-col>
@@ -21,7 +21,7 @@
 
     <van-divider hairline />
 
-    <swiper indicator-dots="{{true}}" style="height:400px;" bindchange="onChange_tab">
+    <swiper indicator-dots="{{true}}" style="height:460px;" bindchange="onChange_tab">
       <swiper-item wx:for="{{tasks[0].types}}" wx:for-item="item" wx:if="{{m.noFindChar('_',index)}}">
         <van-row>
           <van-col span="12" class="text-left">

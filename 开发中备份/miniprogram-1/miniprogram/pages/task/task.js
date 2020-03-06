@@ -52,7 +52,7 @@ Page({
     editID:0,
     editTaskTitle:"",
 
-    showAllTasks:true,
+    showAllTasks:false,
     remain_taskCount:0,
 
     show_task_popup:false,
@@ -519,7 +519,9 @@ Page({
     var task_durations = wx.getStorageSync('task_durations') || []
     var task_colors = wx.getStorageSync('task_colors') || []
     var task_color = task_colors[0].value
+    var show_task_popup = wx.getStorageSync('show_task_popup') || false
     this.setData({
+      show_task_popup:show_task_popup,
       task_color:task_color,
       task_colors:task_colors,
       task_durations:task_durations,
