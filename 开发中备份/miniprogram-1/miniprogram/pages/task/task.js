@@ -75,7 +75,11 @@ Page({
         var specificTasks = tasks[0].types[i]
         for(var j=0;j<specificTasks.length;j++){
           for(var k=j+1;k<specificTasks.length;k++){
-            if(colorLevel[specificTasks[j].color]>colorLevel[specificTasks[k].color]){
+            var jcolor =  colorLevel[specificTasks[j].color]
+            var kcolor =  colorLevel[specificTasks[k].color]
+            var jname = specificTasks[j].name[0]
+            var kname = specificTasks[k].name[0]
+            if(jcolor>kcolor || (jcolor == kcolor && jname < kname)){
               //j k 互换
               var temp = specificTasks[j]
               specificTasks[j] = specificTasks[k]
