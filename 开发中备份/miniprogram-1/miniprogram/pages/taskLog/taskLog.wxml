@@ -27,13 +27,13 @@
             <view style="font-size:20px;color:#000000;">{{tasks[index].time}}</view>
           </van-col>
           <van-col span="12" class="text-right">
-            <view>今日总完成: {{tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count}}</view>
+            <view>今日总完成: {{tasks[index].types.today_completed_count+tasks[index].types.everyday_completed_count+tasks[index].types.limitTime_completed_count}} | {{tasks[index].types.today_completed_count}},{{tasks[index].types.everyday_completed_count}},{{tasks[index].types.limitTime_completed_count}}</view>
           </van-col>
         </van-row>
       </view>
-      <view class="padding radius shadow bg-white" wx:for="{{tasks[index].types}}" wx:for-item="items" wx:for-index="indexes" wx:if="{{m.noFindChar('_',indexes) && tasks[index].types[m.combineCompleteCountStr(indexes)]!=0}}">
+      <view class="radius shadow bg-white" wx:for="{{tasks[index].types}}" wx:for-item="items" wx:for-index="indexes" wx:if="{{m.noFindChar('_',indexes) && tasks[index].types[m.combineCompleteCountStr(indexes)]!=0}}" style="padding:10rpx 4%;border-bottom:1px solid #F5F6F8;">
         <!-- content-header -->
-        <view>
+        <!-- <view>
           <van-row>
             <van-col span="12">
               <text>{{indexes}}</text>
@@ -43,8 +43,7 @@
             </van-col>
           </van-row>
         </view>
-
-        <van-divider hairline />
+        <van-divider hairline /> -->
 
         <!-- content-content -->
         <view wx:for="{{items}}" wx:for-item="datas" wx:if="{{datas!=null &&datas.completed}}" wx:for-index="datas_index">

@@ -53,10 +53,10 @@
 				"pagePath": "pages/home/home"
       },
       {
-				"pagePath": "pages/taskLog/taskLog"
+				"pagePath": "pages/spendLog/spendLog"
       },
       {
-				"pagePath": "pages/spendLog/spendLog"
+				"pagePath": "pages/taskLog/taskLog"
       }
 		]
 	},
