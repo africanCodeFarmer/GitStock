@@ -55,7 +55,9 @@ Page({
     var principles = this.data.principles
     for(var i=0;i<principles.length;i++){
       for(var j=0;j<principles.length;j++){
-        if(principles[i].count>principles[j].count){
+        var itext = principles[i].text.substr(0,1)
+        var jtext = principles[j].text.substr(0,1)
+        if(principles[i].count>principles[j].count || (principles[i].count==principles[j].count && itext<jtext) ){
           var temp = principles[i]
           principles[i] = principles[j]
           principles[j] = temp

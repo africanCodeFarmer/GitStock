@@ -4,7 +4,7 @@
     "pages/home/data_setting/data_setting",
 
     "pages/task/task",
-    "pages/taskLog/taskLog", 
+    "pages/taskLog/taskLog",
 
     "pages/spend/spend",
     "pages/spendLog/spendLog",

@@ -23,7 +23,7 @@
     <view class="padding" wx:for="{{spendLogs}}" wx:if="{{index<=show_spendLog_day && spendLogs[index]!=null}}">
       <view class="padding radius shadow bg-white">
         <!-- content-header -->
-        <view>
+        <view style="padding:10rpx 4% 20rpx 4%;border-bottom:1px solid #F5F6F8;">
           <van-row>
             <van-col span="8">
               <text style="font-size:20px;font-weight:blod;color:#000000;">{{item.time}}</text>
@@ -38,8 +38,6 @@
             </van-col>
           </van-row>
         </view>
-
-        <van-divider hairline />
 
         <!-- content-content -->
         <view wx:for="{{item.datas}}" wx:for-item="datas">
