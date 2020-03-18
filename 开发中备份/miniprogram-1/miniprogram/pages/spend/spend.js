@@ -187,7 +187,9 @@ Page({
     var comment = input_clip.length>1?input_clip[input_clip.length-1]:""
     var icon = this.getSpendType_useSpendType(this.data.spend_type)==null?"moneybag":this.getSpendType_useSpendType(this.data.spend_type).icon
 
-    if(value==""){
+    //金额格式校验
+    value = parseFloat(value).toFixed(2)
+    if(value==""||isNaN(value)){
       this.setData({input_value_comment_error:"正确格式:金额 注释"})
       return;
     }

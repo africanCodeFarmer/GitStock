@@ -18,6 +18,7 @@
         value="{{ block_value }}"
         label="金额"
         placeholder="请输入金额"
+        type="digit"
         required
         bind:change="update_block_value"
         error="{{block_value_error}}"

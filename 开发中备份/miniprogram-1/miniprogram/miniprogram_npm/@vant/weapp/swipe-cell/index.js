@@ -88,8 +88,8 @@ component_1.VantComponent({
             if (this.data.disabled) {
                 return;
             }
-            this.startOffset = this.offset;
-            this.touchStart(event);
+            //this.startOffset = this.offset;
+            //this.touchStart(event);
         },
         noop: function () { },
         onDrag: function (event) {
@@ -110,11 +110,13 @@ component_1.VantComponent({
             if (this.data.disabled) {
                 return;
             }
-            this.dragging = false;
-            this.swipeLeaveTransition();
+            //this.dragging = false;
+            //this.swipeLeaveTransition();
+            //this.open('right');
         },
         onClick: function (event) {
             var _a = event.currentTarget.dataset.key, position = _a === void 0 ? 'outside' : _a;
+
             this.$emit('click', position);
             if (!this.offset) {
                 this.open('right');

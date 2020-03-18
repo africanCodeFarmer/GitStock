@@ -180,6 +180,7 @@
           value="{{transfer_value}}"
           placeholder="请输入金额"
           border="{{ false }}"
+          type="digit"
           bind:change="onChange_transfer_value"
           error-message="{{transfer_value_error}}"
         >
