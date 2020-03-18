@@ -11,6 +11,15 @@ var util = require('../public/public.js');
 
 Page({
   data:{
+    show_completed_plan:false,
+
+    plans:[],
+
+    gradientColor: {
+      '0%': '#1CBBB4',
+      '100%': '#0388F5'
+    },
+
     show_title_text:false,
 
     greet_text:"",
@@ -23,6 +32,69 @@ Page({
     input_principle_error:false,
 
     principles:[],
+  },
+  onClick_reveal_completed_plan:function(){
+    this.setData({show_completed_plan:true})
+  },
+  onClick_complete:function(e){
+    var id = e.target.id
+    var name = e.target.dataset.name
+    
+    Dialog.confirm({
+      title: '完成',
+      message: '确定完成'+name+'了吗?'
+    }).then(() => {
+      // on confirm
+      var plans = this.data.plans
+      for(var i in plans)
+        if(plans[i].id == id){
+          plans[i].completed=true
+          plans[i].complete_time=util.formatTime(new Date())
+        }
+
+      this.setData({plans:plans})
+      wx.setStorageSync('plans', plans)
+      
+      wx.showToast({
+        icon:'none',
+        title: '完成任务',
+      })
+    }).catch(() => {
+      // on cancel
+    });
+  },
+  hitCard:function(e){
+    var id = e.target.id
+    var name = e.target.dataset.name
+    
+    Dialog.confirm({
+      title: '打卡',
+      message: '确定打卡'+name+'吗?'
+    }).then(() => {
+      // on confirm
+      var plans = this.data.plans
+      for(var i in plans)
+        if(plans[i].id == id){
+          var remain_day = plans[i].remain_day-1<0?0:plans[i].remain_day-1
+          plans[i].remain_day=plans[i].type=="remain"?remain_day:plans[i].remain_day;
+          plans[i].insist_day=plans[i].type=="insist"?plans[i].insist_day+1:plans[i].insist_day;
+        }
+
+      this.setData({plans:plans})
+      wx.setStorageSync('plans', plans)
+      
+      wx.showToast({
+        icon:'none',
+        title: '打卡成功',
+      })
+    }).catch(() => {
+      // on cancel
+    });
+  },
+  plan_setting:function(){
+    wx.navigateTo({
+      url: '../home/plan_setting/plan_setting',
+    })
   },
   onClick_data_setting:function(){
     wx.navigateTo({
@@ -178,6 +250,9 @@ Page({
   onClick_add_principle:function(){
     this.setData({show_add_principle:true,editing:false,editID:0,})
   },
+  onClose_completed_plan_popup:function(){
+    this.setData({show_completed_plan:false,})
+  },
   onClose_add_principle:function(){
     this.setData({show_add_principle:false,})
   },
@@ -202,9 +277,10 @@ Page({
     
     this.fillGreetText()
     var principles = wx.getStorageSync('principles') || []
-
+    var plans = wx.getStorageSync('plans') || []
     this.setData({
       principles:principles,
+      plans:plans
     })
   },
 })

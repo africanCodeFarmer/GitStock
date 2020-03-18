@@ -2,6 +2,8 @@
   "pages": [
     "pages/home/home",
     "pages/home/data_setting/data_setting",
+    "pages/home/plan_setting/plan_setting",
+    "pages/home/plan_setting/plan_CURD/plan_CURD",
 
     "pages/task/task",
     "pages/taskLog/taskLog",
@@ -90,6 +92,7 @@
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-skeleton": "@vant/weapp/skeleton/index",
     "van-steps": "@vant/weapp/steps/index",
+    "van-circle": "@vant/weapp/circle/index",
     "cu-custom": "style/colorui/components/cu-custom"
   }
 }

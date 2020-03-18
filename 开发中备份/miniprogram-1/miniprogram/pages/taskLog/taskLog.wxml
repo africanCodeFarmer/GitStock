@@ -49,7 +49,7 @@
                   </view>
                 </van-col>
                 <van-col span="8">
-                  <view class="text-right" style="color:#353535;font-size:13px;">{{indexes=='limitTime'?'限时: ':'时长: '}}{{datas.duration}}min</view>
+                  <view class="text-right" style="color:#888888;font-size:13px;">{{indexes=='limitTime'?'限时: ':'时长: '}}{{datas.duration}}min</view>
                 </van-col>
               </van-row>
               <van-row>

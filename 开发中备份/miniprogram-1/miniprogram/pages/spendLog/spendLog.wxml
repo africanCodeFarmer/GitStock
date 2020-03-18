@@ -61,7 +61,7 @@
                       <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
                       <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
                       <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
-                      <view style="font-size:14px;color:#353535;">余额: {{datas.remain}}</view>
+                      <view style="font-size:14px;color:#888888;">余额: {{datas.remain}}</view>
                     </van-col>
                   </van-row>
                 </van-col>

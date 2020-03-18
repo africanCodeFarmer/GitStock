@@ -1,0 +1,158 @@
+<import src="../../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="编辑/添加">
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
+      <van-field
+        name="plan_id"
+        value="{{ plan_id }}"
+        label="ID"
+        type="number"
+        readonly
+        bind:change="update_plan_id"
+        error-message="{{plan_id_error}}"
+      />
+      <van-field
+        name="plan_name"
+        value="{{ plan_name }}"
+        label="名称"
+        placeholder="请输入名称"
+        required
+        bind:change="update_plan_name"
+        error="{{plan_name_error}}"
+      />
+      <van-field
+        name="plan_desc"
+        value="{{ plan_desc }}"
+        label="详情"
+        placeholder="请输入详情"
+        required
+        bind:change="update_plan_desc"
+        error="{{plan_desc_error}}"
+      />
+      <van-field
+        name="plan_day"
+        value="{{ plan_day }}"
+        label="计划天数"
+        placeholder="请输入计划天数"
+        type="number"
+        bind:change="update_plan_day"
+        error="{{plan_day_error}}"
+      />
+      <van-field
+        name="plan_reward"
+        value="{{ plan_reward }}"
+        label="奖励"
+        placeholder="请输入奖励"
+        bind:change="update_plan_reward"
+      />
+      <!-- 选择计划类型 -->
+      <van-cell>
+        <van-row>
+          <van-col span="6" class="text-left" style="color:black;">类型</van-col>
+          <van-col span="18" class="text-left">
+            <van-radio-group value="{{plan_type}}" bind:change="onChange_plan_type">
+              <view style="display:inline-block;">
+                <van-radio name="remain">剩余类</van-radio>
+              </view>
+              <view style="display:inline-block;margin-left:20rpx;">
+                <van-radio name="insist">坚持类</van-radio>
+              </view>
+            </van-radio-group>
+          </van-col>
+        </van-row>
+      </van-cell>
+      <!-- 选择完成类型 -->
+      <van-cell>
+        <van-row>
+          <van-col span="6" class="text-left" style="color:black;">完成情况</van-col>
+          <van-col span="18" class="text-left">
+            <van-radio-group value="{{plan_completed}}" bind:change="onChange_plan_completed">
+              <view style="display:inline-block;">
+                <van-radio name="false">未完成</van-radio>
+              </view>
+              <view style="display:inline-block;margin-left:20rpx;">
+                <van-radio name="true">已完成</van-radio>
+              </view>
+            </van-radio-group>
+          </van-col>
+        </van-row>
+      </van-cell>
+      <van-cell>
+        <van-row>      
+          <van-col span="8" class="text-left">
+            <van-button  plain hairline type="danger" size="large" bind:click="reset">重置</van-button>
+          </van-col>
+          <van-col offset="1" span="6" class="text-center">
+            <van-button  plain hairline type="warning" size="large" bind:click="update">编辑</van-button>
+          </van-col>
+          <van-col offset="1" span="8" class="text-right">
+            <van-button  plain hairline type="primary" size="large" bind:click="add">添加</van-button>
+          </van-col>
+        </van-row>    
+      </van-cell>
+    </van-collapse-item>
+  </van-collapse>
+</van-cell-group>
+
+<van-cell-group title="所有计划">
+  <view class="bg-white">
+    <van-swipe-cell right-width="{{ 120 }}" wx:for="{{plans}}">
+      <view style="margin:10rpx 4%;border-bottom:1px solid #F5F6F8;padding-bottom:10rpx;">
+        <view>
+          <van-row>
+            <van-col span="12" class="text-left">
+              <text style="font-size:17px;color:black;" class="overflowText">{{item.name}}</text>
+            </van-col>
+            <van-col span="12" class="text-right">
+              <text style="font-size:14px;color:#888888;" class="overflowText">类型: {{item.type=="remain"?"剩余类":"坚持类"}}</text>
+            </van-col>
+          </van-row>
+        </view>
+
+        <view>
+          <van-row>
+            <van-col span="12" class="text-left">
+              <text class="overflowText" style="font-size:13px;color:#888888;">{{item.desc}}</text>
+            </van-col>
+            <van-col span="12" class="text-right">
+              <text class="overflowText" style="font-size:13px;color:#888888;">奖励: {{item.reward}}</text>
+            </van-col>
+          </van-row>
+        </view>
+        
+        <view>
+          <van-row>
+            <van-col span="12" class="text-left">
+              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">{{item.create_time}}</text>
+            </van-col>
+            <van-col span="12" class="text-right">
+              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">完成情况: {{item.completed==true?"已完成":"未完成"}}</text>
+            </van-col>
+          </van-row>
+        </view>
+
+        <view>
+          <van-row>
+            <van-col span="8" class="text-left">
+              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">计划天数: {{item.plan_day}}</text>
+            </van-col>
+            <van-col span="16" class="text-right">
+              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">剩余天数: {{item.remain_day}}</text>
+              <text space="ensp" style="font-size:11px;color:#b2b2b2;"> | </text>
+              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">坚持天数: {{item.insist_day}}</text>
+            </van-col>
+          </van-row>
+        </view>
+      </view>
+
+      <view slot="right" style="margin-left:10px;height:100%;">
+        <van-button custom-style="height:100%;" type="primary" id="{{item.id}}" bind:click="edit">编辑</van-button>
+        <van-button custom-style="height:100%;" type="danger" id="{{item.id}}" bind:click="delete" data-name="{{item.name}}">删除</van-button>
+      </view>
+    </van-swipe-cell>
+  </view>
+</van-cell-group>
+
+<van-dialog id="van-dialog" />
