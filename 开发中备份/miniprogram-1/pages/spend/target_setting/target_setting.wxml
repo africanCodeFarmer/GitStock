@@ -1,0 +1,7 @@
+<import src="../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="数据设置">
+  <van-cell icon="aim" title="花支目标" value="" is-link link-type="navigateTo"
+  url="target_CURD/target_CURD"/>
+</van-cell-group>

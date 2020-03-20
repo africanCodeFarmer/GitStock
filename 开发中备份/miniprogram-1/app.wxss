@@ -1,0 +1,9 @@
+@import "style/colorui/main.wxss";
+@import "style/colorui/icon.wxss";
+
+view.inline{
+  display:inline-block;
+}
+view.marginLeft{
+  margin-left: 20rpx;
+}

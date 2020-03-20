@@ -1,0 +1,88 @@
+<import src="../../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="编辑/添加">
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
+      <van-field
+        name="type_id"
+        value="{{ type_id }}"
+        label="ID"
+        type="number"
+        readonly
+        bind:change="update_type_id"
+        error-message="{{type_id_error}}"
+      />
+      <van-field
+        name="type_text"
+        value="{{ type_text }}"
+        label="名称"
+        placeholder="请输入名称 建议5字及内"
+        required
+        bind:change="update_type_text"
+        error="{{type_text_error}}"
+        error-message="{{type_text_validate_error}}"
+      />
+      
+      <!-- 选择类型 -->
+      <van-cell>
+        <van-row>
+          <van-col span="6" class="text-left" style="color:black;">类型</van-col>
+          <van-col span="18" class="text-left">
+            <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
+              <view class="inline">
+              <van-radio name="-" disabled="{{type_id==null?false:true}}">花支类</van-radio>
+              </view>
+              <view class="inline marginLeft">
+              <van-radio name="+" disabled="{{type_id==null?false:true}}">收入类</van-radio>
+              </view>
+            </van-radio-group>
+          </van-col>
+        </van-row>
+      </van-cell>
+
+      <!-- 挑选图标 -->
+      <van-cell title="挑选图标">
+        <view slot="right-icon" class="cuIcon-{{type_icon}}"></view>
+      </van-cell>
+
+      <van-cell>
+        <van-collapse value="{{ activeNames_icon }}" bind:change="onChange_van_collapse_icon">
+          <van-collapse-item title="所有图标" name="1">
+            <view class="text-left" wx:for="{{icons}}" style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;">
+              <van-button bind:click="choose_icon" data-icon="{{item.name}}"><text class="cuIcon-{{item.name}}"></text></van-button>
+            </view>
+          </van-collapse-item>
+        </van-collapse>
+      </van-cell>
+
+      <van-cell>
+        <van-row>      
+          <van-col span="8" class="text-left">
+            <van-button  plain hairline type="danger" size="large" bind:click="reset">重置</van-button>
+          </van-col>
+          <van-col offset="1" span="6" class="text-center">
+            <van-button  plain hairline type="warning" size="large" bind:click="update">编辑</van-button>
+          </van-col>
+          <van-col offset="1" span="8" class="text-right">
+            <van-button  plain hairline type="primary" size="large" bind:click="add">添加</van-button>
+          </van-col>
+        </van-row>    
+      </van-cell>
+    </van-collapse-item>
+  </van-collapse>
+</van-cell-group>
+
+<van-cell-group title="所有类型">
+  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{types}}">
+    <van-cell title="{{item.text}}" value="{{item.type=='-'?'花支类':'收入类'}}">
+      <view slot="icon" class="cuIcon-{{item.icon}}" style="margin-right:10rpx;"/>
+    </van-cell>
+    <view slot="right">
+      <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
+      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-text="{{item.text}}" bind:click="delete"></van-button>
+    </view>
+  </van-swipe-cell>
+</van-cell-group>
+
+<van-dialog id="van-dialog" />

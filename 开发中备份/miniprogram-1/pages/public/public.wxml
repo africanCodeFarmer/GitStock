@@ -1,0 +1,13 @@
+<template name="custom">
+	<cu-custom bgColor="bg-gradual-blue">
+		<view slot="backText"></view>
+		<view slot="content"></view>
+	</cu-custom>
+</template>
+
+<template name="custom_inner">
+	<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+		<view slot="backText">{{backText}}</view>
+		<view slot="content">{{content}}</view>
+	</cu-custom>
+</template>

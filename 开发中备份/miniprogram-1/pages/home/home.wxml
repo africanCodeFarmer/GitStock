@@ -1,0 +1,198 @@
+<import src="../public/public.wxml" />
+<template is="custom" />
+
+<view class="padding text-left">
+  <view class="padding radius shadow bg-white">
+    <van-row>
+      <van-col span="16">
+        <van-skeleton title row="1" loading="{{show_title_text}}">
+          <view style="font-size:20px;color:black;">{{greet_text}}</view>
+        </van-skeleton>
+      </van-col>
+      <van-col span="8" class="text-right">
+        <van-button plain round type="info" size="small" bind:click="onClick_data_setting">全局数据管理</van-button>
+      </van-col>
+    </van-row>
+  </view>
+</view>
+
+<view class="padding text-left">
+  <view class="padding radius shadow bg-white">
+
+    <van-row>
+      <van-col span="20"><text style="font-size:20px;">我的原则</text></van-col>
+      <van-col span="4">
+        <van-button plain round type="primary" icon="plus" size="small" bind:click="onClick_add_principle">
+        </van-button>
+      </van-col>
+    </van-row>
+
+    <van-divider hairline />
+
+    <scroll-view style="height:100px;" scroll-y>
+      <view style="display:inline-block;margin:0px 10rpx 10rpx 0rpx;padding:5rpx 10rpx;font-size:13px;max-width:100%;word-break: keep-all;word-wrap: break-word;background-color:rgba({{item.count}},0,0,0.8);color:white;border-radius:5px;" wx:for="{{principles}}" bindtap="edit" id="{{item.id}}">{{item.text}}</view>
+    </scroll-view>
+
+  </view>
+</view>
+
+<!-- 我的计划板块 -->
+<view class="padding text-left">
+  <view class="padding radius shadow bg-white">
+
+    <van-row>
+      <van-col span="20">
+        <text style="font-size:20px;">我的计划</text>
+        <view style="margin-left:10rpx;display:inline-block;">
+          <van-tag plain type="warning" size="medium" bindtap="onClick_reveal_completed_plan">展示完成计划</van-tag>
+        </view>
+      </van-col>
+      <van-col span="4">
+        <van-button plain round type="default" icon="setting-o" size="small" bind:click="plan_setting">
+        </van-button>
+      </van-col>
+    </van-row>
+
+    <van-divider hairline />
+
+    <!-- 计划格 -->
+    <!-- style="border-bottom:1px solid #F5F6F8;" -->
+    <view>
+      <van-swipe-cell right-width="{{ 120 }}" wx:for="{{plans}}" wx:if="{{item.completed==false}}">
+        <view style="margin:10rpx 0rpx;">
+          <van-row>
+            <van-col span="12" class="text-left">
+              <text style="font-size:17px;color:black;" class="overflowText">{{item.name}}</text>
+            </van-col>
+            <van-col span="12" class="text-right">
+              <text style="font-size:14px;color:#888888;" class="overflowText">{{item.type=="remain"?"计划剩余: "+item.remain_day+"天":"计划坚持: "+item.insist_day+"天"}}</text>
+            </van-col>
+          </van-row>
+        </view>
+
+        <view>
+          <van-row>
+            <van-col span="12" class="text-left">
+              <text class="overflowText" style="font-size:13px;color:#888888;">{{item.desc}}</text>
+            </van-col>
+            <van-col span="12" class="text-right">
+              <text class="overflowText" style="font-size:13px;color:#888888;">奖励: {{item.reward==''||item.reward==null?'无':item.reward}}</text>
+            </van-col>
+          </van-row>
+        </view>
+        
+        <view>
+          <van-row>
+            <van-col span="12" class="text-left">
+              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">{{item.create_time}} created</text>
+            </van-col>
+            <van-col span="12" class="text-right">
+              <view class="cu-progress round sm striped active">
+                <view class="bg-green" style="width:{{m.computeProgress(item)}}%;">{{m.computeProgress(item)}}%</view>
+              </view>
+            </van-col>
+          </van-row>
+        </view>
+
+        <view slot="right" style="margin-left:10px;height:100%;">
+          <van-button custom-style="height:100%;" type="warning" icon="" id="{{item.id}}" bind:click="hitCard" data-name="{{item.name}}">打卡</van-button>
+          <van-button custom-style="height:100%;" type="primary" icon="" id="{{item.id}}" bind:click="onClick_complete" data-name="{{item.name}}">完成</van-button>
+        </view>
+      </van-swipe-cell>
+    </view>
+  </view>
+</view>
+
+<van-dialog id="van-dialog" />
+
+<van-popup 
+  show="{{ show_add_principle }}" 
+  bind:close="onClose_add_principle"
+  position="bottom"
+  round
+  custom-style="height: 25%;"
+>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">{{editing?'编辑':'添加'}}原则</van-divider>
+
+  <van-field
+    name="input_principle"
+    value="{{input_principle}}"
+    placeholder="请输入原则"
+    border="{{ false }}"
+    bind:change="change_principle"
+    error="{{input_principle_error}}"
+  >
+    <view slot="left-icon" wx:if="{{editing}}" style="margin-right:20rpx;">
+      <van-button round size="small" type="warning" bind:click="onClick_principle_addCount" custom-style="margin-right:10rpx;">触犯+1次</van-button>
+      <van-button round size="small" type="danger" icon="delete" bind:click="delete_principle"></van-button>
+    </view>
+    <van-button slot="button" round size="small" type="primary" icon="arrow" bind:click="{{editing?'update_principle':'add_principle'}}"></van-button>
+  </van-field>
+</van-popup>
+
+<van-popup 
+  show="{{ show_completed_plan }}" 
+  bind:close="onClose_completed_plan_popup"
+  position="bottom"
+  round
+  custom-style="height: 50%;"
+>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">已实现计划</van-divider>
+
+  <view style="margin-bottom:10%;">
+    <view wx:for="{{plans}}" wx:if="{{item.completed==true}}" style="margin:10rpx 4%;">
+      <view>
+        <van-row>
+          <van-col span="12" class="text-left">
+            <text style="font-size:17px;color:black;" class="overflowText">{{item.name}}</text>
+          </van-col>
+          <van-col span="12" class="text-right">
+            <text style="font-size:14px;color:#888888;" class="overflowText">{{item.type=="remain"?"计划剩余: "+item.remain_day+"天":"计划坚持: "+item.insist_day+"天"}}</text>
+          </van-col>
+        </van-row>
+      </view>
+
+      <view>
+        <van-row>
+          <van-col span="12" class="text-left">
+            <text class="overflowText" style="font-size:13px;color:#888888;">{{item.desc}}</text>
+          </van-col>
+          <van-col span="12" class="text-right">
+            <text class="overflowText" style="font-size:13px;color:#888888;">奖励: {{item.reward==''?'无':item.reward}}</text>
+          </van-col>
+        </van-row>
+      </view>
+      
+      <view>
+        <van-row>
+          <van-col span="12" class="text-left">
+            <text class="overflowText" style="font-size:11px;color:#b2b2b2;">{{item.complete_time}} completed</text>
+          </van-col>
+          <!-- <van-col span="24" class="text-right">
+            <view class="cu-progress round sm striped active">
+              <view class="bg-green" style="width:{{m.computeProgress(item)}}%;">{{m.computeProgress(item)}}%</view>
+            </view>
+          </van-col> -->
+        </van-row>
+      </view>
+
+    </view>
+  </view>
+</van-popup>
+
+<van-divider hairline />
+<van-divider hairline />
+<van-divider hairline />
+<van-divider hairline />
+
+<wxs module="m">
+  var computeProgress= function (item) {
+    if(item.type=="insist")
+      return 0;
+    else{
+      var ans =parseFloat( (1-parseFloat(item.remain_day)/parseFloat(item.plan_day))*100 ).toFixed(2); 
+      return ans>100?100:ans;
+    }
+  }
+ module.exports.computeProgress=computeProgress;
+</wxs>

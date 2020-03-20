@@ -1,0 +1,16 @@
+<import src="../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="数据设置">
+  <van-cell icon="edit" title="余额字段" value="" is-link link-type="navigateTo"
+  url="stock_CURD/stock_CURD"/>
+  <van-cell icon="balance-pay" title="花支类型" value="" is-link link-type="navigateTo"
+  url="spend_type_CURD/spend_type_CURD"/>
+</van-cell-group>
+
+<van-cell-group title="辅助数据设置">
+  <van-cell icon="description" title="常用注释块" value="" is-link link-type="navigateTo"
+  url="comment_CURD/comment_CURD"/>
+  <van-cell icon="balance-o" title="可选金额块" value="" is-link link-type="navigateTo"
+  url="money_block_CURD/money_block_CURD"/>
+</van-cell-group>

@@ -1,0 +1,15 @@
+<import src="../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="数据设置">
+  <van-cell icon="label-o" title="任务类型" value="" is-link link-type="navigateTo"
+  url="task_type_CURD/task_type_CURD"/>
+  <van-cell icon="clock-o" title="任务时间" value="" is-link link-type="navigateTo"
+  url="task_duration_CURD/task_duration_CURD"/>
+  <van-cell icon="eye-o" title="任务颜色" value="" is-link link-type="navigateTo"
+  url="task_color_CURD/task_color_CURD"/>
+</van-cell-group>
+
+<van-cell-group title="快捷功能">
+  <van-cell icon="label-o" title="默认展示所有未完成任务" value="{{show_task_popup?'开启':'关闭'}}" icon="orders-o" bind:click="onClick_toggle_showAllTasks"/>
+</van-cell-group>

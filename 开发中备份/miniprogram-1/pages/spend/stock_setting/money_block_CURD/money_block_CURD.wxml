@@ -1,0 +1,53 @@
+<import src="../../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="编辑/添加">
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
+      <van-field
+        name="block_id"
+        value="{{ block_id }}"
+        label="ID"
+        type="number"
+        readonly
+        bind:change="update_block_id"
+        error-message="{{block_id_error}}"
+      />
+      <van-field
+        name="block_value"
+        value="{{ block_value }}"
+        label="金额"
+        placeholder="请输入金额"
+        type="digit"
+        required
+        bind:change="update_block_value"
+        error="{{block_value_error}}"
+      />
+      <van-cell>
+        <van-row>      
+          <van-col span="8" class="text-left">
+            <van-button  plain hairline type="danger" size="large" bind:click="reset">重置</van-button>
+          </van-col>
+          <van-col offset="1" span="6" class="text-center">
+            <van-button  plain hairline type="warning" size="large" bind:click="update">编辑</van-button>
+          </van-col>
+          <van-col offset="1" span="8" class="text-right">
+            <van-button  plain hairline type="primary" size="large" bind:click="add">添加</van-button>
+          </van-col>
+        </van-row>    
+      </van-cell>
+    </van-collapse-item>
+  </van-collapse>
+</van-cell-group>
+
+<van-cell-group title="所有金额块">
+  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{blocks}}">
+    <van-cell title="{{item.value}}" value=""/>
+    <view slot="right">
+      <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
+      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-value="{{item.value}}" bind:click="delete"></van-button>
+    </view>
+  </van-swipe-cell>
+</van-cell-group>
+
+<van-dialog id="van-dialog" />

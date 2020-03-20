@@ -1,0 +1,142 @@
+<import src="../public/public.wxml" />
+<template is="custom" />
+
+<van-tabs bind:disabled="onClick_statistic" z-index="{{101}}">
+  <van-tab title="日志">
+    <!-- header -->
+    <van-sticky offset-top="{{ 60 }}">
+      <view style="border-bottom:1px solid #F5F6F8">
+        <van-search
+          name="search_value"
+          placeholder="支持: 时间 字段名 注释搜索"
+          bind:search="onSearch"
+          bind:cancel="onCancel_search"
+          show-action
+          shape="round"
+          action-text=" 还原"
+          background="#fff"
+        />
+      </view>
+    </van-sticky>
+
+    <!-- content -->
+    <view class="padding" wx:for="{{spendLogs}}" wx:if="{{index<=show_spendLog_day && spendLogs[index]!=null}}">
+      <view class="padding radius shadow bg-white">
+        <!-- content-header -->
+        <view style="padding:10rpx 4% 20rpx 4%;border-bottom:1px solid #F5F6F8;">
+          <van-row>
+            <van-col span="8">
+              <text style="font-size:20px;font-weight:blod;color:#000000;">{{item.time}}</text>
+            </van-col>
+            <van-col span="16" class="text-right">
+              <view style="font-size:14px;color:#353535;">
+                花支: {{item.day_spend}} | 收入: {{item.day_income}}
+              </view>
+              <!-- <view style="font-size:14px;color:#353535;">
+                今日收入: {{item.day_income}}
+              </view> -->
+            </van-col>
+          </van-row>
+        </view>
+
+        <!-- content-content -->
+        <view wx:for="{{item.datas}}" wx:for-item="datas">
+          <van-swipe-cell right-width="{{ 110 }}">
+            
+            <view style="border-bottom:1px solid #F5F6F8">
+              <van-row>
+                <van-col offset="1" span="3">
+                  <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:36px;"></text>
+                </van-col>
+                <van-col span="19">
+                  <van-row>
+                    <van-col span="12" class="text-left">
+                      <view>
+                        <text style="font-size:17px;">{{datas.name}} </text>
+                        <text style="font-size:14px;color:#888888;">{{datas.comment}}</text>
+                      </view>
+                      <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.detail_time}} {{datas.spend_type==null?'转账':datas.spend_type}}</view>
+                    </van-col>
+                    <van-col span="12" class="text-right">
+                      <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
+                      <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
+                      <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
+                      <view style="font-size:14px;color:#888888;">余额: {{datas.remain}}</view>
+                    </van-col>
+                  </van-row>
+                </van-col>
+                <van-col span="1"></van-col>
+              </van-row>
+            </view>
+
+            <view slot="right" style="height:100%;">
+              <van-button custom-style="height:100%;" type="primary" icon="" id="{{datas.id}}" bind:click="edit" data-time="{{item.time}}" data-operate="{{datas.operate}}" >编辑</van-button>
+              <van-button custom-style="height:100%;" type="danger" icon="" id="{{datas.id}}" bind:click="delete" data-time="{{item.time}}" data-message="{{datas.name}} {{datas.comment}} {{datas.operate}}{{datas.value}}" data-spend_type="{{datas.spend_type}}">删除</van-button>
+            </view>
+          </van-swipe-cell>
+        </view>
+
+      </view>
+    </view>
+
+  </van-tab>
+
+  <!-- 统计页 -->
+  <van-tab title="统计" disabled title-style="color:#323233;"></van-tab>
+</van-tabs>
+
+<van-divider hairline contentPosition="center">已经到底啦</van-divider>
+<van-divider hairline />
+<van-divider hairline />
+<van-divider hairline />
+
+<van-dialog id="van-dialog" />
+
+<van-dialog
+  use-slot
+  title="编辑"
+  show="{{ show_edit_dialog }}"
+  show-cancel-button
+  bind:close="onClose_edit_dialog"
+  bind:confirm="update"
+>
+  <van-row>
+    <van-col offset="2" span="20">
+      <van-field
+        label="注释"
+        placeholder="请输入注释"
+        value="{{spendLogData.comment}}"
+        border="{{ false }}"
+        bind:change="onChange_spendLogData_comment"
+      />
+    </van-col>
+    <van-col span="2"></van-col>
+  </van-row>
+
+  <view>
+    <van-row>
+      <van-col offset="2" span="8">
+        <van-cell title="消费类型"></van-cell>
+      </van-col>
+      <van-col span="12">
+        <van-cell title="{{spendLogData.spend_type}}">
+          <view slot="icon">
+            <text class="cuIcon-{{spendLogData.icon}}"></text>
+          </view>
+        </van-cell>
+      </van-col>
+      <van-col span="2"></van-col>
+    </van-row>
+
+    <!-- 分类块 -->
+    <van-row>
+      <van-col offset="4" span="20">  
+        <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_types}}">
+          <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
+            <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
+          </van-cell>
+        </view>
+      </van-col>
+    </van-row>
+  </view>
+</van-dialog>

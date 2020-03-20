@@ -1,0 +1,80 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">{{custom_data.backText}}</view>
+	<view slot="content">{{custom_data.content}}</view>
+</cu-custom>
+
+<view class="padding">
+  <view class="padding radius shadow bg-white">
+    <van-row>
+      <van-col span="12">
+        <view class="text-left" style="font-size:20px;">时间: {{month_title}}</view>
+      </van-col>
+      <van-col span="6">
+        <view class="text-right">
+          <van-button plain round size="small" bind:click="onClick_timeChoose">时间选择</van-button>
+        </view>
+      </van-col>
+      <van-col span="6">
+        <view class="text-right">
+          <van-button plain round type="primary" size="small" bind:click="onClick_loadChart">加载图表</van-button>
+        </view>
+      </van-col>
+    </van-row>
+
+    <view style="height:40rpx;"></view>
+
+    <view style="font-size:14px;">
+      <van-row>
+        <van-col span="8">
+          <view class="text-left">今日任务: {{month_today_completed_count}}</view>
+        </van-col>
+        <van-col span="8">
+          <view class="text-center">每日任务: {{month_everyday_completed_count}}</view>
+        </van-col>
+        <van-col span="8">
+          <view class="text-right">限时任务: {{month_limitTime_completed_count}}</view>
+        </van-col>
+      </van-row>
+    </view>
+  </view>
+</view>
+
+<view class="padding">
+  <view class="padding radius shadow bg-white">
+    <view class="box" style="height:{{canvas_height}}rpx;">
+      <ec-canvas id="column_chart" canvas-id="column_chart" ec="{{ ec_column_chart }}"></ec-canvas>
+    </view>
+  </view>
+</view>
+
+<view class="padding">
+  <view class="padding radius shadow bg-white">
+    <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
+      <ec-canvas id="pie_chart" canvas-id="pie_chart" ec="{{ ec_pie_chart }}"></ec-canvas>
+    </view>
+  </view>
+</view>
+
+<!-- <view class="padding">
+  <view class="padding-xl radius shadow bg-white">
+    <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
+      <ec-canvas id="income_pie_chart" canvas-id="income_pie_chart" ec="{{ ec_income_pie_chart }}"></ec-canvas>
+    </view>
+  </view>
+</view> -->
+
+<van-popup 
+  show="{{ show_timeChoose_popup }}" 
+  bind:close="onClose_timeChoose_popup"
+  position="bottom"
+  custom-style="height: 50%;"
+>
+  <van-datetime-picker
+  title="时间选择"
+  type="year-month"
+  value="{{ currentDate }}"
+  bind:cancel="onClose_timeChoose_popup"
+  bind:confirm="timeChoose"
+  confirm-button-text="加载"
+  />
+</van-popup>

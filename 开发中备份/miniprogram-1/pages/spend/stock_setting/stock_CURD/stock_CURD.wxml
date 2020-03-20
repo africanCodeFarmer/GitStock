@@ -1,0 +1,80 @@
+<import src="../../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="编辑/添加">
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
+      <van-field
+        name="stock_id"
+        value="{{ stock_id }}"
+        label="ID"
+        type="number"
+        readonly
+        bind:change="update_stock_id"
+        error-message="{{stock_id_error}}"
+      />
+      <van-field
+        name="stock_name"
+        value="{{ stock_name }}"
+        label="名称"
+        required
+        placeholder="请输入名称"
+        bind:change="update_stock_name"
+        error="{{stock_name_error}}"
+      />
+      <van-field
+        name="stock_value"
+        value="{{ stock_value }}"
+        label="余额"
+        placeholder="请输入余额"
+        type="digit"
+        bind:change="update_stock_value"
+      />
+
+      <van-cell>
+        <van-row>
+          <van-col span="6" class="text-left" style="color:black;">状态</van-col>
+          <van-col span="18" class="text-left">
+            <van-radio-group value="{{radio_value}}" bind:change="onChange_radio">
+              <view class="inline">
+                <van-radio name="1">allow </van-radio>
+              </view>
+              <view class="inline marginLeft">
+              <van-radio name="2">not allow </van-radio>
+              </view>
+              <view class="inline marginLeft">
+              <van-radio name="3">wait </van-radio>
+              </view>
+            </van-radio-group>
+          </van-col>
+        </van-row>
+      </van-cell>
+
+      <van-cell>
+        <van-row>      
+          <van-col span="8" class="text-left">
+            <van-button  plain hairline type="danger" size="large" bind:click="reset">重置</van-button>
+          </van-col>
+          <van-col offset="1" span="6" class="text-center">
+            <van-button  plain hairline type="warning" size="large" bind:click="update">编辑</van-button>
+          </van-col>
+          <van-col offset="1" span="8" class="text-right">
+            <van-button  plain hairline type="primary" size="large" bind:click="add">添加</van-button>
+          </van-col>
+        </van-row>    
+      </van-cell>
+    </van-collapse-item>
+  </van-collapse>
+</van-cell-group>
+
+<van-cell-group title="所有字段">
+  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{stocks}}">
+    <van-cell title="{{item.name}}: {{item.value}}" value="{{item.status}}"/>
+    <view slot="right">
+      <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
+      <van-button hairline icon="delete" type="danger" id="{{item.id}}" bind:click="delete" data-name="{{item.name}}"></van-button>
+    </view>
+  </van-swipe-cell>
+</van-cell-group>
+
+<van-dialog id="van-dialog" />

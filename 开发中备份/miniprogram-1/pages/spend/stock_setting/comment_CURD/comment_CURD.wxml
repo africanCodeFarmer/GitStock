@@ -1,0 +1,52 @@
+<import src="../../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="编辑/添加">
+  <van-collapse value="{{ activeNames }}" bind:change="onChange_van_collapse">
+    <van-collapse-item title="..." icon="expand-o" name="1">
+      <van-field
+        name="comment_id"
+        value="{{ comment_id }}"
+        label="ID"
+        type="number"
+        readonly
+        bind:change="update_comment_id"
+        error-message="{{comment_id_error}}"
+      />
+      <van-field
+        name="comment_name"
+        value="{{ comment_name }}"
+        label="名称"
+        placeholder="请输入名称"
+        required
+        bind:change="update_comment_name"
+        error="{{comment_name_error}}"
+      />
+      <van-cell>
+        <van-row>      
+          <van-col span="8" class="text-left">
+            <van-button  plain hairline type="danger" size="large" bind:click="reset">重置</van-button>
+          </van-col>
+          <van-col offset="1" span="6" class="text-center">
+            <van-button  plain hairline type="warning" size="large" bind:click="update">编辑</van-button>
+          </van-col>
+          <van-col offset="1" span="8" class="text-right">
+            <van-button  plain hairline type="primary" size="large" bind:click="add">添加</van-button>
+          </van-col>
+        </van-row>    
+      </van-cell>
+    </van-collapse-item>
+  </van-collapse>
+</van-cell-group>
+
+<van-cell-group title="所有注释块">
+  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{comments}}">
+    <van-cell title="{{item.name}}" value=""/>
+    <view slot="right">
+      <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
+      <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-name="{{item.name}}" bind:click="delete"></van-button>
+    </view>
+  </van-swipe-cell>
+</van-cell-group>
+
+<van-dialog id="van-dialog" />
