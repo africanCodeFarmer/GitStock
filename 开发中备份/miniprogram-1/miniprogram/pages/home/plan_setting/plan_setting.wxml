@@ -1,7 +1,0 @@
-<import src="../../public/public.wxml" />
-<template is="custom_inner" data="{{...custom_data}}"/>
-
-<van-cell-group title="数据管理">
-  <van-cell icon="description" title="计划管理" value="" is-link link-type="navigateTo"
-  url="plan_CURD/plan_CURD"/>
-</van-cell-group>
