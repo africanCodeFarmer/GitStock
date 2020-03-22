@@ -1,0 +1,194 @@
+//变量区
+total = 500
+cur = 1
+
+bottomX = 460
+bottomY = 150
+isBottom = false
+
+//逻辑区
+While cur <= total
+	scrollCount = 0
+	
+	Rem HEAD
+	
+	If isBottom = true Then 
+	    showMsg "到达底部了呢"
+		Delay 1000
+		click bottomX, bottomY
+		bottomY = bottomY+40
+	Else 
+		click 460,114 //点击好友(460,114)
+	End If
+	Delay 3000
+	
+	If isBottom = false Then 
+		If GetPixelColor(505,65) = "040404" Then //如果没进入好友页
+			//开始底部判定
+			scrollUp
+			scrollCount = scrollCount + 1
+			If scrollCount = 3 Then 
+				isBottom = true
+			End If
+			Goto HEAD
+		End If
+	End If
+
+	showMsg "我开始加好友" 
+	FindColor 470,697,555,718,"FFFFFF",intX,intY //如果无加好友按钮
+	If intX > 0 And intY > 0 Then 
+	Else 
+		Goto SKIP
+	End If
+
+	colorLoadDelay 526,707,"FFFFFF" //再次检测加好友按钮
+	Delay 500
+	
+	MoveTo 540,702
+	click 540,702//点击加好友
+	Delay 500
+	click 540,702//点击加好友
+	Delay 500
+	click 540,702//点击加好友
+	
+	//拒绝被添加判定
+//	If GetPixelColor(472,124) = "FFFFFF" Then
+//		If GetPixelColor(480,124) = "FFFFFF" Then
+//			showMsg "用户拒绝添加"
+//			Delay 1000
+//			Goto SKIP
+//		End If
+//	End If
+	
+	colorLoadDelay 505,67, "050505"//检测 返回(黑色
+	
+	//免验证检测:直接发送
+	If GetPixelColor(835,69) = "2B2A2A" Then
+		showMsg "不用验证哈哈"
+		Goto ADDFRIEND
+	End If
+	
+	//检测问题底栏灰色:有问题直接不加
+	If GetPixelColor(459,184) = "F9F9F9" Then
+		showMsg "没有答案不加"
+		click 506, 71//点击返回
+		Goto SKIP
+	End If
+	
+	wenX = 467 //偏移量都是87 //(467,195)-(481,183) 找444444 
+	wenY = 195
+	problemX = 470
+	problemY = 228
+	If GetPixelColor(459,173) = "F0F0F0" Then //需要回答问题
+		showMsg "既然要回答啊"
+		
+		isContinue=true
+		While isContinue=true
+			FindColor wenX,wenY-12,wenX+14,wenY,"444444",intX,intY
+			If intX > 0 And intY > 0 Then 
+				click problemX, problemY
+				longDown 
+				click problemX, problemY - 30
+				
+				problemY = problemY + 88
+				wenY = wenY + 88
+				Delay 1000
+			Else 
+				isContinue=false
+			End If
+		Wend
+		
+		click 822,68 //点击下一步
+		
+		Delay 200
+		Goto ADDFRIEND
+	End If
+	
+	//没有广告语时粘贴
+	FindColor 600,157,743,181,"000000",intX,intY
+	If intX > 0 And intY > 0 Then 
+	Else 
+		Delay 1000
+		click 607,169
+		longDown 
+		Delay 500
+		click 601,139
+	End If
+	
+	click 817,70//点击下一步
+	
+	showMsg "我要发送请求"
+	colorLoadDelay 836,69, "404040"//检测 发送(黑色
+	
+	Rem ADDFRIEND
+	click 836,69//点击发送
+	
+	Rem SKIP
+	showMsg "我得点击返回"
+
+	Do Until GetPixelColor(650,58) = "2A2A2A"
+			click 471,73//点击返回
+			Delay 1000
+	Loop
+	
+	cur = cur + 1
+	scrollUp //下拉
+Wend
+
+//函数区
+//长按
+Function longDown
+	Delay 200
+	LeftDown 1
+	Delay 1500
+	LeftUp 1
+	Delay 200
+End Function
+
+//鼠标点击
+Function click(x, y)
+	MoveTo x, y
+	Delay 200
+	LeftClick 1
+	Delay 200
+End Function
+
+//颜色检测:直到颜色出现,否则一直延时
+Function colorLoadDelay(x,y,color)
+	Do Until GetPixelColor(x,y) = color
+		Delay 200
+	Loop
+End Function
+
+//显示消息
+Function showMsg(str)
+	//分辨率(1366,768)
+	Call Plugin.Msg.ShowScrTXT(0, 0, 1366, 768, str, "000000")
+	Delay 100
+End Function
+//隐藏消息
+Function hideMsg()
+	Call Plugin.Msg.HideScrTXT()
+	Delay 100
+End Function
+
+//模拟上拉
+Function scrollUp
+	//起始点(460,154) 偏移量54
+	X = 460
+	upY = 154
+	downY = 208
+	moveY = downY
+	
+	MoveTo X, moveY
+	Delay 10
+	LeftDown 1
+	Delay 10
+	While moveY > upY
+		MoveTo X,moveY
+		moveY = moveY - 1
+		Delay 10
+	Wend
+	LeftUp 1
+	Delay 100
+End Function
