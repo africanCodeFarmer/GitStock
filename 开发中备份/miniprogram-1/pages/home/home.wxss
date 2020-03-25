@@ -1,3 +1,11 @@
 text.overflowText{
   word-break: keep-all;word-wrap: break-word;
 }
+button.vanButtonStyle{
+  width:140px;
+  border: 1px solid #1EC66E; 
+  color:#1EC66E; 
+  border-radius: 25px;  
+  background-color: white;
+  font-size:13px;
+}

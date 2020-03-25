@@ -8,12 +8,20 @@
 // home_day 记录日期
 // home_month 记录月份
 
+//time_plans 时间计划
+
 const app = getApp()
 import Dialog from '@vant/weapp/dialog/dialog';
 var util = require('../public/public.js');
 
 Page({
   data:{
+    curhour:null,
+    time_plans:[
+      '','','','','','','','','',
+      '','','','','','','','','',
+    ],
+
     show_completed_plan:false,
 
     plans:[],
@@ -35,6 +43,65 @@ Page({
     input_principle_error:false,
 
     principles:[],
+  },
+  formSubmit:function(e){
+    var time_plans = [
+      '','','','','','','','','',
+      '','','','','','','','','',
+    ]
+
+    for(var i in time_plans)
+      time_plans[i]=e.detail.value['value'+i]
+    
+    this.setData({time_plans:time_plans})
+    wx.setStorageSync('time_plans', time_plans)
+
+    wx.showToast({
+      icon:'none',
+      title: '已保存',
+    })
+  },
+  formReset:function(){
+    Dialog.confirm({
+      title: '重置',
+      message: '确定重置时间计划吗?'
+    }).then(() => {
+      // on confirm
+      var time_plans = [
+        '','','','','','','','','',
+        '','','','','','','','','',
+      ]
+      
+      this.setData({time_plans:time_plans})
+      wx.setStorageSync('time_plans', time_plans)
+
+      wx.showToast({
+        icon:'none',
+        title: '已重置',
+      })
+    }).catch(() => {
+      // on cancel
+    });
+  },
+  onClick_clearTimePlan:function(e){
+    var id = e.target.id
+    Dialog.confirm({
+      title: '清空',
+      message: '确定清空'+(parseInt(id)+6)+':00吗?'
+    }).then(() => {
+      // on confirm
+      var time_plans = this.data.time_plans
+      time_plans[id]=''
+      this.setData({time_plans:time_plans})
+      wx.setStorageSync('time_plans', time_plans)
+
+      wx.showToast({
+        icon:'none',
+        title: '已清空',
+      })
+    }).catch(() => {
+      // on cancel
+    });
   },
   onClick_reveal_completed_plan:function(){
     this.setData({show_completed_plan:true})
@@ -338,13 +405,22 @@ Page({
     this.fillGreetText()
     var principles = wx.getStorageSync('principles') || []
 
+    var curhour = util.formatTime(new Date).split(' ')[1].split(':')[0]
+
     //检测刷新时间
     this.checkTimeUpdate()
     var plans = wx.getStorageSync('plans') || []
 
+    var time_plans = wx.getStorageSync('time_plans') || [
+      '','','','','','','','','',
+      '','','','','','','','','',
+    ]
+
     this.setData({
       principles:principles,
-      plans:plans
+      plans:plans,
+      curhour:curhour,
+      time_plans:time_plans,
     })
   },
 })
