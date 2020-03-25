@@ -27,7 +27,6 @@
         value="{{ plan_desc }}"
         label="详情"
         placeholder="请输入详情"
-        required
         bind:change="update_plan_desc"
         error="{{plan_desc_error}}"
       />
@@ -63,6 +62,7 @@
           </van-col>
         </van-row>
       </van-cell>
+
       <!-- 选择完成类型 -->
       <van-cell>
         <van-row>
@@ -98,39 +98,33 @@
 
 <van-cell-group title="所有计划">
   <view class="bg-white">
-    <van-swipe-cell right-width="{{ 120 }}" wx:for="{{plans}}">
-      <view style="margin:10rpx 4%;padding-bottom:10rpx;">
+    <van-swipe-cell right-width="{{ 90 }}" wx:for="{{plans}}">
+      <view style="margin:10rpx 4% 10rpx 4%;">
         <view>
           <van-row>
-            <van-col span="12" class="text-left">
-              <text style="font-size:17px;color:black;" class="overflowText">{{item.name}}</text>
+            <van-col span="16" class="text-left">
+              <van-tag plain>{{item.type=="remain"?"剩余类":"坚持类"}}</van-tag>
+              <view wx:if="{{item.free_count<=0}}" class="inline">
+                <van-tag plain type="danger">已废除</van-tag>
+              </view>
+              <view wx:else class="inline">
+                <van-tag plain type="warning" wx:if="{{item.status=='hitCard'}}">已打卡</van-tag>
+              </view>
+              <text style="margin-left:10rpx;font-size:17px;color:black;" class="overflowText">{{item.name}}</text>
             </van-col>
-            <van-col span="12" class="text-right">
-              <text style="font-size:14px;color:#888888;" class="overflowText">类型: {{item.type=="remain"?"剩余类":"坚持类"}}</text>
+            <van-col span="8" class="text-right">
+              <text class="overflowText" style="font-size:13px;color:#888888;">{{item.reward==null||item.reward==''?'无奖励':item.reward}}</text>
             </van-col>
           </van-row>
         </view>
 
         <view>
           <van-row>
-            <van-col span="12" class="text-left">
-              <text class="overflowText" style="font-size:13px;color:#888888;">{{item.desc}}</text>
+            <van-col span="16" class="text-left">
+              <text class="overflowText" style="font-size:13px;color:#888888;" space="ensp">{{item.desc==null||item.desc==''?' ':item.desc}}</text>
             </van-col>
-            <van-col span="12" class="text-right">
-              <text class="overflowText" style="font-size:13px;color:#888888;">奖励: {{item.reward==null||item.reward==''?'无':item.reward}}</text>
-            </van-col>
-          </van-row>
-        </view>
-
-        <view>
-          <van-row>
-            <van-col span="8" class="text-left">
-              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">计划天数: {{item.plan_day}}</text>
-            </van-col>
-            <van-col span="16" class="text-right">
-              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">剩余天数: {{item.remain_day}}</text>
-              <text space="ensp" style="font-size:11px;color:#b2b2b2;"> | </text>
-              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">坚持天数: {{item.insist_day}}</text>
+            <van-col span="8" class="text-right">
+              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">{{"计划"+item.plan_day+",剩余"+item.remain_day+",坚持"+item.insist_day}}</text>      
             </van-col>
           </van-row>
         </view>
@@ -141,13 +135,13 @@
               <text class="overflowText" style="font-size:11px;color:#b2b2b2;">{{item.create_time}} created</text>
             </van-col>
             <van-col span="12" class="text-right">
-              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">完成情况: {{item.completed==true?"已完成":"未完成"}}</text>
+              <text class="overflowText" style="font-size:11px;color:#b2b2b2;">{{item.completed==true?"已完成":"未完成"}}</text>
             </van-col>
           </van-row>
         </view>
       </view>
 
-      <view slot="right" style="margin-left:10px;height:100%;">
+      <view slot="right" style="height:100%;">
         <van-button custom-style="height:100%;" type="primary" icon="edit" id="{{item.id}}" bind:click="edit"></van-button>
         <van-button custom-style="height:100%;" type="danger" id="{{item.id}}" bind:click="delete" data-name="{{item.name}}" icon="delete"></van-button>
       </view>

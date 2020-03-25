@@ -12,10 +12,8 @@
 //   create_time
 //   complete_time
 
-//status hitCard|free //打卡或请假
-//free_count //每个月10次
-//dump_day:remain_day insist_day //备份数据
-
+//   status null | hitCard //打卡
+//   free_count //每月可以不打卡数
 // }
 
 var util = require('../../../public/public.js');
@@ -95,10 +93,8 @@ Page({
       return;
     }
     if(this.data.plan_desc == null){
-      this.setData({plan_desc_error:true})
-      return;
     }
-    if(this.data.plan_day == null){
+    if(this.data.plan_day == null || (this.data.plan_day==0&&this.data.plan_type=='remain')){
       this.setData({plan_day_error:true})
       return;
     }
@@ -123,7 +119,10 @@ Page({
       completed:this.data.plan_completed=="true"?true:false,
       complete_time:null,
 
-      create_time:util.formatTime(new Date())
+      create_time:util.formatTime(new Date()),
+
+      status:null,
+      free_count:wx.getStorageSync('month_free_count') || 10,
     }
     plans.unshift(plan)
     wx.setStorageSync('plans', plans)

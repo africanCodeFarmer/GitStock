@@ -7,4 +7,8 @@
   <van-cell icon="delete" title="清空任务日志数据" bind:click="onClick_clear_tasks"/>
 </van-cell-group>
 
+<van-cell-group title="数据格式管理">
+  <van-cell icon="edit" title="优化花支日志金额格式" bind:click="onClick_updateSpendLogsValues"/>
+</van-cell-group>
+
 <van-dialog id="van-dialog" />

@@ -74,13 +74,14 @@
         </view>
       </view>
       <view slot="icon">
-        <image src="{{item.iconPath}}" style="width:100rpx;height:100rpx;margin-right:20rpx;border-radius: 25px;"/>
+        <image src="{{item.iconPath}}" style="width:100rpx;height:100rpx;margin-right:20rpx;"/>
       </view>
       <view slot="label">
         <view>{{item.desc}}</view>
         <view class="flex">
           <view class="cu-progress round sm striped active">
-            <view class="bg-green" style="width:{{target_percent[index]}}%;">{{target_percent[index]}}%</view>
+            <view class="bg-green" style="width:{{target_percent[index]}}%;"></view>
+            <text>{{target_percent[index]}}%</text>
           </view>
         </view>
       </view>
@@ -215,7 +216,7 @@
         <view class="text-right">{{item.value}}RMB</view>
       </view>
       <view slot="icon">
-        <image src="{{item.iconPath}}" style="width:100rpx;height:100rpx;margin-right:20rpx;border-radius: 25px;"/>
+        <image src="{{item.iconPath}}" style="width:100rpx;height:100rpx;margin-right:20rpx;"/>
       </view>
       <view slot="label">
         <view>{{item.desc}}</view>

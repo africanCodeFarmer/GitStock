@@ -5,3 +5,16 @@
   <van-cell icon="description" title="计划" value="" is-link link-type="navigateTo"
   url="plan_CURD/plan_CURD"/>
 </van-cell-group>
+
+<van-cell-group title="辅助数据设置">
+  <van-field
+    label="月可缺打数"
+    value="{{ month_free_count }}"
+    placeholder="请输入每月可不打卡次数"
+    type="number"
+    border="{{ false }}"
+    bind:change="onChange_month_free_count"
+  >
+    <van-button slot="button" round size="small" type="primary" bind:click="update_month_free_count">确定</van-button>
+  </van-field>
+</van-cell-group>

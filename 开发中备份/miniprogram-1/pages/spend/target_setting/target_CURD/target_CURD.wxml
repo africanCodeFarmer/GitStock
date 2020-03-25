@@ -50,7 +50,11 @@
             <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" max-count="1" bind:delete="afterRead_delete"/>
           </van-col>
         </van-row>
-        <view wx:if="{{target_iconPath_error}}" style="color:#EE0A24;">请选择目标图片</view>
+        <van-row>
+          <van-col offset="6" span="18" class="text-left">
+            <view wx:if="{{target_iconPath_error}}" style="color:#EE0A24;">请选择目标图片</view>
+          </van-col>
+        </van-row>
       </van-cell>
 
       <van-cell>
@@ -90,9 +94,13 @@
   <van-swipe-cell right-width="{{ 90 }}" wx:for="{{targets}}">
     
     <!-- 单元格内容 -->
-    <van-cell title="{{item.name}}" use-label-slot border="{{false}}">
+    <van-cell use-label-slot border="{{false}}">
+      <view slot="title">
+        <text class="overFlow">{{item.name}} </text>
+        <text class="overFlow" style="color:#888888;">{{item.desc}}</text>
+      </view>
       <view slot="label">
-        <view>{{item.desc}}</view>
+        <!-- <view>{{item.desc}}</view> -->
         <view>{{item.create_time}} created</view>
       </view>
       <view slot="right-icon">
@@ -100,7 +108,7 @@
         <view class="text-right">{{item.achieved==false?"未实现":"已实现"}}</view>
       </view>
       <view slot="icon">
-        <image src="{{item.iconPath}}" style="width:100rpx;height:100rpx;margin-right:20rpx;"/>
+        <image src="{{item.iconPath}}" style="width:50px;height:50px;margin-right:20rpx;"/>
       </view>
     </van-cell>
 

@@ -4,6 +4,28 @@ Page({
   data: {
     custom_data:{"backText":"主页","content":"全局数据管理"}
   },
+  onClick_updateSpendLogsValues:function(){
+    wx.showLoading({
+      title: '优化花支日志金额格式中...',
+      mask:true,
+    })
+
+    var spendLogs = wx.getStorageSync('spendLogs') || []
+    for(var i in spendLogs){
+      for(var j in spendLogs[i].datas){
+        spendLogs[i].datas[j].value = parseFloat(spendLogs[i].datas[j].value)
+      }
+    }
+    wx.setStorageSync('spendLogs', spendLogs)
+
+    wx.hideLoading({
+      complete: (res) => {},
+    })
+    wx.showToast({
+      icon:'none',
+      title: '优化完毕',
+    })
+  },
   onClick_clear_tasks:function(){
     Dialog.confirm({
       title: '清空',

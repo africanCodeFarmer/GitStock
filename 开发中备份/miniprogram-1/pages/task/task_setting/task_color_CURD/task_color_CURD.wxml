@@ -47,13 +47,15 @@
 </van-cell-group>
 
 <van-cell-group title="所有任务颜色(优先级从上到下)">
-  <van-swipe-cell right-width="{{ 90 }}" wx:for="{{task_colors}}">
+  <van-swipe-cell right-width="{{ 135 }}" wx:for="{{task_colors}}">
     <van-cell>
       <view slot="icon">
         <view style="height:50rpx;width:50rpx;background-color:{{item.value}}"></view>
       </view>
     </van-cell>
     <view slot="right">
+      <van-button hairline icon="arrow-up" type="info" id="{{item.id}}" bind:click="levelUp"></van-button>
+
       <van-button hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
       <van-button hairline icon="delete" type="danger" id="{{item.id}}" data-value="{{item.value}}" bind:click="delete"></van-button>
     </view>

@@ -7,3 +7,7 @@ view.inline{
 view.marginLeft{
   margin-left: 20rpx;
 }
+text.overFlow{
+  word-break: keep-all;
+  word-wrap: break-word;
+}

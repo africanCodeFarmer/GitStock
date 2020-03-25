@@ -39,6 +39,29 @@ Page({
 
     task_colors:[],
   },
+  levelUp:function(e){
+    var id = e.target.id
+    var task_colors = this.data.task_colors
+    for(var i in task_colors){
+      if(task_colors[i].id == id){
+        var temp = task_colors[i]
+        var changeIndex = i-1<0?task_colors.length-1:i-1;
+
+        //与前id互换
+        task_colors[i]=task_colors[changeIndex];
+        task_colors[changeIndex]=temp
+        
+        wx.showToast({
+          icon:'none',
+          title: '已更新颜色顺序',
+        })
+
+        break
+      }
+    }
+    this.setData({task_colors:task_colors})
+    wx.setStorageSync('task_colors', task_colors)
+  },
   reset:function(){
     this.setData({
       task_color_id:null,

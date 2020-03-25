@@ -5,6 +5,9 @@
 //   count
 // }
 
+// home_day 记录日期
+// home_month 记录月份
+
 const app = getApp()
 import Dialog from '@vant/weapp/dialog/dialog';
 var util = require('../public/public.js');
@@ -66,27 +69,46 @@ Page({
   hitCard:function(e){
     var id = e.target.id
     var name = e.target.dataset.name
-    
+    var status = e.target.dataset.status
+
     Dialog.confirm({
-      title: '打卡',
-      message: '确定打卡'+name+'吗?'
+      title: status=='hitCard'?'取消打卡':'打卡',
+      message: '确定'+(status=='hitCard'?'取消':'')+'打卡'+name+'吗?'
     }).then(() => {
       // on confirm
       var plans = this.data.plans
       for(var i in plans)
         if(plans[i].id == id){
+
+          //取消打卡
+          if(plans[i].status=="hitCard"){
+            plans[i].status=null
+            
+            //恢复天数
+            plans[i].remain_day=plans[i].type=="remain"?plans[i].remain_day+1:plans[i].remain_day;
+            plans[i].insist_day=plans[i].type=="insist"?plans[i].insist_day-1:plans[i].insist_day;
+
+            wx.showToast({
+              icon:'none',
+              title: '已取消打卡',
+            })
+            break
+          }
+
           var remain_day = plans[i].remain_day-1<0?0:plans[i].remain_day-1
           plans[i].remain_day=plans[i].type=="remain"?remain_day:plans[i].remain_day;
           plans[i].insist_day=plans[i].type=="insist"?plans[i].insist_day+1:plans[i].insist_day;
+          plans[i].status='hitCard'
+
+          wx.showToast({
+            icon:'none',
+            title: '打卡成功',
+          })
+          break
         }
 
       this.setData({plans:plans})
       wx.setStorageSync('plans', plans)
-      
-      wx.showToast({
-        icon:'none',
-        title: '打卡成功',
-      })
     }).catch(() => {
       // on cancel
     });
@@ -272,12 +294,54 @@ Page({
     else {text="夜里好!"}
     this.setData({greet_text:text})
   },
+  checkTimeUpdate:function(){
+    var curday = util.formatTime(new Date()).split(' ')[0].split('/')[2]
+    var home_day = wx.getStorageSync('home_day') || curday
+
+    var curmonth = util.formatTime(new Date()).split(' ')[0].split('/')[1]
+    var home_month = wx.getStorageSync('home_month') || curmonth
+
+    var plans = wx.getStorageSync('plans')||[]
+    if(home_day!=curday){
+      //同步日期
+      wx.setStorageSync('home_day', curday)
+      //已打卡清空状态 未打卡减少可不打卡数
+      for(var i in plans)
+        if(plans[i].status=='hitCard')
+          plans[i].status=null
+        else{
+          if(plans[i].free_count!=0){
+            var notHitCardDay = parseInt(curday)-parseInt(home_day)
+            plans[i].free_count-=notHitCardDay
+          }
+        }
+
+      this.setData({plans:plans})
+      wx.setStorageSync('plans', plans)
+    }
+
+    //月更新
+    if(home_month!=curmonth){
+      //同步日期
+      wx.setStorageSync('home_month', curmonth)
+      for(var i in plans)
+        if(plans[i].free_count>0)
+          plans[i].free_count=wx.getStorageSync('month_free_count') || 10
+
+      this.setData({plans:plans})
+      wx.setStorageSync('plans', plans)
+    }
+  },
   onShow:function(){
     this.getTabBar().init()
-    
+
     this.fillGreetText()
     var principles = wx.getStorageSync('principles') || []
+
+    //检测刷新时间
+    this.checkTimeUpdate()
     var plans = wx.getStorageSync('plans') || []
+
     this.setData({
       principles:principles,
       plans:plans
