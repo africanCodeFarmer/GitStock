@@ -395,6 +395,21 @@ Page({
     if(home_day!=curday){
       //同步日期
       wx.setStorageSync('home_day', curday)
+
+      //刷新星座
+      var constellation = wx.getStorageSync('constellation') || ''
+      wx.request({
+        url: 'http://web.juhe.cn:8080/constellation/getAll?key=af7471c6fa64da6b5632120547707948&consName='+constellation+'&type=today',
+        data: {
+        },
+        header: {
+          'key':'af7471c6fa64da6b5632120547707948',
+        },
+        success: function(res) {
+          wx.setStorageSync('constellationData', res.data)
+        }
+      })
+
       //已打卡清空状态 未打卡减少可不打卡数
       for(var i in plans)
         if(plans[i].status=='hitCard')
@@ -425,20 +440,8 @@ Page({
   onShow:function(){
     this.getTabBar().init()
 
-    //星座运势
-    var constellation = wx.getStorageSync('constellation') || ''
-    wx.request({
-      url: 'http://web.juhe.cn:8080/constellation/getAll?key=af7471c6fa64da6b5632120547707948&consName='+constellation+'&type=today',
-      data: {
-      },
-      header: {
-        'key':'af7471c6fa64da6b5632120547707948',
-      },
-      success: function(res) {
-        
-        that.setData({constellationData:res.data})
-      }
-    })
+    // wx.removeStorageSync('constellation')
+    // wx.removeStorageSync('constellationData')
 
     //天气
     var that = this
@@ -467,11 +470,15 @@ Page({
       '','','','','','','','','',
     ]
 
+    //星座运势
+    var constellationData = wx.getStorageSync('constellationData') || []
+
     this.setData({
       principles:principles,
       plans:plans,
       curhour:curhour,
       time_plans:time_plans,
+      constellationData:constellationData,
     })
   },
 })

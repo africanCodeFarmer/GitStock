@@ -6,7 +6,7 @@
     label="我的星座"
     value="{{ constellation }}"
     placeholder="请输入你的星座 如双子座"
-    type="number"
+    
     border="{{ false }}"
     bind:change="onChange_constellation"
   >

@@ -94,7 +94,7 @@
     </view>
 
     <!-- 星座运势 -->
-    <view class="padding text-left">
+    <!-- <view class="padding text-left">
       <view class="padding radius shadow bg-white">
 
         <van-row>
@@ -106,7 +106,6 @@
         </van-row>
 
         <view style="height:20rpx;border-bottom:1px solid #F5F6F8;margin-bottom:10rpx;"></view>
-        <!-- <van-divider hairline /> -->
 
         <van-row>
           <van-col span="12" class="text-left">
@@ -139,7 +138,7 @@
           </van-col>
         </van-row>
       </view>
-    </view>
+    </view> -->
   </van-tab>
   <van-tab title="我的计划">
     <!-- 我的计划板块 -->
