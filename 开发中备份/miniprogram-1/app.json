@@ -4,7 +4,8 @@
     "pages/home/data_setting/data_setting",
     "pages/home/plan_setting/plan_setting",
     "pages/home/plan_setting/plan_CURD/plan_CURD",
-
+    "pages/home/constellation_setting/constellation_setting",
+    
     "pages/task/task",
     "pages/taskLog/taskLog",
 
@@ -95,5 +96,10 @@
     "van-circle": "@vant/weapp/circle/index",
     "van-transition": "@vant/weapp/transition/index",
     "cu-custom": "style/colorui/components/cu-custom"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取您的位置以更新实时天气"
+    }
   }
 }

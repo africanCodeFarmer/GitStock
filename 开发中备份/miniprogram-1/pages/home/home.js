@@ -10,12 +10,19 @@
 
 //time_plans 时间计划
 
+var amapFile = require('../../libs/amap-wx.js');
+
 const app = getApp()
 import Dialog from '@vant/weapp/dialog/dialog';
 var util = require('../public/public.js');
 
 Page({
   data:{
+    constellationData:[],
+
+    weather:"",
+    myAmapFun:null,
+
     curhour:null,
     time_plans:[
       '','','','','','','','','',
@@ -43,6 +50,10 @@ Page({
     input_principle_error:false,
 
     principles:[],
+  },
+  onLoad:function(){
+    var myAmapFun = new amapFile.AMapWX({key:'e5627f4d2246135a5af0b6a6de2692c5'})
+    this.setData({myAmapFun:myAmapFun})
   },
   formSubmit:function(e){
     var time_plans = [
@@ -188,6 +199,11 @@ Page({
   onClick_data_setting:function(){
     wx.navigateTo({
       url: '../home/data_setting/data_setting',
+    })
+  },
+  onClick_constellation_setting:function(){
+    wx.navigateTo({
+      url: '../home/constellation_setting/constellation_setting',
     })
   },
   onClick_principle_addCount:function(){
@@ -363,10 +379,17 @@ Page({
   },
   checkTimeUpdate:function(){
     var curday = util.formatTime(new Date()).split(' ')[0].split('/')[2]
-    var home_day = wx.getStorageSync('home_day') || curday
+    var home_day = wx.getStorageSync('home_day')
 
     var curmonth = util.formatTime(new Date()).split(' ')[0].split('/')[1]
-    var home_month = wx.getStorageSync('home_month') || curmonth
+    var home_month = wx.getStorageSync('home_month')
+
+    //没有存储时存储
+    if(home_day==''||home_day==null||home_month==''||home_month==null){
+      wx.setStorageSync('home_day', curday)
+      wx.setStorageSync('home_month', curmonth)
+      return;
+    }
 
     var plans = wx.getStorageSync('plans')||[]
     if(home_day!=curday){
@@ -401,6 +424,34 @@ Page({
   },
   onShow:function(){
     this.getTabBar().init()
+
+    //星座运势
+    var constellation = wx.getStorageSync('constellation') || ''
+    wx.request({
+      url: 'http://web.juhe.cn:8080/constellation/getAll?key=af7471c6fa64da6b5632120547707948&consName='+constellation+'&type=today',
+      data: {
+      },
+      header: {
+        'key':'af7471c6fa64da6b5632120547707948',
+      },
+      success: function(res) {
+        
+        that.setData({constellationData:res.data})
+      }
+    })
+
+    //天气
+    var that = this
+    this.data.myAmapFun.getWeather({
+      success: function(data){
+        //成功回调data
+        var weather = data.city.data+" "+data.weather.data+" "+data.temperature.data+"°C "+data.humidity.data+"RH"
+        that.setData({weather:weather})
+      },
+      fail: function(info){
+        //失败回调
+      }
+    })
 
     this.fillGreetText()
     var principles = wx.getStorageSync('principles') || []

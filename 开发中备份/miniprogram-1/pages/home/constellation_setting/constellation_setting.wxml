@@ -1,0 +1,17 @@
+<import src="../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="辅助数据设置">
+  <van-field
+    label="我的星座"
+    value="{{ constellation }}"
+    placeholder="请输入你的星座 如双子座"
+    type="number"
+    border="{{ false }}"
+    bind:change="onChange_constellation"
+  >
+    <van-button slot="button" round size="small" type="primary" bind:click="update_constellation">确定</van-button>
+  </van-field>
+</van-cell-group>
+
+<van-dialog id="van-dialog" />

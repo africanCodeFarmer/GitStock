@@ -13,10 +13,19 @@
         <van-button plain round type="info" size="small" bind:click="onClick_data_setting">全局数据管理</van-button>
       </van-col>
     </van-row>
+    <view style="height:20rpx;"></view>
+    <van-row>
+      <van-col span="8" class="text-left">
+        <text>您的位置</text>
+      </van-col>
+      <van-col span="16" class="text-right">
+        <text>{{weather}}</text>
+      </van-col>
+    </van-row>
   </view>
 </view>
 
-<van-tabs active="{{1}}" animated>
+<van-tabs active="{{1}}" animated swipeable>
   <van-tab title="我的时间计划">
     <!-- 我的时间计划 -->
     <view class="padding text-left">
@@ -65,7 +74,7 @@
   </van-tab>
   <van-tab title="我的原则">
     <view class="padding text-left">
-      <view class="padding radius shadow bg-white">
+      <view class="padding radius shadow bg-white" style="max-height:200px;">
 
         <van-row>
           <van-col span="20"><text style="font-size:20px;">我的原则</text></van-col>
@@ -77,10 +86,58 @@
 
         <van-divider hairline />
 
-        <!-- <scroll-view style="height:100px;" scroll-y> -->
+        <scroll-view style="height:100px;" scroll-y>
         <view style="display:inline-block;margin:0px 10rpx 10rpx 0rpx;padding:5rpx 10rpx;font-size:13px;max-width:100%;word-break: keep-all;word-wrap: break-word;background-color:rgba({{item.count}},0,0,1);color:white;border-radius:5px;" wx:for="{{principles}}" bindtap="edit" id="{{item.id}}">{{item.text}}</view>
-        <!-- </scroll-view> -->
+        </scroll-view>
 
+      </view>
+    </view>
+
+    <!-- 星座运势 -->
+    <view class="padding text-left">
+      <view class="padding radius shadow bg-white">
+
+        <van-row>
+          <van-col span="20"><text style="font-size:20px;">星座运势</text></van-col>
+          <van-col span="4">
+            <van-button plain round icon="setting-o" size="small" bind:click="onClick_constellation_setting">
+            </van-button>
+          </van-col>
+        </van-row>
+
+        <view style="height:20rpx;border-bottom:1px solid #F5F6F8;margin-bottom:10rpx;"></view>
+        <!-- <van-divider hairline /> -->
+
+        <van-row>
+          <van-col span="12" class="text-left">
+            <text style="font-size:17px;color:black;" space="ensp">{{constellationData==[]||constellationData==null||constellationData==''?' ':''}}{{constellationData.QFriend}} {{constellationData.color}}</text>
+          </van-col>
+          <van-col span="12" class="text-right">
+            <text style="font-size:14px;color:black;">综合 {{constellationData.all}}</text>
+          </van-col>
+        </van-row>
+        <van-row>
+          <van-col span="12" class="text-left">
+            <text style="font-size:13px;color:#888888;">健康 {{constellationData.health}}</text>
+          </van-col>
+          <van-col span="12" class="text-right">
+            <text style="font-size:13px;color:#888888;">金钱 {{constellationData.money}}</text>
+          </van-col>
+        </van-row>
+        <van-row>
+          <van-col span="12" class="text-left">
+            <text style="font-size:13px;color:#888888;">恋爱 {{constellationData.love}}</text>
+          </van-col>
+          <van-col span="12" class="text-right">
+            <text style="font-size:13px;color:#888888;">工作 {{constellationData.work}}</text>
+          </van-col>
+        </van-row>
+        <view style="height:20rpx;border-bottom:1px solid #F5F6F8;margin-bottom:10rpx;"></view>
+        <van-row>
+          <van-col span="24" class="text-left">
+            <text class="overFlow">{{constellationData.summary}}</text>
+          </van-col>
+        </van-row>
       </view>
     </view>
   </van-tab>
@@ -105,7 +162,7 @@
         <van-divider hairline />
 
         <!-- 计划格 -->
-        <!-- style="border-bottom:1px solid #F5F6F8;" -->
+        <!-- style="border-bottom:1px solid #F5F5F6F8;" -->
         <view wx:for="{{plans}}" wx:if="{{item.completed==false}}" style="border-bottom:1px solid #F5F6F8;">
           <van-swipe-cell right-width="{{ 120 }}">
             <view style="margin:10rpx 0rpx;">

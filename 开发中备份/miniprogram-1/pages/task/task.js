@@ -146,9 +146,8 @@ Page({
       }
     }
     tasks[0].types[dayIndex] = specificTasks
-    this.setData({
-      tasks:tasks
-    })
+
+    this.setData({tasks:tasks})
     wx.setStorageSync('tasks', tasks)
 
     //更新剩余

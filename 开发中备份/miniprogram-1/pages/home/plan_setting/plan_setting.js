@@ -1,6 +1,7 @@
 // month_free_count 每月可以不打卡次数
 
 import Dialog from '@vant/weapp/dialog/dialog';
+const util = require('../../public/public.js')
 
 Page({
   data: {

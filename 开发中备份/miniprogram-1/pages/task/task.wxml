@@ -34,9 +34,8 @@
 
         <scroll-view style="margin-top:20rpx;height:80%;border-bottom:1px solid #F5F6F8;border-top:1px solid #F5F6F8" scroll-y>
           
-
           <view wx:for="{{item}}" wx:for-item="items" wx:for-index="i" style="margin-top:20rpx;" wx:if="{{showAllTasks==true?'none':items.completed==false}}">
-            <van-transition name="fade">
+            <!-- <van-transition name="fade"> -->
               <van-row>
                 <van-col span="2">
                   <!-- 打钩框 -->
@@ -83,7 +82,7 @@
                   </view>
                 </van-col>
               </van-row>
-            </van-transition>
+            <!-- </van-transition> -->
           </view>
         </scroll-view>
 
