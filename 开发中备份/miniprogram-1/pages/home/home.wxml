@@ -74,7 +74,7 @@
   </van-tab>
   <van-tab title="我的原则">
     <view class="padding text-left">
-      <view class="padding radius shadow bg-white" style="max-height:200px;">
+      <view class="padding radius shadow bg-white">
 
         <van-row>
           <van-col span="20"><text style="font-size:20px;">我的原则</text></van-col>
@@ -86,9 +86,9 @@
 
         <van-divider hairline />
 
-        <scroll-view style="height:100px;" scroll-y>
+        <!-- <scroll-view style="height:100px;" scroll-y> -->
         <view style="display:inline-block;margin:0px 10rpx 10rpx 0rpx;padding:5rpx 10rpx;font-size:13px;max-width:100%;word-break: keep-all;word-wrap: break-word;background-color:rgba({{item.count}},0,0,1);color:white;border-radius:5px;" wx:for="{{principles}}" bindtap="edit" id="{{item.id}}">{{item.text}}</view>
-        </scroll-view>
+        <!-- </scroll-view> -->
 
       </view>
     </view>
