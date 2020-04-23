@@ -50,14 +50,14 @@
                 </van-col>
                 <van-col span="19">
                   <van-row>
-                    <van-col span="12" class="text-left">
+                    <van-col span="14" class="text-left">
                       <view>
                         <text style="font-size:17px;">{{datas.name}} </text>
-                        <text style="font-size:14px;color:#888888;">{{datas.comment}}</text>
+                        <text style="font-size:14px;color:#888888;" class="overFlow">{{datas.comment}}</text>
                       </view>
                       <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.detail_time}} {{datas.spend_type==null?'转账':datas.spend_type}}</view>
                     </van-col>
-                    <van-col span="12" class="text-right">
+                    <van-col span="10" class="text-right">
                       <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
                       <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
                       <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
@@ -104,7 +104,6 @@
     <van-col offset="2" span="20">
       <van-field
         label="注释"
-        placeholder="请输入注释"
         value="{{spendLogData.comment}}"
         border="{{ false }}"
         bind:change="onChange_spendLogData_comment"
@@ -132,7 +131,7 @@
     <van-row>
       <van-col offset="4" span="20">  
         <view style="display:inline-block;margin:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_types}}">
-          <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}">
+          <van-cell clickable title="{{item.text}}" size="mini" bind:click="edit_choose_type" data-text="{{item.text}}" data-icon="{{item.icon}}" border="{{false}}">
             <view slot="icon"><text class="cuIcon-{{item.icon}}"></text></view>
           </van-cell>
         </view>

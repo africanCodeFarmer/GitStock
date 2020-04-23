@@ -216,7 +216,7 @@
         <view class="text-right">{{item.value}}RMB</view>
       </view>
       <view slot="icon">
-        <image src="{{item.iconPath}}" style="width:100rpx;height:100rpx;margin-right:20rpx;"/>
+        <image src="{{item.iconPath}}" style="width:50px;height:100%;margin-right:20rpx;"/>
       </view>
       <view slot="label">
         <view>{{item.desc}}</view>

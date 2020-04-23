@@ -16,16 +16,17 @@ Page({
     })
   },
   onReachBottom:function(){
-    var show_taskLog_day = this.data.show_taskLog_day+1
-    if(show_taskLog_day>=this.data.tasks.length){
-      return;
-    }
-
+    var show_taskLog_day = this.data.show_taskLog_day+10
     this.setData({show_taskLog_day:show_taskLog_day})
-    wx.showToast({
-      icon:'none',
-      title: '数据已追加',
-    })
+    //if(show_taskLog_day>=this.data.tasks.length){
+      //return;
+    //}
+
+    //this.setData({show_taskLog_day:show_taskLog_day})
+    // wx.showToast({
+    //   icon:'none',
+    //   title: '数据已追加',
+    // })
   },
   onCancel_search:function(){
     this.setData({

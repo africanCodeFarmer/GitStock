@@ -99,7 +99,7 @@
 <van-cell-group title="所有计划">
   <view class="bg-white">
     <van-swipe-cell right-width="{{ 90 }}" wx:for="{{plans}}">
-      <view style="margin:10rpx 4% 10rpx 4%;">
+      <view style="margin:0 4%;">
         <view>
           <van-row>
             <van-col span="16" class="text-left">

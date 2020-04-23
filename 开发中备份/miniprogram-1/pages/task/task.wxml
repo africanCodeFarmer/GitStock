@@ -34,7 +34,7 @@
 
         <scroll-view style="margin-top:20rpx;height:80%;border-bottom:1px solid #F5F6F8;border-top:1px solid #F5F6F8" scroll-y>
           
-          <view wx:for="{{item}}" wx:for-item="items" wx:for-index="i" style="margin-top:20rpx;" wx:if="{{showAllTasks==true?'none':items.completed==false}}">
+          <view wx:for="{{item}}" wx:for-item="items" wx:for-index="i" wx:if="{{showAllTasks==true?'none':items.completed==false}}">
             <!-- <van-transition name="fade"> -->
               <van-row>
                 <van-col span="2">
@@ -70,7 +70,7 @@
                         </van-col>
                         <van-col span="{{index=='limitTime'?12:10}}">
                           <view wx:if="{{index=='everyday'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">已完成: {{items.count}}次</view>
-                          <view wx:if="{{index=='limitTime'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">截止时间: {{items.create_time}}</view>
+                          <view wx:if="{{index=='limitTime'}}" class="text-right" style="color:#b2b2b2;font-size:11px;">-{{items.create_time}}</view>
                         </van-col>
                       </van-row>
 
@@ -167,7 +167,7 @@
       <!-- 颜色块 -->
       <view style="margin:10rpx 10% 0rpx 10%;">
         <view style="display:inline-block;padding:5rpx 10rpx 5rpx 0rpx;" wx:for="{{task_colors}}">
-          <button style="height:25rpx;width:25rpx;background-color:{{item.value}};" data-color="{{item.value}}" bindtap="onClick_task_color"></button>
+          <button style="height:50rpx;width:50rpx;background-color:{{item.value}};" data-color="{{item.value}}" bindtap="onClick_task_color"></button>
         </view>
       </view>
     </view>

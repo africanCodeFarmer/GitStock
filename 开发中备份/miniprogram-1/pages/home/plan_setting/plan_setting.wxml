@@ -8,9 +8,9 @@
 
 <van-cell-group title="辅助数据设置">
   <van-field
-    label="月可缺打数"
+    label="每月请假数"
     value="{{ month_free_count }}"
-    placeholder="请输入每月可不打卡次数"
+    placeholder="请输入每月可以请假天数"
     type="number"
     border="{{ false }}"
     bind:change="onChange_month_free_count"

@@ -36,17 +36,18 @@ Page({
     })
   },
   onReachBottom:function(){
-    var show_spendLog_day = this.data.show_spendLog_day+1
+    var show_spendLog_day = this.data.show_spendLog_day+10
     var spendLogs = this.data.spendLogs
 
-    if(show_spendLog_day < spendLogs.length){
-      this.setData({show_spendLog_day:show_spendLog_day})
+    this.setData({show_spendLog_day:show_spendLog_day})
+    //if(show_spendLog_day < spendLogs.length){
+      //this.setData({show_spendLog_day:show_spendLog_day})
 
-      wx.showToast({
-        icon:'none',
-        title: '数据已追加',
-      })
-    }
+      // wx.showToast({
+      //   icon:'none',
+      //   title: '数据已追加',
+      // })
+    //}
   },
   onCancel_search:function(){
     this.setData({

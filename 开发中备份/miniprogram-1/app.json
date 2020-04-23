@@ -4,7 +4,6 @@
     "pages/home/data_setting/data_setting",
     "pages/home/plan_setting/plan_setting",
     "pages/home/plan_setting/plan_CURD/plan_CURD",
-    "pages/home/constellation_setting/constellation_setting",
     
     "pages/task/task",
     "pages/taskLog/taskLog",

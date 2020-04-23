@@ -25,10 +25,10 @@
 
     <van-row>
       <van-col span="12">
-        <view class="text-left">每日花支总计: {{month_spend}}</view>
+        <view class="text-left">月花支: {{month_spend}}</view>
       </van-col>
       <van-col span="12">
-        <view class="text-right">每日收入总计: {{month_income}}</view>
+        <view class="text-right">月收入: {{month_income}}</view>
       </van-col>
     </van-row>
   </view>
