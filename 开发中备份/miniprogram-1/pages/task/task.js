@@ -61,9 +61,10 @@ Page({
   sortTasks:function(){
     var tasks = this.data.tasks
     var task_colors = this.data.task_colors
+
     var colorLevel = []
     for(var i in task_colors)
-    colorLevel[task_colors[i].value]=task_colors[i].id
+      colorLevel[task_colors[i].value]=i
 
     //升序排列
     if(tasks.length>0)
