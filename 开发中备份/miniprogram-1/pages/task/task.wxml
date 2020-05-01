@@ -54,7 +54,7 @@
                         </van-col>
                         <van-col span="14">
                           <view>
-                            <text style="color:{{items.color}};word-break: keep-all;word-wrap: break-word;font-size:14px;">{{items.name}}</text>
+                            <text style="color:{{items.color}};word-break: break-all;word-wrap: break-word;font-size:14px;">{{items.name}}</text>
                           </view>
                         </van-col>
                         <van-col span="8">

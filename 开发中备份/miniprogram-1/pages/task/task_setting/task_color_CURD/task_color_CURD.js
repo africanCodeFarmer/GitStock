@@ -42,10 +42,15 @@ Page({
   levelUp:function(e){
     var id = e.target.id
     var task_colors = this.data.task_colors
+
+    console.log(id)
+
     for(var i in task_colors){
       if(task_colors[i].id == id){
         var temp = task_colors[i]
         var changeIndex = i-1<0?task_colors.length-1:i-1;
+
+        console.log(changeIndex)
 
         //与前id互换
         task_colors[i]=task_colors[changeIndex];
@@ -59,6 +64,10 @@ Page({
         break
       }
     }
+
+    for(var i in task_colors)
+      task_colors[i].id=i
+
     this.setData({task_colors:task_colors})
     wx.setStorageSync('task_colors', task_colors)
   },
