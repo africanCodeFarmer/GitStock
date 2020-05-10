@@ -1,0 +1,135 @@
+<?php
+
+namespace app\admintest\controller;
+
+use app\admintest\model\ClazzModel;
+use cmf\controller\AdminBaseController;
+use app\statusygu\controller\AdminProjectController;
+
+/**
+ * Class AdminIndexController
+ * @package app\admintest\controller
+ *
+ * @adminMenuRoot(
+ *     'name'   =>'测试应用',
+ *     'action' =>'default',
+ *     'parent' =>'',
+ *     'display'=> true,
+ *     'order'  => 10,
+ *     'icon'   =>'group',
+ *     'remark' =>'测试应用'
+ * )
+ */
+class AdminIndexController extends AdminBaseController
+{
+    /**
+     * 测试菜单方法
+     * @adminMenu(
+     *     'name'   => '测试菜单方法',
+     *     'parent' => 'default',
+     *     'display'=> true,
+     *     'hasView'=> true,
+     *     'order'  => 10000,
+     *     'icon'   => '',
+     *     'remark' => '测试菜单方法',
+     *     'param'  => ''
+     * )
+     */
+     
+    function CacheHtml($cacheName,$cachetime=3600,$cachedata=[],$cachepath=''){
+        //缓存路径 D:/phpstudy_pro/WWW/ygustatus/public
+        $cachepath = $cachepath == '' ? $_SERVER['DOCUMENT_ROOT'] : $cachepath;
+        //缓存目录
+        $catalog = 'cache';
+        //检查缓存目录是否存在
+        is_dir($cachepath.'/'.$catalog) or @mkdir($cachepath.'/'.$catalog, 0777); //0777可读写权限
+
+        //遍历查找该目录下所有文件
+        $ArrayFile = [];
+        $this->listDir($cachepath.'/'.$catalog,$ArrayFile);
+
+        //如果有此缓存看看是否过期
+        if(!empty($ArrayFile)){
+            foreach($ArrayFile as $k=>$v){
+                $fileNameArray =explode(' ',$v); //创建时间 时长 文件名.php
+                
+                if(count($fileNameArray)<3) //文件名格式错误跳过
+                        continue;
+
+                //查找此缓存
+                if($fileNameArray[2]==$cacheName.'.php'){
+                    //echo date("Y-m-d H:i:s",filemtime(explode(' ',$v)[1])+3600);
+  
+                    //获取当前文件的到期时间
+                    $getFileEndTime = (int)$fileNameArray[0]+(int)$fileNameArray[1];
+
+                    $cacheName = $v;
+
+                    //到期删除
+                    if(time() >= $getFileEndTime){
+                        unlink($cachepath.'/'.$catalog.'/'.$v);
+                        return false;
+                    }
+                }
+            }
+        }
+
+        //检查缓存是否存在
+        if(is_file($cachepath.'/'.$catalog.'/'.$cacheName)){
+            //缓存存在则打开
+            $fileopen = fopen($cachepath.'/'.$catalog.'/'.$cacheName,'r');
+            //读取缓存的数据
+            $fileData = fread($fileopen,filesize($cachepath.'/'.$catalog.'/'.$cacheName));
+            //将缓存的数据返回
+            $fileData = json_decode($fileData,true);
+        }else{
+            if(empty($cachedata)){ //空数据
+                return false;
+            }
+            //判断数据类型
+            if(is_string($cachedata)){
+                //数据为字符串将数据组合为数组并且转换为JSON
+                $jsonData = json_encode(array($cachedata));
+            }else{
+                //数据为数组将数组转换为JSON
+                $jsonData = json_encode($cachedata);
+            }
+            //缓存不存在则创建
+            $fileopen = fopen($cachepath.'/'.$catalog.'/'.time().' '.$cachetime.' '.$cacheName.'.php','w+');
+            //将缓存的数据写入文件
+            fwrite($fileopen,$jsonData);
+
+            $fileData=$cachedata;
+        }
+        //关闭
+        fclose($fileopen);
+        return $fileData;
+    }
+
+    //遍历文件
+    function listDir($dir,&$arr) { 
+        if(!is_dir($dir) || !$dh = opendir($dir)) {
+            return false;
+        }
+
+        while( ($file = readdir($dh)) !== false ) {
+            if(is_dir($dir."/".$file) && $file!="." && $file!="..") { 
+                $arr[] = $file;
+                $this->listDir($dir."/".$file,$arr);
+            } else { 
+                if($file!="." && $file!="..")
+                    $arr[] = $file;
+            } 
+        } 
+        closedir($dh);
+        return;
+    }
+    
+    public function index()
+    {
+        // if(!$fileData = $this->CacheHtml('testCache')){
+        //     $fileData = $this->CacheHtml('testCache',3600,[ ['id'=>1,'msg'=>'test1'],['id'=>2,'msg'=>'test2'] ]); //缓存创建
+        // }
+        // print_r($fileData);
+    }
+}
