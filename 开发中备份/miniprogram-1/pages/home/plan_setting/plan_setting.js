@@ -16,7 +16,12 @@ Page({
     this.setData({month_free_count:e.detail})
   },
   update_month_free_count:function(){
+    var plans = wx.getStorageSync('plans') || []
+    for(var i in plans)
+      plans[i].free_count = this.data.month_free_count
+
     wx.setStorageSync('month_free_count', this.data.month_free_count)
+    wx.setStorageSync('plans', plans)
     wx.showToast({
       icon:'none',
       title: '已更新每月可不打卡次数',

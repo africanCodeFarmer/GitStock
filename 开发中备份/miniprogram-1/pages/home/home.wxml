@@ -32,7 +32,12 @@
       <view class="padding radius shadow bg-white">
 
         <van-row>
-          <van-col span="24"><text style="font-size:20px;">我的时间计划</text></van-col>
+          <van-col span="24">
+            <text style="font-size:20px;">我的时间计划</text>
+            <view style="margin:0px 0px 0px 4px;display:inline-block;">
+              <van-tag plain type="primary" size="medium" bindtap="onClick_reveal">展示所有未完成任务</van-tag>
+            </view>
+          </van-col>
         </van-row>
 
         <van-divider hairline />
@@ -42,7 +47,9 @@
             <!-- 时间段 -->
             <view wx:for="{{time_plans}}" style="border-bottom:1px solid #F5F6F8;{{index+6==curhour?'color:#EF0A24;':''}}">
               <van-row>
-                <van-col span="2">
+                <van-col span="3">
+                  <van-icon name="arrow-up" bind:click="onClick_arrow_up" id="{{index}}"/>
+                  <view style="display:inline-block;margin-left:4px;"></view>
                   <van-icon name="close" bind:click="onClick_clearTimePlan" id="{{index}}"/>
                 </van-col>
                 <van-col span="4" class="text-left">
@@ -51,7 +58,7 @@
                 <van-col span="1" class="text-left">
                   <text>|</text>
                 </van-col>
-                <van-col span="17" class="text-left">
+                <van-col span="16" class="text-left">
                   <input name="value{{index}}" placeholder="" value="{{time_plans[index]}}"/>  
                 </van-col>
               </van-row>
@@ -137,10 +144,10 @@
 
             <view>
               <van-row>
-                <van-col span="12" class="text-left">
+                <van-col span="16" class="text-left">
                   <text class="overflowText" style="font-size:13px;color:#888888;" space="ensp">{{item.desc==null||item.desc==''?' ':item.desc}}</text>
                 </van-col>
-                <van-col span="12" class="text-right">
+                <van-col span="8" class="text-right">
                   <text class="overflowText" style="font-size:13px;color:#888888;">{{item.reward==''||item.reward==null?'无奖励':item.reward}}</text>
                 </van-col>
               </van-row>
@@ -250,6 +257,39 @@
 <van-divider hairline />
 <van-divider hairline />
 
+<van-popup 
+  show="{{ show_task_popup }}" 
+  bind:close="onClose_task_popup"
+  position="bottom"
+  round
+  custom-style="height: 80%;"
+>
+  <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">所有未完成任务</van-divider>
+ 
+  <!-- 颜色块 -->
+  <view class="text-center">
+    <view style="display:inline-block;" wx:for="{{task_colors}}">
+      <button style="height:10rpx;width:20rpx;background-color:{{item.value}};margin:0rpx 5rpx;"></button>
+    </view>
+  </view>
+
+  <view style="margin:0rpx 10% 20rpx 10%;" wx:for="{{tasks[0].types}}" wx:if="{{m.noFindChar('_',index)}}">
+    <!-- header -->
+    <view class="text-left" style="font-size:17px;border-bottom:1px solid #F5F6F8;">
+      <van-tag mark type="primary" plain size="large">{{index}}</van-tag>
+    </view>
+    <!-- content -->
+    <view style="width:100%;" wx:for="{{item}}" wx:for-item="items" class="text-left" wx:for-index="i" >
+      <text wx:if="{{items.completed==false}}" style="text-overflow:ellipsis;word-wrap:break-word;color:{{items.color}};font-size:14px;">{{i+1}} {{items.name}}</text>
+    </view>
+  </view>
+
+  <van-divider hairline contentPosition="center" custom-style="color:#b2b2b2;font-size:11px;" borderColor="#FFFFFF"></van-divider>
+  <van-divider hairline borderColor="#FFFFFF"/>
+  <van-divider hairline borderColor="#FFFFFF"/>
+  <van-divider hairline borderColor="#FFFFFF"/>
+</van-popup>
+
 <wxs module="m">
   var computeProgress= function (item) {
     if(item.type=="insist")
@@ -259,5 +299,15 @@
       return ans>100?100:ans;
     }
   }
- module.exports.computeProgress=computeProgress;
+  module.exports.computeProgress=computeProgress;
+
+  var numberToFix= function (value) {
+    return value.toFixed(2)
+  }
+  module.exports.numberToFix=numberToFix;
+
+  var noFindChar= function (find,str) {
+    return str.indexOf(find)>=0?false:true;
+  }
+  module.exports.noFindChar=noFindChar;
 </wxs>

@@ -184,6 +184,13 @@
   custom-style="height: 80%;"
 >
   <van-divider hairline contentPosition="center" customStyle="border-color: #FFF;font-size:17px;color:#000000;">所有未完成任务</van-divider>
+ 
+  <!-- 颜色块 -->
+  <view class="text-center">
+    <view style="display:inline-block;" wx:for="{{task_colors}}">
+      <button style="height:10rpx;width:20rpx;background-color:{{item.value}};margin:0rpx 5rpx;"></button>
+    </view>
+  </view>
 
   <view style="margin:0rpx 10% 20rpx 10%;" wx:for="{{tasks[0].types}}" wx:if="{{m.noFindChar('_',index)}}">
     <!-- header -->
@@ -192,7 +199,7 @@
     </view>
     <!-- content -->
     <view style="width:100%;" wx:for="{{item}}" wx:for-item="items" class="text-left" wx:for-index="i" >
-      <text wx:if="{{items.completed==false}}" style="text-overflow:ellipsis;word-wrap:break-word;color:{{items.color}};font-size:14px;">{{items.name}}</text>
+      <text wx:if="{{items.completed==false}}" style="text-overflow:ellipsis;word-wrap:break-word;color:{{items.color}};font-size:14px;">{{i+1}} {{items.name}}</text>
     </view>
   </view>
 
@@ -206,10 +213,10 @@
   var numberToFix= function (value) {
     return value.toFixed(2)
   }
- module.exports.numberToFix=numberToFix;
+  module.exports.numberToFix=numberToFix;
 
   var noFindChar= function (find,str) {
     return str.indexOf(find)>=0?false:true;
   }
- module.exports.noFindChar=noFindChar;
+  module.exports.noFindChar=noFindChar;
 </wxs>

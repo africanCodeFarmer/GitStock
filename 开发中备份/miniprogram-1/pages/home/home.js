@@ -49,6 +49,27 @@ Page({
 
     principles:[],
   },
+  onClick_arrow_up:function(e){
+    var id = e.target.id //0-17
+    var time_plans = this.data.time_plans
+
+    //交换两行数据
+    var ex_id = parseInt(id)-1<0?17:parseInt(id)-1;
+
+    var temp = time_plans[id]
+    time_plans[id]=time_plans[ex_id]
+    time_plans[ex_id]=temp
+
+    this.setData({
+      time_plans:time_plans,
+    })
+  },
+  onClick_reveal:function(){
+    this.setData({show_task_popup:true})
+  },
+  onClose_task_popup:function(){
+    this.setData({show_task_popup:false})
+  },
   onLoad:function(){
     var myAmapFun = new amapFile.AMapWX({key:'e5627f4d2246135a5af0b6a6de2692c5'})
     this.setData({myAmapFun:myAmapFun})
@@ -418,6 +439,15 @@ Page({
   },
   onShow:function(){
     this.getTabBar().init()
+
+    //展示所有任务
+    var task_colors = wx.getStorageSync('task_colors') || []
+    var tasks = wx.getStorageSync('tasks') || []
+    
+    this.setData({
+      task_colors:task_colors,
+      tasks:tasks,
+    })
 
     //天气
     var that = this
